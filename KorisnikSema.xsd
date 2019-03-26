@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.megatravel.com/tim41" xmlns:mt="www.megatravel.com/tim41">
+    <xs:import schemaLocation="SmestajSema.xsd"/>
+    <xs:complexType abstract="true" name="TKorisnik">
+        <xs:sequence>
+            <xs:element name="ID" type="xs:ID"/>
+            <xs:element name="Username" type="xs:string"/>
+            <xs:element name="Password" type="xs:anyType"/>
+            <xs:element name="Ime" type="xs:string"/>
+            <xs:element name="Prezime" type="xs:string"/>
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern
+                            value="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Adresa" type="xs:string"/>
+            <xs:element name="Telefon" type="xs:integer"/>
+            <xs:element name="Uloga">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Administrator"/>
+                        <xs:enumeration value="Krajnji korisnik"/>
+                        <xs:enumeration value="Agent"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Administrator">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="mt:TKorisnik">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Agent">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="mt:TKorisnik">
+                    <xs:sequence>
+                        <xs:element name="ListaNekretnina">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element ref="SmestajnaJedinica"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="KrajnjiKorisnik">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="mt:TKorisnik">
+                    <xs:sequence/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Rezervacija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Rezervisao"/>
+                <xs:element name="CenaSmestaja">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:decimal">
+                            <xs:fractionDigits value="2"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element ref="SmestajnaJedinica"/>
+                <xs:element name="DatumDolaska" type="xs:date"/>
+                <xs:element name="DatumOdlaska" type="xs:date"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

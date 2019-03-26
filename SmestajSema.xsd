@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+
+    <xs:element name="SmestajniObjekat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="TipSmestaja">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Hotel"/>
+                            <xs:enumeration value="Apartman"/>
+                            <xs:enumeration value="Bed&amp;Breakfast"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="ID" type="xs:ID"/>
+                <xs:element maxOccurs="unbounded" ref="SmestajnaJedinica"/>
+                <xs:element ref="Lokacija"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="SmestajnaJedinica">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="BrojKreveta" type="xs:integer"/>
+                <xs:element name="Dostupna" type="xs:boolean"/>
+                <xs:element name="Terasa" type="xs:boolean"/>
+                <xs:element name="ZauzetaOd" type="xs:date"/>
+                <xs:element name="ZauzetaDo" type="xs:date"/>
+                <xs:element name="SlikaJedinice">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:base64Binary">
+                                <xs:attribute name="PuitanjaSlike"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Lokacija">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="NazivLokacije" type="xs:string"/>
+                <xs:element name="GeografskaSirina" type="xs:integer"/>
+                <xs:element name="GeografskaDuzina" type="xs:integer"/>
+                <xs:element name="OpisLokacije">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="200"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
