@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:ns1="www.megatravel.com/tim41/reservations">
+    <xs:import namespace="www.megatravel.com/tim41/reservations" schemaLocation="Rezervacija.xsd"/>
+    <xs:element name="Rezervacija">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="RezervacijaKorisnika" type="ns1:TRezervacijaKorisnika"/>
+                <xs:element name="RezervacijaAgenta" type="ns1:TRezervacija"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

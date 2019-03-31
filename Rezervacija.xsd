@@ -29,7 +29,7 @@
                     </xs:element>
                     <xs:element name="Korisnik" type="ns1:TKorisnik"/>
                     <xs:element name="Ocena" type="xs:double"/>
-                    <xs:element name="Komentar" type="xs:string"/>
+                    <xs:element name="Komentar" type="TKomentar"/>
                 </xs:sequence>
                 <xs:attribute name="DatumRezervacije"/>
             </xs:extension>

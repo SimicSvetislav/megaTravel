@@ -23,7 +23,8 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="Lokacija" type="TLokacija"/>
-            <xs:element maxOccurs="unbounded" name="SmestajneJedinice" type="TSmestajnaJedinica"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="SmestajneJedinice"
+                type="TSmestajnaJedinica"/>
             <xs:element name="Kategorija">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -36,7 +37,8 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="DodatneUsluge" type="TDodatneUsluge"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="DodatneUsluge"
+                type="TDodatnaUsluga"/>
             <xs:element name="Otkazivanje" type="TOtkazivanje"/>
         </xs:sequence>
     </xs:complexType>
@@ -76,7 +78,7 @@
             </xs:element>
             <xs:element name="Rejting" type="TRejting"/>
             <xs:element name="Objekat" type="TSmestajniObjekat"/>
-            <xs:element maxOccurs="unbounded" name="Komentari" type="ns1:TKomentar"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Komentari" type="ns1:TKomentar"/>
             <xs:element maxOccurs="unbounded" name="Cenovnici" type="TCenovnik"/>
             <xs:element name="PodrazumevaniCenovnik" type="TCenovnik"/>
             <xs:element name="Id">
@@ -86,6 +88,16 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="Opis">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="1024"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="DodatneUsluge"
+                type="TDodatnaUsluga"/>
+            <xs:element name="Otkazivanje" type="TOtkazivanje"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TRejting">
@@ -161,7 +173,7 @@
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TDodatneUsluge">
+    <xs:complexType name="TDodatnaUsluga">
         <xs:sequence>
             <xs:element name="Id">
                 <xs:simpleType>

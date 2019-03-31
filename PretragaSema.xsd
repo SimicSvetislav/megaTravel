@@ -14,7 +14,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="TipSmestaja">
+            <xs:element minOccurs="0" name="TipSmestaja">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="Hotel"/>
@@ -23,7 +23,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="KategorijaSmestaja">
+            <xs:element minOccurs="0" name="KategorijaSmestaja">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="NA"/>
@@ -35,21 +35,23 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="Udaljenost">
+            <xs:element minOccurs="0" name="Udaljenost">
                 <xs:simpleType>
                     <xs:restriction base="xs:double">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element default="false" name="BesplatnoOtkazivanje" type="xs:boolean"/>
-            <xs:element name="OtkazivanjePre">
+            <xs:element default="false" minOccurs="0" name="BesplatnoOtkazivanje" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="OtkazivanjePre">
                 <xs:simpleType>
                     <xs:restriction base="xs:integer">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="DodatneUsluge"
+                type="ns1:TDodatnaUsluga"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
