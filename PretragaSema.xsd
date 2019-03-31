@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    xmlns:ns1="www.megatravel.com/tim41">
+    <xs:import namespace="www.megatravel.com/tim41" schemaLocation="SmestajSema.xsd"/>
+    <xs:complexType name="TPretraga">
+        <xs:sequence>
+            <xs:element name="Lokacija" type="ns1:TLokacija"/>
+            <xs:element name="Dolazak" type="xs:date"/>
+            <xs:element name="Odlazak" type="xs:date"/>
+            <xs:element name="BrojOsoba">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="TipSmestaja">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Hotel"/>
+                        <xs:enumeration value="Apartman"/>
+                        <xs:enumeration value="Bed&amp;Breakfast"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="KategorijaSmestaja">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="NA"/>
+                        <xs:enumeration value="1"/>
+                        <xs:enumeration value="2"/>
+                        <xs:enumeration value="3"/>
+                        <xs:enumeration value="4"/>
+                        <xs:enumeration value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Udaljenost">
+                <xs:simpleType>
+                    <xs:restriction base="xs:double">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element default="false" name="BesplatnoOtkazivanje" type="xs:boolean"/>
+            <xs:element name="OtkazivanjePre">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

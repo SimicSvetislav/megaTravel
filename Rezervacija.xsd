@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.megatravel.com/tim41/reservations"
+    xmlns="www.megatravel.com/tim41/reservations" xmlns:ns1="www.megatravel.com/tim41/users"
+    xmlns:ns2="www.megatravel.com/tim41">
+    <xs:import namespace="www.megatravel.com/tim41/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:import namespace="www.megatravel.com/tim41" schemaLocation="SmestajSema.xsd"/>
+    <xs:complexType name="TRezervacijaKorisnika">
+        <xs:complexContent>
+            <xs:extension base="TRezervacija">
+                <xs:sequence>
+                    <xs:element name="CenaSmestaja">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:decimal">
+                                <xs:fractionDigits value="2"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="StanjeRezervacije">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="Rezervisano"/>
+                                <xs:enumeration value="U toku"/>
+                                <xs:enumeration value="Otkazano"/>
+                                <xs:enumeration value="Realizovano"/>
+                                <xs:enumeration value="U obradi"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Korisnik" type="ns1:TKorisnik"/>
+                    <xs:element name="Ocena" type="xs:double"/>
+                    <xs:element name="Komentar" type="xs:string"/>
+                </xs:sequence>
+                <xs:attribute name="DatumRezervacije"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKomentar">
+        <xs:sequence>
+            <xs:element name="Tekst">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="1024"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Prilog" type="xs:anyType"/>
+            <xs:element default="false" name="Odobren" type="xs:boolean"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TRezervacija">
+        <xs:sequence>
+            <xs:element name="DatumPocetka" type="xs:date"/>
+            <xs:element name="DatumZavrsetka" type="xs:date"/>
+            <xs:element name="Smestaj" type="ns2:TSmestajnaJedinica"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

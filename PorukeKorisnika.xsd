@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.megatravel.com/tim41/chat" xmlns="www.megatravel.com/tim41/chat"
+    xmlns:ns="www.megatravel.com/tim41" xmlns:ns1="www.megatravel.com/tim41/users">
+    <xs:import namespace="www.megatravel.com/tim41/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:complexType name="TPoruka">
+        <xs:sequence>
+            <xs:element name="Posiljalac" type="ns1:TKorisnik"/>
+            <xs:element name="Primalac" type="ns1:TKorisnik"/>
+            <xs:element name="Tekst">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="1024"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Sadrzaj" type="xs:anyType"/>
+        </xs:sequence>
+        <xs:attribute name="timestamp" type="xs:dateTime"/>
+    </xs:complexType>
+</xs:schema>
