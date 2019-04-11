@@ -25,7 +25,7 @@
             <xs:element name="Lokacija" type="TLokacija"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="SmestajneJedinice"
                 type="TSmestajnaJedinica"/>
-            <xs:element name="Kategorija">
+            <xs:element name="Kategorija" default="NA">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="NA"/>
@@ -40,6 +40,16 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="DodatneUsluge"
                 type="TDodatnaUsluga"/>
             <xs:element name="Otkazivanje" type="TOtkazivanje"/>
+            <xs:element default="BRONZE" name="Klasa">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="BRONZE"/>
+                        <xs:enumeration value="SILVER"/>
+                        <xs:enumeration value="GOLD"/>
+                        <xs:enumeration value="PLATINUM"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TLokacija">
@@ -98,6 +108,13 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="DodatneUsluge"
                 type="TDodatnaUsluga"/>
             <xs:element name="Otkazivanje" type="TOtkazivanje"/>
+            <xs:element name="PovecanjeVeciBrojOsoba">
+                <xs:simpleType>
+                    <xs:restriction base="xs:double">
+                        <xs:minInclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TRejting">
@@ -218,6 +235,14 @@
                 <xs:simpleType>
                     <xs:restriction base="xs:integer">
                         <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="CenaOtkazivanja">
+                <xs:simpleType>
+                    <xs:restriction base="xs:double">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
