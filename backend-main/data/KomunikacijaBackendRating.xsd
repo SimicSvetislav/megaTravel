@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    xmlns:ns1="www.megatravel.com/tim41" targetNamespace="www.megatravel.com/tim41/poruke/rating"
-    xmlns="www.megatravel.com/tim41/poruke/rating">
+    targetNamespace="www.model.megatrave.projectl.com/messages/rating"
+    xmlns="www.model.megatrave.projectl.com/messages/rating"
+    xmlns:acc="www.model.megatravel.project.com/accomodation"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
     <xs:element name="Ocenivanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="SmestajId">
+                <xs:element name="smestajId">
                     <xs:simpleType>
-                        <xs:restriction base="xs:integer">
-                            <xs:minInclusive value="0"/>
+                        <xs:restriction base="xs:long">
+                            <xs:minInclusive value="1"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="Ocena">
+                <xs:element name="ocena">
                     <xs:simpleType>
                         <xs:restriction base="xs:integer">
                             <xs:minInclusive value="1"/>

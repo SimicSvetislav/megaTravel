@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="www.megatravel.com/tim41/reservations"
-    xmlns="www.megatravel.com/tim41/reservations" xmlns:ns1="www.megatravel.com/tim41/users"
-    xmlns:ns2="www.megatravel.com/tim41">
-    <xs:import namespace="www.megatravel.com/tim41/users" schemaLocation="KorisnikSema.xsd"/>
-    <xs:import namespace="www.megatravel.com/tim41" schemaLocation="SmestajSema.xsd"/>
+    targetNamespace="www.model.megatravel.project.com/reservations"
+    xmlns="www.model.megatravel.project.com/reservations"
+    xmlns:acc="www.model.megatravel.project.com/accomodation"
+    xmlns:usr="www.model.megatravel.project.com/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:import namespace="www.model.megatravel.project.com/accomodation"
+        schemaLocation="SmestajSema.xsd"/>
     <xs:complexType name="TRezervacijaKorisnika">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="RezervacijaKorisnika"/>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="TRezervacija">
                 <xs:sequence>
-                    <xs:element name="CenaSmestaja">
+                    <xs:element name="cenaSmestaja">
                         <xs:simpleType>
                             <xs:restriction base="xs:decimal">
                                 <xs:fractionDigits value="2"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="StanjeRezervacije">
+                    <xs:element name="stanje">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:enumeration value="Rezervisano"/>
@@ -27,33 +34,76 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element name="Korisnik" type="ns1:TKorisnik"/>
-                    <xs:element name="Ocena" type="xs:double"/>
-                    <xs:element name="Komentar" type="TKomentar"/>
+                    <xs:element name="korisnik" type="usr:TKorisnik"/>
+                    <xs:element name="ocena" type="xs:double"/>
+                    <xs:element name="komentar" type="TKomentar"/>
                 </xs:sequence>
-                <xs:attribute name="DatumRezervacije"/>
+                <xs:attribute name="datumRezervacije">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:date">
+                            <xs:minInclusive value="1900-01-01"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="TKomentar">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Komentar"/>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="Tekst">
+            <xs:element name="tekst">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="1024"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="Prilog" type="xs:anyType"/>
-            <xs:element default="false" name="Odobren" type="xs:boolean"/>
+            <xs:element name="prilog" type="xs:anyType"/>
+            <xs:element default="false" name="odobren" type="xs:boolean"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TRezervacija">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Rezervacija"/>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="DatumPocetka" type="xs:date"/>
-            <xs:element name="DatumZavrsetka" type="xs:date"/>
-            <xs:element name="Smestaj" type="ns2:TSmestajnaJedinica"/>
-            <xs:element name="Popust">
+            <xs:element name="datumPocetka">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:date">
+                        <xs:minInclusive value="1900-01-01"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="datumZavrsetka">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:date">
+                        <xs:minInclusive value="1900-01-01"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="smestaj" type="acc:TSmestajnaJedinica"/>
+            <xs:element name="popust">
                 <xs:simpleType>
                     <xs:restriction base="xs:double">
                         <xs:minInclusive value="0"/>

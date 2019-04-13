@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    xmlns:ns1="www.megatravel.com/tim41/reservations"
-    targetNamespace="www.megatravel.com/tim41/poruke/agent"
-    xmlns="www.megatravel.com/tim41/poruke/agent">
-    <xs:import namespace="www.megatravel.com/tim41/reservations" schemaLocation="Rezervacija.xsd"/>
+    targetNamespace="www.model.megatravel.project.com/messages/agent"
+    xmlns="www.model.megatravel.project.com/messages/agent"
+    xmlns:res="www.model.megatravel.project.com/reservations"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+    <xs:import namespace="www.model.megatravel.project.com/reservations"
+        schemaLocation="Rezervacija.xsd"/>
     <xs:element name="Rezervacija">
         <xs:complexType>
             <xs:choice>
-                <xs:element name="RezervacijaKorisnika" type="ns1:TRezervacijaKorisnika"/>
-                <xs:element name="RezervacijaAgenta" type="ns1:TRezervacija"/>
+                <xs:element name="rezervacijaKorisnika" type="res:TRezervacijaKorisnika"/>
+                <xs:element name="rezervacijaAgenta" type="res:TRezervacija"/>
             </xs:choice>
         </xs:complexType>
     </xs:element>
