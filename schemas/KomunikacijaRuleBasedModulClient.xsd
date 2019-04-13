@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="www.megatravel.com/tim41/poruke/ruleBased"
-    xmlns="www.megatravel.com/tim41/poruke/ruleBased">
+    targetNamespace="www.model.megatravel.project.com/messages/ruleBased"
+    xmlns="www.model.megatravel.project.com/messages/ruleBased"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
     <xs:complexType name="RBMPoruka">
         <xs:sequence>
-            <xs:element name="Subject">
+            <xs:element name="tema">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="LAST_MINUTE"/>
@@ -14,7 +15,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="Sadrzaj" type="xs:double"/>
+            <xs:element name="sadrzaj" type="xs:double"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

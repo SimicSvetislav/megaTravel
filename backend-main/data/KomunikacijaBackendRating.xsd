@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="www.model.megatrave.projectl.com/messages/rating"
-    xmlns="www.model.megatrave.projectl.com/messages/rating"
+    targetNamespace="www.model.megatravel.project.com/messages/rating"
+    xmlns="www.model.megatravel.project.com/messages/rating"
     xmlns:acc="www.model.megatravel.project.com/accomodation"
     xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
     <xs:element name="Ocenivanje">

@@ -1,21 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    xmlns:ns1="www.megatravel.com/tim41" targetNamespace="www.megatravel.com/tim41/pretraga"
-    xmlns="www.megatravel.com/tim41/pretraga">
-    <xs:import namespace="www.megatravel.com/tim41" schemaLocation="SmestajSema.xsd"/>
+    targetNamespace="www.model.megatravel.project.com/search"
+    xmlns="www.model.megatravel.project.com/search"
+    xmlns:acc="www.model.megatravel.project.com/accomodation"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+    <xs:import namespace="www.model.megatravel.project.com/accomodation"
+        schemaLocation="SmestajSema.xsd"/>
     <xs:complexType name="TPretraga">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="PretragaObjekat"/>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="Lokacija" type="ns1:TLokacija"/>
-            <xs:element name="Dolazak" type="xs:date"/>
-            <xs:element name="Odlazak" type="xs:date"/>
-            <xs:element name="BrojOsoba">
+            <xs:element name="lokacija" type="acc:TLokacija"/>
+            <xs:element name="dolazak">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:date">
+                        <xs:minInclusive value="1900-01-01"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="odlazak">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:date">
+                        <xs:minInclusive value="1900-01-01"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="brojOsoba">
                 <xs:simpleType>
                     <xs:restriction base="xs:integer">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element minOccurs="0" name="TipSmestaja">
+            <xs:element minOccurs="0" name="tipSmestaja">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="Hotel"/>
@@ -24,7 +54,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element minOccurs="0" name="KategorijaSmestaja">
+            <xs:element minOccurs="0" name="kategorijaSmestaja">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="NA"/>
@@ -36,23 +66,23 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element minOccurs="0" name="Udaljenost">
+            <xs:element minOccurs="0" name="udaljenost">
                 <xs:simpleType>
                     <xs:restriction base="xs:double">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element default="false" minOccurs="0" name="BesplatnoOtkazivanje" type="xs:boolean"/>
-            <xs:element minOccurs="0" name="OtkazivanjePre">
+            <xs:element default="false" minOccurs="0" name="besplatnoOtkazivanje" type="xs:boolean"/>
+            <xs:element minOccurs="0" name="otkazivanjePre">
                 <xs:simpleType>
                     <xs:restriction base="xs:integer">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="DodatneUsluge"
-                type="ns1:TDodatnaUsluga"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge"
+                type="acc:TDodatnaUsluga"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
