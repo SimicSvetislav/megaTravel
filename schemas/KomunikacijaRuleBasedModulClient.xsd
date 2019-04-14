@@ -2,11 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="www.model.megatravel.project.com/messages/ruleBased"
     xmlns="www.model.megatravel.project.com/messages/ruleBased"
-<<<<<<< HEAD
-    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
-=======
     xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
->>>>>>> 6f3ea5954fde4ad74adf6728338231d09bd60c78
     <xs:complexType name="RBMPoruka">
         <xs:sequence>
             <xs:element name="tema">

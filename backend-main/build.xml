@@ -95,23 +95,25 @@
 		</delete>
 	</target>
 	
-	<target name="copy_model_to_rule_based_module" depends="init">
+	<target name="copy_model_to_rule_based_module" depends="init,delete_model_rule_based_module">
 		<copy todir="${rbm.model.dir}"> 
 			<fileset dir="${gen.model.dir}" />
 		</copy>
 	</target>
 	
 	<target name="delete_schemas" depends="init">
-		<delete dir="${schemas.dir}" />
+		<delete includeemptydirs="true">
+			<fileset dir="${schemas.dir}" includes="**/*" />
+		</delete>
 	</target>
 	
-	<target name="copy_to_schemas" depends="init">
+	<target name="copy_to_schemas" depends="init,delete_schemas">
 		<copy todir="${schemas.dir}"> 
 			<fileset dir="${data.dir}" />
 		</copy>
 	</target>
 	
-	<target name="copy_to_all" depends="copy_model_to_main_backend,copy_to_schemas,copy_model_to_rule_based_module"/>
+	<target name="copy_to_all" depends="copy_model_to_main_backend,copy_model_to_rule_based_module,copy_to_schemas"/>
 	
 	<target name="main" depends="generate_all,copy_to_all"/>
   
