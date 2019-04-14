@@ -1,4 +1,4 @@
-package com.project.megaTravel.util;
+package com.project.megatravel.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

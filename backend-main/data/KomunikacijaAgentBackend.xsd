@@ -3,7 +3,7 @@
     targetNamespace="www.model.megatravel.project.com/messages/agent"
     xmlns="www.model.megatravel.project.com/messages/agent"
     xmlns:res="www.model.megatravel.project.com/reservations"
-    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
     <xs:import namespace="www.model.megatravel.project.com/reservations"
         schemaLocation="Rezervacija.xsd"/>
     <xs:element name="Rezervacija">
