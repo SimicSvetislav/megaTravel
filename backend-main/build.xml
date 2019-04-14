@@ -83,7 +83,7 @@
 		</delete>
 	</target>
 	
-	<target name="copy_model_to_main_backend" depends="init,delete_model_main_backend">
+	<target name="copy_model_to_main_backend" depends="init">
 		<copy todir="${src.model.dir}"> 
 			<fileset dir="${gen.model.dir}" />
 		</copy>
@@ -95,7 +95,7 @@
 		</delete>
 	</target>
 	
-	<target name="copy_model_to_rule_based_module" depends="init,delete_model_rule_based_module">
+	<target name="copy_model_to_rule_based_module" depends="init">
 		<copy todir="${rbm.model.dir}"> 
 			<fileset dir="${gen.model.dir}" />
 		</copy>
@@ -107,7 +107,7 @@
 		</delete>
 	</target>
 	
-	<target name="copy_to_schemas" depends="init,delete_schemas">
+	<target name="copy_to_schemas" depends="init">
 		<copy todir="${schemas.dir}"> 
 			<fileset dir="${data.dir}" />
 		</copy>
