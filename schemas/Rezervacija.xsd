@@ -3,7 +3,12 @@
     targetNamespace="www.model.megatravel.project.com/reservations"
     xmlns="www.model.megatravel.project.com/reservations"
     xmlns:acc="www.model.megatravel.project.com/accomodation"
+<<<<<<< HEAD
     xmlns:usr="www.model.megatravel.project.com/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+=======
+    xmlns:usr="www.model.megatravel.project.com/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    jxb:version="2.1">
+>>>>>>> 6f3ea5954fde4ad74adf6728338231d09bd60c78
     <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
     <xs:import namespace="www.model.megatravel.project.com/accomodation"
         schemaLocation="SmestajSema.xsd"/>
@@ -39,12 +44,21 @@
                     <xs:element name="komentar" type="TKomentar"/>
                 </xs:sequence>
                 <xs:attribute name="datumRezervacije">
+<<<<<<< HEAD
                     <xs:annotation>
                         <xs:appinfo>
                             <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
                         </xs:appinfo>
                     </xs:annotation>
                     <xs:simpleType>
+=======
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+>>>>>>> 6f3ea5954fde4ad74adf6728338231d09bd60c78
                         <xs:restriction base="xs:date">
                             <xs:minInclusive value="1900-01-01"/>
                         </xs:restriction>
@@ -79,24 +93,42 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element name="datumPocetka">
+<<<<<<< HEAD
                 <xs:annotation>
                     <xs:appinfo>
                         <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
                     </xs:appinfo>
                 </xs:annotation>
                 <xs:simpleType>
+=======
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+>>>>>>> 6f3ea5954fde4ad74adf6728338231d09bd60c78
                     <xs:restriction base="xs:date">
                         <xs:minInclusive value="1900-01-01"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="datumZavrsetka">
+<<<<<<< HEAD
                 <xs:annotation>
                     <xs:appinfo>
                         <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
                     </xs:appinfo>
                 </xs:annotation>
                 <xs:simpleType>
+=======
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+>>>>>>> 6f3ea5954fde4ad74adf6728338231d09bd60c78
                     <xs:restriction base="xs:date">
                         <xs:minInclusive value="1900-01-01"/>
                     </xs:restriction>

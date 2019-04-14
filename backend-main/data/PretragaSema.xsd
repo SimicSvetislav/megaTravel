@@ -3,7 +3,7 @@
     targetNamespace="www.model.megatravel.project.com/search"
     xmlns="www.model.megatravel.project.com/search"
     xmlns:acc="www.model.megatravel.project.com/accomodation"
-    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
     <xs:import namespace="www.model.megatravel.project.com/accomodation"
         schemaLocation="SmestajSema.xsd"/>
     <xs:complexType name="TPretraga">
@@ -15,24 +15,24 @@
         <xs:sequence>
             <xs:element name="lokacija" type="acc:TLokacija"/>
             <xs:element name="dolazak">
-                <xs:annotation>
-                    <xs:appinfo>
-                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
-                    </xs:appinfo>
-                </xs:annotation>
                 <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                        </xs:appinfo>
+                    </xs:annotation>
                     <xs:restriction base="xs:date">
                         <xs:minInclusive value="1900-01-01"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="odlazak">
-                <xs:annotation>
-                    <xs:appinfo>
-                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megaTravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megaTravel.util.MyDatatypeConverter.printDate"/>
-                    </xs:appinfo>
-                </xs:annotation>
                 <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                        </xs:appinfo>
+                    </xs:annotation>
                     <xs:restriction base="xs:date">
                         <xs:minInclusive value="1900-01-01"/>
                     </xs:restriction>

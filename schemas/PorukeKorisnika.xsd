@@ -4,7 +4,12 @@
     xmlns="www.model.megatravel.project.com/chat"
     xmlns:acc="www.model.megatravel.project.com/accomodation"
     xmlns:res="www.model.megatravel.project.com/reservations"
+<<<<<<< HEAD
     xmlns:usr="www.model.megatravel.project.com/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+=======
+    xmlns:usr="www.model.megatravel.project.com/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    jxb:version="2.1">
+>>>>>>> 6f3ea5954fde4ad74adf6728338231d09bd60c78
     <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
     <xs:import namespace="www.model.megatravel.project.com/reservations"
         schemaLocation="Rezervacija.xsd"/>

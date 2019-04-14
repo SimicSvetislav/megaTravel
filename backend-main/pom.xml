@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.project</groupId>
-	<artifactId>megaTravel</artifactId>
+	<artifactId>megatravel</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>megaTravel</name>
+	<name>megatravel</name>
 	<description>Projekat iz predmeta XML i veb servisi i sistemi bazirani na znanju</description>
 
 	<properties>

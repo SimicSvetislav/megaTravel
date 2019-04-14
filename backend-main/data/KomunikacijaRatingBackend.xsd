@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="www.model.megatravel.project.com/messages/rating"
     xmlns="www.model.megatravel.project.com/messages/rating"
-    xmlns:jxb="http://java.sun.com/xml/ns/jaxb">
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
     <xs:element name="Ocene">
         <xs:complexType>
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
