@@ -50,6 +50,11 @@
 	<target name="generate_classes_korisnikSema" depends="init">
 		<xjc schema="${data.dir}/KorisnikSema.xsd" destdir="${gen.dir}"/>
 	</target>
+	
+	<target name="generate_classes_rezervacije" depends="init">
+		<xjc schema="${data.dir}/Rezervacija.xsd" destdir="${gen.dir}"/>
+	</target>
+	
 	<target name="generate_classes_agentBackEnd" depends="init">
 		<xjc schema="${data.dir}/KomunikacijaAgentBackend.xsd" destdir="${gen.dir}"/>
 	</target>
@@ -65,15 +70,10 @@
 	<target name="generate_classes_ruleBasedModulClient" depends="init">
 		<xjc schema="${data.dir}/KomunikacijaRuleBasedModulClient.xsd" destdir="${gen.dir}"/>
 	</target>
-	
-	<!-- Requires JRE6 for ant task execution, ExternalToolsConfiguration -->
-	<target name="generate_schema" depends="init">
-		<schemagen srcdir="${src.dir}/rs/ac/uns/ftn/jaxb/example4" destdir="${gen.dir}">
-			<schema file="address_book4.xsd" namespace="http://www.ftn.uns.ac.rs/jaxb/example4"/>
-		</schemagen>
-	</target>
 		
-	<target name="generate_all" depends="generate_classes_smestaj,generate_classes_porukeKorisnika,generate_classes_korisnikSema,generate_schema"/>
+	<target name="generate_all" depends="generate_classes_smestaj,generate_classes_pretraga,generate_classes_porukeKorisnika,
+		generate_classes_korisnikSema,generate_classes_rezervacije,generate_classes_agentBackEnd,generate_classes_backendAgent,
+		generate_classes_ratingBackend, generate_classes_backendRating,generate_classes_ruleBasedModulClient"/>
 
 	<target name="main" depends="generate_all"/>
   
