@@ -1,0 +1,78 @@
+//created on: 14.04.2019.
+package rules
+
+//list any import classes here.
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+
+//declare any global variables here
+
+rule "Otkazivanje krace od 3 dana pre pocetka rezervacije"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 100
+    when
+        $rez : RezervacijaKorisnika( $datum : datumPocetka, datumUOpsegu($datum, 2), procenatOtkazivanje == -1, $id : id )
+    then
+        System.out.println("Naplati 100% cene za otkazivanje rezervacije " + $id);
+        modify($rez){ setProcenatOtkazivanje(100); }
+        
+end
+
+rule "Otkazivanje od 15 do 3 dana pre pocetka rezervacije"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 50
+    when
+        $rez : RezervacijaKorisnika( $datum : datumPocetka, datumUOpsegu($datum, 15), procenatOtkazivanje == -1, $id : id )
+    then
+        System.out.println("Naplati 50% cene za otkazivanje rezervacije " + $id);
+        modify($rez){ setProcenatOtkazivanje(50); }
+        
+end
+
+rule "Otkazivanje od 30 do 15 dana pre pocetka rezervacije"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 30
+    when
+        $rez : RezervacijaKorisnika( $datum : datumPocetka, datumUOpsegu($datum, 30), procenatOtkazivanje == -1, $id : id )
+    then
+        System.out.println("Naplati 30% cene za otkazivanje rezervacije " + $id);
+        modify($rez){ setProcenatOtkazivanje(30); }
+
+end
+
+rule "Otkazivanje 15 dana pre pocetka rezervacije i postoje nadovezane druge rezervacije"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 55
+    when
+        $rez : RezervacijaKorisnika( false, procenatOtkazivanje == -1, $id : id )
+    then
+        System.out.println("Naplati 55% cene za otkazivanje rezervacije " + $id);
+                modify($rez){ setProcenatOtkazivanje(55); }
+
+end
+
+rule "Otkazivanje 30 dana pre pocetka rezervacije"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 0
+    when
+        $rez : RezervacijaKorisnika( $datum : datumPocetka, !datumUOpsegu($datum, 30), procenatOtkazivanje == -1, $id : id )
+    then
+        System.out.println("Otkazivanje rezervacije " + $id + " je besplatno");
+        modify($rez){ setProcenatOtkazivanje(0); }
+
+end
+
+rule "Halt otkazivanje"
+	agenda-group "otkazivanje"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "otkazivanje"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end

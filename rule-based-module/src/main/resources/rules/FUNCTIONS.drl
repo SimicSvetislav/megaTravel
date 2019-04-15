@@ -1,0 +1,102 @@
+//created on: 15.04.2019.
+package rules
+
+//list any import classes here.
+
+import java.util.Date
+import java.util.List
+import java.lang.Math
+import java.util.concurrent.TimeUnit
+
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+import com.project.megatravel.model.users.KrajnjiKorisnik
+
+//declare any global variables here
+
+function RezervacijaKorisnika poslednjaRezervacija (Object rezervacije) {
+	
+	RezervacijaKorisnika r = null;
+	
+	
+	
+	return r;
+	
+}
+
+function boolean datumUOpsegu(Date datum, long opseg) {
+	
+	if (datum == null) return false;
+	
+	//System.out.println(datum);
+	
+	Date today = new Date();
+	long timeInMillis = Math.abs(datum.getTime() - today.getTime());
+	long daysDiff = TimeUnit.DAYS.convert(timeInMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
+	
+	if (daysDiff <= opseg) {
+		//System.out.println("U opsegu");
+		return true;
+	}
+	
+	return false;
+	
+}
+
+function boolean earlyBird(Date datumRez) {
+
+	if (datumRez == null) return false;
+
+	Date today = new Date();
+	long timeInMillis = Math.abs(datumRez.getTime() - today.getTime());
+	long daysDiff = TimeUnit.DAYS.convert(timeInMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
+	
+	if (daysDiff >= 90) {
+		return true;
+	}
+	
+	return false;
+}
+
+function boolean isToday(Date datumRez) {
+
+	if (datumRez == null) return false;
+
+	Date today = new Date();
+	
+	if (datumRez.getYear() == today.getYear() && datumRez.getMonth() == today.getMonth() && datumRez.getDay() == today.getDay() ) {
+		return true;
+	}
+	
+	return false;
+}
+
+function boolean poredjenjeKategorija(String smestajKategorija, String korisnikKategorija) {
+	
+	if (smestajKategorija == null || korisnikKategorija == null) return false;
+
+	if (smestajKategorija.equals("PLATINUM")) {
+		return true;
+	} else if (smestajKategorija.equals("GOLD")) {
+		// Dozvoliti kategorije NA, BRONZE, SILVER i GOLD
+		if (!korisnikKategorija.equals("PLATINUM")) {
+			return true;
+		}
+	} else if (smestajKategorija.equals("SILVER")) {
+		// Dozvoliti kategorije NA, BRONZE i SILVER
+		if (!korisnikKategorija.equals("PLATINUM") && !korisnikKategorija.equals("GOLD")) {
+			return true;
+		}
+	} else if (smestajKategorija.equals("BRONZE")) {
+		// Dozvoliti kategorije NA i BRONZE
+		if (korisnikKategorija.equals("NA") || korisnikKategorija.equals("BRONZE")) {
+			return true;
+		}
+	} else if (smestajKategorija.equals("NA")) {
+		// Dozvoliti samo kategoriju NA
+		if (korisnikKategorija.equals("NA")) {
+			return true;
+		}
+	}
+	
+	return false;
+}

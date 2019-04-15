@@ -94,7 +94,18 @@
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
-        <xs:attribute name="datumRegistracije" type="xs:date"/>
+        <xs:attribute name="datumRegistracije">
+            <xs:simpleType>
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:restriction base="xs:date">
+                    <xs:minInclusive value="1900-01-01"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
     <xs:complexType name="TAdministrator">
         <xs:annotation>
@@ -146,20 +157,47 @@
                 <xs:sequence>
                     <xs:element maxOccurs="unbounded" name="rezervacije"
                         type="res:TRezervacijaKorisnika" minOccurs="0"/>
-                    <xs:element default="BRONZE" name="klasa">
+                    <xs:element default="NA" name="kategorija">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
                                 <xs:enumeration value="BRONZE"/>
                                 <xs:enumeration value="SILVER"/>
                                 <xs:enumeration value="GOLD"/>
                                 <xs:enumeration value="PLATINUM"/>
+                                <xs:enumeration value="NA"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
                     <xs:element default="false" name="ponudjenPopustNakonOtkazivanja"
                         type="xs:boolean"/>
+                    <xs:element name="lokacija" type="acc:TLokacija"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKupon">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Kupon"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="korisnik" type="TKrajnjiKorisnik"/>
+            <xs:element name="tip">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="GOLD"/>
+                        <xs:enumeration value="PLATINUM"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id">
+            <xs:simpleType>
+                <xs:restriction base="xs:long">
+                    <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 </xs:schema>

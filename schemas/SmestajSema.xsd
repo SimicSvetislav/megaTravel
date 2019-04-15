@@ -27,36 +27,34 @@
             <xs:element name="lokacija" type="TLokacija"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="smestajneJedinice"
                 type="TSmestajnaJedinica"/>
-            <xs:element name="kategorija" default="NA">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="NA"/>
-                        <xs:enumeration value="1"/>
-                        <xs:enumeration value="2"/>
-                        <xs:enumeration value="3"/>
-                        <xs:enumeration value="4"/>
-                        <xs:enumeration value="5"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge"
                 type="TDodatnaUsluga"/>
             <xs:element name="otkazivanje" type="TOtkazivanje"/>
-            <xs:element default="BRONZE" name="klasa">
+            <xs:element default="NA" name="kategorija">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="BRONZE"/>
                         <xs:enumeration value="SILVER"/>
                         <xs:enumeration value="GOLD"/>
                         <xs:enumeration value="PLATINUM"/>
+                        <xs:enumeration value="NA"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="rejting" type="TRejting"/>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>
                 <xs:restriction base="xs:long">
                     <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="zvezdice">
+            <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="5"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -152,14 +150,14 @@
         <xs:sequence>
             <xs:element name="brojOcena">
                 <xs:simpleType>
-                    <xs:restriction base="xs:integer">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="sumaOcena">
                 <xs:simpleType>
-                    <xs:restriction base="xs:double">
+                    <xs:restriction base="xs:long">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>

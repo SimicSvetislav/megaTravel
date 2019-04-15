@@ -19,25 +19,32 @@
                 <xs:sequence>
                     <xs:element name="cenaSmestaja">
                         <xs:simpleType>
-                            <xs:restriction base="xs:decimal">
-                                <xs:fractionDigits value="2"/>
-                            </xs:restriction>
+                            <xs:restriction base="xs:double"> </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
                     <xs:element name="stanje">
                         <xs:simpleType>
                             <xs:restriction base="xs:string">
-                                <xs:enumeration value="Rezervisano"/>
-                                <xs:enumeration value="U toku"/>
-                                <xs:enumeration value="Otkazano"/>
-                                <xs:enumeration value="Realizovano"/>
-                                <xs:enumeration value="U obradi"/>
+                                <xs:enumeration value="REZERVISANO"/>
+                                <xs:enumeration value="U TOKU"/>
+                                <xs:enumeration value="OTKAZANO"/>
+                                <xs:enumeration value="REALIZOVANO"/>
+                                <xs:enumeration value="U OBRADI"/>
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
                     <xs:element name="korisnik" type="usr:TKorisnik"/>
-                    <xs:element name="ocena" type="xs:double"/>
+                    <xs:element name="ocena" type="xs:int"/>
                     <xs:element name="komentar" type="TKomentar"/>
+                    <xs:element default="false" name="obradjeno" type="xs:boolean"/>
+                    <xs:element default="-1" name="procenatOtkazivanje">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:double">
+                                <xs:minInclusive value="-1"/>
+                                <xs:maxInclusive value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
                 </xs:sequence>
                 <xs:attribute name="datumRezervacije">
                     <xs:simpleType>
@@ -113,5 +120,12 @@
                 </xs:simpleType>
             </xs:element>
         </xs:sequence>
+        <xs:attribute name="id">
+            <xs:simpleType>
+                <xs:restriction base="xs:long">
+                    <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 </xs:schema>

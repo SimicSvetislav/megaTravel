@@ -1,0 +1,148 @@
+//created on: 14.04.2019.
+package rules
+
+//list any import classes here.
+import com.project.megatravel.model.accomodation.SmestajniObjekat
+import com.project.megatravel.model.accomodation.SmestajnaJedinica
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+
+
+//declare any global variables here
+
+
+// BRONZE 
+
+rule "Ocena smestaja nije definisana"
+	agenda-group "smestaj"
+    lock-on-active true
+    salience 10
+    when
+        $so : SmestajniObjekat( rejting.getBrojOcena() == 0, $id : id )
+    then
+       	System.out.println("Smestaju " + $id + " dodeljena kategorija BRONZE (uslov 1 - neocenjen)");
+       	modify ($so) { setKategorija("BRONZE"); }
+
+end
+
+rule "Kategorija smestaja nije definisana"
+	agenda-group "smestaj"
+    lock-on-active true
+    salience 5
+    when
+        $so : SmestajniObjekat( kategorija == "NA", $id : id )
+    then
+       	System.out.println("Smestaju " + $id + " dodeljena kategorija BRONZE (uslov 3 - nekategorisan)");
+       	modify ($so) { setKategorija("BRONZE"); }
+
+end
+
+rule "Smestaj ima 2 ili manje zvezdica"
+	agenda-group "smestaj"
+    lock-on-active true
+    salience 10
+    when
+        $obj : SmestajniObjekat( rejting.getBrojOcena() != 0, 
+        (double)rejting.getSumaOcena() / (double)rejting.getBrojOcena() <= 2.0, 
+        kategorija != "SILVER", kategorija != "GOLD", kategorija != "PLATINUM", 
+        $id : id)
+    then
+       	System.out.println("Smestaju " + $id + " dodeljena kategorija BRONZE (uslov 2 - rating " 
+       	+ ( (double)$obj.getRejting().getSumaOcena() / (double)$obj.getRejting().getBrojOcena() ) + ")");
+       	modify ($obj) { setKategorija("BRONZE"); }
+
+end
+
+// SILVER
+rule "Ocena smestaja veca od dve zvezdice i u poslednjih 90 dana ima barem 3 rezervacije"
+	agenda-group "smestaj"
+    lock-on-active true
+    salience 20
+    when
+        $obj : SmestajniObjekat( rejting.getBrojOcena() != 0, 
+        (double)rejting.getSumaOcena() / (double)rejting.getBrojOcena() > 2.0,
+        kategorija != "SILVER", kategorija != "GOLD", kategorija != "PLATINUM",
+        $jedinice : smestajneJedinice, $id : id )
+        $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj memberOf $jedinice ) )
+        Number (intValue >= 3 ) from accumulate (
+			RezervacijaKorisnika (
+				datumUOpsegu(datumRezervacije, 90)
+			) from $rezervacije,
+			count(1)
+		)
+    then
+       	System.out.println("Smestaju " + $id + " dodeljena kategorija SILVER (rating " 
+       	+ ( (double)$obj.getRejting().getSumaOcena() / (double)$obj.getRejting().getBrojOcena() ) + ")");
+       	modify ($obj) { setKategorija("SILVER"); }
+
+end
+
+// GOLD 
+rule "Ocena smestaja veca od tri zvezdice, u poslednjih 30 dana ima barem 2 rezervacije sa ocenom 4 ili vise i poslednja uspesno realizovana rezervacija nije imala ocenu manju od 3 zvezdice"
+	agenda-group "smestaj"
+    lock-on-active true
+    salience 30
+    when
+    	$obj : SmestajniObjekat( rejting.getBrojOcena() != 0, 
+        (double)rejting.getSumaOcena() / (double)rejting.getBrojOcena() > 3.0,
+        kategorija != "GOLD", kategorija != "PLATINUM",
+        $jedinice : smestajneJedinice, $id : id )
+        $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj memberOf $jedinice ) )
+        Number (intValue >= 2 ) from accumulate (
+			RezervacijaKorisnika (
+				stanje == "REALIZOVANO",
+				ocena >= 4
+			) from $rezervacije,
+			count(1)
+		)
+		$poslednjaRez : RezervacijaKorisnika( stanje == "REALIZOVANO" ) from $rezervacije
+		not RezervacijaKorisnika( $poslednjaRez.getDatumZavrsetka().getTime() < datumZavrsetka.getTime() )
+		from $rezervacije
+		RezervacijaKorisnika( id == $poslednjaRez.getId(), ocena >= 3 )
+    
+    then
+       	System.out.println("Smestaju " + $id + " dodeljena kategorija GOLD (rating " 
+       	+ ( (double)$obj.getRejting().getSumaOcena() / (double)$obj.getRejting().getBrojOcena() ) + ")");
+       	//System.out.println("Poslednja " + $poslednjaRez.getDatumZavrsetka());
+       	modify ($obj) { setKategorija("GOLD"); }
+
+end
+
+
+// PLATINUM
+rule "TEST2"
+	agenda-group "smestaj"
+    lock-on-active true
+    salience 40
+    when
+    	$obj : SmestajniObjekat( rejting.getBrojOcena() != 0, 
+        (double)rejting.getSumaOcena() / (double)rejting.getBrojOcena() > 3.0,
+        kategorija == "GOLD",
+        $jedinice : smestajneJedinice, $id : id )
+        $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj memberOf $jedinice ) )
+        Number (doubleValue >= 1000 ) from accumulate (
+			RezervacijaKorisnika (
+				stanje == "REALIZOVANO",
+				datumUOpsegu(datumZavrsetka, 90),
+				$cena : cenaSmestaja 
+			) from $rezervacije,
+			sum($cena)
+		)
+    then
+       	System.out.println("Smestaju " + $id + " dodeljena kategorija PLATINUM (rating " 
+       	+ ( (double)$obj.getRejting().getSumaOcena() / (double)$obj.getRejting().getBrojOcena() ) + ")");
+       	modify ($obj) { setKategorija("PLATINUM"); }
+
+end
+
+// HALT
+rule "Halt smestaj"
+	agenda-group "smestaj"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "smestaj"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end
+

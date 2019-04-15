@@ -1,0 +1,23 @@
+//created on: 14.04.2019.
+package rules
+
+//list any import classes here.
+
+import java.util.List
+
+import com.project.megatravel.model.users.Korisnik
+import com.project.megatravel.model.users.KrajnjiKorisnik
+import com.project.megatravel.model.accomodation.SmestajniObjekat
+
+//declare any global variables here
+
+
+
+rule "Kategorija smestaja ista ili veca od kategorije klijenta"
+    when
+        $korisnik : KrajnjiKorisnik( $katKorisnik : kategorija )
+        $list : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, poredjenjeKategorija($katSmestaj, $katKorisnik ) ) )
+    then
+        System.out.println("Smestaja za preporuku : " + $list.size());
+end
+
