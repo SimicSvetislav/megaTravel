@@ -4,10 +4,12 @@
     xmlns="www.model.megatravel.project.com/accomodation"
     xmlns:acc="www.model.megatravel.project.com/accomodation"
     xmlns:res="www.model.megatravel.project.com/reservations"
-    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1"
+    xmlns:usr="www.model.megatravel.project.com/users">
 
     <xs:import namespace="www.model.megatravel.project.com/reservations"
         schemaLocation="Rezervacija.xsd"/>
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
     <xs:complexType name="TSmestajniObjekat">
         <xs:annotation>
             <xs:appinfo>
@@ -42,6 +44,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="rejting" type="TRejting"/>
+            <xs:element name="agent" type="usr:TAgent"/>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>

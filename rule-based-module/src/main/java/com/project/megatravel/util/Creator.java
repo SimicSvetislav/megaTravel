@@ -1,0 +1,184 @@
+package com.project.megatravel.util;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.model.accomodation.Rejting;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
+
+public final class Creator {
+	
+	private Creator() {
+		
+	}
+	
+	public static RezervacijaKorisnika createRezervacija(long id, double cena, String datum, String stanje) {
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        rez.setProcenatOtkazivanje(-1.0);
+        rez.setId(id);
+        rez.setCenaSmestaja(cena);
+        rez.setStanje(stanje);
+        
+        try {
+			rez.setDatumPocetka(sdf.parse(datum));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        
+        return rez;
+
+	}
+	
+	public static RezervacijaKorisnika createRezervacija(long id, double cena, String datumP, String datumZ, String stanje, SmestajnaJedinica sj) {
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        rez.setProcenatOtkazivanje(-1.0);
+        rez.setId(id);
+        rez.setCenaSmestaja(cena);
+        rez.setStanje(stanje);
+        rez.setSmestaj(sj);
+        
+        try {
+			rez.setDatumPocetka(sdf.parse(datumP));
+			rez.setDatumZavrsetka(sdf.parse(datumZ));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        
+        return rez;
+
+	}
+	
+	public static RezervacijaKorisnika createRezervacija(long id, double cena, int ocena, String datumR, String datumP, String datumZ, String stanje, SmestajnaJedinica sj) {
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        rez.setProcenatOtkazivanje(-1.0);
+        rez.setId(id);
+        rez.setCenaSmestaja(cena);
+        rez.setStanje(stanje);
+        rez.setSmestaj(sj);
+        rez.setOcena(ocena);
+        
+        try {
+			rez.setDatumPocetka(sdf.parse(datumP));
+			rez.setDatumZavrsetka(sdf.parse(datumZ));
+			rez.setDatumRezervacije(sdf.parse(datumR));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        
+        return rez;
+
+	}
+	
+	public static KrajnjiKorisnik createKrajnjiKorisnik(long id, String kat, String datumReg) {
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        KrajnjiKorisnik k = new KrajnjiKorisnik();
+        
+        k.setId(id);
+        k.setKategorija(kat);
+        
+        try {
+			k.setDatumRegistracije(sdf.parse(datumReg));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        
+        return k;
+
+	}
+	
+	public static SmestajniObjekat createSmestajniObjekat(long id, String kat) {
+		
+        SmestajniObjekat o = new SmestajniObjekat();
+        
+        o.setId(id);
+        o.setKategorija(kat);
+        
+        return o;
+
+	}
+	
+	public static SmestajniObjekat createSmestajniObjekat(long id, String kat, Rejting r) {
+		
+        SmestajniObjekat o = new SmestajniObjekat();
+        
+        o.setId(id);
+        o.setKategorija(kat);
+        o.setRejting(r);
+        
+        return o;
+
+	}
+	
+	public static SmestajniObjekat createSmestajniObjekat(long id, String kat, Rejting r, Lokacija lokacija) {
+		
+        SmestajniObjekat o = new SmestajniObjekat();
+        
+        o.setId(id);
+        o.setKategorija(kat);
+        o.setRejting(r);
+        o.setLokacija(lokacija);
+        
+        return o;
+
+	}
+	
+	public static Lokacija createLokacija(long id, String naziv) {
+		
+		Lokacija l = new Lokacija();
+		
+		l.setId(id);
+		l.setNaziv(naziv);
+		
+		return l;
+		
+	}
+	
+	public static SmestajnaJedinica createSmestajnaJedinica(long id, SmestajniObjekat so) {
+		
+		SmestajnaJedinica j = new SmestajnaJedinica();
+        
+        j.setId(id);
+        j.setSObjekat(so);
+        
+        return j;
+
+	}
+	
+	public static SmestajnaJedinica createSmestajnaJedinica(long id, SmestajniObjekat so, Rejting r) {
+		
+		SmestajnaJedinica j = new SmestajnaJedinica();
+        
+        j.setId(id);
+        j.setSObjekat(so);
+        j.setRejting(r);
+        
+        return j;
+
+	}
+	
+	public static Rejting createRejting(long bo, long so) {
+		
+		Rejting r = new Rejting();
+		
+		r.setBrojOcena(bo);
+		r.setSumaOcena(so);
+		
+		return r;	
+	}
+
+}

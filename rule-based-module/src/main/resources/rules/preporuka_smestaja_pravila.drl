@@ -11,13 +11,14 @@ import com.project.megatravel.model.accomodation.SmestajniObjekat
 
 //declare any global variables here
 
-
+global List lista;
 
 rule "Kategorija smestaja ista ili veca od kategorije klijenta"
     when
         $korisnik : KrajnjiKorisnik( $katKorisnik : kategorija )
         $list : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, poredjenjeKategorija($katSmestaj, $katKorisnik ) ) )
     then
+    	drools.getKnowledgeRuntime().setGlobal("lista", $list);
         System.out.println("Smestaja za preporuku : " + $list.size());
 end
 

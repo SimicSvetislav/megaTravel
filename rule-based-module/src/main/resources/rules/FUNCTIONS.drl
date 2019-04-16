@@ -13,14 +13,44 @@ import com.project.megatravel.model.users.KrajnjiKorisnik
 
 //declare any global variables here
 
-function RezervacijaKorisnika poslednjaRezervacija (Object rezervacije) {
+function boolean ugnjezdenaRezervacija(List rezervacije, RezervacijaKorisnika rez) {
 	
-	RezervacijaKorisnika r = null;
+	boolean pre = false;
+	boolean posle = false;
 	
+	for (Object o : rezervacije) {
+		RezervacijaKorisnika r = (RezervacijaKorisnika) o;
+		
+		if (r.equals(rez)) continue;
+		
+		if (!pre) {
+			Date dayAfterLast = new Date(r.getDatumZavrsetka().getTime() + TimeUnit.DAYS.toMillis( 1 ));
+			if (sameDate(dayAfterLast, rez.getDatumPocetka())) {
+				pre = true;
+			}
+		}
+		
+		if (!posle) {
+			Date dayBeforeFirst = new Date(r.getDatumPocetka().getTime() - TimeUnit.DAYS.toMillis( 1 ));
+			if (sameDate(dayBeforeFirst, rez.getDatumZavrsetka())) {
+				posle = true;
+			}
+		}
+	}
 	
+	return pre && posle;
 	
-	return r;
+}
+
+function boolean sameDate(Date d1, Date d2) {
+
+	if (d1 == null || d2 == null) return false;
 	
+	if (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth() && d1.getDay() == d2.getDay() ) {
+		return true;
+	}
+	
+	return false;
 }
 
 function boolean datumUOpsegu(Date datum, long opseg) {
