@@ -90,6 +90,7 @@ rule "Ocena smestaja veca od tri zvezdice, u poslednjih 30 dana ima barem 2 reze
         Number (intValue >= 2 ) from accumulate (
 			RezervacijaKorisnika (
 				stanje == "REALIZOVANO",
+				datumUOpsegu(datumRezervacije, 30),
 				ocena >= 4
 			) from $rezervacije,
 			count(1)
@@ -109,7 +110,7 @@ end
 
 
 // PLATINUM
-rule "TEST2"
+rule "Ocena veca od 3 zvezdice, u poslednjih 90 dana profit od barem 1000 i prethodna kategorija GOLD"
 	agenda-group "smestaj"
     lock-on-active true
     salience 40
