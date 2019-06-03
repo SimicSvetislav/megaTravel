@@ -337,4 +337,51 @@
         </xs:sequence>
         <xs:attribute default="Euro" name="valuta" type="xs:string"/>
     </xs:complexType>
+    <xs:element name="Sj">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="brojKreveta" type="xs:integer"/>
+                <xs:element default="false" name="balkon" type="xs:boolean"/>
+                <xs:element maxOccurs="unbounded" name="slike">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:base64Binary">
+                                <xs:attribute name="putanja" type="xs:string"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="rejting" type="TRejting"/>
+                <xs:element name="sObjekat" type="TSmestajniObjekat"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="komentari"
+                    type="res:TKomentar"/>
+                <xs:element maxOccurs="unbounded" name="cenovnici" type="TCenovnik"/>
+                <xs:element name="podrazumevaniCenovnik" type="TCenovnik"/>
+                <xs:element name="opis">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="1024"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge"
+                    type="TDodatnaUsluga"/>
+                <xs:element name="otkazivanje" type="TOtkazivanje"/>
+                <xs:element name="povecanjeVeciBrojOsoba">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

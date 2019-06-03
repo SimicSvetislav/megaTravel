@@ -14,9 +14,25 @@
 	<name>megatravel</name>
 	<description>Projekat iz predmeta XML i veb servisi i Sistemi bazirani na znanju</description>
 
+	<repositories>
+    	<repository>
+	      <id>exist-db</id>
+	      <url>http://repo.evolvedbinary.com/content/repositories/exist-db/</url>
+	      <releases><enabled>true</enabled></releases>
+	      <snapshots><enabled>false</enabled></snapshots>
+	    </repository>
+	    <repository>
+	      <id>exist-db-snapshots</id>
+	      <url>http://repo.evolvedbinary.com/content/repositories/exist-db-snapshots/</url>
+	      <releases><enabled>false</enabled></releases>
+	      <snapshots><enabled>true</enabled></snapshots>
+	    </repository>
+	</repositories>
+
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
+		<basedir>C:\Users\Sveta\Desktop\megaTravel\backend-main</basedir>
 	</properties>
 
 	<dependencies>
@@ -52,20 +68,18 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -78,8 +92,43 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+	    <dependency>
+	      <groupId>org.exist-db</groupId>
+	      <artifactId>exist-core</artifactId>
+	      <version>5.0.0-RC6</version>
+	    </dependency>
+		<dependency>
+		    <groupId>wsdl4j</groupId>
+		    <artifactId>wsdl4j</artifactId>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <exclusions>
+		        <exclusion>
+		            <artifactId>logback-classic</artifactId>
+		            <groupId>ch.qos.logback</groupId>
+		        </exclusion>
+		        <exclusion>
+		            <artifactId>log4j-over-slf4j</artifactId>
+		            <groupId>org.slf4j</groupId>
+		        </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+		    </exclusions>
+       	</dependency>
+        <dependency>
+               <groupId>org.springframework.ws</groupId>
+               <artifactId>spring-ws-core</artifactId>
+        </dependency>
+		</dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -93,12 +142,34 @@
 	</dependencyManagement>
 
 	<build>
-		<plugins>
+		<pluginManagement>
+			<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+                <version>0.12.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <schemaLanguage>WSDL</schemaLanguage>
+                    <generatePackage>hello.wsdl</generatePackage>
+                    <schemas>
+                        <schema>
+                            <url>http://localhost:8080/testservice?wsdl</url>
+                        </schema>
+                    </schemas>
+                </configuration>
+            </plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
-
 </project>

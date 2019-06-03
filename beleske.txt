@@ -1,0 +1,9 @@
+﻿Exist baza
+Kako bi se baza pripremila za korišćenje ispratiti uputstva iz README.txt fajla koji se nalazi u materijalima za vežbe 7 u okviru petog termina 
+Baza se startuje pokretanje startup.bat fajla na putanji {TomEE_root}\bin\
+Bazu pokrenuti na portu koji je definisan u resources/exist.properties fajlu
+Port podesiti u server.xml fajlu na putanji {TomEE_root}\conf\ u okviru taga Connector
+Bazi prisupati na adresi http://localhost:<port>/exist/
+Korisnik koji po default-u postoji u bazi je 
+username:admin 
+password:
