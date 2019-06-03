@@ -3,15 +3,310 @@ package rules
 
 //list any import classes here.
 
-import java.util.Date
 import java.util.List
 import java.lang.Math
 import java.util.concurrent.TimeUnit
+import java.time.LocalDate
+import java.util.Date
+import java.time.ZoneId
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar
+import java.util.TimeZone
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika
 import com.project.megatravel.model.users.KrajnjiKorisnik
+import com.project.megatravel.model.accomodation.SmestajniObjekat
+import com.project.megatravel.model.accomodation.SmestajnaJedinica
+import com.project.megatravel.model.accomodation.Rejting
+import com.project.megatravel.events.ReservationEvent
 
 //declare any global variables here
+
+function double rejtingCalc(Rejting r) {
+	
+	return (double)r.getSumaOcena()/r.getBrojOcena();
+
+}
+
+function boolean imaRezervacija(SmestajnaJedinica sj, List rezervacije) {
+	
+	Date today = new Date();
+	
+	for (Object o : rezervacije) {
+		RezervacijaKorisnika rk = (RezervacijaKorisnika) o;
+		if (today.before(rk.getDatumZavrsetka()) || sameDate(today, rk.getDatumZavrsetka())) {
+			return true;
+		}
+	}
+	
+	
+	return false;
+	
+}
+
+function boolean vecaCena(List uMestu, List moje) {
+	
+	System.out.println(uMestu.size());
+	System.out.println(moje.size());
+	
+	double suma = 0.0;
+	for (Object o : uMestu) {
+		SmestajnaJedinica sj = (SmestajnaJedinica) o;
+		suma += sj.getPodrazumevaniCenovnik().getCena().getIznos();
+		System.out.println(suma);
+	}
+	
+	double prosek = suma / uMestu.size();
+	
+	System.out.println(prosek);
+	
+	for (Object o : moje ) {
+		SmestajnaJedinica sj = (SmestajnaJedinica) o;
+		if (sj.getPodrazumevaniCenovnik().getCena().getIznos() > prosek) {
+			System.out.println("Veca cena");
+			return true;
+		}
+	}
+	
+	return false;
+}
+
+function boolean spada(Date point, Date pocetak, Date zavrsetak) {
+
+	//System.out.println(point);
+	//System.out.println(pocetak);
+	//System.out.println(zavrsetak);
+
+	if ( (point.after(pocetak) || sameDate(point, pocetak)) && (point.before(zavrsetak) || sameDate(point, zavrsetak)) ) {
+		//System.out.println("spada");
+		return true;
+	}
+
+	return false;
+}
+
+function boolean badText(String t1, String t2) {
+	
+	System.out.println("Tu sam 2");
+	
+	if (t1.contains(t2)) {
+		return true;
+	}
+	
+	return false;
+	
+}
+
+function boolean ponudjenPopust(RezervacijaKorisnika rk) {
+	
+	Date d = rk.getKorisnik().getPonudjenPopustNakonOtkazivanja();
+	
+	if (d == null) return false;
+	
+	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+	
+	cal.setTime(d);
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH) + 1;
+	int day = cal.get(Calendar.DAY_OF_MONTH);
+	
+	LocalDate lDate = LocalDate.of(year, month, day);
+	LocalDate today = LocalDate.now();
+	
+	// Provera kada je poslednji put ponudjen popust
+	lDate = lDate.plusYears(1);
+	
+	if (lDate.isAfter(today)) {
+		System.out.println("Vec ponudjen popust");
+		return true;
+	}
+	
+	return false;
+	
+}
+
+function boolean preklapanje2(SearchEvent s1, SearchEvent s2) {
+	
+	Date p1 = s1.getPocetak();
+	Date z1 = s1.getKraj();
+	
+	Date p2 = s2.getPocetak();
+	Date z2 = s2.getKraj();
+	
+	if (z1.before(p2) || z2.before(p1)) {
+		return false;
+	}
+	
+	if (((z1.before(z2) || sameDate(z1,z2))  && (z1.after(p2) || sameDate(z1,p2)))
+		|| ((z2.before(z1) || sameDate(z2,z1)) && (z2.after(p1) || sameDate(z2,p1)))) {
+		return true;
+	}
+	
+	return false;
+
+}
+
+function boolean preklapanje3(Date p1, Date z1, Date p2, Date z2) {
+	
+	if (z1.before(p2) || z2.before(p1)) {
+		return false;
+	}
+	
+	if (((z1.before(z2) || sameDate(z1,z2))  && (z1.after(p2) || sameDate(z1,p2)))
+		|| ((z2.before(z1) || sameDate(z2,z1)) && (z2.after(p1) || sameDate(z2,p1)))) {
+		return true;
+	}
+	
+	return false;
+	
+}
+
+function boolean preklapanje(ReservationEvent r1, ReservationEvent r2) {
+	
+	Date p1 = r1.getRk().getDatumPocetka();
+	Date z1 = r1.getRk().getDatumZavrsetka();
+	
+	Date p2 = r2.getRk().getDatumPocetka();
+	Date z2 = r2.getRk().getDatumZavrsetka();
+	
+	if (z1.before(p2) || z2.before(p1)) {
+		return false;
+	}
+	
+	if (((z1.before(z2) || sameDate(z1,z2))  && (z1.after(p2) || sameDate(z1,p2)))
+		|| ((z2.before(z1) || sameDate(z2,z1)) && (z2.after(p1) || sameDate(z2,p1)))) {
+		return true;
+	}
+	
+	return false;
+
+}
+
+function Lokacija nadjiLokaciju(RezervacijaKorisnika rez) {
+	
+	SmestajnaJedinica sj = rez.getSmestaj();
+	
+	if (sj==null) return null;
+	
+	SmestajniObjekat so = sj.getSObjekat();
+	
+	if (so==null) return null;
+	
+	return so.getLokacija();
+	
+}
+
+function boolean sameDate(Date d1, Date d2) {
+
+	if (d1 == null || d2 == null) return false;
+	
+	Calendar cal1 = Calendar.getInstance();
+	Calendar cal2 = Calendar.getInstance();
+	cal1.setTime(d1);
+	cal2.setTime(d2);
+	boolean sameDay = cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
+                  cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+	
+	/*if (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth() && d1.getDay() == d2.getDay() ) {
+		
+		return true;
+	}*/
+	
+	return sameDay;
+}
+
+// Provera da li je danasnji datum dovoljno pre zadatog
+function boolean razmak(java.util.Date datum, long opseg) {
+	
+	if (datum == null) return false;
+	
+	//System.out.println(datum);
+	
+	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+	cal.setTime(datum);
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH) + 1;
+	int day = cal.get(Calendar.DAY_OF_MONTH);
+	
+	//System.out.println(year);
+	//System.out.println(month);
+	//System.out.println(day);
+	
+	//LocalDate lDate = datum.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	LocalDate lDate = LocalDate.of(year, month, day);
+	LocalDate today = LocalDate.now();
+	
+	//System.out.println(lDate);
+	//System.out.println(today);
+	
+	//System.out.println(lDate.getYear());
+	//System.out.println(lDate.getMonth());
+	//System.out.println(lDate.getDayOfMonth());
+	
+	//Date today = new Date();
+	
+	
+	//long timeInMillis = Math.abs(datum.getTime() - today.getTime());
+	//long daysDiff = TimeUnit.DAYS.convert(timeInMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
+	
+	// Razmak ne postoji
+	if (lDate.isBefore(today)) { return false; }
+	
+	today = today.plus(opseg, ChronoUnit.DAYS);
+	
+	if (lDate.isEqual(today) || lDate.isAfter(today)) {
+		// Razmak postoji
+		//System.out.println("Dovoljno daleko - " + opseg);
+		return true;
+	}
+	
+	return false;
+	
+}
+
+function boolean datumUOpsegu(java.util.Date datum, long opseg) {
+	
+	if (datum == null) return false;
+	
+	//System.out.println(datum);
+	
+	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+	cal.setTime(datum);
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH) + 1;
+	int day = cal.get(Calendar.DAY_OF_MONTH);
+	
+	//System.out.println(year);
+	//System.out.println(month);
+	//System.out.println(day);
+	
+	//LocalDate lDate = datum.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	LocalDate lDate = LocalDate.of(year, month, day);
+	LocalDate today = LocalDate.now();
+	
+	//System.out.println(lDate);
+	//System.out.println(today);
+	
+	//System.out.println(lDate.getYear());
+	//System.out.println(lDate.getMonth());
+	//System.out.println(lDate.getDayOfMonth());
+	
+	//Date today = new Date();
+	
+	//if (lDate.isAfter(today)) { return false; }
+	
+	lDate = lDate.plus(opseg, ChronoUnit.DAYS);
+	
+	if (lDate.isEqual(today) || lDate.isAfter(today)) {
+		System.out.println("U opsegu - " + opseg);
+		return true;
+	} else {
+		System.out.println("Nije u opsegu - " + opseg);
+	}
+	
+	return false;
+	
+}
 
 function boolean ugnjezdenaRezervacija(List rezervacije, RezervacijaKorisnika rez) {
 	
@@ -22,6 +317,8 @@ function boolean ugnjezdenaRezervacija(List rezervacije, RezervacijaKorisnika re
 		RezervacijaKorisnika r = (RezervacijaKorisnika) o;
 		
 		if (r.equals(rez)) continue;
+		
+		
 		
 		if (!pre) {
 			Date dayAfterLast = new Date(r.getDatumZavrsetka().getTime() + TimeUnit.DAYS.toMillis( 1 ));
@@ -42,45 +339,22 @@ function boolean ugnjezdenaRezervacija(List rezervacije, RezervacijaKorisnika re
 	
 }
 
-function boolean sameDate(Date d1, Date d2) {
-
-	if (d1 == null || d2 == null) return false;
-	
-	if (d1.getYear() == d2.getYear() && d1.getMonth() == d2.getMonth() && d1.getDay() == d2.getDay() ) {
-		return true;
-	}
-	
-	return false;
-}
-
-function boolean datumUOpsegu(Date datum, long opseg) {
-	
-	if (datum == null) return false;
-	
-	//System.out.println(datum);
-	
-	Date today = new Date();
-	long timeInMillis = Math.abs(datum.getTime() - today.getTime());
-	long daysDiff = TimeUnit.DAYS.convert(timeInMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
-	
-	if (daysDiff <= opseg) {
-		//System.out.println("U opsegu");
-		return true;
-	}
-	
-	return false;
-	
-}
-
 function boolean earlyBird(Date datumRez) {
 
 	if (datumRez == null) return false;
 
-	Date today = new Date();
-	long timeInMillis = Math.abs(datumRez.getTime() - today.getTime());
-	long daysDiff = TimeUnit.DAYS.convert(timeInMillis, java.util.concurrent.TimeUnit.MILLISECONDS);
+	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
+	cal.setTime(datumRez);
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH) + 1;
+	int day = cal.get(Calendar.DAY_OF_MONTH);
 	
-	if (daysDiff >= 90) {
+	LocalDate lDate = LocalDate.of(year, month, day);
+	LocalDate today = LocalDate.now();
+	
+	lDate = lDate.plus(3, ChronoUnit.MONTHS);
+	
+	if (lDate.isBefore(today) || lDate.isEqual(today)) {
 		return true;
 	}
 	

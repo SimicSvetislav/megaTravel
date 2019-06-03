@@ -1,0 +1,20 @@
+//created on: 03.06.2019.
+package rules
+
+//list any import classes here.
+
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+
+//declare any global variables here
+
+query "Slobodni_smestaji" (RezervacijaKorisnika $rez)
+	$s: RezervacijaKorisnika( $rez!=this, 
+		$rez.getSmestaj().getSObjekat().getLokacija()==this.getSmestaj().getSObjekat().getLokacija(), 
+		!spada($rez.getDatumZavrsetka(), datumPocetka, datumZavrsetka) )
+end
+
+query "Zauzeti_smestaji" (RezervacijaKorisnika $rez)
+	$s: RezervacijaKorisnika( $rez!=this, 
+		$rez.getSmestaj().getSObjekat().getLokacija()==this.getSmestaj().getSObjekat().getLokacija(), 
+		spada($rez.getDatumZavrsetka(), datumPocetka, datumZavrsetka) )
+end

@@ -1,0 +1,136 @@
+package rules
+
+import com.project.megatravel.model.accomodation.Lokacija
+import com.project.megatravel.events.LastMinuteEvent
+import com.project.megatravel.events.EarlyBirdEvent
+import com.project.megatravel.events.ReservationEvent
+import com.project.megatravel.events.CancellationEvent
+import com.project.megatravel.events.SearchEvent
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+
+global Boolean lmEnabled;
+global Boolean ebEnabled;
+global Boolean agentNot;
+global Boolean cancelDiscount;
+
+rule "5 ili vise last-minute rezervacija u jednom mestu u poslednjih 30 minuta"
+    agenda-group "dogadjaji lm"
+	salience 10
+    when
+        $e1: LastMinuteEvent($lok: lokacija) over window:time(30m)
+        Number(intValue >= 4) from accumulate(
+            $e2: LastMinuteEvent(
+                this != $e1, 
+                lokacija == $lok
+            ) over window:time(30m),
+            count($e2)
+        )
+  	then
+        System.out.println( "Zabrani last-minute");
+        kcontext.getKieRuntime().setGlobal( "lmEnabled", false );
+        drools.halt();
+        
+end
+
+rule "15 ili vise early-bird rezervacija u jednom mestu u poslednjih 90 sekundi"
+    agenda-group "dogadjaji eb"
+	salience 10
+    when
+    	$e1: EarlyBirdEvent($lok: lokacija) over window:time(90s)
+        Number(intValue >= 14) from accumulate(
+            $e2: EarlyBirdEvent(
+                this != $e1, 
+                lokacija == $lok
+            ) over window:time(90s),
+            count($e2)
+        )
+  	then
+        System.out.println( "Zabrani early bird");
+        kcontext.getKieRuntime().setGlobal( "ebEnabled", false );
+        drools.halt();
+end
+
+rule "U prethodna 3h 20 ili vise smestaja iste lokacije u navedenom periodu"
+    agenda-group "dogadjaji a1"
+	salience 10
+    when
+    	$re: ReservationEvent( $lok: lokacija )
+    	Number(intValue >= 19) from accumulate (
+    		$re2: ReservationEvent(
+    			this != $re,
+    			lokacija == $lok,
+    			eval(preklapanje($re, $re2))
+    		) over window:time(3h),
+    		count($re2)
+    	)
+  	then
+        System.out.println( "Notificiraj agenta o preporuci za povecanje cene");
+        kcontext.getKieRuntime().setGlobal( "agentNot", true );
+        drools.halt();
+end
+
+rule "Otkazivanje 10 minuta nakon zakazivanja"
+    agenda-group "dogadjaji otk"
+	salience 10
+    when
+    	$ce: CancellationEvent( $rez: rk, !ponudjenPopust($rez) )
+    	$re: ReservationEvent( $rez == rk, this meets [10m] $ce)
+  	then
+        System.out.println( "Ponudi popust nakon otkazivanje od 40%");
+        $rez.getKorisnik().setPonudjenPopustNakonOtkazivanja(new Date());
+        $rez.setPopust(40);
+        kcontext.getKieRuntime().setGlobal( "cancelDiscount", true );
+        drools.halt();
+end
+
+rule "30 ili vise pretraga u 3 minuta i u poslednja 4 dana nije bilo rezervacija"
+	agenda-group "dogadjaji pretraga"
+	salience 10
+	when
+		$se: SearchEvent( $lok: lokacija, $pocetak: pocetak, $kraj: kraj )
+    	Number(intValue >= 29) from accumulate (
+    		$se2: SearchEvent(
+    			this != $se,
+    			lokacija == $lok,
+    			eval(preklapanje2($se, $se2))
+    		) over window:time(3m),
+    		count(1)
+    	)
+    	Number(intValue == 0) from accumulate (
+    		$r: RezervacijaKorisnika( 
+    			smestaj.getSObjekat().getLokacija() == $lok,
+    			preklapanje3($pocetak, $kraj, datumPocetka, datumZavrsetka)==false,
+    			// Nema rezervacija u poslednja cetiri dana
+    			datumUOpsegu(datumRezervacije, 4)==true
+    		),
+    		count(1)
+    	)
+    then
+    	System.out.println("Vise od 30 pretraga i nema rezervacija u poslednja 4 dana");
+    	System.out.println("Preporuci popust od 30%");
+    	drools.halt();
+end
+
+/*rule "Vise osoba"
+no-loop true
+agenda-group "negativni popust"
+salience $razlika*10
+when
+    $rez: RezervacijaKorisnika( $razlika: smestaj.getBrojKreveta() - brojOsoba, $razlika == 3)
+then
+    System.out.println("Povecaj cenu za " + 10 + "%");
+    $rez.setPopust($rez.getPopust() - 10);
+    drools.halt();
+end*/
+
+// HALT - trenutno se ne koristi
+rule "Halt dogadjaji"
+	agenda-group "dogadjaji"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "dogadjaji"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end

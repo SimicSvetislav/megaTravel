@@ -1,0 +1,103 @@
+//created on: 02.06.2019.
+package rules
+
+//list any import classes here.
+
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+import com.project.megatravel.model.accomodation.SmestajniObjekat
+import com.project.megatravel.model.accomodation.SmestajnaJedinica
+
+//declare any global variables here
+
+//global Set lojalni;
+
+global Double predlog;
+
+rule "Nema rezervacija u poslednjih 15 dana i cena veca od prosecne"
+	agenda-group "agent"
+	salience 10
+    when
+        // rezervacije od poslednjih 15 dana
+        $rez15: List() from collect ( RezervacijaKorisnika( datumUOpsegu(datumRezervacije,15)==true ) )
+    	
+    	$smestaji : Set() from accumulate (
+			RezervacijaKorisnika (
+				$id : smestaj.getSObjekat().getId()
+			) from $rez15,
+			collectSet($id)
+		)
+		// Objekti koji nemaju rezervacije u prethodnih 15 dana
+		$so : SmestajniObjekat( id not memberOf $smestaji, $lok: lokacija )
+		$jediniceUMestu: List() from collect ( SmestajnaJedinica( sObjekat!=$so, sObjekat.getLokacija()==$lok ) )
+		$mojeJedinice: List() from collect ( SmestajnaJedinica( sObjekat==$so ) )
+		eval ( vecaCena($jediniceUMestu, $mojeJedinice) )
+    then
+        System.out.println("Nema rezervacije " + $so.getId());
+        System.out.println("Upozoriti agenta");
+
+end
+
+rule "Preporuka za snizenje"
+    agenda-group "agent"
+    salience 10
+    when
+        $sj: SmestajnaJedinica(  )
+    	$rezj: List() from collect ( RezervacijaKorisnika( smestaj==$sj ) )
+    	eval ( imaRezervacija($sj, $rezj)==false )
+    	Number ($avg: doubleValue) from accumulate (
+    		SmestajnaJedinica(
+    			this != $sj,
+    			$price: podrazumevaniCenovnik.getCena().getIznos(),
+    			sObjekat.getKategorija()==$sj.getSObjekat().getKategorija(),
+    			// Uzmi u obzir samo one sa slicnim ocenama
+    			Math.abs(rejtingCalc($sj.getRejting())-rejtingCalc(rejting))<=0.5
+    		),
+    		average($price)
+    	)
+    then
+    	System.out.println("--------");
+    	System.out.println($sj.getPodrazumevaniCenovnik().getCena().getIznos());
+    	System.out.println($avg);
+    	double pr = $sj.getPodrazumevaniCenovnik().getCena().getIznos()/$avg - 1;
+    	
+        System.out.println("Nema rezervacije u buducnosti - " + $sj.getId());
+        if (pr > 0) {
+        	predlog = pr;
+	    	System.out.println("Predloziti popust " + pr * 100 + "%");
+    	} else {
+    		System.out.println("Cena je vec dovoljno atraktivna");
+    	}
+end
+
+// Proba za template
+/*rule "Lojalnost"
+no-loop true
+agenda-group "lojalnost"
+salience 10
+when
+    $rez: RezervacijaKorisnika( $k: korisnik, (lojalni.contains($k)==false), popust==0.0, $agent: smestaj.getSObjekat().getAgent() )
+    Number(intValue >= 3) from accumulate (
+    	$rez2: RezervacijaKorisnika(
+    		korisnik == $k,
+    		smestaj.getSObjekat().getAgent() == $agent
+    	), count(1)
+    )
+then
+	System.out.println("Granica prevazidjena ");
+	System.out.println("Dodeli popust " + lojalni.contains($k));
+	lojalni.add($k);
+	kcontext.getKieRuntime().setGlobal( "lojalni", lojalni );
+    $rez.setPopust(10);   
+end*/
+
+// Halt
+rule "Halt agent"
+	agenda-group "agent"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "agent"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end

@@ -1,0 +1,45 @@
+//created on: 02.06.2019.
+package rules
+
+//list any import classes here.
+
+import com.project.megatravel.model.accomodation.Lokacija
+import com.project.megatravel.events.LastMinuteEvent
+
+//declare any global variables here
+
+global Boolean finalized;
+
+rule "Last-minute dogadjaj"
+	agenda-group "rezervacija_okidac"
+	salience 50
+	lock-on-active true
+    when	
+        $rez : RezervacijaKorisnika( $datumRezervacije : datumRezervacije, $datumPocetka : datumPocetka, popust == 0.0,  sameDate($datumRezervacije, $datumPocetka), $id : id  )
+    then
+    	System.out.println("\nLast-minute\nDodeljen popust 50% za rezervaciju " + $id );
+        modify ($rez) { setPopust(50); }
+
+end
+
+rule "Early bird dogadjaj"
+	agenda-group "rezervacija_okidac"
+	salience 25
+	lock-on-active true
+    when
+        $rez : RezervacijaKorisnika( $datumP : datumPocetka , popust == 0.0, earlyBird($datumP), $id : id  )
+    then
+        System.out.println("\nEarly bird\nDodeljen popust 25% za rezervaciju " + $id );
+        modify ($rez) { setPopust(25); }
+end
+
+rule "Halt rezervacija_okidac"
+	agenda-group "rezervacija_okidac"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "popusti"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end

@@ -1,12 +1,12 @@
-package faza1;
+package tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -16,26 +16,26 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.util.Creator;
 
 public class PreporukaTest {
-
-	KieSession kSession;
 	
-	@BeforeEach
-	void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
+		
+		
+	}
+
+	@Test	
+	public void testRecommendationPlatinum() {
 		
 		System.out.println( "Bootstrapping the Rule Engine ..." );
 
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
-        kSession =  kContainer.newKieSession("ksession-rules");
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
         
         kSession.setGlobal("lista", new ArrayList<>());
         
         kSession.getAgenda().getAgendaGroup("preporuka").setFocus();
 		
-	}
-
-	@Test	
-	void testRecommendationPlatinum() {
 	
         KrajnjiKorisnik k = new KrajnjiKorisnik();
         k.setKategorija("PLATINUM");
@@ -79,8 +79,19 @@ public class PreporukaTest {
 	}
 	
 	@Test	
-	void testRecommendationGold() {
+	public void testRecommendationGold() {
 	
+		System.out.println( "Bootstrapping the Rule Engine ..." );
+
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
+        
+        kSession.setGlobal("lista", new ArrayList<>());
+        
+        kSession.getAgenda().getAgendaGroup("preporuka").setFocus();
+		
+		
         KrajnjiKorisnik k = new KrajnjiKorisnik();
         k.setKategorija("GOLD");
         
@@ -123,8 +134,19 @@ public class PreporukaTest {
 	}
 	
 	@Test	
-	void testRecommendationSilver() {
+	public void testRecommendationSilver() {
 	
+		System.out.println( "Bootstrapping the Rule Engine ..." );
+
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
+        
+        kSession.setGlobal("lista", new ArrayList<>());
+        
+        kSession.getAgenda().getAgendaGroup("preporuka").setFocus();
+		
+		
         KrajnjiKorisnik k = new KrajnjiKorisnik();
         k.setKategorija("SILVER");
         
@@ -168,8 +190,19 @@ public class PreporukaTest {
 	
 	
 	@Test	
-	void testRecommendationBronze() {
+	public void testRecommendationBronze() {
 	
+		System.out.println( "Bootstrapping the Rule Engine ..." );
+
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
+        
+        kSession.setGlobal("lista", new ArrayList<>());
+        
+        kSession.getAgenda().getAgendaGroup("preporuka").setFocus();
+		
+		
         KrajnjiKorisnik k = new KrajnjiKorisnik();
         k.setKategorija("BRONZE");
         
@@ -212,8 +245,19 @@ public class PreporukaTest {
 	}
 	
 	@Test	
-	void testRecommendationNA() {
+	public void testRecommendationNA() {
 	
+		System.out.println( "Bootstrapping the Rule Engine ..." );
+
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
+        
+        kSession.setGlobal("lista", new ArrayList<>());
+        
+        kSession.getAgenda().getAgendaGroup("preporuka").setFocus();
+		
+		
         KrajnjiKorisnik k = new KrajnjiKorisnik();
         k.setKategorija("NA");
         

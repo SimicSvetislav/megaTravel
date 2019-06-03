@@ -15,7 +15,7 @@ rule "Otkazivanje 30 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 0
     when
-        $rez : RezervacijaKorisnika( $datum : datumPocetka, stanje == "REZERVISANO", !datumUOpsegu($datum, 30), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( $datum : datumPocetka, stanje == "REZERVISANO", razmak($datum, 30), procenatOtkazivanje == -1, $id : id )
     then
         System.out.println("Otkazivanje rezervacije " + $id + " je besplatno");
         modify($rez){ setProcenatOtkazivanje(0); }
@@ -48,7 +48,7 @@ rule "Otkazivanje krace od 3 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 100
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, datumUOpsegu($datum, 2), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, !razmak($datum, 3), procenatOtkazivanje == -1, $id : id )
     then
         System.out.println("Naplati 100% cene za otkazivanje rezervacije " + $id);
         modify($rez){ setProcenatOtkazivanje(100); }
@@ -60,7 +60,7 @@ rule "Otkazivanje od 15 do 3 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 50
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, datumUOpsegu($datum, 15), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, !razmak($datum, 15), procenatOtkazivanje == -1, $id : id )
     then
         System.out.println("Naplati 50% cene za otkazivanje rezervacije " + $id);
         modify($rez){ setProcenatOtkazivanje(50); }
@@ -72,7 +72,7 @@ rule "Otkazivanje od 30 do 15 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 30
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, datumUOpsegu($datum, 30), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, !razmak($datum, 30), procenatOtkazivanje == -1, $id : id )
     then
         System.out.println("Naplati 30% cene za otkazivanje rezervacije " + $id);
         modify($rez){ setProcenatOtkazivanje(30); }

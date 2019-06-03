@@ -1,6 +1,6 @@
-package faza1;
+package tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +30,8 @@ public class PopustTest {
         KieSession kSession =  kContainer.newKieSession("ksession-rules");
         
         kSession.getAgenda().getAgendaGroup("popusti").setFocus();
+        
+        kSession.setGlobal("finalizing", false);
 		
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
         rez.setPopust(0.0);
@@ -69,13 +71,13 @@ public class PopustTest {
         kSession.insert(rez3);
         int fired = kSession.fireAllRules();
         
-        assertEquals(0, rez.getPopust());
+        assertEquals(0, rez.getPopust(), 0.001);
         
         // Early bird
-        assertEquals(25.0, rez2.getPopust());
+        assertEquals(25.0, rez2.getPopust(), 0.001);
         
         // Last minute
-        assertEquals(50.0, rez3.getPopust());
+        assertEquals(50.0, rez3.getPopust(), 0.001);
         
         // 2 popusta i halt
         assertEquals(3, fired);
@@ -90,6 +92,8 @@ public class PopustTest {
         KieSession kSession =  kContainer.newKieSession("ksession-rules");
         
         kSession.getAgenda().getAgendaGroup("popusti").setFocus();
+        
+        kSession.setGlobal("finalizing", false);
         
         Lokacija l = Creator.createLokacija(1, "Novi Sad");
         
@@ -203,7 +207,7 @@ public class PopustTest {
         
         int fired = kSession.fireAllRules();
         
-        assertEquals(60, rezNew.getPopust());
+        assertEquals(60, rezNew.getPopust(), 0.001);
         
         // Preporuka i halt
         assertEquals(2, fired);
@@ -220,6 +224,8 @@ public class PopustTest {
         KieSession kSession =  kContainer.newKieSession("ksession-rules");
         
         kSession.getAgenda().getAgendaGroup("popusti2").setFocus();
+        
+        kSession.setGlobal("finalizing", false);
         
         Lokacija l = Creator.createLokacija(1, "Novi Sad");
         Lokacija l2 = Creator.createLokacija(2, "Novi Sad");
@@ -369,7 +375,7 @@ public class PopustTest {
         
         int fired = kSession.fireAllRules();
         
-        assertEquals(80, rez8.getPopust());
+        assertEquals(80, rez8.getPopust(), 0.001);
         
         // Popust i halt
         assertEquals(2, fired);

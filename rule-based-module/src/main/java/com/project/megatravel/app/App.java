@@ -10,31 +10,60 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
+import com.project.megatravel.events.LastMinuteEvent;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.model.users.Kupon;
-import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.util.Creator;
-
 
 public class App {
 
 	public static void main(String[] args) {
 		System.out.println("Rule based module started successfully.");
 		
-		//testRecommendation(); C
-		//testDiscount(); 		C
-		//testCancelling();		C
-		//testClient(); 		C
-		//testAccomodation();	C
+		//testRecommendation(); 
+		//testDiscount(); 		
+		//testCancelling();		
+		//testClient(); 		
+		//testAccomodation();	
 		//testDiscount2();
-		testDiscount3();
-		//testCancelling2();	C
-		//testCancelling3();	C
+		//testDiscount3();
+		//testCancelling2();	
+		//testCancelling3();	
+		
+		testCEPLastMinute();
+		
+	}
+	
+	public static void testCEPLastMinute() {
+		
+		System.out.println( "Bootstrapping the Rule Engine ..." );
+
+        KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
+        
+        kSession.getAgenda().getAgendaGroup("dogadjaji").setFocus();
+        
+        Lokacija l = Creator.createLokacija(1, "Novi Sad");
+        Lokacija l2 = Creator.createLokacija(1, "Beograd");
+        
+        kSession.insert(new LastMinuteEvent(l2));
+        kSession.insert(new LastMinuteEvent(l));
+        kSession.insert(new LastMinuteEvent(l2));
+        kSession.insert(new LastMinuteEvent(l2));
+        kSession.insert(new LastMinuteEvent(l2));
+        kSession.insert(new LastMinuteEvent(l2));
+        
+        int fired = kSession.fireAllRules();
+        
+        System.out.println( "Number of Rules executed = " + fired );
+		
 	}
 	
 	public static void testDiscount3() {

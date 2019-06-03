@@ -2,6 +2,7 @@ package com.project.megatravel.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
@@ -28,6 +29,23 @@ public final class Creator {
         
         try {
 			rez.setDatumPocetka(sdf.parse(datum));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        
+        return rez;
+
+	}
+	
+	public static RezervacijaKorisnika createRezervacija(String datumP, String datumZ) {
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        
+        try {
+			rez.setDatumPocetka(sdf.parse(datumP));
+			rez.setDatumZavrsetka(sdf.parse(datumZ));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -179,6 +197,15 @@ public final class Creator {
 		r.setSumaOcena(so);
 		
 		return r;	
+	}
+
+	public static RezervacijaKorisnika createRezervacija(Date d1, Date d2) {
+			RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        
+			rez.setDatumPocetka((d1));
+			rez.setDatumZavrsetka((d2));
+			
+			return rez;
 	}
 
 }
