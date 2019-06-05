@@ -1,0 +1,35 @@
+template header
+granica
+popust
+
+package rules
+
+import com.project.megatravel.model.accomodation.SmestajnaJedinica
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+import java.util.Set
+
+global Set lojalni;
+
+template "lojalnost"
+
+rule "Lojalnost @{row.rowNumber}"
+no-loop true
+agenda-group "lojalnost"
+salience @{popust}
+when
+    $rez: RezervacijaKorisnika( $k: korisnik, popust==0.0, $agent: smestaj.getSObjekat().getAgent() )
+    Number(intValue >= @{granica}) from accumulate (
+    	$rez2: RezervacijaKorisnika(
+    		korisnik == $k,
+    		smestaj.getSObjekat().getAgent() == $agent
+    	), count(1)
+    )
+then
+	System.out.println("Granica prevazidjena " + @{granica});
+	System.out.println("Dodeli popust " + @{popust});
+	lojalni.add($k);
+	kcontext.getKieRuntime().setGlobal( "lojalni", lojalni );
+    modify ($rez) { setPopust(@{popust}) };   
+end
+
+end template

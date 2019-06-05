@@ -1,12 +1,12 @@
-package faza1;
+package tests;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -16,12 +16,12 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.model.users.Kupon;
 import com.project.megatravel.util.Creator;
 
-class KlijentiTest {
+public class KlijentiTest {
 
-	KieSession kSession;
+	public static KieSession kSession;
 	
-	@BeforeEach
-	void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
 		
 		System.out.println( "Bootstrapping the Rule Engine ..." );
 
@@ -36,7 +36,7 @@ class KlijentiTest {
 	}
 
 	@Test	
-	void testClients() {
+	public void testClients() {
 		
 		// REZERVACIJE
 		
@@ -179,7 +179,7 @@ class KlijentiTest {
         // Ukupna cena rezervacija ne prelazi 300
         assertEquals("BRONZE", k3.getKategorija());
         
-        // Ukupna cena rezervacija prelazi 300 i registrovan vise od 6 meseci
+        // Ukupna cena rezervacija prelazi 300 i registrovan pre vise od 6 meseci
         assertEquals("SILVER", k4.getKategorija());
         
         // Nema dve rezervacije i nije regostrovan 6 meseci

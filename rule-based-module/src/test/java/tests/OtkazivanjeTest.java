@@ -1,8 +1,8 @@
-package faza1;
+package tests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -12,10 +12,10 @@ import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.util.Creator;
 
-class OtkazivanjeTest {
+public class OtkazivanjeTest {
 	
 	@Test
-	void testOtkazivanjeOsnovno() {
+	public void testOtkazivanjeOsnovno() {
 		
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
@@ -29,16 +29,16 @@ class OtkazivanjeTest {
         
         so.getSmestajneJedinice().add(j);
         
-        RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "04/04/2019", "17/04/2019", "19/04/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "04/04/2019", "04/06/2019", "19/06/2019", "REZERVISANO", j);
         rez.setProcenatOtkazivanje(-1.0);
         
-        RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "21/04/2019", "27/04/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "14/06/2019", "27/06/2019", "REZERVISANO", j);
         rez2.setProcenatOtkazivanje(-1.0);
         
         RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2017", "20/07/2019", "25/07/2019", "REZERVISANO", j);
         rez3.setProcenatOtkazivanje(-1.0);
         
-        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "03/05/2019", "10/05/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "22/06/2019", "30/06/2019", "REZERVISANO", j);
         rez4.setProcenatOtkazivanje(-1.0);    
         
         kSession.insert(rez);
@@ -49,16 +49,16 @@ class OtkazivanjeTest {
         int fired = kSession.fireAllRules();
         
         // Manje od 3 dana
-        assertEquals(100.0, rez.getProcenatOtkazivanje());
+        assertEquals(100.0, rez.getProcenatOtkazivanje(), 0.001);
         
         // 15 do 3 dana pre pocetka rezervacije
-        assertEquals(50.0, rez2.getProcenatOtkazivanje());
+        assertEquals(50.0, rez2.getProcenatOtkazivanje(), 0.001);
         
         // Vise od 30 dana pre pocetka rezervacije
-        assertEquals(0.0, rez3.getProcenatOtkazivanje());
+        assertEquals(0.0, rez3.getProcenatOtkazivanje(), 0.001);
         
         // 30 do 15 dana pre pocetka rezervacije
-        assertEquals(30.0, rez4.getProcenatOtkazivanje());
+        assertEquals(30.0, rez4.getProcenatOtkazivanje(), 0.001);
         
         // Cetiri procene otkazivanja i halt
         assertEquals(5, fired);
@@ -66,7 +66,7 @@ class OtkazivanjeTest {
 	}
 	
 	@Test
-	void testOtkazivanjeUgnjezdena() {
+	public void testOtkazivanjeUgnjezdena() {
 		
         KieServices ks = KieServices.Factory.get();
         KieContainer kContainer = ks.getKieClasspathContainer();
@@ -80,7 +80,7 @@ class OtkazivanjeTest {
         
         so.getSmestajneJedinice().add(j);
         
-        RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "04/04/2019", "10/04/2019", "15/04/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "04/04/2019", "10/08/2019", "15/08/2019", "REZERVISANO", j);
         RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REALIZOVANO", j);
         RezervacijaKorisnika rez3 = Creator.createRezervacija(2, 100, 0, "04/01/2017", "10/01/2017", "15/01/2017", "REALIZOVANO", j);
         RezervacijaKorisnika rez4 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REALIZOVANO", j);
@@ -101,7 +101,7 @@ class OtkazivanjeTest {
         so2.getSmestajneJedinice().add(j2);
         so2.getSmestajneJedinice().add(j3);
         
-        RezervacijaKorisnika rez6 = Creator.createRezervacija(6, 100, 0, "04/04/2019", "10/04/2019", "15/04/2019", "REZERVISANO", j2);
+        RezervacijaKorisnika rez6 = Creator.createRezervacija(6, 100, 0, "04/04/2019", "10/08/2019", "15/08/2019", "REZERVISANO", j2);
         
         RezervacijaKorisnika rez7 = Creator.createRezervacija(7, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REALIZOVANO", j2);
         RezervacijaKorisnika rez8 = Creator.createRezervacija(8, 100, 0, "04/01/2017", "10/01/2017", "15/01/2017", "REALIZOVANO", j3);
@@ -121,7 +121,7 @@ class OtkazivanjeTest {
         so3.getSmestajneJedinice().add(j4);
         so3.getSmestajneJedinice().add(j5);
         
-        RezervacijaKorisnika rez11 = Creator.createRezervacija(11, 100, 0, "04/04/2019", "10/04/2019", "15/04/2019", "REZERVISANO", j4);
+        RezervacijaKorisnika rez11 = Creator.createRezervacija(11, 100, 0, "04/04/2019", "10/08/2019", "15/08/2019", "REZERVISANO", j4);
         
         RezervacijaKorisnika rez12 = Creator.createRezervacija(12, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REALIZOVANO", j5);
         RezervacijaKorisnika rez13 = Creator.createRezervacija(13, 100, 0, "04/01/2017", "10/01/2017", "15/01/2017", "REALIZOVANO", j4);
@@ -141,21 +141,21 @@ class OtkazivanjeTest {
         
         int fired = kSession.fireAllRules();
         
-        // Tri godina uspesnog poslovanja
-        assertEquals(75.0, rez.getProcenatOtkazivanje());
+        // Tri godine uspesnog poslovanja
+        assertEquals(75.0, rez.getProcenatOtkazivanje(), 0.001);
         
-        // Dve godina uspesnog poslovanja
-        assertEquals(50.0, rez6.getProcenatOtkazivanje());
+        // Dve godine uspesnog poslovanja
+        assertEquals(50.0, rez6.getProcenatOtkazivanje(), 0.001);
         
         // Pet godina uspesnog poslovanja
-        assertEquals(100.0, rez11.getProcenatOtkazivanje());
+        assertEquals(100.0, rez11.getProcenatOtkazivanje(), 0.001);
         
         // Tri procene otkazivanja i halt
         assertEquals(4, fired);
 	}
 	
 	@Test
-	void testOtkazivanjeGodinePoslovanja() {
+	public void testOtkazivanjeGodinePoslovanja() {
 		
 		System.out.println( "Bootstrapping the Rule Engine ..." );
 
@@ -171,14 +171,14 @@ class OtkazivanjeTest {
         
         so.getSmestajneJedinice().add(j);
         
-        RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "01/01/2019", "05/05/2019", "10/05/2019", "REZERVISANO", j);
-        RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "01/05/2019", "04/05/2019", "REALIZOVANO", j);
-        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2019", "11/05/2019", "15/05/2019", "REALIZOVANO", j);
+        RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "01/01/2019", "05/08/2019", "10/08/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "01/08/2019", "04/08/2019", "REALIZOVANO", j);
+        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2019", "11/08/2019", "15/08/2019", "REALIZOVANO", j);
         
-        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "05/06/2019", "15/06/2019", "REZERVISANO", j);
-        RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2019", "01/06/2019", "04/06/2019", "REALIZOVANO", j);
-        RezervacijaKorisnika rez6 = Creator.createRezervacija(6, 100, 0, "04/01/2019", "17/06/2019", "21/06/2019", "REALIZOVANO", j);
-        RezervacijaKorisnika rez7 = Creator.createRezervacija(7, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REALIZOVANO", j);
+        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "05/08/2019", "15/06/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2019", "01/08/2019", "04/06/2019", "REALIZOVANO", j);
+        RezervacijaKorisnika rez6 = Creator.createRezervacija(6, 100, 0, "04/01/2019", "17/08/2019", "21/06/2019", "REALIZOVANO", j);
+        RezervacijaKorisnika rez7 = Creator.createRezervacija(7, 100, 0, "04/01/2019", "10/08/2019", "15/01/2019", "REALIZOVANO", j);
         
         kSession.insert(rez);
         kSession.insert(rez2);
@@ -191,10 +191,10 @@ class OtkazivanjeTest {
         int fired = kSession.fireAllRules();
         
         // Ugnjezdena rezervacija
-        assertEquals(55.0, rez.getProcenatOtkazivanje());
+        assertEquals(55.0, rez.getProcenatOtkazivanje(), 0.001);
         
         // Skoro ugnjezdena rezervacija, placanje na osnovu jedne godine uspesnog poslovanja
-        assertEquals(25.0, rez4.getProcenatOtkazivanje());
+        assertEquals(25.0, rez4.getProcenatOtkazivanje(), 0.001);
         
         
         // Dve procene otkazivanja i halt

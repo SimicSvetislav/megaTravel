@@ -10,6 +10,12 @@ import com.project.megatravel.model.reservations.RezervacijaKorisnika
 import com.project.megatravel.model.accomodation.SmestajniObjekat
 import com.project.megatravel.model.accomodation.SmestajnaJedinica
 import com.project.megatravel.model.accomodation.Lokacija
+import com.project.megatravel.events.LastMinuteEvent;
+import com.project.megatravel.events.EarlyBirdEvent;
+
+global Boolean finalizing;
+global Boolean lmEnabled;
+global Boolean ebEnabled;
 
 rule "Last-minute"
 	agenda-group "popusti"
@@ -20,6 +26,11 @@ rule "Last-minute"
     then
     	System.out.println("\nLast-minute\nDodeljen popust 50% za rezervaciju " + $id );
         modify ($rez) { setPopust(50); }
+        if (finalizing!=null && finalizing) {
+        	Lokacija $lokacija = nadjiLokaciju($rez);
+        	System.out.println("Inserted LM event" + $lokacija.getNaziv());
+        	insert (new LastMinuteEvent());
+        }
 
 end
 
@@ -32,7 +43,11 @@ rule "Early bird"
     then
         System.out.println("\nEarly bird\nDodeljen popust 25% za rezervaciju " + $id );
         modify ($rez) { setPopust(25); }
-
+        if (finalizing!=null && finalizing) {
+        	Lokacija $lokacija = nadjiLokaciju($rez);
+        	System.out.println("Inserted EB event" + $lokacija.getNaziv());
+        	insert (new EarlyBirdEvent());
+        }
 end
 
 rule "Popust na neocenjene smestaje u istom mestu u kojem su klijenti boravili barem 6 puta kod barem 3 razlicita agenta"
@@ -66,7 +81,7 @@ rule "Popust na neocenjene smestaje na lokaciji u kojoj klijenti nisu prethodno 
         $rezervacije : List() from collect ( RezervacijaKorisnika( datumUOpsegu(datumZavrsetka, 365), stanje == "REALIZOVANO", korisnik.getId() == $korisnikId ) )
         $lSet : Set() from accumulate (
 			RezervacijaKorisnika (
-				$idL : smestaj.getSObjekat().getLokacija().getId()
+				$idL : smestaj.getSObjekat().getLokacija()
 			) from $rezervacije,
 			collectSet($idL)
 		)

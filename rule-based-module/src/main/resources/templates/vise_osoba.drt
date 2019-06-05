@@ -1,0 +1,25 @@
+template header
+visak
+procenat
+
+package rules
+
+import com.project.megatravel.model.accomodation.SmestajnaJedinica
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+
+template "vise_osoba"
+
+rule "Vise osoba @{row.rowNumber}"
+no-loop true
+agenda-group "negativni popust"
+salience @{visak}*10
+when
+    $rez: RezervacijaKorisnika( $razlika: (brojOsoba-smestaj.getBrojKreveta()), $razlika > 0, $razlika >= @{visak})
+then
+	//System.out.println("Razlika " + $razlika);
+    System.out.println("Povecaj cenu za " + @{procenat} + "%");
+    $rez.setPopust($rez.getPopust() - @{procenat});
+    drools.halt();   
+end
+
+end template

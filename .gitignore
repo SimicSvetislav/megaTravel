@@ -198,4 +198,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Server baze podataka
+/TomEE
+
 # End of https://www.gitignore.io/api/java,linux,maven,angular,windows,eclipse,java-web,code-java,visualstudiocode

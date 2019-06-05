@@ -1,0 +1,19 @@
+template header
+text
+
+package rules
+
+import com.project.megatravel.model.chat.Poruka
+
+template "filter"
+
+rule "Filter messages_@{row.rowNumber}"
+no-loop true
+agenda-group "filter"
+when
+    $msg: Poruka( $tekst: tekst, badText($tekst, "@{text}") == true )
+then
+    System.out.println("Odbi klijenta " + $msg.getPosiljalac());
+end
+
+end template

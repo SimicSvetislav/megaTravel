@@ -10,58 +10,6 @@
     <xs:import namespace="www.model.megatravel.project.com/reservations"
         schemaLocation="Rezervacija.xsd"/>
     <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
-    <xs:complexType name="TSmestajniObjekat">
-        <xs:annotation>
-            <xs:appinfo>
-                <jxb:class name="SmestajniObjekat"/>
-            </xs:appinfo>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="tipSmestaja">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="Hotel"/>
-                        <xs:enumeration value="Apartman"/>
-                        <xs:enumeration value="Bed&amp;Breakfast"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="lokacija" type="TLokacija"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="smestajneJedinice"
-                type="TSmestajnaJedinica"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge"
-                type="TDodatnaUsluga"/>
-            <xs:element name="otkazivanje" type="TOtkazivanje"/>
-            <xs:element default="NA" name="kategorija">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="BRONZE"/>
-                        <xs:enumeration value="SILVER"/>
-                        <xs:enumeration value="GOLD"/>
-                        <xs:enumeration value="PLATINUM"/>
-                        <xs:enumeration value="NA"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="rejting" type="TRejting"/>
-            <xs:element name="agent" type="usr:TAgent"/>
-        </xs:sequence>
-        <xs:attribute name="id">
-            <xs:simpleType>
-                <xs:restriction base="xs:long">
-                    <xs:minInclusive value="1"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="zvezdice">
-            <xs:simpleType>
-                <xs:restriction base="xs:integer">
-                    <xs:minInclusive value="1"/>
-                    <xs:maxInclusive value="5"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
     <xs:complexType name="TLokacija">
         <xs:annotation>
             <xs:appinfo>
@@ -114,7 +62,6 @@
                 </xs:complexType>
             </xs:element>
             <xs:element name="rejting" type="TRejting"/>
-            <xs:element name="sObjekat" type="TSmestajniObjekat"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="komentari" type="res:TKomentar"/>
             <xs:element maxOccurs="unbounded" name="cenovnici" type="TCenovnik"/>
             <xs:element name="podrazumevaniCenovnik" type="TCenovnik"/>
@@ -285,7 +232,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="smestajniObjekat" type="TSmestajniObjekat"/>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>
@@ -337,4 +283,53 @@
         </xs:sequence>
         <xs:attribute default="Euro" name="valuta" type="xs:string"/>
     </xs:complexType>
+    <xs:element name="SmestajniObjekat">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="tipSmestaja">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="Hotel"/>
+                            <xs:enumeration value="Apartman"/>
+                            <xs:enumeration value="Bed&amp;Breakfast"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="lokacija" type="TLokacija"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="smestajneJedinice"
+                    type="TSmestajnaJedinica"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge"
+                    type="TDodatnaUsluga"/>
+                <xs:element name="otkazivanje" type="TOtkazivanje"/>
+                <xs:element default="NA" name="kategorija">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="BRONZE"/>
+                            <xs:enumeration value="SILVER"/>
+                            <xs:enumeration value="GOLD"/>
+                            <xs:enumeration value="PLATINUM"/>
+                            <xs:enumeration value="NA"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="rejting" type="TRejting"/>
+                <xs:element name="agent" type="usr:TAgent"/>
+            </xs:sequence>
+            <xs:attribute name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="zvezdice">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxInclusive value="5"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

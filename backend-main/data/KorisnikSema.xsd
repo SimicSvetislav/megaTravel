@@ -133,8 +133,8 @@
                             </xs:restriction>
                         </xs:simpleType>
                     </xs:element>
-                    <xs:element maxOccurs="unbounded" name="smestajniObjekti"
-                        type="acc:TSmestajniObjekat" minOccurs="0"/>
+                    <xs:element maxOccurs="unbounded" name="smestajniObjektiID" type="xs:string"
+                        minOccurs="0"/>
                     <xs:element maxOccurs="unbounded" name="rezervacije" type="res:TRezervacija"
                         minOccurs="0"/>
                     <xs:element maxOccurs="unbounded" minOccurs="0" name="filteriPoruka">
