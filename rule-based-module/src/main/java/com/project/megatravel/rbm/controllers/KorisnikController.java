@@ -6,28 +6,101 @@ import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.megatravel.dto.KrajnjiKorisnikDTO;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
-import com.project.megatravel.rbm.services.SampleAppService;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.rbm.services.KorisniciService;
 import com.project.megatravel.util.Creator;
 
 @RestController
-public class SampleAppController {
-	private static Logger log = LoggerFactory.getLogger(SampleAppController.class);
+public class KorisnikController {
+	private static Logger log = LoggerFactory.getLogger(KorisnikController.class);
 
-	private final SampleAppService sampleService;
+	private final KorisniciService service;
+
+	private final KieContainer kieContainer;
 
 	@Autowired
-	public SampleAppController(SampleAppService sampleService) {
-		this.sampleService = sampleService;
+	public KorisnikController(KieContainer kieContainer, KorisniciService service) {
+		log.info("Initialising a new example session.");
+		this.kieContainer = kieContainer;
+		this.service = service;
+	}
+	
+	@RequestMapping(value = "/client/classify", method=RequestMethod.PUT, consumes="application/json")
+	public String classifyClient(@RequestBody KrajnjiKorisnikDTO kk) {
+		
+		log.info("Classifying client...");
+		
+		return service.classify(kk);
+	}
+	
+	@RequestMapping(value = "/client", method=RequestMethod.GET)
+	public String classifyClient() {
+		
+		log.info("Classifying client... (2)");
+		
+		//KieServices ks = KieServices.Factory.get();
+        //KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kieContainer.newKieSession("ksession-rules");
+        
+        kSession.getAgenda().getAgendaGroup("klijent").setFocus();
+		
+		KrajnjiKorisnik korisnik = Creator.createKrajnjiKorisnik(1L, "NA", "10/10/2018");
+		
+		RezervacijaKorisnika rez = Creator.createRezervacija(4, 310, 0, "10/04/2018", "03/05/2019", "10/05/2019", "REALIZOVANO", 
+				Creator.createSmestajnaJedinica(1, Creator.createSmestajniObjekat(1, "NA", Creator.createRejting(0, 0))));
+		rez.setProcenatOtkazivanje(-1.0);
+		korisnik.getRezervacije().add(rez);
+		
+		kSession.insert(korisnik);
+		
+		int fired = kSession.fireAllRules();
+		
+		System.out.println("Fired - " + fired );
+		
+		return korisnik.getKategorija();
+		
+		//return service.classify(kk);
+	}
+	
+	@RequestMapping(value = "/client2", method=RequestMethod.GET)
+	public String classifyClient2() {
+		
+		log.info("Classifying client... (2a)");
+		
+		KieServices ks = KieServices.Factory.get();
+        KieContainer kContainer = ks.getKieClasspathContainer();
+        KieSession kSession =  kContainer.newKieSession("ksession-rules");
+        
+        kSession.getAgenda().getAgendaGroup("klijent").setFocus();
+		
+		KrajnjiKorisnik korisnik = Creator.createKrajnjiKorisnik(2L, "NA", "10/10/2018");
+		
+		RezervacijaKorisnika rez = Creator.createRezervacija(4, 310, 0, "10/04/2018", "03/05/2019", "10/05/2019", "REALIZOVANO", 
+				Creator.createSmestajnaJedinica(1, Creator.createSmestajniObjekat(1, "NA", Creator.createRejting(0, 0))));
+		rez.setProcenatOtkazivanje(-1.0);
+		korisnik.getRezervacije().add(rez);
+		
+		kSession.insert(korisnik);
+		
+		int fired = kSession.fireAllRules();
+		
+		System.out.println("Fired - " + fired );
+		
+		return korisnik.getKategorija();
+		
+		//return service.classify(kk);
 	}
 
-	@RequestMapping(value = "/item", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = "application/json")
 	public String getQuestions() {
 
         KieServices ks = KieServices.Factory.get();

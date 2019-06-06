@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.project.megatravel.dto.KrajnjiKorisnikDTO;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -206,6 +207,18 @@ public final class Creator {
 			rez.setDatumZavrsetka((d2));
 			
 			return rez;
+	}
+
+	public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {
+		
+        
+        KrajnjiKorisnikDTO k = new KrajnjiKorisnikDTO();
+        
+        k.setId(id);
+        k.setKategorija(kat);
+        k.setDatumRegistracije(datumR);
+        
+        return k;
 	}
 
 }

@@ -13,12 +13,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class SampleApp {
+public class RuleBasedModuleApp {
 
-	private static Logger log = LoggerFactory.getLogger(SampleApp.class);
+	private static Logger log = LoggerFactory.getLogger(RuleBasedModuleApp.class);
 
 	public static void main(String[] args) {
-		ApplicationContext ctx = SpringApplication.run(SampleApp.class, args);
+		ApplicationContext ctx = SpringApplication.run(RuleBasedModuleApp.class, args);
 
 		String[] beanNames = ctx.getBeanDefinitionNames();
 		Arrays.sort(beanNames);

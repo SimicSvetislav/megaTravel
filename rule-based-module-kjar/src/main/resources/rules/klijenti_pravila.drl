@@ -31,7 +31,7 @@ rule "Klijent registrovan vise od 6 meseci i ukupna cena rezervacija prelazi 300
     when
         $klijent : KrajnjiKorisnik ( $registracija : datumRegistracije, kategorija != "GOLD", kategorija != "PLATINUM", !datumUOpsegu($registracija, 180), 
         $rezervacije : rezervacije, $id : id )
-        Number (doubleValue >= 300 ) from accumulate (
+        Number (doubleValue >= 400 ) from accumulate (
 			RezervacijaKorisnika (
 				stanje == "REALIZOVANO", 
 				$cena : cenaSmestaja
