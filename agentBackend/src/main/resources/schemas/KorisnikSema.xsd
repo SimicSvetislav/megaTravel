@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/users"
+    xmlns="www.model.megatravel.project.com/users"
+    xmlns:acc="www.model.megatravel.project.com/accomodation"
+    xmlns:res="www.model.megatravel.project.com/reservations"
+    xmlns:usr="www.model.megatravel.project.com/users" xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    jxb:version="2.1">
+    <xs:import schemaLocation="SmestajSema.xsd"
+        namespace="www.model.megatravel.project.com/accomodation"/>
+    <xs:import namespace="www.model.megatravel.project.com/reservations"
+        schemaLocation="Rezervacija.xsd"/>
+    <xs:complexType abstract="true" name="TKorisnik">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Korisnik"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="korisnickoIme">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="64"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="sifra">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="64"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ime">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="64"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="prezime">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="64"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="email">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern
+                            value="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"/>
+                        <xs:maxLength value="64"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="adresa">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="128"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="telefon">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="32"/>
+                        <xs:pattern value="[+]?\d{9,15}"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="uloga">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Administrator"/>
+                        <xs:enumeration value="Krajnji korisnik"/>
+                        <xs:enumeration value="Agent"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="stanje" default="AKTIVAN">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="AKTIVAN"/>
+                        <xs:enumeration value="BLOKIRAN"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id">
+            <xs:simpleType>
+                <xs:restriction base="xs:long">
+                    <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="datumRegistracije">
+            <xs:simpleType>
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.util.Date" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDate" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDate"/>
+                    </xs:appinfo>
+                </xs:annotation>
+                <xs:restriction base="xs:date">
+                    <xs:minInclusive value="1900-01-01"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TAdministrator">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Administrator"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TKorisnik"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TAgent">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Agent"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TKorisnik">
+                <xs:sequence>
+                    <xs:element name="poslovniMaticniBroj">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:totalDigits value="10"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" name="smestajniObjekti"
+                        type="acc:TSmestajniObjekat" minOccurs="0"/>
+                    <xs:element maxOccurs="unbounded" name="rezervacije" type="res:TRezervacija"
+                        minOccurs="0"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="filteriPoruka">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string"/>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKrajnjiKorisnik">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="KrajnjiKorisnik"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TKorisnik">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="rezervacije"
+                        type="res:TRezervacijaKorisnika" minOccurs="0"/>
+                    <xs:element default="NA" name="kategorija">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="BRONZE"/>
+                                <xs:enumeration value="SILVER"/>
+                                <xs:enumeration value="GOLD"/>
+                                <xs:enumeration value="PLATINUM"/>
+                                <xs:enumeration value="NA"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element default="false" name="ponudjenPopustNakonOtkazivanja"
+                        type="xs:boolean"/>
+                    <xs:element name="lokacija" type="acc:TLokacija"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TKupon">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Kupon"/>
+            </xs:appinfo>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="korisnik" type="TKrajnjiKorisnik"/>
+            <xs:element name="tip">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="GOLD"/>
+                        <xs:enumeration value="PLATINUM"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id">
+            <xs:simpleType>
+                <xs:restriction base="xs:long">
+                    <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>
