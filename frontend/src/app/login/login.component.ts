@@ -1,3 +1,5 @@
+import { User } from './../user';
+import { TestService } from './../services/test.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,13 +10,20 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+
+  user: User = new User();
+  constructor(private router: Router,private testing: TestService) { }
 
   ngOnInit() {
   }
 
   home() {
     this.router.navigate(['/home']);
+  }
+
+  login() {
+    alert("Usao!")
+    this.testing.test("Puno pozdrava!");
   }
 
 }
