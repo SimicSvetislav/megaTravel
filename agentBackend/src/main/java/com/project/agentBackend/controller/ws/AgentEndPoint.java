@@ -5,13 +5,13 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
-import com.project.agentBackend.model.Temp;
-import com.project.agentBackend.model.messages.agent.Rezervacija;
+import com.project.agentBackend.model.messages.agent.GetBookingsRequest;
+import com.project.agentBackend.model.messages.agent.GetBookingsResponse;
 
 
 
 @Endpoint
-public class AgentEndpoint {
+public class AgentEndPoint {
 	private static final String NAMESPACE_URI = "www.model.megatravel.project.com/messages/agent";
 
 	
@@ -24,12 +24,12 @@ public class AgentEndpoint {
 		return new Temp();
 	}*/
 	
-	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "answer")
+	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getBookingsRequest")
 	@ResponsePayload
-	public Rezervacija getAnswer() {
+	public GetBookingsResponse getAnswer(@RequestPayload GetBookingsRequest request) {
 		
 
-		return new Rezervacija();
+		return new GetBookingsResponse();
 	}
 	
 	

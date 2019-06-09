@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ws:getRatingRequest xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:ns1="www.model.megatravel.project.com/messages/rating"
+ xmlns:ws="www.model.megatravel.project.com/messages/rating/ws"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/messages/rating/ws file:/C:/Users/lukaj/git/megaTravel/schemas_updated/OceneRazmena.xsd">
+    <ws:ocene>
+        <ns1:smestajId>50</ns1:smestajId>
+        <ns1:ocena>5</ns1:ocena>
+        <ns1:smestajId>50</ns1:smestajId>
+        <ns1:ocena>5</ns1:ocena>
+    </ws:ocene>
+</ws:getRatingRequest>

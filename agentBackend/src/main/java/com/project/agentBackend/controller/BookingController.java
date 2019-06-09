@@ -35,6 +35,13 @@ public class BookingController {
 		return new ResponseEntity<>(new Rezervacija(), HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value="/{bookingId}", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Rezervacija> getBooking(@PathVariable("bookingId") String bookingId) {
+		
+		
+		return new ResponseEntity<>(new Rezervacija(), HttpStatus.OK);
+	}
+	
 	@RequestMapping(value="/all/agentId/{agentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<RezervacijaKorisnika>> getAllBookingsUserInfo(@PathVariable("agentId") String agentId) {
 		

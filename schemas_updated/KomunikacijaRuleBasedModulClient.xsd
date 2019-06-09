@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/messages/ruleBased"
+    xmlns="www.model.megatravel.project.com/messages/ruleBased"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb" jxb:version="2.1">
+    <xs:complexType name="RBMPoruka">
+        <xs:sequence>
+            <xs:element name="tema">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="LAST_MINUTE"/>
+                        <xs:enumeration value="EARLY_BIRD"/>
+                        <xs:enumeration value="POVECANA_POTRAZNJA"/>
+                        <xs:enumeration value="VISOKA_CENA"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="sadrzaj" type="xs:double"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
