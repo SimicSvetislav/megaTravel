@@ -1,0 +1,22 @@
+{
+  "name": "rating-module",
+  "version": "1.0.0",
+  "description": "Rating module for megatravel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimicSvetilslav/megaTravel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SimicSvetilslav/megaTravel/issues"
+  },
+  "homepage": "https://github.com/SimicSvetilslav/megaTravel#readme",
+  "dependencies": {
+    "@google/cloud-debug": "^0.9.3"
+  }
+}
