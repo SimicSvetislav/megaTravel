@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,7 @@ import com.project.megatravel.util.Creator;
 public class RuleBasedModuleClient {
 	
 	@Autowired
-	private RestTemplate client;
+	private RestTemplate restClient;
 	
 	@RequestMapping(value = "/testclient", method=RequestMethod.GET)
 	public String testClient() {
@@ -30,7 +31,7 @@ public class RuleBasedModuleClient {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 	    HttpEntity <String> entity = new HttpEntity<String>(headers);
 	      
-	    return client.exchange("http://localhost:8020/item", HttpMethod.GET, entity, String.class).getBody();
+	    return restClient.exchange("http://localhost:8020/item", HttpMethod.GET, entity, String.class).getBody();
 	}
 	
 	@RequestMapping(value = "/client/classify", method=RequestMethod.GET)
@@ -40,7 +41,9 @@ public class RuleBasedModuleClient {
 		
 		HttpEntity <KrajnjiKorisnikDTO> entity = new HttpEntity<KrajnjiKorisnikDTO>(kk);
 	    
-	    return client.exchange("http://localhost:8020/client/classify", HttpMethod.PUT, entity, String.class).getBody();
+	    return restClient.exchange("http://localhost:8020/client/classify", HttpMethod.PUT, entity, String.class).getBody();
 	}
+	
+	
 
 }

@@ -8,26 +8,11 @@
 		<version>2.1.5.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.project</groupId>
-	<artifactId>mega-travel</artifactId>
+	<groupId>com.project.megatravel</groupId>
+	<artifactId>eureka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>mega-travel</name>
-	<description>Projekat iz predmeta XML i veb servisi i Sistemi bazirani na znanju</description>
-
-	<repositories>
-    	<repository>
-	      <id>exist-db</id>
-	      <url>http://repo.evolvedbinary.com/content/repositories/exist-db/</url>
-	      <releases><enabled>true</enabled></releases>
-	      <snapshots><enabled>false</enabled></snapshots>
-	    </repository>
-	    <repository>
-	      <id>exist-db-snapshots</id>
-	      <url>http://repo.evolvedbinary.com/content/repositories/exist-db-snapshots/</url>
-	      <releases><enabled>false</enabled></releases>
-	      <snapshots><enabled>true</enabled></snapshots>
-	    </repository>
-	</repositories>
+	<name>eureka</name>
+	<description>Demo project for Spring Boot</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -36,25 +21,17 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web-services</artifactId>
-		</dependency>
-		<dependency>
-	      <groupId>org.exist-db</groupId>
-	      <artifactId>exist-core</artifactId>
-	      <version>5.0.0-RC6</version>
-	    </dependency>
-	    <dependency>
-		    <groupId>org.springframework.cloud</groupId>
-		    <artifactId>spring-cloud-starter-eureka</artifactId>
-		    <version>1.4.7.RELEASE</version>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
