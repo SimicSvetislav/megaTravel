@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/accomodation/managment"
+    xmlns="www.model.megatravel.project.com/accomodation/managment"
+    xmlns:acc="www.model.megatravel.project.com/accomodation">
+    <xs:import namespace="www.model.megatravel.project.com/accomodation"
+        schemaLocation="file:/C:/Users/lukaj/git/megaTravel/schemas_updated/SmestajSema.xsd"/>
+    <xs:element name="addObjectRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addObjectResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addUnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="addUnitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getObjectsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="agentId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getObjectsResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getObjectRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getObjectResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUnitsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objectId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUnitsResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUnitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
