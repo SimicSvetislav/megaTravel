@@ -1,0 +1,30 @@
+<!-- <div class="masthead">
+  <nav>
+    <ul class="nav nav-justified">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#">Projects</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Downloads</a></li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div> -->
+
+<ul class="nav nav-justified">
+  <li class="nav-item"  [class.active]="activeTab === 'basic-info'">
+    <a class="nav-link" (click)="activeTab = 'basic-info'">Osnovni podaci</a>
+  </li>
+  <li class="nav-item" [class.active]="activeTab === 'facilities'">
+    <a class="nav-link" (click)="activeTab = 'facilities'">Dodatne usluge</a>
+  </li>
+</ul>
+
+<div [ngSwitch]="activeTab">
+  <div *ngSwitchCase="'basic-info'">
+    <app-new-object-basic-info [object] = "newObject" (addBasicInfo)="addBasicInfo()"></app-new-object-basic-info>
+  </div>
+  <div *ngSwitchCase="'facilities'">
+    <app-choose-facilities [object] = "newObject" (chooseFacilites) = "addNewObject()" (backFacilities)="backFacilities()"></app-choose-facilities>
+  </div>
+</div>
