@@ -1,0 +1,117 @@
+
+<form #f ="ngForm">
+  <div class="row">    
+     <div class="col-md-3 mb-3">
+        <label for="objectName">Ime objekta* :</label>
+     </div>
+     <div class="col-md-3 mb-3">
+        
+      </div>
+     <div class="col-md-3 mb-3">
+        <input id="objectName" type="text" class="form-control" [(ngModel)]="object.naziv" name="objectName" required>
+     </div>
+  </div>
+  <div class="row">
+      <div class="col-md-3 mb-3">
+          <label for="objectType">Tip smestaja* :</label>
+      </div>
+      <div class="col-md-3 mb-3">
+        <select [(ngModel)]="object.tipSmestaja" name="objectType" id="objectType" class="custom-select d-block" required>
+              <option *ngFor="let type of types;" [ngValue]="type">{{type.naziv}}</option>
+        </select>
+      </div>
+      <div class="col-md-3 mb-3">
+          <label for="objectCat">Kategorija smestaja* :</label>
+      </div>
+      <div class="col-md-3 mb-3">
+        <select [(ngModel)]="object.kategorija" name="objectCat" id="objectCat" class="custom-select d-block" required>
+          <option *ngFor="let cat of categories;" [ngValue]="cat">{{cat.naziv}}</option>
+        </select>
+      </div>   
+  </div>
+  <hr/>
+  <div class="row">
+      <div class="col-md-3 mb-3">
+          <label for="objectAddress">Adresa objekta* :</label>
+      </div>
+      <div class="col-md-3 mb-3">
+        
+      </div>
+       <div class="col-md-3 mb-3">
+          <input id="objectAddress" type="text" class="form-control" [(ngModel)]="adresa" name="objectAddress" required>
+       </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="objectLatitude">Koordinate objekta :</label>
+    </div>
+    <div class="col-md-2 mb-3">
+      <label >Geo. sirina :</label>
+    </div>
+    <div class="col-md-1 mb-3">
+        <input [(ngModel)]="duzinaStepeni"  id="objectLatitude" type="text" class="form-control" name="objectLatitude" placeholder="Stepeni" pattern="[0-9]*">
+    </div>
+    <div class="col-md-1 mb-3">
+      <select [(ngModel)]="duzinaOrijentacija" name="objectLatitudeOrientation" id="objectLatitudeOrientation"  class="form-control">
+          <!-- <select  name="objectLatitudeOrientation" id="objectLatitudeOrientation"> -->
+            <!-- <option [ngValue]="null">Strana sveta</option> -->
+            <option >N</option>
+            <option>S</option>
+
+      </select>
+    </div>
+    <div class="col-md-2 mb-3">
+        <label for="objectLongitude">Geo. duzina :</label>
+    </div>
+    <div class="col-md-1 mb-3">
+        <input [(ngModel)]="sirinaStepeni" name="objectLongitude" id="objectLongitude" type="text" class="form-control"   placeholder="Stepeni" pattern="[0-9]*">
+    </div> 
+    <div class="col-md-1 mb-3">
+      <select [(ngModel)]="sirinaOrijentacija"  name="objectLongitudeOrientation" id="objectLongitudeOrientation" class="form-control">
+          <!-- <select   name="objectLongitudeOrientation" id="objectLongitudeOrientation" class="form-control"> -->
+        <!-- <option [ngValue]="null">Strana sveta</option> -->
+        <option >W</option>
+        <option>E</option>
+      </select>
+    </div>  
+  </div>
+  <hr/>
+  <div class="row">    
+      <div class="col-md-3 mb-3">
+         <label >Otkazivanje :</label>
+      </div>
+      <div class="col-md-3 mb-3">
+          <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="otkazivanje" id="cancelOption" name="cancelOption" value="Moguce">Moguće</label>
+      </div>
+      <div class="col-md-2 mb-3">
+        <label for="objectCancelDaysNum">Broj dana :</label>
+      </div>
+      <div class="col-md-1 mb-3">
+         <input id="objectCancelDaysNum" type="text" class="form-control" [(ngModel)]="brojDanaOtkazivanja" name="objectCancelDaysNum" >
+      </div>
+      <div class="col-md-2 mb-3">
+          <label for="objectCancelFactor">Faktor :</label>
+      </div>
+      <div class="col-md-1 mb-3">
+        <input id="objectCancelFactor" type="text" class="form-control" [(ngModel)]="faktorOtkazivanja" name="objectCancelFactor" >
+      </div>
+   </div>
+  <div class="form-group">
+      <label for="objectcomment">Opis objekta:</label>
+      <textarea [(ngModel)]="opisObjekta" class="form-control" rows="2" id="objectComment" name="objectComment"></textarea>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-danger btn-lg btn-block" (click)="back()">
+            <fa name="angle-left" size="lg"></fa> Povratak
+          </button>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "next(f)">
+          Dalje <fa name="angle-right" size="lg"></fa>
+      </button>
+    </div>
+  </div>
+</form>
+
