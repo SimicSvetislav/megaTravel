@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
 
   user: User = new User();
   constructor(private router: Router,private testing: TestService) { }
-
+  str: String="";
   ngOnInit() {
   }
 
@@ -23,7 +23,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     alert("Usao!")
-    this.testing.test("Puno pozdrava!");
+    this.testing.test().subscribe(data => {
+      this.str = JSON.stringify(data);
+      alert("Vratio se sime: " + this.str);
+    })
   }
 
 }
