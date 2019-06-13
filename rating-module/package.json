@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/SimicSvetilslav/megaTravel#readme",
   "dependencies": {
-    "@google/cloud-debug": "^0.9.3"
+    "@google/cloud-debug": "^0.9.3",
+    "mongodb": "^3.2.7",
+    "mysql": "^2.17.1"
   }
 }
