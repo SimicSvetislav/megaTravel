@@ -11,18 +11,25 @@ export class SmestajniObjekat {
     id: number;
     tipSmestaja: TipSmestaja;
     lokacija: Lokacija;
-    otkazivanje: Otkazivanje;
+   // otkazivanje: Otkazivanje;
     kategorija: KategorijaSmestaja;
-    zvezdice: number;       // ??????????????/
+   // zvezdice: number;       // ??????????????/
 
+    // PRIVREMENO...
+    // rejting: Rejting;
 
-    rejting: Rejting;
+   // smestajneJedinice: SmestajnaJedinica[];
+  //  dodatneUsluge: DodatnaUsluga[];
 
-    smestajneJedinice: SmestajnaJedinica[];
-    dodatneUsluge: DodatnaUsluga[];
-
-    agent: Agent;
+  //  agent: Agent;
 
     // ????????????????????
     naziv: string;
+
+    constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja) {
+      this.id = id;
+      this.naziv = naziv;
+      this.tipSmestaja = tip;
+      this.kategorija = kategorija;
+    }
 }

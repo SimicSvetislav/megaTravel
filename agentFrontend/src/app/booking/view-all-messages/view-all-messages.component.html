@@ -1,0 +1,33 @@
+<h1 class="text-center">Sve pristigle poruke</h1>
+<div class="row">
+  <div class="col-lg-3 themed-grid-col">
+    <div class="list-group">
+      <!-- <a  [class.active]="activeTab === 'inbox'" (click)="activeTab = 'inbox'" class="list-group-item list-group-item-action" >Primljene<span class="badge badge-pill badge-success ml-3">8.5</span></a> 
+      <a  [class.active]="activeTab === 'sent'" (click)="activeTab = 'sent'" class="list-group-item list-group-item-action" >Poslate</a> -->
+      <a  [class.active]="activeTab === 'inbox'" (click)="changeActiveTab('inbox')" class="list-group-item list-group-item-action" >Primljene<span class="badge badge-pill badge-success ml-3">8.5</span></a> 
+      <a  [class.active]="activeTab === 'sent'" (click)="changeActiveTab('sent')" class="list-group-item list-group-item-action" >Poslate</a>
+    </div>
+    <button type="button" class="btn btn-primary btn-lg btn-block mt-3"  (click)="back()">
+      <fa name="angle-left" size="lg"></fa> Povratak
+    </button>
+  </div>
+  <div class="col-lg-9">
+    <div class="row">
+      <div class="col">
+        <app-view-all-messages-table [messagesType]="activeTab" onChanges (selectedMessageChanged)="selectedMessageChanged($event)"></app-view-all-messages-table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" *ngIf="selectedMessage">
+          <div [ngSwitch]="displayDirection">
+              <div *ngSwitchCase="'receive'" style="height: 20vh">
+                <app-view-message [message]="selectedMessage" [activeTab]="activeTab" (back)="backFromView()" (reply)="replyFromView()"></app-view-message>               
+              </div>
+              <div *ngSwitchCase="'answer'">
+                <app-answer-message [message]="selectedMessage" (back)="backFromAnswer()" (reply)="replyFromAnswer()"></app-answer-message>
+              </div>
+          </div>       
+      </div>
+    </div>
+  </div>
+</div>

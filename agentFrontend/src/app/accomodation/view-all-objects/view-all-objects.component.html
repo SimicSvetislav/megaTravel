@@ -1,3 +1,54 @@
-<p>
-  view-all-objects works!
-</p>
+<h2 class="text-center">Objekti agenta</h2>
+<div  class="stopsTable">
+<div *ngFor="let object of objektiAgenta">
+  <div class="row oneFlight">
+    <div class="col-lg-10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- <p><b>{{reservation?.ticket.flight | timeFilter}}</b></p> -->
+          <p><b>Ime objekta</b></p>
+
+        </div>
+        <div class="col-lg-3">
+          <!-- <p><b>{{reservation?.ticket.flight.stops.length}} presedanja</b></p> -->
+          <p><b>Adresa</b></p>
+
+        </div>
+        <div class="col-lg-3">
+          <!-- <p><b>{{reservation?.ticket.flight.flightDistance}}km</b></p> -->
+          <p><b>Tip smestaja</b></p>
+
+        </div>
+        <div class="col-lg-3">
+          <!-- <p><b>{{reservation?.ticket.flight.flightDistance}}km</b></p> -->
+          <p><b>Kategorija</b></p>
+
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <p><b>{{object.naziv}}</b></p>
+        </div>
+        <div class="col-lg-3">
+          <p><b>{{object.lokacija | locationFilter}}</b></p>
+        </div>
+        <div class="col-lg-3"  style="font-size: 17px">
+          <p><b>{{object.tipSmestaja.naziv}}</b></p>
+        </div>
+        <div class="col-lg-3"  style="font-size: 17px">
+          <p><b>{{object.kategorija.naziv}}</b></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2 priceDiv">
+      <!-- <div class="w-100">fdfd</div> -->
+      <div style="text-align: center">
+        <button type="submit" class="btn btn-primary btn-block detail" (click)="detail(object)">
+          Detalji
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

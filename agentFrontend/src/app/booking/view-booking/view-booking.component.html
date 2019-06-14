@@ -1,0 +1,59 @@
+<div class="border border-primary rounded">
+    <div class="row"> <!-- neki ngIf-->
+      <div class="col">
+
+      </div>
+      <div class="col">
+
+      </div>
+      <div class="col">
+          <button type="button" class="btn btn-primary btn-lg btn-block mt-3"  (click)="confirmBook()">
+              <fa name="check" size="lg"></fa> Potvrdi
+            </button>
+      </div>
+    </div>
+    <table class="table table-bordered mt-3">
+        <thead>
+      
+        </thead>
+        <tbody>
+          <tr>
+            <th>Id rezervacije</th>
+            <td>{{selectedBooking.id}}</td>
+          </tr>
+          <tr class="info">
+            <th>Početak termina</th>
+            <td>{{selectedBooking.datumPocetka | date}}</td>
+          </tr>
+          <tr class="info">
+            <th>Kraj termina</th>
+            <td>{{selectedBooking.datumZavrsetka | date}}</td>
+          </tr>
+          <tr>
+            <th>Datum rezervacije</th>
+            <td>{{selectedBooking.datumRezervacije | date}}</td>
+          </tr>
+          <tr>
+            <th>Cena</th>
+            <td>{{selectedBooking.cenaSmestaja}}</td>
+          </tr>
+          <tr>
+            <th>Popust</th>
+            <td>{{selectedBooking.popust}}</td>
+          </tr>
+          <tr>
+            <th>Stanje rezervacije</th>
+            <td>{{selectedBooking.stanje}}</td>
+          </tr>
+          <tr>
+            <th>Soba(Smeštaj)</th>
+            <td>{{selectedBooking | bookRoom}}</td>
+          </tr>
+          <tr>
+            <th>Rezervisao</th>
+            <td>{{selectedBooking | bookUser}}</td>
+          </tr>
+                                                   
+        </tbody>
+      </table>  
+</div>

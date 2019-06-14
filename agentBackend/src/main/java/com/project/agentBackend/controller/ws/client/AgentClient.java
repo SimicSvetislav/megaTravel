@@ -20,7 +20,7 @@ public class AgentClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetBookingsResponse response = (GetBookingsResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/agentBackend", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/agentBackend", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/messages/agent"));
 		

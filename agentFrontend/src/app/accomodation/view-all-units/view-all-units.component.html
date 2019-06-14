@@ -1,3 +1,57 @@
-<p>
-  view-all-units works!
-</p>
+<!-- <h2 class="text-center">Sobe agenta</h2> -->
+<div  class="stopsTable">
+  <div *ngFor="let unit of units">
+    <div class="row oneFlight mb-3">
+      <div class="col-lg-10">
+        <div class="row">
+          <div class="col-lg-3">
+            <p><b>Redni broj sobe</b></p>
+          </div>
+          <div class="col-lg-3">
+            <p><b>Broj kreveta</b></p>
+          </div>
+          <div class="col-lg-3">
+            <p><b>Balkon</b></p>
+          </div>
+          <div class="col-lg-3">
+            <p><b>Podrazumevana cena</b></p>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <p><b>{{unit.id}}</b></p>
+          </div>
+          <div class="col-lg-3">
+            <p><b>{{unit.brojKreveta}}</b></p>
+          </div>
+          <div class="col-lg-3"  style="font-size: 17px">
+            <p><b>{{unit.balkon ? 'Da' : 'Ne'}}</b></p>
+          </div>
+          <div class="col-lg-3"  style="font-size: 17px">
+            <p><b>{{unit.podrazumevaniCenovnik.cena.iznos}} {{unit.podrazumevaniCenovnik.cena.valuta}}</b></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 priceDiv">
+        <!-- <div class="w-100">fdfd</div> -->
+        <div style="text-align: center">
+          <button type="submit" class="btn btn-primary btn-block detail" (click)="detail(object)" >
+            Detalji
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "newUnit()">
+      <fa name="plus" size="lg"></fa>Dodaj novu sobu 
+    </button>
+  </div>
+</div>
+

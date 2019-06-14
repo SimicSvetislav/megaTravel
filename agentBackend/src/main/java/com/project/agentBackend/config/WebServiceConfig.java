@@ -16,18 +16,18 @@ import org.springframework.xml.xsd.XsdSchema;
 @Configuration
 public class WebServiceConfig extends WsConfigurerAdapter {
 	
-	/*Bez ovoga ne realizuje dinamicki definisane beanove po njihovim url delovima...*/
+	//Bez ovoga ne realizuje dinamicki definisane beanove po njihovim url delovima...
 	@Bean
 	public ServletRegistrationBean messageDispatcherServlet(ApplicationContext applicationContext) {
 		MessageDispatcherServlet servlet = new MessageDispatcherServlet();
 		servlet.setApplicationContext(applicationContext);
 		servlet.setTransformWsdlLocations(true);
-		return new ServletRegistrationBean(servlet, "/*");
+		return new ServletRegistrationBean(servlet, "/ws/*");
 	}
 	
 	
 
-	/*url wsdl: http://localhost:8836/agent/agentBackend.wsdl */
+	//url wsdl: http://localhost:8836/agent/ws/agentBackend.wsdl 
 	@Bean(name = "agentBackend")
 	public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema schema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
@@ -45,7 +45,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 		return new SimpleXsdSchema(new ClassPathResource("schemas/KomunikacijaAgentBackend.xsd"));
 	}
 	
-	//url wsdl: http://localhost:8836/agent/accomodationRating.wsdl 
+	//url wsdl: http://localhost:8836/agent/ws/accomodationRating.wsdl 
 	@Bean(name = "accomodationRating")
 	public DefaultWsdl11Definition ratingWsdl(XsdSchema ratingSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
@@ -63,7 +63,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 	}
 	
 	
-	//url wsdl: http://localhost:8836/agent/accomodation.wsdl 
+	//url wsdl: http://localhost:8836/agent/ws/accomodation.wsdl 
 	@Bean(name = "accomodation")
 	public DefaultWsdl11Definition ratingAccomodation(XsdSchema accomodationSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();
@@ -80,7 +80,7 @@ public class WebServiceConfig extends WsConfigurerAdapter {
 		return new SimpleXsdSchema(new ClassPathResource("schemas/SmestajSemaManagment.xsd"));
 	}
 	
-	//url wsdl: http://localhost:8836/agent/booking.wsdl 
+	//url wsdl: http://localhost:8836/agent/ws/booking.wsdl 
 	@Bean(name = "booking")
 	public DefaultWsdl11Definition booking(XsdSchema bookingSchema) {
 		DefaultWsdl11Definition wsdl11Definition = new DefaultWsdl11Definition();

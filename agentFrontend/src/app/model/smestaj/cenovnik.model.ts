@@ -4,6 +4,10 @@ export class Cenovnik {
     pocetak: Date;
     kraj: Date;
 
+    pocetakStr: string;
+    krajStr: string;
+
     cena: Cena;
     smestaj: SmestajnaJedinica;
+
 }

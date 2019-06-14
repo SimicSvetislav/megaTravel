@@ -21,7 +21,7 @@ public class AccomodationRatingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetRatingResponse response = (GetRatingResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodationRating", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodationRating", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/messages/rating/ws"));
 		

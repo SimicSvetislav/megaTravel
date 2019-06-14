@@ -1,0 +1,30 @@
+<table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Naslov</th>
+        <th>Pošiljalac</th>
+        <th>Primalac</th>
+        <th>Datum</th>
+        <th>Prilog</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let poruka of poruke; index as i" (click)="select(poruka, i)" [ngClass]="{ 'selectedRow': selectedRows[i]}">
+        <td>
+          Sprat...
+        </td>
+        <td>
+          {{poruka.posiljalac.email}}
+        </td>
+        <td>
+          {{poruka.primalac?.email}}
+        </td>
+        <td>
+          {{poruka.timestamp}}
+        </td>
+        <td>
+          {{poruka.sadrzaj ? 'Ima' : 'Nema'}}
+        </td>
+      </tr>
+    </tbody>
+  </table>

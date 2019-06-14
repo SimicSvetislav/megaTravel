@@ -30,7 +30,7 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		AddObjectResponse response = (AddObjectResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodation", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodation", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/accomodation/managment"));
 		
@@ -47,7 +47,7 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		AddUnitResponse response = (AddUnitResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodation", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodation", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/accomodation/managment"));
 		
@@ -64,7 +64,7 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetObjectResponse response = (GetObjectResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodation", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodation", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/accomodation/managment"));
 		
@@ -81,7 +81,7 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetObjectsResponse response = (GetObjectsResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodation", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodation", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/accomodation/managment"));
 		
@@ -98,7 +98,7 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetUnitResponse response = (GetUnitResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodation", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodation", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/accomodation/managment"));
 		
@@ -115,7 +115,7 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		 GetUnitsResponse response = ( GetUnitsResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/accomodation", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/accomodation", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/accomodation/managment"));
 		

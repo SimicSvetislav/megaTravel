@@ -1,3 +1,61 @@
-<p>
-  view-object works!
-</p>
+<!-- <ul class="nav nav-justified">
+  <li class="nav-item"  [class.active]="activeTab === 'basic-info'">
+    <a class="nav-link" (click)="activeTab = 'basic-info'">Osnovni podaci</a>
+  </li>
+  <li class="nav-item" [class.active]="activeTab === 'facilities'">
+    <a class="nav-link" (click)="activeTab = 'facilities'">Dodatne usluge</a> 
+  </li>
+  <li class="nav-item" [class.active]="activeTab === 'images'">
+    <a class="nav-link" (click)="activeTab = 'images'">Slike objekta</a>
+</li>
+  <li class="nav-item" [class.active]="activeTab === 'units'">
+      <a class="nav-link" (click)="activeTab = 'units'">Sobe</a>
+  </li>
+  
+</ul> -->
+
+<!-- <ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Active</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">Link</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+  </li>  
+</ul> -->
+
+<h1 class="text-center">Podaci o objektu: {{objekat.naziv}}</h1>
+<div class="row">
+  <div class="col-lg-3 themed-grid-col">
+    <div class="list-group">
+      <a  [class.active]="activeTab === 'basic-info'" (click)="activeTab = 'basic-info'" class="list-group-item list-group-item-action" >Osnovne informacije</a>
+      <a  [class.active]="activeTab === 'facilities'" (click)="activeTab = 'facilities'" class="list-group-item list-group-item-action" >Dodatne usluge</a>
+      <a  [class.active]="activeTab === 'images'" (click)="activeTab = 'images'" class="list-group-item list-group-item-action" >Slike</a>
+      <a  [class.active]="activeTab === 'units'" (click)="activeTab = 'units'" class="list-group-item list-group-item-action" >Sve sobe</a> 
+    </div>
+    <button type="button" class="btn btn-primary btn-lg btn-block mt-3"  (click)="back()">
+      <fa name="angle-left" size="lg"></fa> Povratak
+    </button>
+  </div>
+  <div class="col-lg-9">
+    <div [ngSwitch]="activeTab">
+      <div *ngSwitchCase="'basic-info'">
+        <app-view-object-basic-info [object] = "objekat" ></app-view-object-basic-info>
+      </div>
+      <div *ngSwitchCase="'facilities'">
+        <app-view-object-facilities [object] = "objekat" ></app-view-object-facilities>
+      </div>
+      <div *ngSwitchCase="'images'">
+        <app-view-object-images [object] = "objekat" ></app-view-object-images>
+      </div>
+      <div *ngSwitchCase="'units'">
+        <app-view-all-units [object] = "objekat" ></app-view-all-units>
+      </div>
+    </div>
+  </div>
+</div>

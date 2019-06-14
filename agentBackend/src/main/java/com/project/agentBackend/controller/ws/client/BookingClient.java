@@ -30,7 +30,7 @@ public class BookingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetBookingsResponse response = (GetBookingsResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/booking", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/booking", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/reservations/managment"));
 		
@@ -47,7 +47,7 @@ public class BookingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		GetBookingResponse response = (GetBookingResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/booking", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/booking", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/reservations/managment"));
 		
@@ -64,7 +64,7 @@ public class BookingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		MakeBookingResponse response = (MakeBookingResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/booking", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/booking", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/reservations/managment"));
 		
@@ -81,7 +81,7 @@ public class BookingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		ConfirmBookingResponse response = (ConfirmBookingResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/booking", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/booking", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/reservations/managment"));
 		
@@ -98,7 +98,7 @@ public class BookingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		 GetMessageResponse response = ( GetMessageResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/booking", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/booking", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/reservations/managment"));
 		
@@ -115,7 +115,7 @@ public class BookingClient extends WebServiceGatewaySupport {
 		log.info("Requesting location for " + country);
 
 		 AnswerMessageResponse response = ( AnswerMessageResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/booking", request,
+				.marshalSendAndReceive("http://localhost:8836/agent/ws/booking", request,
 						new SoapActionCallback(
 								"www.model.megatravel.project.com/reservations/managment"));
 		
