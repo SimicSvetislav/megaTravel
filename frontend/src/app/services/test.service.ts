@@ -10,9 +10,9 @@ export class TestService {
 
   constructor(private http: HttpClient) { }
 
-  test(temp): Observable<any> {
+  test() {
     alert("Service!")
-    return this.http.get("//localhost:8888/api/test/proba");
+    return this.http.get("//localhost:8111/api/test/proba");
   }
 
 }
