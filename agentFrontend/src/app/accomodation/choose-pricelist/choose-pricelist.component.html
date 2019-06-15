@@ -1,3 +1,126 @@
+<h1 class="text-center">Definisanje cene smestaja</h1>
+<div class="row">    
+  <div class="col-md-3 mb-3">
+     <label for="defaultPrice">Podrazumevana cena[po indeksu]* :</label>
+  </div>
+  <div class="col-md-3 mb-3">
+    <select [(ngModel)]="selectedIndex" (change)= "defaultPriceChanged()"  name="defaultPrice" id="defaultPrice" class="form-control" required>
+        <option *ngFor="let cena of dodatiCenovnici;index as i">{{i+1}}</option>
+    </select>
+  </div> 
+  <div class="col-md-3 mb-3">
+    <label >Nova cena* :</label>
+  </div>
+   <div class="col-md-3 mb-3">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "this.shouldPriceFormDisplay = !this.shouldPriceFormDisplay;">
+        <fa name="plus" size="lg"></fa> Dodaj
+    </button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 mb-3">
+      <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td>Indeks</td>
+              <td>Pocetak smene</td>
+              <td>Kraj termina</td>
+              <td>Iznos</td>
+              <td>Valuta</td>
+              <!-- <td>Podrazumevani</td> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cenovnik of dodatiCenovnici; index as i">
+              <td>
+                {{i+1}}
+              </td>
+              <td>
+                {{cenovnik.pocetakStr }}
+              </td>
+              <td>
+                {{cenovnik.krajStr }}
+              </td>
+              <td>
+                {{cenovnik.cena.iznos}}
+              </td>
+              <td>
+                {{cenovnik.cena.valuta}}
+              </td>
+              <!-- <td>
+                  <button type="submit" class="btn btn-primary" style="float: right;" (click) = "addNewPrice(f)" aria-placeholder="dflajkflakj">
+                      Dodaj <fa name="angle-right" size="lg"></fa>
+                  </button>
+              </td>        -->
+            </tr>
+          </tbody>
+        </table>
+  </div>
+  <div class="col-md-6 mb-3" [hidden]="!shouldPriceFormDisplay">
+      <form #f ="ngForm">
+        <div class="row">
+            <div class="col-md-5  mb-3">
+              <label for="price">Cena* :</label>
+            </div>
+            <div class="col-md-7 mb-3">
+              <input id="price" type="text" class="form-control" [(ngModel)]="iznos" name="price" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5  mb-3">
+              <label for="currency">Valuta* :</label>
+            </div>
+            <div class="col-md-7 mb-3">
+                <select [(ngModel)]="valuta"  name="currency" id="currency" class="form-control" required>
+                  <option>RSD</option>
+                  <option>EUR</option>
+                </select>
+            </div> 
+        </div>
+        <div class="row">
+          <div class="col-md-5  mb-3">
+            <label for="dp1">Početak termina* :</label>
+          </div>
+          <div class="col-md-7 mb-3">
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp1" id="dp1" [(ngModel)]="start" ngbDatepicker  startDate="2019-07-01" #departurePicker="ngbDatepicker" required>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="departurePicker.toggle()" type="button"><fa name="plus" style="color:blue" size="lg"></fa></button>
+              </div>
+            </div>
+          </div>      
+        </div>
+        <div class="row">
+          <div class="col-md-5  mb-3">
+            <label for="dp2">Kraj termina* :</label>
+          </div>
+          <div class="col-md-7 mb-3">
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd"
+                       name="dp2" name="dp2" [(ngModel)]="end"  ngbDatepicker startDate="2019-08-01" #arrivalPicker="ngbDatepicker" required>
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="arrivalPicker.toggle()" type="button"><fa name="plus" style="color:red" size="lg"></fa></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <button type="button" class="btn btn-danger" (click)="quit()">
+                    <fa name="angle-left" size="lg"></fa> Odustani
+            </button>
+          </div>
+          <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-primary" style="float: right;" (click) = "addNewPrice(f)">
+                  Dodaj <fa name="angle-right" size="lg"></fa>
+              </button>
+            </div>
+          </div>
+      </form>
+  </div>
+</div>
 <div class="row">
     <div class="col-md-4">
         <button type="button" class="btn btn-danger btn-lg btn-block" (click)="back()">
@@ -10,4 +133,4 @@
           Dalje <fa name="angle-right" size="lg"></fa>
       </button>
     </div>
-  </div>
+</div>

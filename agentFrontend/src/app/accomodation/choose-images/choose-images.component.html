@@ -15,7 +15,7 @@
 </form>
   <h1>Odabrali ste sledeće slike:</h1>
   <div class="card-deck">
-      <app-display-image *ngFor="let image of selectedImages" [imageWrapper]="image" (deleteImage)="deleteImage(image)"></app-display-image>
+      <app-display-image style="width: 33%" *ngFor="let image of selectedImages" [imageWrapper]="image" (deleteImage)="deleteImage(image)"></app-display-image>
   </div>
   <div class="row">
       <div class="col-md-4">

@@ -47,7 +47,7 @@ export class NewUnitBasicInfoComponent implements OnInit {
       otkazivanje.brojDana = +this.brojDanaOtkazivanja;
       otkazivanje.faktorOtkazivanja = +this.faktorOtkazivanja;
       otkazivanje.dozvoljeno = this.otkazivanje;
-      this.object.otkazivanje = otkazivanje;
+      // this.object.otkazivanje = otkazivanje;
     }
 
     console.log(this.otkazivanje);

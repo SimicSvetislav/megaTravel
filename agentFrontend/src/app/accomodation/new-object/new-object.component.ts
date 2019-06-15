@@ -1,3 +1,5 @@
+import { KategorijaSmestaja } from './../../model/smestaj/kategorija-smestaja.model';
+import { TipSmestaja } from './../../model/smestaj/tip-smestaja.model';
 import { AccomodationService } from './../../service/accomodation.service';
 import { Component, OnInit } from '@angular/core';
 import { SmestajniObjekat } from 'src/app/model/smestaj/smestajni-objekat.model';
@@ -16,7 +18,7 @@ export class NewObjectComponent implements OnInit {
   constructor(private accomodationService: AccomodationService) { }
 
   ngOnInit() {
-    this.newObject = new SmestajniObjekat();
+    this.newObject = new SmestajniObjekat(1, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, '4*'));
 
     this.activeTab = 'basic-info';
   }

@@ -13,18 +13,28 @@ export class SmestajnaJedinica {
     cenovnici: Cenovnik[];
     podrazumevaniCenovnik: Cenovnik;
 
-    opis: string;
-    dodatneUsluge: DodatnaUsluga[];
-    otkazivanje: Otkazivanje;
+    // privremeno zakomentarisano
+    // opis: string;   // ?????? digli na objekat
+   // dodatneUsluge: DodatnaUsluga[];
+   // otkazivanje: Otkazivanje;
 
     // ??????????????????????
-    povecanjeVeciBrojOsoba: number;
-    sObjekat: SmestajniObjekat;
-    komentari: Komentar[];
-    rejting: Rejting;
+    // povecanjeVeciBrojOsoba: number;
+     sObjekat: SmestajniObjekat;
+    // komentari: Komentar[];
+    // rejting: Rejting;
 
-    // FileSet???
-    slike: File[];
+    // FileSet??? digli na objekat
+    // slike: File[];
+
+    constructor(id: number, kreveta: number, balkon: boolean, podrazumevani: Cenovnik, cenovnici: Cenovnik[]) {
+        this.id = id;
+        this.brojKreveta = kreveta;
+        this.balkon = balkon;
+        this.podrazumevaniCenovnik = podrazumevani;
+        this.cenovnici = cenovnici;
+       // this.sObjekat = objekat;
+    }
 }
 
 

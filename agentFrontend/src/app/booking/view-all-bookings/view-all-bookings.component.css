@@ -1,0 +1,18 @@
+.list-group-item.list-group-item-action { cursor: pointer; }
+
+/* tr.selected{
+    background-color: beige;
+}
+
+tr.selectedRow {
+    background-color: beige;
+    cursor: pointer;
+} */
+
+table {
+    cursor: pointer;
+    height: 40vh;
+    overflow-y:scroll;
+    /* height:300px; */
+    display:block;
+}

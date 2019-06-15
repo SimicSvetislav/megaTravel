@@ -1,27 +1,21 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-  <div class="container-fluid">
-      <!-- <div class="navbar-header">
-          <a class="navbar-brand" href="#">Project name</a>
-        </div> -->
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-              <img alt="MegaTravel" src="../../../assets/hotel-icon.png">
+          <nav class="navbar ">
+            <a class="navbar-brand" href="#">                                   
+              <img src="../../../assets/hotel-icon.png" width="30" height="30" class="d-inline-block align-top" alt="MegaTravel">
+              MegaTravel
             </a>
-          </div>
+          </nav>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" routerLink = "/airline/all">Airlines <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink = "/bookings">Rezervacije <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" routerLink = "/searchRentacar">Rezervacije <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" routerLink = "/user">Poruke <span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink = "/messages">Poruke <span class="sr-only">(current)</span></a>
         </li>
         
-        <li>
-          <button *ngIf="!isUserLogged" routerLink="/login" class="btn btn-secondary my-2 my-sm-0" type="submit">Svi objekti</button>
+        <li class="nav-item active">
+          <a class="nav-link"  routerLink = "/objects">Svi objekti <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
           <a class="nav-link"  routerLink = "/newObject">Novi Objekat <span class="sr-only">(current)</span></a>
@@ -29,20 +23,30 @@
       </ul>
    
       <ul class="nav navbar-right nav-pills">
-        <li class="nav-item active">
-            <a class="nav-link" routerLink = "/airline/all">Profil </a>
+        <li class="nav-item active" style="color: white">
+            <button *ngIf="!isUserLogged" routerLink="/profile" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="id-card" size="lg"></fa> 
+              Profil </button>
         </li>
         <li class="nav-item active">
-          <button *ngIf="!isUserLogged" routerLink="/login" class="btn btn-secondary my-2 my-sm-0" type="submit">Registracija</button>
+          <button *ngIf="!isUserLogged" routerLink="/register" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="plus" size="lg"></fa> 
+            Registracija</button>
         </li>
         <li class="nav-item active">
-          <button *ngIf="!isUserLogged" routerLink="/login" class="btn btn-secondary my-2 my-sm-0" type="submit">Prijava</button>
+          <button *ngIf="!isUserLogged" routerLink="/login" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="angle-down" size="lg"></fa>Prijava</button>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" routerLink = "/airline/all">Odjava <span class="sr-only">(current)</span></a>
+          <!-- <a class="nav-link" routerLink = "/logout">Odjava </a> -->
+          <button *ngIf="!isUserLogged" routerLink="/logout" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="angle-up" size="lg"></fa>Odjava</button>
         </li>        
       </ul>
     </div>
-  </div>
 </nav>
+
+
+ 
+
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
 

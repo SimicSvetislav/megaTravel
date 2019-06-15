@@ -49,19 +49,19 @@ export class NewObjectBasicInfoComponent implements OnInit {
 
   ngOnInit() {
     const t: TipSmestaja[] = new Array();
-    const s: TipSmestaja = new TipSmestaja();
+    const s: TipSmestaja = new TipSmestaja(1, 'hotel');
     s.id = 1;
     s.naziv = 'hotel';
 
-    const s2: TipSmestaja = new TipSmestaja();
+    const s2: TipSmestaja = new TipSmestaja(2, 'hotel');
     s2.id = 1;
     s2.naziv = 'bed and breakfast';
 
-    const s3: TipSmestaja = new TipSmestaja();
+    const s3: TipSmestaja = new TipSmestaja(3, 'hotel');
     s3.id = 1;
     s3.naziv = 'apartman';
 
-    const s4: TipSmestaja = new TipSmestaja();
+    const s4: TipSmestaja = new TipSmestaja(4, 'hotel');
     s4.id = 1;
     s4.naziv = 'hotel';
 
@@ -116,7 +116,7 @@ export class NewObjectBasicInfoComponent implements OnInit {
       otkazivanje.brojDana = +this.brojDanaOtkazivanja;
       otkazivanje.faktorOtkazivanja = +this.faktorOtkazivanja;
       otkazivanje.dozvoljeno = this.otkazivanje;
-      this.object.otkazivanje = otkazivanje;
+      // this.object.otkazivanje = otkazivanje;
     }
 
     console.log(this.otkazivanje);

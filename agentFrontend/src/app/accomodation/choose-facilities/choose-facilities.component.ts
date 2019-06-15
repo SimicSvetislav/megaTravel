@@ -48,22 +48,22 @@ export class ChooseFacilitiesComponent implements OnInit {
 
   addFacilities() {
     if (this.object) {
-      this.object.dodatneUsluge = this.dodatneUsluge;
+      // this.object.dodatneUsluge = this.dodatneUsluge;
     }
 
     if (this.unit) {
-      this.unit.dodatneUsluge = this.dodatneUsluge;
+      // this.unit.dodatneUsluge = this.dodatneUsluge;
     }
     this.chooseFacilities.emit();
   }
 
   back() {
     if (this.object) {
-      this.object.dodatneUsluge = this.dodatneUsluge;
+      // this.object.dodatneUsluge = this.dodatneUsluge;
     }
 
     if (this.unit) {
-      this.unit.dodatneUsluge = this.dodatneUsluge;
+      // this.unit.dodatneUsluge = this.dodatneUsluge;
     }
     this.backFacilities.emit();
   }

@@ -8,4 +8,8 @@ export class KrajnjiKorisnik extends Korisnik {
     lokacija: Lokacija;
 
     rezervacije: RezervacijaKorisnika[];
+
+    constructor(ime: string, prezime: string, email: string, telefon: string) {
+        super(ime, prezime, email, telefon);
+    }
 }

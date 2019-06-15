@@ -1,6 +1,7 @@
 .imageCard {
     /* width: 100px; height: 100px; */
     max-width: 100px; max-height: 100px;
+    /* width: 80%; height: 80%; */
 
     /* set to anything and aspect ratio is maintained */
     /* width: auto;
@@ -8,3 +9,15 @@
     max-height: 200px;
     max-width: 100%; */
 }
+
+.card-img-top {
+    /* width: 60%; */        /*u visine prostora za sliku*/
+    height: 15vw;           /*viewportwidth*/
+    object-fit: cover;      /*lepo interpolira sliku u zadatim dimenzijama zoom umesto razvlacenja slike...*/
+}
+
+ div.card {
+    display: block;
+    float: left;
+    /* width: 30%; */
+} 

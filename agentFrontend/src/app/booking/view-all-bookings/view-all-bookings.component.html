@@ -1,0 +1,71 @@
+<h1 class="text-center">Podaci o rezervacijama</h1>
+<div class="row">
+  <div class="col-lg-3 themed-grid-col">
+    <div class="list-group">
+      <a  [class.active]="activeTab === 'upcoming'" (click)="activeTab = 'upcoming'" class="list-group-item list-group-item-action" >Nerealizovane</a>
+      <a  [class.active]="activeTab === 'history'" (click)="activeTab = 'history'" class="list-group-item list-group-item-action" >Realizovane</a>
+    </div>
+    <button type="button" class="btn btn-primary btn-lg btn-block mt-3"  (click)="back()">
+      <fa name="angle-left" size="lg"></fa> Povratak
+    </button>
+  </div>
+  <div class="col-lg-9">
+    <form>
+      <div class="form-group form-inline">
+          Filter po objektu: 
+            <!-- <input class="form-control ml-2" type="text" [formControl]="filter"/> -->
+            <select  name="objectType" id="objectType" class="custom-select d-block" [formControl] = "filter">
+                <option [ngValue]="undefined"> </option>
+                <option *ngFor="let obj of objects;" [ngValue]="obj">{{obj.naziv}}</option>
+          </select>
+        </div>
+    </form>
+      
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">#Id</th>
+          <th scope="col">Početak</th>
+          <th scope="col">Kraj</th>
+          <th scope="col">Rezervisano</th>
+          <th scope="col">Smeštaj</th>
+          <th scope="col">Cena</th>
+          <th scope="col">Info</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let booking of filteredBookings | async; index as i">
+          <th scope="row">{{ booking.id }}</th>
+          <td>
+            <!-- <ngb-highlight [result]="booking.name" [term]="filter.value"></ngb-highlight> -->
+            {{booking.datumPocetka | date}}
+          </td>
+          <td>
+            <!-- <ngb-highlight [result]="booking.area | number" [term]="filter.value"></ngb-highlight> -->
+            {{booking.datumZavrsetka | date}}
+          </td>
+          <td>
+            <!-- <ngb-highlight [result]="booking.population | number" [term]="filter.value"></ngb-highlight> -->
+            {{booking.datumRezervacije | date}}
+          </td>
+          <td>
+              <ngb-highlight [result]="booking.smestaj.sObjekat.naziv" [term]="filter.value"></ngb-highlight>
+          </td>
+          <td>
+            {{booking.cenaSmestaja}}
+          </td>
+          <td>
+            <button class="btn btn-primary btn-block" (click)="selectedRowChanged(booking)">
+              <fa name="info" size="lg"></fa> Detalji
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div *ngIf="selectedReservation">
+        <app-view-booking [selectedBooking]="selectedReservation">{{selectedReservation.id}}</app-view-booking>
+      </div>
+
+  </div>
+</div>

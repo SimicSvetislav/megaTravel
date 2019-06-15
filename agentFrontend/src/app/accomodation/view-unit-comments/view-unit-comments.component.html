@@ -1,0 +1,14 @@
+<div>
+  <div class="card mb-3" *ngFor="let comment of comments">
+      <div class="card-header">
+          <img src="../../../assets/man-icon.png" class="mr-3" alt="">
+          <span class="mr-3">Anonimni</span>
+          <span class="badge badge-pill badge-primary">8.5</span>
+        
+      </div>
+    <div class="card-body">
+      <!-- <h5 class="card-title">Special title treatment</h5> -->
+      <p class="card-text">{{comment.tekst}}</p>
+    </div>
+  </div>
+</div>

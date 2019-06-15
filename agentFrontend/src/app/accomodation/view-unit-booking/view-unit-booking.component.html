@@ -1,0 +1,55 @@
+<div class="row mb-3">
+  <div class="col"></div>
+  <div class="col">
+    <button type="button" class="btn btn-outline-primary btn-block btn-lg" (click)="isCollapsed = !isCollapsed"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+    <fa name="angle-down" size="lg"></fa> Zauzmi sobu
+  </button>
+  </div>
+  <div class="col"></div>
+</div>
+<div  id="collapseExample" [ngbCollapse]="isCollapsed">
+  <form #f ="ngForm">
+    <div class="row">
+      <div class="col-md-3  mb-3">
+        <label for="dp1">Početak termina* :</label>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                   name="dp1" id="dp1" [(ngModel)]="start" ngbDatepicker  startDate="2019-07-01" #departurePicker="ngbDatepicker" required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="departurePicker.toggle()" type="button"><fa name="plus" style="color:blue" size="lg"></fa></button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3  mb-3">
+        <label for="dp2">Kraj termina* :</label>
+      </div>
+      <div class="col-md-3 mb-3">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"
+                   name="dp2" name="dp2" [(ngModel)]="end"  ngbDatepicker startDate="2019-08-01" #arrivalPicker="ngbDatepicker" required>
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="arrivalPicker.toggle()" type="button"><fa name="plus" style="color:red" size="lg"></fa></button>
+          </div>
+        </div>
+      </div>      
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <button type="button" class="btn btn-danger btn-lg btn-block" (click)="quit()">
+                <fa name="angle-left" size="lg"></fa> Odustani
+        </button>
+      </div>
+      <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "bookUnit(f)">
+              Dodaj <fa name="angle-right" size="lg"></fa>
+          </button>
+        </div>
+      </div>
+  </form>
+</div>
+
+<!-- TODO: Prikaz aktuelnih nadolazecih rezervacija za tu sobu-->

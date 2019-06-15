@@ -1,41 +1,41 @@
 <div>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td>Id usluge</td>
-          <td>Naziv usluge</td>
-          <td>Ukloni uslugu</td>
-          <td>Dodaj uslugu</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let facility of facilities; index as i"  [ngClass]="{ 'selectedRow': selectedRows[i]}">
-          <td>
-            {{facility.id}}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td>Id usluge</td>
+        <td>Naziv usluge</td>
+        <td>Ukloni uslugu</td>
+        <td>Dodaj uslugu</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let facility of facilities; index as i"  [ngClass]="{ 'selectedRow': selectedRows[i]}">
+        <td>
+          {{facility.id}}
+        </td>
+        <td>
+          {{facility.ime}}
+        </td>
+        <td>
+            <button class="btn btn-lg btn-block btn-danger" (click)="ukloniUslugu(facility, i)"><fa name="times" size="lg"></fa>Ukloni</button>
           </td>
-          <td>
-            {{facility.ime}}
-          </td>
-          <td>
-              <button class="btn btn-lg btn-block btn-danger" (click)="ukloniUslugu(facility, i)"><fa name="times" size="lg"></fa>Ukloni</button>
-            </td>
-          <td>
-            <button class="btn btn-lg btn-block btn-success" (click)="dodajUslugu(facility, i)"  ><fa name="plus" size="lg"></fa>Dodaj</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="row">
-      <div class="col-md-4">
-          <button type="button" class="btn btn-danger btn-lg btn-block" (click)="back()">
-              <fa name="angle-left" size="lg"></fa> Povratak
-            </button>
-      </div>
-      <div class="col-md-4"></div>
-      <div class="col-md-4">
-        <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "addFacilities()">
-            Dalje <fa name="angle-right" size="lg"></fa>
+        <td>
+          <button class="btn btn-lg btn-block btn-success" (click)="dodajUslugu(facility, i)"  ><fa name="plus" size="lg"></fa>Dodaj</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="row">
+  <div class="col-md-4">
+      <button type="button" class="btn btn-danger btn-lg btn-block" (click)="back()">
+          <fa name="angle-left" size="lg"></fa> Povratak
         </button>
-      </div>
-    </div>
+  </div>
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "addFacilities()">
+        Dalje <fa name="angle-right" size="lg"></fa>
+    </button>
+  </div>
+</div>

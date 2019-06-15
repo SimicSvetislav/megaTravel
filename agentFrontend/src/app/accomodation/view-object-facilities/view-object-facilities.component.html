@@ -1,0 +1,20 @@
+<div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <td>Šifra usluge</td>
+        <td>Naziv usluge</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let facility of facilities; index as i">
+        <td>
+          {{facility.id}}
+        </td>
+        <td>
+          {{facility.ime}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

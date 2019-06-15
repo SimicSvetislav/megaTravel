@@ -3,6 +3,7 @@ package com.project.agentBackend.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,17 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.agentBackend.controller.ws.client.AccomodationClient;
 import com.project.agentBackend.model.accomodation.SmestajnaJedinica;
 import com.project.agentBackend.model.accomodation.SmestajniObjekat;
+import com.project.agentBackend.model.accomodation.managment.AddObjectResponse;
 
 @RestController
 @RequestMapping("/accomodation")
 public class AccomodationController {
 
+	@Autowired
+	private AccomodationClient accClient;
+	
 	@RequestMapping(value="/object", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<SmestajniObjekat>> getAllAccomodationObjects() {
-		
-		
+		AddObjectResponse r =  accClient.getCountry("");
+		SmestajniObjekat rs = r.getObject();
 		return new ResponseEntity<>(new ArrayList<SmestajniObjekat>(), HttpStatus.OK);
 	}
 	

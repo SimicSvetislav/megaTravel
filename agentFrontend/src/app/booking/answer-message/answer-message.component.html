@@ -1,0 +1,65 @@
+  
+  <div class="card mb-3" >
+      <div class="card-header">
+        <div class="row">
+          <div class="col-lg-2">
+            Tema:
+          </div>
+          <div class="col-lg-4">
+              <input type="text" id="subject" name="subject" class="form-control">
+          </div>
+          <div class="col-lg-1">
+
+          </div>
+          <div class="col-lg-5">     
+            <p class="text-center">Pošiljalac: {{message?.posiljalac?.email}}</p>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+              Za:
+            </div>
+            <div class="col-lg-4">
+                <!-- <input type="text" id="sendTo" name="sendTo" class="form-control" [(ngModel)]="message.posiljalac.email"> -->
+            </div>
+            <div class="col-lg-1">
+                <button type="submit" class="btn btn-primary" style="float: right;">
+                    <fa name="paperclip" size="lg"></fa> 
+                </button>
+            </div>
+            <div class="col-lg-5">     
+              <p class="text-center">Datum slanja: {{message?.timestamp | date}}</p>
+            </div>        
+          </div>
+        <!-- <div class="row">
+          <div class="col bg-primary">
+            Prilog:
+          </div>
+        </div> -->
+      </div>
+    <div class="card-body">
+      <div class=" bg-primary mb-3">
+          Prilog: {{message?.sadrzaj ? 'Ima' : 'Nema'}}
+        </div>
+      <p class="card-text">      
+        <textarea name="text" id="text" class="form-control" rows="6">
+            Phasellus malesuada mauris sed convallis ultricies. Aenean dictum, urna viverra varius convallis, nibh ex pharetra eros, nec 
+            suscipit dui lacus in lectus. Pellentesque efficitur id purus ac laoreet. Donec non imperdiet libero. Sed et justo sapien. 
+            Praesent et felis sit amet risus sollicitudin vulputate. Phasellus eros neque, dapibus at quam vel, egestas suscipit augue. 
+            Aliquam vel ipsum dictum, blandit eros varius, consectetur lacus. Nam sit amet pulvinar eros. Sed vulputate euismod nibh ut pulvinar.</p>
+        </textarea>
+      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+        <button type="button" class="btn btn-danger btn-lg btn-block" (click)="backTo()">
+            <fa name="angle-left" size="lg"></fa> Povratak
+          </button>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-primary btn-lg btn-block" style="float: right;" (click) = "replyTo()">
+          <fa name="share" size="lg"></fa>Odgovori 
+      </button>
+    </div>
+  </div>

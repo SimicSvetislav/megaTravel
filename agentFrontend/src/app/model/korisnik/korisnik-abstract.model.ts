@@ -11,4 +11,11 @@ export abstract class Korisnik {
     uloga: string;
     stanje: string;
 
+    constructor(ime: string, prezime: string, email: string, telefon: string) {
+        this.ime = ime;
+        this.prezime = prezime;
+        this.email = email;
+        this.telefon = telefon;
+    }
+
 }
