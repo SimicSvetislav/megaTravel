@@ -68,6 +68,22 @@ public class SjRepository implements ExistRepository {
 		
 		SmestajnaJedinica sj = ExistDB.deleteById(id, collectionName, jaxbContext);
 		
+		Long soId = sj.getSObjekat();
+		if (soId!=null) {
+			SmestajniObjekat so = soRepo.getOneById(soId);
+			List<SmestajnaJedinica> jedinice = so.getSmestajnaJedinica();
+			for (SmestajnaJedinica s : jedinice) {
+				if (s.getId() == sj.getId()) {
+					so.getSmestajnaJedinica().remove(s);
+					
+					// Pretpostavka da nema duplikata
+					break;
+				}
+			}
+			
+			so = soRepo.save(so);
+		}
+		
 		return sj;
 		
 	}
