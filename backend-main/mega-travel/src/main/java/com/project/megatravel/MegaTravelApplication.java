@@ -46,8 +46,10 @@ public class MegaTravelApplication {
 		//testSjRepo();
 		//testSoRepo();
 		//testRezervacijaRepo();
-		testDodatneUsluge();
+		//testDodatneUsluge();
 		testKorisnici();
+		
+		testSjModifyTrigger();
 		
 	}
 	
@@ -79,6 +81,26 @@ public class MegaTravelApplication {
 		for (SmestajnaJedinica s : sve) {
 			System.out.print(s.getId() + " ");
 		}
+		
+	}
+	
+	public static void testSjModifyTrigger() {
+		
+		//SoRepository repo = new SoRepository();
+		//SmestajniObjekat so = repo.getOneById(1L);
+		
+		SjRepository repo2 = new SjRepository();
+		SmestajnaJedinica sj = repo2.getOneById(2L);
+		
+		/*so.getSmestajnaJedinica().add(sj);
+		
+		so = repo.save(so);
+		
+		System.out.println(so.getSmestajnaJedinica().size());*/
+		
+		sj.setBalkon(true);
+		
+		sj = repo2.save(sj);
 		
 	}
 	

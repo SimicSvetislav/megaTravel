@@ -2,6 +2,9 @@ package com.project.megatravel.repository;
 
 import java.util.Collection;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public interface ExistRepository {
 	
 	public Object save(Object entity);

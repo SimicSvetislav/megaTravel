@@ -95,7 +95,7 @@ public class ExistDB {
 			//um.setValidating(true);
 			entity = (T) um.unmarshal(res.getContentAsDOM());
 			
-			logger.info("Fetched the document '" + res.getId() + "'z from collection " + collection.getName() + " as JAXB instance.");
+			logger.info("Fetched the document '" + res.getId() + "' from collection " + collection.getName() + " as JAXB instance.");
 			
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();

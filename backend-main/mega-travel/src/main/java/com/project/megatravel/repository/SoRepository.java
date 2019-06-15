@@ -2,6 +2,7 @@ package com.project.megatravel.repository;
 
 import java.util.Collection;
 
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.ExistDB;
@@ -14,10 +15,6 @@ public class SoRepository implements ExistRepository {
 	private static Long currentId = ExistDB.determineId(collectionName);
 	private static final String jaxbContext = SmestajniObjekat.class.getPackage().toString().substring(8);
 	private static final String schemaLocation = "https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd";
-	
-	public SoRepository() {
-		
-	}
 	
 	@Override
 	public SmestajniObjekat save(Object entity) {

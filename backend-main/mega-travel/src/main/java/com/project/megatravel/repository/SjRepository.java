@@ -1,11 +1,13 @@
 package com.project.megatravel.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.ExistDB;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 
 @Repository
 public class SjRepository implements ExistRepository {
@@ -15,9 +17,7 @@ public class SjRepository implements ExistRepository {
 	private static final String jaxbContext = SmestajnaJedinica.class.getPackage().toString().substring(8);
 	private static final String schemaLocation = "https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd";
 	
-	public SjRepository() {
-		
-	}
+	private SoRepository soRepo = new SoRepository();
 	
 	@Override
 	public SmestajnaJedinica save(Object entity) {
@@ -25,8 +25,26 @@ public class SjRepository implements ExistRepository {
 		SmestajnaJedinica sj = (SmestajnaJedinica) entity;
 		
 		if (sj.getId()==null) {
-			// Dodeli id
+			// Dodeli id, prvi put se cuva
 			sj.setId(++currentId);
+		} else {
+			// Id postoji, radi se update
+			Long soId = sj.getSObjekat();
+			if (soId!=null) {
+				SmestajniObjekat so = soRepo.getOneById(soId);
+				List<SmestajnaJedinica> jedinice = so.getSmestajnaJedinica();
+				for (SmestajnaJedinica s : jedinice) {
+					if (s.getId() == sj.getId()) {
+						so.getSmestajnaJedinica().remove(s);
+						so.getSmestajnaJedinica().add(sj);
+						
+						// Pretpostavka da nema duplikata
+						break;
+					}
+				}
+				
+				so = soRepo.save(so);
+			}
 		}
 
 		return ExistDB.save(sj, sj.getId(), collectionName, schemaLocation, jaxbContext);		
