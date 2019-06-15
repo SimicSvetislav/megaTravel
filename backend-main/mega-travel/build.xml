@@ -1,0 +1,126 @@
+<project name="backend-main" default="main" basedir=".">
+
+	<!-- Skript generise potrebne java klase na osnovu XML sema u ./data
+	     Osim klasa generisu se i ObjectFactory.java i package-info.java fajlovi koji trebaju JAXB-u za rad
+	     Dodati su i zadaci koji kopiraju generisane klase u modele modula u okviru projekta
+	     Dodat je i zadatak koji kopira XML šeme iz foldera ./data u ../schemas
+	      -->
+	
+    <property name="src.dir" value="${basedir}/src"/>
+  	<property name="lib.dir" value="${basedir}/lib"/>
+  	<property name="bin.dir" value="${basedir}/bin"/>
+  	<property name="data.dir" value="${basedir}/data/schemas"/>
+	<property name="gen.dir" value="${basedir}/gen"/>
+	<property name="gen.model.dir" value="${gen.dir}/com/project/megatravel/model"/>
+	<property name="src.model.dir" value="${src.dir}/main/java/com/project/megatravel/model"/>
+	<property name="rbm.model.dir" value="${basedir}/../../rule-based-module/src/main/java/com/project/megatravel/model"/>
+	<property name="schemas.dir" value="${basedir}/../../schemas"/>
+	
+	<!-- Task za generisanje objektnog modela na osnovu XSD seme -->
+	<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+	  <classpath>
+	    <fileset dir="${lib.dir}" includes="*.jar" />
+	  </classpath>
+	</taskdef>
+	
+	<!-- Task za generisanje XSD seme na osnovu objektnog modela -->
+	<taskdef name="schemagen" classname="com.sun.tools.jxc.SchemaGenTask">
+	  <classpath>
+	    <fileset dir="${lib.dir}" includes="*.jar" />
+	  </classpath>
+	</taskdef>
+	
+	<target name="init">
+	    <echo message="basedir = ${basedir}"/>
+	    <echo message="build.compiler = ${build.compiler}"/>
+	    <echo message="java.home = ${java.home}"/>
+	    <echo message="java.class.path = ${java.class.path}"/>
+	</target>
+	
+	<target name="generate_classes_smestaj" depends="init">
+		<xjc schema="${data.dir}/SmestajSema.xsd" destdir="${gen.dir}"/>
+	</target>
+		
+	<target name="generate_classes_pretraga" depends="init">
+		<xjc schema="${data.dir}/PretragaSema.xsd" destdir="${gen.dir}"/>
+	</target>
+		
+	<target name="generate_classes_porukeKorisnika" depends="init">
+		<xjc schema="${data.dir}/PorukeKorisnika.xsd" destdir="${gen.dir}"/>
+	</target>
+		
+	<target name="generate_classes_korisnikSema" depends="init">
+		<xjc schema="${data.dir}/KorisnikSema.xsd" destdir="${gen.dir}"/>
+	</target>
+	
+	<target name="generate_classes_rezervacije" depends="init">
+		<xjc schema="${data.dir}/Rezervacija.xsd" destdir="${gen.dir}"/>
+	</target>
+	
+	<target name="generate_classes_agentBackEnd" depends="init">
+		<xjc schema="${data.dir}/KomunikacijaAgentBackend.xsd" destdir="${gen.dir}"/>
+	</target>
+	<target name="generate_classes_backendAgent" depends="init">
+		<xjc schema="${data.dir}/KomunikacijaBackendAgent.xsd" destdir="${gen.dir}"/>
+	</target>
+	<target name="generate_classes_ratingBackend" depends="init">
+		<xjc schema="${data.dir}/KomunikacijaRatingBackend.xsd" destdir="${gen.dir}"/>
+	</target>
+	<target name="generate_classes_backendRating" depends="init">
+		<xjc schema="${data.dir}/KomunikacijaBackendRating.xsd" destdir="${gen.dir}"/>
+	</target>
+	<target name="generate_classes_ruleBasedModulClient" depends="init">
+		<xjc schema="${data.dir}/KomunikacijaRuleBasedModulClient.xsd" destdir="${gen.dir}"/>
+	</target>
+		
+	<target name="generate_all" depends="generate_classes_smestaj,generate_classes_pretraga,generate_classes_porukeKorisnika,
+		generate_classes_korisnikSema,generate_classes_rezervacije,generate_classes_agentBackEnd,generate_classes_backendAgent,
+		generate_classes_ratingBackend, generate_classes_backendRating,generate_classes_ruleBasedModulClient"/>
+
+	<target name="delete_model_main_backend" depends="init">
+		<delete includeemptydirs="true">
+			<fileset dir="${src.model.dir}" includes="**/*" />
+		</delete>
+	</target>
+	
+	<target name="copy_model_to_main_backend" depends="init">
+		<copy todir="${src.model.dir}"> 
+			<fileset dir="${gen.model.dir}" />
+		</copy> 
+	</target>
+	
+	<target name="delete_model_rule_based_module" depends="init">
+		<delete includeemptydirs="true">
+			<fileset dir="${rbm.model.dir}" includes="**/*" />
+		</delete>
+	</target>
+	
+	<target name="copy_model_to_rule_based_module" depends="init">
+		<copy todir="${rbm.model.dir}"> 
+			<fileset dir="${gen.model.dir}" />
+		</copy>
+	</target>
+	
+	<target name="delete_schemas" depends="init">
+		<delete includeemptydirs="true">
+			<fileset dir="${schemas.dir}" includes="**/*" />
+		</delete>
+	</target>
+	
+	<target name="copy_to_schemas" depends="init">
+		<copy todir="${schemas.dir}"> 
+			<fileset dir="${data.dir}" />
+		</copy>
+	</target>
+	
+	<target name="delete_gen" depends="init">
+		<delete includeemptydirs="true">
+			<fileset dir="${gen.dir}" includes="**/*" />
+		</delete>
+	</target>
+	
+	<target name="copy_to_all" depends="copy_model_to_main_backend,copy_model_to_rule_based_module,copy_to_schemas"/>
+	
+	<target name="main" depends="delete_gen,generate_all,copy_to_all"/>
+  
+</project>

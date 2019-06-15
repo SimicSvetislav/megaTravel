@@ -23,7 +23,7 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
@@ -60,11 +60,11 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
+        rez.setSmestajnaJedinica(sj.getId());
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -82,11 +82,11 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
+        rez.setSmestajnaJedinica(sj.getId());
         rez.setOcena(ocena);
         
         try {
@@ -172,7 +172,7 @@ public final class Creator {
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
         j.setId(id);
-        j.setSObjekat(so);
+        j.setSObjekat(so.getId());
         
         return j;
 
@@ -183,7 +183,7 @@ public final class Creator {
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
         j.setId(id);
-        j.setSObjekat(so);
+        j.setSObjekat(so.getId());
         j.setRejting(r);
         
         return j;

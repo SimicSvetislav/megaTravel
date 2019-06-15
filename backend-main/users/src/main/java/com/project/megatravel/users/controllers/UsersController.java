@@ -63,7 +63,7 @@ public class UsersController {
 	
 	@RequestMapping(method = RequestMethod.GET, path="/hello")
 	public String hello() {
-		return "Hello world";
+		return "Hello world updated";
 	}
 	
 }

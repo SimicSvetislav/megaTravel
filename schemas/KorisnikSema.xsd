@@ -200,4 +200,13 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
+    <xs:element name="KorisnikEntity">
+        <xs:complexType>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="Korisnik" type="TKrajnjiKorisnik"/>
+                </xs:sequence>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

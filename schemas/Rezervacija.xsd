@@ -110,7 +110,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="smestaj" type="acc:TSmestajnaJedinica"/>
             <xs:element name="popust">
                 <xs:simpleType>
                     <xs:restriction base="xs:double">
@@ -119,6 +118,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element ref="acc:SmestajnaJedinica"/>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>
@@ -128,4 +128,11 @@
             </xs:simpleType>
         </xs:attribute>
     </xs:complexType>
+    <xs:element name="RezervacijaEntity">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="rezervacija" type="TRezervacija"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

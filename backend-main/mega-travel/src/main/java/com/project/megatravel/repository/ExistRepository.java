@@ -1,14 +1,12 @@
 package com.project.megatravel.repository;
 
-public class Repository {
+import java.util.Collection;
 
-	public Repository() {
-		
-		String collectionId = "db/sample/library";
-		String documentId = "1.xml";
-		
-		
-		
-	}
+public interface ExistRepository {
+	
+	public Object save(Object entity);
+	public Object getOneById(Long id);
+	public Collection<? extends Object> getAll();
+	public Object deleteById(Long id);
 	
 }

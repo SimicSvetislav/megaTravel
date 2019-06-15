@@ -4,34 +4,32 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
-import java.util.UUID;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
-import org.xmldb.api.base.Resource;
-import org.xmldb.api.base.ResourceIterator;
-import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.modules.XPathQueryService;
-
-import com.project.megatravel.model.accomodation.Sj;
-import com.project.megatravel.model.accomodation.SmestajniObjekat;
 
 public class ExistDB {
 	
+	private final static Logger logger = Logger.getLogger(ExistDB.class.getName());
+	
 	private final static String EXIST_PROPERTIES_FILE = "exist.properties";
-	private static final String TARGET_NAMESPACE = "http://www.model.megatravel.project.com/bookstore";
+	//private static final String TARGET_NAMESPACE = "http://www.model.megatravel.project.com/bookstore";
 	//private static final String TARGET_NAMESPACE = "http://www.ftn.uns.ac.rs/examples/xmldb/bookstore";
 	
 	private static String user;
@@ -39,13 +37,177 @@ public class ExistDB {
 	private static String uri;
 	private static String driver;
 	private static String colRoot;
+	private static Database database;
 
 	private ExistDB() { }
+	
+	public static <T> T save(T entity, Long id, String collectionName, String schemaLocation, String jaxbContext) {
+		
+		try {
+			Collection col = ExistDB.getOrCreateCollection(colRoot + collectionName);
+		
+		
+			JAXBContext context = JAXBContext.newInstance(jaxbContext);
+			
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, schemaLocation);
+			
+			OutputStream os = new ByteArrayOutputStream();
+			marshaller.marshal(entity, os);
+			
+			//System.out.println("Data:\n" + os.toString());
+			
+			XMLResource resource = (XMLResource) col.createResource(id + ".xml", XMLResource.RESOURCE_TYPE);
+			
+			resource.setContent(os);
+			col.storeResource(resource);
+	        logger.info("Storing the document: " + resource.getId() + " in collection " + col.getName());
+		} catch (XMLDBException | JAXBException e) {
+			logger.warning("Exception occured while savind resource");
+			e.printStackTrace();
+		}
+	        
+		return entity;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T getOneById(Long id, String collectionName, String jaxbContext) {
+		
+		XMLResource res = null;
+		T entity = null;
+		
+		try {
+			
+			Collection collection = ExistDB.getOrCreateCollection(colRoot + collectionName);
+			
+			JAXBContext context = JAXBContext.newInstance(jaxbContext);
+			
+			Unmarshaller um = context.createUnmarshaller();
+			
+			res = (XMLResource) collection.getResource(id + ".xml");
+			
+			if (res == null) {
+				logger.warning("Entity with ID " + id + " doesn't exist in collection " + collection.getName());
+				return null;
+			}
+			
+			//um.setValidating(true);
+			entity = (T) um.unmarshal(res.getContentAsDOM());
+			
+			logger.info("Fetched the document '" + res.getId() + "'z from collection " + collection.getName() + " as JAXB instance.");
+			
+		} catch (XMLDBException | JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
+	
+	public static <T> java.util.Collection<T> getAll(String collectionName, String jaxbContext) {
+		
+		java.util.Collection<T> entities = new ArrayList<T>();
+		XMLResource res = null;
+		
+		try {
+			
+			Collection collection = ExistDB.getOrCreateCollection(colRoot + collectionName);
+		
+			JAXBContext context = JAXBContext.newInstance(jaxbContext);
+			
+			Unmarshaller um = context.createUnmarshaller();
+			
+			String[] resources = collection.listResources();
+			
+			for (String resourceName : resources) {
+				
+				res = (XMLResource) collection.getResource(resourceName);
+				
+				@SuppressWarnings("unchecked")
+				T entity = (T) um.unmarshal(res.getContentAsDOM());
+				
+				entities.add(entity);
+				
+			}
+		
+		} catch (XMLDBException | JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		return entities;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T deleteById(Long id, String collectionName, String jaxbContext) {
+		
+		
+		XMLResource res = null;
+		T entity = null;
+		
+		try {
+			
+			Collection collection = ExistDB.getOrCreateCollection(colRoot + collectionName);
+			
+			JAXBContext context = JAXBContext.newInstance(jaxbContext);
+			
+			Unmarshaller um = context.createUnmarshaller();
+			
+			res = (XMLResource) collection.getResource(id + ".xml");
+			
+			if (res == null) {
+				logger.warning("Entity with ID " + id + " doesn't exist in collection " + collection.getName());
+				return null;
+			}
+			
+			entity = (T) um.unmarshal(res.getContentAsDOM());
+			
+			collection.removeResource(res);
+			
+			logger.info("Deleted document '" + res.getId() + "' from collection " + collection.getName());
+			
+		} catch (XMLDBException | JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		return entity;
+	}
+	
+	/**
+	 * Odredjuje od kog broja ce se dodeljivati id-evi u nekoj kolekciji
+	 * @param collectionName
+	 * @return
+	 */
+	public static Long determineId(String collectionName) {
+		
+		Collection collection = null;
+		Long max = null;
+		try {
+			collection = ExistDB.getOrCreateCollection(colRoot + collectionName);
+			
+			String[] resources = collection.listResources();
+	        
+	        List<Long> ids = Arrays.asList(resources).stream().map(name -> {
+	        	name = name.substring(0, name.indexOf('.'));
+	        	Long id = Long.parseLong(name);
+	        	return id;
+	        } ).collect(Collectors.toList());
+	        
+	        
+	        max = ids.size()!=0 ? Collections.max(ids) : 0L;
+        
+		} catch (XMLDBException e) {
+			e.printStackTrace();
+		}
+        
+        return max;
+		
+	}
 	
 	public static void initDatabase() throws Exception {
 		
 		Properties props = new Properties();
 		
+		// Read database properties
 		try {
 			readProperties(props);
 		} catch (IOException e) {
@@ -53,6 +215,7 @@ public class ExistDB {
 			e.printStackTrace();
 		}
 		
+		// Set database properties
 		setUser(props.getProperty("exist.connection.user", "admin").trim());
 		password = props.getProperty("exist.connection.password", "").trim();
 		
@@ -68,20 +231,158 @@ public class ExistDB {
 		
 		String action = props.getProperty("exist.action").trim();
 		
-		System.out.println("[INFO] Loading driver class: " + driver);
+		// Load driver
+		logger.info("Loading driver class: " + driver);
 		Class<?> cl = Class.forName(driver);
         
-        // encapsulation of the database driver functionality
-    	Database database = (Database) cl.newInstance();
+        // Encapsulation of the database driver functionality
+    	database = (Database) cl.newInstance();
 		database.setProperty("create-database", "true");
         
-        // entry point for the API which enables you to get the Collection reference
+        // Entry point for the API which enables you to get the Collection reference
         DatabaseManager.registerDatabase(database);
 		
-        Collection col = null;
-        XMLResource res = null;
+        if (action.equals("none")) {
+			
+        	ExistDB.getOrCreateCollection(colRoot + "/jedinice");
+        	ExistDB.getOrCreateCollection(colRoot + "/dodaci");
+        	ExistDB.getOrCreateCollection(colRoot + "/korisnici");
+        	ExistDB.getOrCreateCollection(colRoot + "/objekti");
+        	ExistDB.getOrCreateCollection(colRoot + "/rezervacije");
+        	//ExistDB.getOrCreateCollection(colRoot + "/poruke");
+        	
+        	/*try {
+        		
+        		JAXBContext context = JAXBContext.newInstance("com.project.megatravel.model.accomodation");
+        		
+        		Marshaller marshaller = context.createMarshaller();
+    			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+    			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, "www.model.megatravel.project.com/accomodation");
+    			
+    			OutputStream os = new ByteArrayOutputStream();
+    			//marshaller.marshal(sj, os);
+    			
+    			System.out.println("Data:\n" + os.toString());
+        		
+    			res = (XMLResource) col.createResource("101.xml", XMLResource.RESOURCE_TYPE);
+    			
+    			res.setContent(os);
+    			col.storeResource(res);
+                logger.info("Storing the document: " + res.getId());
+                
+                String[] list = col.listResources();
+                
+                List<Long> l2 = Arrays.asList(list).stream().map(name -> {
+                	name = name.substring(0, name.indexOf('.'));
+                	Long id = Long.parseLong(name);
+                	return id;
+                } ).collect(Collectors.toList());
+                
+                Long max = Collections.max(l2);
+                
+                logger.info("Max: " + max);
+                
+                /*Collection c2 = ExistDB.getOrCreateCollection(colRoot + "/jedinice");
+    			
+    			context = JAXBContext.newInstance("com.project.megatravel.model.accomodation");
+    			
+    			Unmarshaller um = context.createUnmarshaller();
+    			
+    			res = (XMLResource) c2.getResource("3.xml");
+    			
+    			//um.setValidating(true);
+    			//Sj sj2 = (Sj) um.unmarshal(res.getContentAsDOM());
+                
+    			//System.out.println(sj2.getBrojKreveta());
+    			//System.out.println(sj2.getId());
+    			
+    			col.removeResource(res);*/
+        		
+        		/*Collection c2 = ExistDB.getOrCreateCollection("/db/megatravel/jedinice");
+    	        
+        		String[] list = c2.listResources();
+        		
+                XPathQueryService xpathService = (XPathQueryService) c2.getService("XPathQueryService", "1.0");
+                xpathService.setProperty("indent", "yes");
+                xpathService.setNamespace("", TARGET_NAMESPACE);
+                
+    	        //String xpathExp = "doc(\"prvi.xml\")//book[@category=\"WEB\" and price>35]/title";
+    	        String xpathExp = "//book";
+    	        
+    	        System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+    	        ResourceSet result = xpathService.query(xpathExp);
+    	        
+    	        ResourceIterator i = result.getIterator();
+                Resource res1 = null;
+                String toUm = "";
+                
+                while(i.hasMoreResources()) {
+                
+                	try {
+                        res1 = i.nextResource();
+                        toUm = res1.getContent().toString();
+                        System.out.println(toUm);
+                        
+                    } finally {
+                        
+                    	// don't forget to cleanup resources
+                        try { 
+                        	((EXistResource)res1).freeResources(); 
+                        } catch (XMLDBException xe) {
+                        	xe.printStackTrace();
+                        }
+                    }
+                }*/
+                
+                //Unmarshaller um = context.createUnmarshaller();
+                
+                //Book b2 = (Book) um.unmarshal(new StringReader(toUm)); // getContentAsDOM()
+                
+               //System.out.println(b2.getCategory());
+        		
+        		/*Collection c2 = ExistDB.getOrCreateCollection(colRoot + "/jedinice");
+    			
+    			XPathQueryService xpathService = (XPathQueryService) c2.getService("XPathQueryService", "1.0");
+                xpathService.setProperty("indent", "yes");
+                xpathService.setNamespace("", TARGET_NAMESPACE);
+                
+    	        //String xpathExp = "doc(\"prvi.xml\")//book[@category=\"WEB\" and price>35]/title";
+    	        String xpathExp = "//rejting";
+    	        
+    	        System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+    	        ResourceSet result = xpathService.query(xpathExp);
+    	        
+    	        ResourceIterator i = result.getIterator();
+                Resource res1 = null;
+                String toUm = "";
+                
+                while(i.hasMoreResources()) {
+                
+                	try {
+                        res1 = i.nextResource();
+                        toUm = res1.getContent().toString();
+                        System.out.println(toUm);
+                        
+                    } finally {
+                        
+                    	// don't forget to cleanup resources
+                        try { 
+                        	((EXistResource)res1).freeResources(); 
+                        } catch (XMLDBException xe) {
+                        	xe.printStackTrace();
+                        }
+                    }
+                }
+    		
+        	} catch (XMLDBException e) {
+				// TODO: handle exception
+			}*/
+        	
+		} else {
+			
+		}
         
-        try {
+        /*try {
         	
         	addSj();
         	//getSj();
@@ -93,7 +394,7 @@ public class ExistDB {
         
         	String documentId = "prvi.xml";
         	
-	        res = (XMLResource) col.createResource("prvi.xml", XMLResource.RESOURCE_TYPE);
+	        res = (XMLResource) col.createResource("prvi.xml", XMLResource.RESOURCE_TYPE);*/
 	        
 	        /*String filePath = "data/books.xml";
 	        
@@ -157,7 +458,7 @@ public class ExistDB {
             /*************************************************************************************************************/
              
             //Collection c2 = ExistDB.getOrCreateCollection("/db/sample/library");
-	        Collection c2 = ExistDB.getOrCreateCollection("/db/megatravel");
+	        /*Collection c2 = ExistDB.getOrCreateCollection("/db/megatravel");
 	        
             XPathQueryService xpathService = (XPathQueryService) c2.getService("XPathQueryService", "1.0");
             xpathService.setProperty("indent", "yes");
@@ -198,7 +499,7 @@ public class ExistDB {
            //System.out.println(b2.getCategory());
 	        
 	        col.storeResource(res);
-	        Logger.info("Done");
+	        logger.info("Done");
         } catch(Exception e) {
         	e.printStackTrace();
         } finally {
@@ -217,15 +518,13 @@ public class ExistDB {
                 	xe.printStackTrace();
                 }
             }
-		}
-		if (action.equals("create")) {
-			//new Repository();
-		}
+		}*/
+		
 	}
 	
 	public static void addSj() {
 		
-		XMLResource res = null;
+		/*XMLResource res = null;
 		
 		try {
 			Collection c2 = ExistDB.getOrCreateCollection("/db/sample/library");
@@ -258,13 +557,13 @@ public class ExistDB {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 	
 	public static void getSj() {
 		
-		XMLResource res = null;
+		/*XMLResource res = null;
 		
 		try {
 			
@@ -285,7 +584,7 @@ public class ExistDB {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		*/
 	}
 	
 	
@@ -334,7 +633,7 @@ public class ExistDB {
                     
                     CollectionManagementService mgt = (CollectionManagementService) parentCol.getService("CollectionManagementService", "1.0");
                     
-                    System.out.println("[INFO] Creating the collection: " + pathSegments[pathSegmentOffset]);
+                    logger.info("Creating the collection: " + pathSegments[pathSegmentOffset]);
                     col = mgt.createCollection(pathSegments[pathSegmentOffset]);
                     
                     col.close();

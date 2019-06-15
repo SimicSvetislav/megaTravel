@@ -17,9 +17,9 @@ exports.postRating = function postRating(req, res) {
 
 		const collection = client.db(dbName).collection(colName)
 			
-		if (!req.body.grade || !req.body.room || !req.body.object) {
+		if (!req.body.grade || !req.body.room || !req.body.korisnik) {
 			client.close()
-			res.status(400).send('Grade and room must be specified in request body!')
+			res.status(400).send('Grade, room and user must be specified in request body!')
 		}
 		
 		if (!req.body.comment) {
@@ -27,7 +27,7 @@ exports.postRating = function postRating(req, res) {
 		}
 
 		
-		collection.insertOne({grade: req.body.grade, room: req.body.room, comment: req.body.comment, object: req.body.object, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
+		collection.insertOne({grade: req.body.grade, room: req.body.room, comment: req.body.comment, korisnik: req.body.korisnik, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
 			
 			client.close()
 		
