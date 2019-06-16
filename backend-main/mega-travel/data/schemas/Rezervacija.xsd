@@ -119,8 +119,6 @@
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
-                        <xs:element name="ocena" type="xs:int"/>
-                        <xs:element name="komentar" type="TKomentar"/>
                     </xs:sequence>
                     <xs:attribute name="datumRezervacije">
                         <xs:simpleType>

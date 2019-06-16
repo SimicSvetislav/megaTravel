@@ -7,7 +7,7 @@
     <xs:element name="Ocenivanje">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="smestajId">
+                <xs:element name="room">
                     <xs:annotation>
                         <xs:appinfo>
                             <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
@@ -19,7 +19,7 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="ocena">
+                <xs:element name="grade">
                     <xs:annotation>
                         <xs:appinfo>
                             <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
@@ -31,9 +31,9 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="komentar" type="xs:string"/>
-                <xs:element default="false" name="dozvoljen" type="xs:boolean"/>
-                <xs:element name="korisnik">
+                <xs:element name="comment" type="xs:string"/>
+                <xs:element default="false" name="approved" type="xs:boolean"/>
+                <xs:element name="user">
                     <xs:annotation>
                         <xs:appinfo>
                             <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>

@@ -5,14 +5,14 @@ import java.util.Collection;
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.ExistDB;
-import com.project.megatravel.model.users.Korisnik;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
 
 @Repository
 public class KorisnikRepository implements ExistRepository {
 
 	private static final String collectionName = "/korisnici";
 	private static Long currentId = ExistDB.determineId(collectionName);
-	private static final String jaxbContext = Korisnik.class.getPackage().toString().substring(8);
+	private static final String jaxbContext = KrajnjiKorisnik.class.getPackage().toString().substring(8);
 	private static final String schemaLocation = "https://www.model.megatravel.project.com/users schemas/KorisnikSema.xsd";
 	
 	public KorisnikRepository() {
@@ -20,9 +20,9 @@ public class KorisnikRepository implements ExistRepository {
 	}
 	
 	@Override
-	public Korisnik save(Object entity) {
+	public KrajnjiKorisnik save(Object entity) {
 		
-		Korisnik kor = (Korisnik) entity;
+		KrajnjiKorisnik kor = (KrajnjiKorisnik) entity;
 		
 		if (kor.getId()==null) {
 			// Dodeli id
@@ -33,22 +33,22 @@ public class KorisnikRepository implements ExistRepository {
 	}
 
 	@Override
-	public Korisnik getOneById(Long id) {
+	public KrajnjiKorisnik getOneById(Long id) {
 		
 		return ExistDB.getOneById(id, collectionName, jaxbContext);
 	}
 
 	@Override
-	public Collection<Korisnik> getAll() {
+	public Collection<KrajnjiKorisnik> getAll() {
 		
 		return ExistDB.getAll(collectionName, jaxbContext);
 	
 	}
 
 	@Override
-	public Korisnik deleteById(Long id) {
+	public KrajnjiKorisnik deleteById(Long id) {
 		
-		Korisnik kor = ExistDB.deleteById(id, collectionName, jaxbContext);
+		KrajnjiKorisnik kor = ExistDB.deleteById(id, collectionName, jaxbContext);
 		
 		return kor;
 		

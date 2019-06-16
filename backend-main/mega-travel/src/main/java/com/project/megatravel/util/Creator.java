@@ -87,7 +87,7 @@ public final class Creator {
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
         rez.setSmestajnaJedinica(sj.getId());
-        rez.setOcena(ocena);
+        //rez.setOcena(ocena);
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -160,7 +160,7 @@ public final class Creator {
 		
 		Lokacija l = new Lokacija();
 		
-		l.setId(id);
+		//l.setId(id);
 		l.setNaziv(naziv);
 		
 		return l;
@@ -184,7 +184,7 @@ public final class Creator {
         
         j.setId(id);
         j.setSObjekat(so.getId());
-        j.setRejting(r);
+        //j.setRejting(r);
         
         return j;
 

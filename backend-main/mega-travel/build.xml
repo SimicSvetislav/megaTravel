@@ -121,6 +121,8 @@
 	
 	<target name="copy_to_all" depends="copy_model_to_main_backend,copy_model_to_rule_based_module,copy_to_schemas"/>
 	
+	<target name="main_backend_do_job" depends="delete_gen, delete_model_main_backend, generate_all, copy_model_to_main_backend"/>
+	
 	<target name="main" depends="delete_gen,generate_all,copy_to_all"/>
   
 </project>
