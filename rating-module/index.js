@@ -17,7 +17,7 @@ exports.postRating = function postRating(req, res) {
 
 		const collection = client.db(dbName).collection(colName)
 			
-		if (!req.body.grade || !req.body.room || !req.body.korisnik) {
+		if (!req.body.grade || !req.body.room || !req.body.user) {
 			client.close()
 			res.status(400).send('Grade, room and user must be specified in request body!')
 		}
@@ -27,7 +27,7 @@ exports.postRating = function postRating(req, res) {
 		}
 
 		
-		collection.insertOne({grade: req.body.grade, room: req.body.room, comment: req.body.comment, korisnik: req.body.korisnik, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
+		collection.insertOne({grade: req.body.grade, room: req.body.room, comment: req.body.comment, user: req.body.user, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
 			
 			client.close()
 		
@@ -73,6 +73,37 @@ exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
 		const collection = client.db(dbName).collection(colName)
 
 		collection.find({room: room}, { projection: { _id: 0 } }).toArray(function(err, result) {
+			
+			client.close()
+			
+			if (err) throw err
+
+			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result))
+		})
+		
+	})
+  
+}
+
+exports.getRatingsByUser = function getRatingsByUser(req, res) {
+  
+	if (!req.body.user) {
+		res.status(400).send('User must be specified in request body!')
+	}
+
+	let user = req.body.user
+
+	const client = new MongoClient(uri, { useNewUrlParser: true })
+	client.connect(err => {
+		
+		if (err) {
+			client.close
+			res.status(500).send(err)
+		}			
+		const collection = client.db(dbName).collection(colName)
+
+		collection.find({user: user}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
 			client.close()
 			
