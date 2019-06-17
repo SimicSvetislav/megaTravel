@@ -16,7 +16,7 @@ export class AgentsComponent implements OnInit {
   ngOnInit() {
     this.agentService.getAgents().subscribe(data => {
       this.agents = data;
-    });
+    }, error => console.log(error));
   }
 
 }

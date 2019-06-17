@@ -18,4 +18,8 @@ export class AgentsService {
     return this.http.get(AGENT_API);
   }
 
+  getOne(id: Number): Observable<any> {
+    return this.http.get(AGENT_API + id);
+  }
+
 }

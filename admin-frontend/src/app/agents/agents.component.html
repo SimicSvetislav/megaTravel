@@ -16,7 +16,7 @@
         <td>{{agent.adresa}}</td>
         <td>{{agent.telefon}}</td>
         <td>{{agent.poslovniMaticniBroj}}</td>
-        <td><button class="btn btn-warning" routerLink="/agent/new">Edit</button></td>
+        <td><button class="btn btn-warning" routerLink="/agents/{{agent.id}}">Edit</button></td>
         <td><button class="btn btn-danger" (click)="delete(agent.id)">Delete</button></td>
       </tr>
     </tbody>

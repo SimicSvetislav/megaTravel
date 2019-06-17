@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -49,22 +50,32 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.DELETE, path="/agent/{id}")
 	public ResponseEntity<Agent> registration(@PathVariable("id") Long id) {
 		
-		Agent a = new Agent();
-		a.setId(id);
+		String url = USERS_MS + "agent/" + id;
 		
-		return new ResponseEntity<Agent>(a, HttpStatus.OK);
+		restClient.delete(url);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/agent/{id}")
+	@RequestMapping(method = RequestMethod.GET, path="/agent/{id}", produces = "application/json")
+	@ResponseBody
 	public ResponseEntity<Agent> getUser(@PathVariable("id") Long id) {
 		
+		String url = USERS_MS + "agent/" + id;
 		
-		return new ResponseEntity<Agent>(service.getById(id), HttpStatus.OK);
+		//Agent agent = restClient.getForObject(url, Agent.class);
+		
+		//ResponseEntity<Agent> response = new ResponseEntity<>(agent, HttpStatus.OK);
+		
+		ResponseEntity<Agent> response = restClient.getForEntity(url, Agent.class);
+		
+		return response;
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/agent")
+	@RequestMapping(method = RequestMethod.GET, path="/agent", produces = "application/json")
+	@ResponseBody
 	public ResponseEntity<List<Agent>> getAgents() {
 		
 		String url = USERS_MS + "agent";

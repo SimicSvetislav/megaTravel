@@ -12,10 +12,12 @@ import { TypesComponent } from './types/types.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AgentEditComponent } from './agents/agent-edit/agent-edit.component';
 
 const appRoutes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'agents', component: AgentsComponent },
+  { path: 'agents/:id', component: AgentEditComponent },
   { path: 'users', component: UsersComponent },
   { path: 'extras', component: ExtrasComponent },
   { path: 'categories', component: CategoriesComponent },
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
     TypesComponent,
     ProfileComponent,
     NotFoundComponent,
+    AgentEditComponent,
   ],
   imports: [
     BrowserModule,
