@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Agent;
@@ -46,10 +47,9 @@ public class AgentsController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/agent/{id}")
+	@RequestMapping(method = RequestMethod.GET, path="/agent/{id}", produces = "application/json")
+	@ResponseBody
 	public ResponseEntity<Agent> getUser(@PathVariable("id") Long id) {
-		
-		
 		
 		return new ResponseEntity<Agent>(service.getById(id), HttpStatus.OK);
 		

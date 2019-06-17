@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+import com.project.megatravel.users.repository.KorisnikRepository;
+
 @EnableDiscoveryClient
 @SpringBootApplication
 public class UsersApplication {
@@ -26,6 +28,11 @@ public class UsersApplication {
 		SpringApplication.run(UsersApplication.class, args);
 		
 		logger.info("Users microservice successfully started");
+		
+		// Test
+		KorisnikRepository r = new KorisnikRepository();
+		System.out.println(r.getByEmail("ppera@gmail.com"));
+		System.out.println(r.getByEmail("pera@gmail.com"));
 	}
 
 }
