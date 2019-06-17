@@ -22,7 +22,7 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
@@ -59,11 +59,11 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
+        rez.setSmestajnaJedinica(sj.getId());
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -81,12 +81,12 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
-        rez.setOcena(ocena);
+        rez.setSmestajnaJedinica(sj.getId());
+        //rez.setOcena(ocena);
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -159,7 +159,7 @@ public final class Creator {
 		
 		Lokacija l = new Lokacija();
 		
-		l.setId(id);
+		//l.setId(id);
 		l.setNaziv(naziv);
 		
 		return l;
@@ -171,7 +171,7 @@ public final class Creator {
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
         j.setId(id);
-        j.setSObjekat(so);
+        j.setSObjekat(so.getId());
         
         return j;
 
@@ -182,8 +182,8 @@ public final class Creator {
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
         j.setId(id);
-        j.setSObjekat(so);
-        j.setRejting(r);
+        j.setSObjekat(so.getId());
+        //j.setRejting(r);
         
         return j;
 
@@ -207,5 +207,17 @@ public final class Creator {
 			
 			return rez;
 	}
+
+	/*public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {
+		
+        
+        KrajnjiKorisnikDTO k = new KrajnjiKorisnikDTO();
+        
+        k.setId(id);
+        k.setKategorija(kat);
+        k.setDatumRegistracije(datumR);
+        
+        return k;
+	}*/
 
 }

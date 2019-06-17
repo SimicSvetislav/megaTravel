@@ -110,7 +110,8 @@ public class UsersServiceRestClient {
 	
 	@RequestMapping(method = RequestMethod.GET, path="/agent")
 	public ResponseEntity<List<Agent>> getAgents() {
-		String url = ADMIN_MODULE;
+		//String url = ADMIN_MODULE;
+		String url = USERS + "agent";
 		
 		ResponseEntity<List<Agent>> response = restClient.exchange(
 				  url,

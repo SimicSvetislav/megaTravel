@@ -50,6 +50,7 @@ public class AgentsController {
 	public ResponseEntity<Agent> getUser(@PathVariable("id") Long id) {
 		
 		
+		
 		return new ResponseEntity<Agent>(service.getById(id), HttpStatus.OK);
 		
 	}

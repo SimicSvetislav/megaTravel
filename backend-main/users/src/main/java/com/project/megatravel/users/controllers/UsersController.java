@@ -49,7 +49,6 @@ public class UsersController {
 	@RequestMapping(method = RequestMethod.GET, path="/{id}")
 	public  ResponseEntity<KrajnjiKorisnik> getUser(@PathVariable("id") Long id) {
 		
-		
 		return new ResponseEntity<KrajnjiKorisnik>(service.getById(id), HttpStatus.OK);
 		
 	}

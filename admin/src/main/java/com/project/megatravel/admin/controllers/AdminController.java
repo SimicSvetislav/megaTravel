@@ -3,6 +3,8 @@ package com.project.megatravel.admin.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.project.megatravel.admin.services.AdminService;
 import com.project.megatravel.model.users.Agent;
@@ -21,8 +24,13 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 @RequestMapping("")
 public class AdminController {
 
+	private static final String USERS_MS = "http://users/";
+	
 	@Autowired
 	private AdminService service;
+	
+	@Autowired
+	private RestTemplate restClient;
 	
 	@RequestMapping(method = RequestMethod.POST, path="/agent")
 	public ResponseEntity<Agent> registration(@RequestBody Agent korisnik) {
@@ -57,9 +65,32 @@ public class AdminController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/agent")
-	public ResponseEntity<List<Agent>> getUsers() {
+	public ResponseEntity<List<Agent>> getAgents() {
 		
-		return new ResponseEntity<List<Agent>>(service.getAll(), HttpStatus.OK);
+		String url = USERS_MS + "agent";
+		
+		ResponseEntity<List<Agent>> response = restClient.exchange(
+				  url,
+				  HttpMethod.GET,
+				  null,
+				  new ParameterizedTypeReference<List<Agent>>(){});
+		
+		return response;
+	
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/user")
+	public ResponseEntity<List<KrajnjiKorisnik>> getUsers() {
+		
+		String url = USERS_MS;
+		
+		ResponseEntity<List<KrajnjiKorisnik>> response = restClient.exchange(
+				  url,
+				  HttpMethod.GET,
+				  null,
+				  new ParameterizedTypeReference<List<KrajnjiKorisnik>>(){});
+		
+		return response;
 	
 	}
 	

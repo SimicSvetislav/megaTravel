@@ -11,6 +11,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { TypesComponent } from './types/types.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'profile', component: ProfileComponent},
@@ -31,7 +32,7 @@ const appRoutes: Routes = [
     CategoriesComponent,
     TypesComponent,
     ProfileComponent,
-    NotFoundComponent
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +41,7 @@ const appRoutes: Routes = [
       appRoutes,
       { enableTracing: true }
     ),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

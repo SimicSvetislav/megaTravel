@@ -53,7 +53,7 @@ public class MegaTravelApplication {
 		//testDodatneUsluge();
 		//testKorisnici();
 		//testAgenti();
-		testAdmini();
+		//testAdmini();
 		
 		//testSjModifyTrigger();
 		//testSjDeleteTrigger();
@@ -350,7 +350,7 @@ public class MegaTravelApplication {
 		l.setNaziv("Novi Sad");
 		ag.setSifra("ppera");
 		ag.setStanje("AKTIVAN");
-		ag.setTelefon("");
+		ag.setTelefon("060/1234-56-78");
 		
 		ag = repo.save(ag);
 		
@@ -375,8 +375,6 @@ public class MegaTravelApplication {
 		for (Agent a : sve) {
 			System.out.print(a.getId() + " ");
 		}
-		
-		
 		
 	}
 	
