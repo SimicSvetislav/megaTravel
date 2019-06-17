@@ -33,5 +33,21 @@ public class UsersService {
 		
 	}
 	
+	public KrajnjiKorisnik save(KrajnjiKorisnik korisnik) {
+		
+		KrajnjiKorisnik kk = repo.save(korisnik);
+		
+		return kk;
+		
+	}
+	
+	public KrajnjiKorisnik remove(Long id) {
+		
+		KrajnjiKorisnik kk = repo.deleteById(id);
+		
+		return kk;
+		
+	}
+	
 	
 }

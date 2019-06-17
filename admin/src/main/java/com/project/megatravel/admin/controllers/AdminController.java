@@ -64,11 +64,31 @@ public class AdminController {
 		
 		String url = USERS_MS + "agent/" + id;
 		
-		//Agent agent = restClient.getForObject(url, Agent.class);
-		
-		//ResponseEntity<Agent> response = new ResponseEntity<>(agent, HttpStatus.OK);
-		
 		ResponseEntity<Agent> response = restClient.getForEntity(url, Agent.class);
+		
+		return response;
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/user/block/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<KrajnjiKorisnik> blockUser(@PathVariable("id") Long id) {
+		
+		String url = USERS_MS + "block/" + id;
+		
+		ResponseEntity<KrajnjiKorisnik> response = restClient.getForEntity(url, KrajnjiKorisnik.class);
+		
+		return response;
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/user/activate/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<KrajnjiKorisnik> activateUser(@PathVariable("id") Long id) {
+		
+		String url = USERS_MS + "activate/" + id;
+		
+		ResponseEntity<KrajnjiKorisnik> response = restClient.getForEntity(url, KrajnjiKorisnik.class);
 		
 		return response;
 		

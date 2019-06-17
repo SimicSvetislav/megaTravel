@@ -30,9 +30,9 @@ public class UsersApplication {
 		logger.info("Users microservice successfully started");
 		
 		// Test
-		KorisnikRepository r = new KorisnikRepository();
-		System.out.println(r.getByEmail("ppera@gmail.com"));
-		System.out.println(r.getByEmail("pera@gmail.com"));
+		//KorisnikRepository r = new KorisnikRepository();
+		//System.out.println(r.getByEmail("ppera@gmail.com"));
+		//System.out.println(r.getByEmail("pera@gmail.com"));
 	}
 
 }

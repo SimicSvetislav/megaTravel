@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { AgentsService } from '../services/agents.service'
+import { AgentsService } from '../services/agents.service';
 
 @Component({
   selector: 'app-agents',
@@ -11,12 +12,16 @@ export class AgentsComponent implements OnInit {
 
   agents: any;
 
-  constructor(private agentService: AgentsService) { }
+  constructor(private agentService: AgentsService, private router: Router) { }
 
   ngOnInit() {
     this.agentService.getAgents().subscribe(data => {
       this.agents = data;
     }, error => console.log(error));
+  }
+
+  add() {
+    this.router.navigateByUrl('/agents/add');
   }
 
 }

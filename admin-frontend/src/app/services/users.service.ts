@@ -14,4 +14,12 @@ export class UsersService {
     return this.http.get(USER_API);
   }
 
+  block(id: Number): Observable<any> {
+    return this.http.get(USER_API + 'block/' + id);
+  }
+
+  activate(id: Number): Observable<any> {
+    return this.http.get(USER_API + 'activate/' + id);
+  }
+
 }
