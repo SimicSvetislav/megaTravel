@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.services.UsersService;
 import java.util.List;
@@ -58,6 +60,32 @@ public class UsersController {
 	public  ResponseEntity<KrajnjiKorisnik> getUser(@PathVariable("id") Long id) {
 		
 		return new ResponseEntity<KrajnjiKorisnik>(service.getById(id), HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/block/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<KrajnjiKorisnik> blockUser(@PathVariable("id") Long id) {
+		
+		KrajnjiKorisnik kk = service.getById(id);
+		kk.setStanje("BLOKIRAN");
+		
+		kk = service.save(kk);
+		
+		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/activate/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<KrajnjiKorisnik> activateUser(@PathVariable("id") Long id) {
+		
+		KrajnjiKorisnik kk = service.getById(id);
+		kk.setStanje("AKTIVAN");
+		
+		kk = service.save(kk);
+		
+		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
 		
 	}
 	

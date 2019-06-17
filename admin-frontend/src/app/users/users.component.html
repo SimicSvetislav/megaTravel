@@ -8,8 +8,9 @@
         <th scope="col">Email</th>
         <th scope="col">Category</th>
         <th scope="col">Adress</th>
-        <th scope="col">Telefon</th>
-        <th scope="col">Status</th>
+        <th scope="col">Telephone</th>
+        <th scope="col">Active</th>
+        <th scope="col">Change status</th>
       </tr>
     </thead>
     <tbody>
@@ -21,8 +22,18 @@
         <td>{{user.kategorija}}</td>
         <td>{{user.adresa}}</td>
         <td>{{user.telefon}}</td>
-        <td>{{user.stanje}}</td>
-        <td><button class="btn btn-warning" routerLink="/agent/new">Edit</button></td>
+        <td *ngIf="user.stanje=='AKTIVAN';else other_content">
+          &#x2611;
+        </td>
+        <ng-template #other_content>
+          <td>&#x2612;</td>
+        </ng-template>
+        <td *ngIf="user.stanje=='AKTIVAN';else other_content2">
+          <button class="btn btn-warning" (click)="block(user.id)">Block</button>
+        </td>
+        <ng-template #other_content2>
+          <td><button class="btn btn-success" (click)="activate(user.id)">Activate</button></td>
+        </ng-template>
         <td><button class="btn btn-danger" (click)="delete(user.id)">Delete</button></td>
       </tr>
     </tbody>
