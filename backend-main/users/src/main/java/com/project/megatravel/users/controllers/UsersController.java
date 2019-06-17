@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +22,13 @@ public class UsersController {
 	
 	@Autowired
 	private UsersService service;
+	
+/*	@RequestMapping(method = RequestMethod.GET, path="/test")
+	public ResponseEntity<String> test() {
+		System.out.println("DSLFKJSDF SVE OKKKKK");
+		return new ResponseEntity<String>("Sve ok", HttpStatus.OK);
+		
+	}*/
 	
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<KrajnjiKorisnik> registration(@RequestBody KrajnjiKorisnik korisnik) {
@@ -64,5 +72,7 @@ public class UsersController {
 	public String hello() {
 		return "Hello world updated";
 	}
+	
+	
 	
 }

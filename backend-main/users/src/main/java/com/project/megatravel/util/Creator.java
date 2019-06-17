@@ -3,6 +3,7 @@ package com.project.megatravel.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
@@ -10,6 +11,8 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.model.users.Kupon;
+import com.project.megatravel.model.users.KrajnjiKorisnik.Rezervacije;
 
 public final class Creator {
 	
@@ -99,6 +102,23 @@ public final class Creator {
         return rez;
 
 	}
+	
+	public static KrajnjiKorisnik createKrajnjiKorisnik(String sifra,
+			String email, String adresa, String telefon,
+			String ime, String prezime) {
+		
+		KrajnjiKorisnik k = new KrajnjiKorisnik();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		k.setIme(ime);
+		k.setPrezime(prezime);
+		
+		return k;
+	}
+	
 	
 	public static KrajnjiKorisnik createKrajnjiKorisnik(long id, String kat, String datumReg) {
 		

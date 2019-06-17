@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 
 export class RegistrationValidator {
