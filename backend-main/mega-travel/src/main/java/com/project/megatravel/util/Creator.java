@@ -9,6 +9,7 @@ import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
@@ -219,6 +220,15 @@ public final class Creator {
         k.setDatumRegistracije(datumR);
         
         return k;
+	}
+
+	public static TipSmestaja createTipSmestaja(long l, String string) {
+		TipSmestaja tip = new TipSmestaja();
+		
+		tip.setId(l);
+		tip.setNaziv(string);
+		
+		return tip;
 	}
 
 }

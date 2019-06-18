@@ -75,13 +75,13 @@ public class MegaTravelApplication {
 		
 		sj = repo.save(sj);
 		
-		SmestajnaJedinica sj2 = repo.getOneById(3L);
+		//SmestajnaJedinica sj2 = repo.getOneById(3L);
 		
-		System.out.println("Fetched: " + sj2.getId());
+		//System.out.println("Fetched: " + sj2.getId());
 		
-		SmestajnaJedinica sj3 = repo.deleteById(10L);
+		//SmestajnaJedinica sj3 = repo.deleteById(10L);
 		
-		System.out.println("Deleted: " + sj3.getId());
+		//System.out.println("Deleted: " + sj3.getId());
 		
 		Collection<SmestajnaJedinica> sve = repo.getAll();
 		
@@ -138,7 +138,7 @@ public class MegaTravelApplication {
 		so.setLokacija(Creator.createLokacija(1L, "Novi Sad"));
 		so.setAgent(1L);
 		so.setRejting(Creator.createRejting(20, 89));
-		so.setTipSmestaja(1L);
+		so.setTipSmestaja(Creator.createTipSmestaja(1L, "Apartman"));
 		so.setZvezdice(4);
 		
 		so = repo.save(so);
@@ -147,7 +147,7 @@ public class MegaTravelApplication {
 		so.setLokacija(Creator.createLokacija(2L, "Beograd"));
 		so.setAgent(1L);
 		so.setRejting(Creator.createRejting(8, 32));
-		so.setTipSmestaja(2L);
+		so.setTipSmestaja(Creator.createTipSmestaja(2L, "Hotel"));
 		so.setZvezdice(3);
 		so.setId(null);
 		
