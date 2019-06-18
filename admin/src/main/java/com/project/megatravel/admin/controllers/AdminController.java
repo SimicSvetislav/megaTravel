@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.megatravel.admin.services.AdminService;
+import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
@@ -26,6 +28,8 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 public class AdminController {
 
 	private static final String USERS_MS = "http://users/";
+	private static final String SEARCH_MS = "http://search/";
+	private static final String MAIN_MS = "http://main/";
 	
 	@Autowired
 	private AdminService service;
@@ -125,13 +129,59 @@ public class AdminController {
 	
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, path="/{id}/{newStatus}")
-	public ResponseEntity<KrajnjiKorisnik> updateUserStatus(@PathVariable("id") Long id, @PathVariable("newStatus") String newStatus) {
+	@RequestMapping(method = RequestMethod.GET, path="/extras", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<List<DodatnaUsluga>> getExtras() {
 		
-		KrajnjiKorisnik kk = service.updateStatus(id, newStatus);
+		String url = MAIN_MS + "extras";
 		
-		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
+		ResponseEntity<List<DodatnaUsluga>> response = restClient.exchange(
+				  url,
+				  HttpMethod.GET,
+				  null,
+				  new ParameterizedTypeReference<List<DodatnaUsluga>>(){});
 		
+		return response;
+	
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, path="/extras/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<DodatnaUsluga> deleteExtra(@PathVariable("id") Long id) {
+		
+		String url = MAIN_MS + "extras/" + id;
+		
+		restClient.delete(url);
+		
+		DodatnaUsluga du = new DodatnaUsluga();
+		du.setId(id);
+		
+		return new ResponseEntity<DodatnaUsluga>(du, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/extras", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<DodatnaUsluga> addExtra(@RequestBody DodatnaUsluga extra) {
+		
+		String url = MAIN_MS + "extras";
+		
+		ResponseEntity<DodatnaUsluga> response = restClient.postForEntity(url, extra, DodatnaUsluga.class);
+		
+		return response;
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, path="/extras", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<DodatnaUsluga> updateExtra(@RequestBody DodatnaUsluga extra) {
+		
+		String url = MAIN_MS + "extras";
+		
+		restClient.put(url, extra);
+		
+		DodatnaUsluga du = new DodatnaUsluga();
+		du.setId(extra.getId());
+		
+		return new ResponseEntity<DodatnaUsluga> (du, HttpStatus.OK);
 	}
 	
 }

@@ -4,7 +4,7 @@
     xmlns="www.model.megatravel.project.com/accomodation/managment"
     xmlns:acc="www.model.megatravel.project.com/accomodation">
     <xs:import namespace="www.model.megatravel.project.com/accomodation"
-        schemaLocation="file:/C:/Users/lukaj/git/megaTravel/schemas_updated/SmestajSema.xsd"/>
+        schemaLocation="SmestajSema.xsd"/>
     <xs:element name="addObjectRequest">
         <xs:complexType>
             <xs:sequence>
