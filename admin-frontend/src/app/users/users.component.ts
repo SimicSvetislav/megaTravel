@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
 
   }
 
-  block(id: Number) {
+  block(id: number) {
     this.service.block(id).subscribe(user => {
       console.log('Blocked ' + user.id);
       this.service.getAll().subscribe(data => {
@@ -30,7 +30,7 @@ export class UsersComponent implements OnInit {
     }, error => console.log(error));
   }
 
-  activate(id: Number) {
+  activate(id: number) {
     this.service.activate(id).subscribe(user => {
       console.log('Activated ' + user.id)
       this.service.getAll().subscribe(data => {
