@@ -2,9 +2,11 @@ package com.project.megatravel.users.repository;
 
 import java.util.Collection;
 
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.model.users.Administrator;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.ExistDB;
 
 @Repository
@@ -52,6 +54,30 @@ public class AdminRepository implements ExistRepository {
 		
 		return admin;
 		
+	}
+	
+	public Administrator getByEmail(String email) {
+		
+		Collection<Administrator> all = getAll();
+		
+		Administrator user =  all.stream()
+				.filter(u -> u.getEmail().equals(email))
+				.findFirst()
+				.orElse(null);
+		
+		return user;
+	}
+	
+	public Administrator getByUsername(String username) {
+		
+		Collection<Administrator> all = getAll();
+		
+		Administrator user =  all.stream()
+				.filter(u -> u.getKorisnickoIme().equals(username))
+				.findFirst()
+				.orElse(null);
+		
+		return user;
 	}
 
 	public static Long getCurrentId() {

@@ -1,5 +1,5 @@
-import { AuthService } from './../services/auth/auth.service';
 import { SignUpInfo } from './../forms/registerForm';
+import { AuthService } from './../services/auth/auth.service';
 import { User } from './../user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -62,17 +62,17 @@ export class RegisterComponent implements OnInit {
   }
 
   home() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/profile']);
   }
 
   register() {
     this.signupInfo = new SignUpInfo(
-      this.user.firstName,
+      this.user.ime,
       this.user.email,
-      this.user.password,
-      this.user.lastName,
-      this.user.address,
-      this.user.phoneNumber,
+      this.user.sifra,
+      this.user.prezime,
+      this.user.adresa,
+      this.user.telefon,
   )
 
 

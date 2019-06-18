@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.ExistDB;
 
 @Repository
@@ -52,6 +53,30 @@ public class AgentRepository implements ExistRepository {
 		
 		return ag;
 		
+	}
+	
+	public Agent getByEmail(String email) {
+		
+		Collection<Agent> all = getAll();
+		
+		Agent user =  all.stream()
+				.filter(u -> u.getEmail().equals(email))
+				.findFirst()
+				.orElse(null);
+		
+		return user;
+	}
+	
+	public Agent getByUsername(String username) {
+		
+		Collection<Agent> all = getAll();
+		
+		Agent user =  all.stream()
+				.filter(u -> u.getKorisnickoIme().equals(username))
+				.findFirst()
+				.orElse(null);
+		
+		return user;
 	}
 
 	public static Long getCurrentId() {
