@@ -30,10 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         KrajnjiKorisnik user = userRepository.getByEmail(username);
         
         if(user == null) {
-        	System.out.println("Upao ovde");
         	return null;
         } else {
-        	System.out.println("Ili ovde");
         	 return UserPrinciple.build(user);
         }
                

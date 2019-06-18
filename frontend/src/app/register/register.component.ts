@@ -1,3 +1,6 @@
+import { AuthService } from './../services/auth/auth.service';
+import { SignUpInfo } from './../forms/registerForm';
+import { User } from './../user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -33,7 +36,15 @@ export class RegisterComponent implements OnInit {
   registrationFormGroup : FormGroup;
   passwordFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,private router : Router) { 
+  user: User = new User();
+  temp:User = new User();
+  signupInfo : SignUpInfo;
+  isSignedUp = false;
+  isSignUpFailed = false;
+  errorMessage = '';
+
+  constructor(private formBuilder: FormBuilder,private router : Router,
+              private authService: AuthService) { 
             this.passwordFormGroup = this.formBuilder.group({
             password: ['', Validators.required],
             confirmPassword: ['',Validators.required]
@@ -52,6 +63,27 @@ export class RegisterComponent implements OnInit {
 
   home() {
     this.router.navigate(['/home']);
+  }
+
+  register() {
+    this.signupInfo = new SignUpInfo(
+      this.user.firstName,
+      this.user.email,
+      this.user.password,
+      this.user.lastName,
+      this.user.address,
+      this.user.phoneNumber,
+  )
+
+
+
+  this.authService.signUp(this.signupInfo).subscribe(data => {
+    this.temp = data;
+    this.isSignedUp = true;
+    this.isSignUpFailed = false;
+
+    this.router.navigate(['/home']);
+  })
   }
 
 }

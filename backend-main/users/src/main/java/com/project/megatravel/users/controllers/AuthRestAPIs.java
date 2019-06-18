@@ -59,7 +59,7 @@ public class AuthRestAPIs {
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
 
-    	System.out.println("DFKLJF " + loginRequest.getEmail());
+    	
     	Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginRequest.getEmail(),
@@ -83,33 +83,13 @@ public class AuthRestAPIs {
 
     @PostMapping(value = "/signup")
     public ResponseEntity<KrajnjiKorisnik> registerUser(@Valid @RequestBody SignUpForm signUpRequest) {
-        
+        	
 
-        // Creating user's account
-//    	KrajnjiKorisnik user = new KrajnjiKorisnik();
-    /*    List<AbstractUser> lista = userRepository.findAll();
-        AbstractUser poslednji = new AbstractUser();
-		System.out.println("lista size: " + lista.size());
-		poslednji = lista.get(lista.size() - 1);
-		System.out.println("Poslednji id: " + poslednji.getId());
-		Long pom = poslednji.getId() + 1;
-		user.setId(pom);
-        */
-    	
-    	
-    
-    	
     	KrajnjiKorisnik kk = Creator.createKrajnjiKorisnik(encoder.encode(signUpRequest.getPassword()),
     			signUpRequest.getEmail(),signUpRequest.getAddress(),signUpRequest.getPhoneNumber(),
     			signUpRequest.getFirstName(),signUpRequest.getLastName());
     	
-     /*   user.setEmail(signUpRequest.getEmail());
-        user.setPassword(encoder.encode(signUpRequest.getPassword()));
-        user.setFirstName(signUpRequest.getFirstName());
-        user.setLastName(signUpRequest.getLastName());
-        user.setAddress(signUpRequest.getAddress());
-        user.setPhoneNumber(signUpRequest.getPhoneNumber());*/
-        
+
 
         userRepository.save(kk);
 
