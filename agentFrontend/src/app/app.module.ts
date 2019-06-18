@@ -4,7 +4,7 @@ import { DatePipe } from './utils/date.pipe';
 import { AccomodationService } from './service/accomodation.service';
 import { BookingService } from './service/booking.service';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component } from '@angular/core';
+import { NgModule, Component, APP_INITIALIZER } from '@angular/core';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxBootstrapSliderModule } from 'ngx-bootstrap-slider';
@@ -46,6 +46,7 @@ import { ViewBookingComponent } from './booking/view-booking/view-booking.compon
 import { RoomBookPipe } from './utils/room.pipe';
 import { UserBookPipe } from './utils/user.pipe';
 import { LogoutComponent } from './user/logout/logout.component';
+import { AppConfigService } from './service/app-config.service';
 const routes = [
   {
     path: 'objects', component: ViewAllObjectsComponent,
@@ -87,6 +88,9 @@ const routes = [
     path: '**', component: PageNotFoundComponent
   }];
 
+  export function initializeApp(appConfig: AppConfigService) {
+    return () => appConfig.load();
+  }
 @NgModule({
   declarations: [
     AppComponent,
@@ -137,7 +141,11 @@ const routes = [
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true}) // <-- debugging purposes only
   ],
-  providers: [BookingService, AccomodationService, UserService],
+  providers: [BookingService,
+              AccomodationService,
+              UserService,
+              { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfigService], multi: true }
+            ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

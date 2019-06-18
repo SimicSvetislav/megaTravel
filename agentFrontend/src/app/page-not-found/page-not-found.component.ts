@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from '../service/app-config.service';
 
 @Component({
   selector: 'app-page-not-found',
@@ -9,7 +10,11 @@ export class PageNotFoundComponent implements OnInit {
 
   constructor() { }
 
+  tekst: string;
+
   ngOnInit() {
+    this.tekst = AppConfigService.settings.backend.serverPort;
+
   }
 
 }
