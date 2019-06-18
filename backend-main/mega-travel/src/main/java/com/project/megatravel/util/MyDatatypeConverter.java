@@ -52,7 +52,7 @@ public class MyDatatypeConverter {
 		try {
 			return Long.parseLong(value);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return null;
 		}
 
@@ -93,7 +93,7 @@ public class MyDatatypeConverter {
 		try {
 			return Integer.parseInt(value);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return null;
 		}
 
@@ -121,7 +121,7 @@ public class MyDatatypeConverter {
 		try {
 			return Double.parseDouble(value);
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return null;
 		}
 

@@ -38,7 +38,7 @@ public class AgentsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path="/agent/{id}")
-	public ResponseEntity<Agent> registration(@PathVariable("id") Long id) {
+	public ResponseEntity<Agent> deleteAgent(@PathVariable("id") Long id) {
 		
 		Agent a = new Agent();
 		a.setId(id);
