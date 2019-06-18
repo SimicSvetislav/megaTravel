@@ -19,8 +19,9 @@
           </div>
           
           <ng-template #other_content>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="login()">Log in</button>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="register()">Register</button>
+						<button *ngIf="boolLogOff" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="login()">Sign in</button>
+						<button *ngIf="boolLogIn" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="signOut()">Sign out</button>
+            <button *ngIf="boolLogOff" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="register()">Register</button>
           </ng-template>
           
       </form>

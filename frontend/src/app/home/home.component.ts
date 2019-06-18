@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../services/auth/token-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -16,9 +17,25 @@ export class HomeComponent implements OnInit {
   toDate: NgbDate;
   hoveredDate: NgbDate;
 
-  constructor(private router: Router) { }
+  id;
+  boolLogIn: boolean = false;
+  boolLogOff: boolean = false;
+
+  constructor(private router: Router,private token: TokenStorageService) { }
 
   ngOnInit() {
+
+    this.id = this.token.getUser();
+
+    if(this.id == null) {
+      this.boolLogIn = false;
+      this.boolLogOff = true;
+    } else {
+      this.boolLogIn = true;
+      this.boolLogOff = false;
+    }
+
+
   }
 
 
@@ -46,8 +63,8 @@ export class HomeComponent implements OnInit {
     return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
   }
 
-  logout() {
-    //this.ts.signOut();
+  signOut() {
+    this.token.signOut();
     this.router.navigate(['/login']);
   }
 

@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../services/auth/token-storage.service';
 import { AuthService } from './../services/auth/auth.service';
 import { Token } from './../Token';
 import { AuthLoginInfo } from './../forms/loginForm';
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
 
   user: User = new User();
-  constructor(private router: Router,private testing: TestService,private authService: AuthService) { }
+  constructor(private router: Router,private testing: TestService,private authService: AuthService,private tokenStorage: TokenStorageService) { }
   str: String="";
 
   private loginInfo : AuthLoginInfo;
@@ -40,8 +41,33 @@ export class LoginComponent implements OnInit {
     this.loginInfo = new AuthLoginInfo(this.user.email,this.user.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
-      alert("Alertujem: " + data.accessToken);
+      
 
+      if(data.accessToken === undefined) {
+        alert("Nesto nije u redu!");
+      } else {
+        this.tokenStorage.saveToken(data.accessToken);
+        this.tokenStorage.saveUsername(data.username);
+        this.tokenStorage.saveAuthorities(data.authorities);
+        this.tokenStorage.saveUser(data.user_id);
+        this.tokenStorage.saveReserved(0);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+       /* this.roles = this.tokenStorage.getAuthorities();
+        localStorage["sent"] = false;*/
+
+        this.router.navigate(['/home']);
+        
+
+      }
+
+
+
+
+    }, error => {
+      console.log(error);
+      
     })
 
   /*  this.testing.test().subscribe(data => {

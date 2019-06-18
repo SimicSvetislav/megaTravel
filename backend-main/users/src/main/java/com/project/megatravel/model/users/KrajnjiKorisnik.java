@@ -135,6 +135,9 @@ public class KrajnjiKorisnik
     protected List<KrajnjiKorisnik.Rezervacije> rezervacije;
     protected List<Kupon> kuponi;
 
+    
+  
+    
     /**
      * Gets the value of the kategorija property.
      * 

@@ -16,7 +16,7 @@ import com.project.megatravel.model.users.KrajnjiKorisnik.Rezervacije;
 
 public final class Creator {
 	
-	private Creator() {
+	public Creator() {
 		
 	}
 	
