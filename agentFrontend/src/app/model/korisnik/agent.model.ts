@@ -5,9 +5,5 @@ import { Rezervacija } from '../rezervacija/rezervacija.model';
 export class Agent extends Korisnik {
     poslovniMaticniBroj: number;
 
-    smestajniObjekti: SmestajniObjekat[];
-    rezervacije: Rezervacija[];
 
-    // ??????????????????????
-    filteriPoruka: string[];
 }

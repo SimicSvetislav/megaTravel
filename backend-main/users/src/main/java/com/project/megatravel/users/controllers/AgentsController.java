@@ -23,27 +23,30 @@ public class AgentsController {
 	@Autowired
 	private AgentsService service;
 	
-	@RequestMapping(method = RequestMethod.POST, path="/agent")
+	@RequestMapping(method = RequestMethod.POST, path="/agent", produces="application/json")
 	public ResponseEntity<Agent> registration(@RequestBody Agent korisnik) {
 		
-		return new ResponseEntity<Agent>(korisnik, HttpStatus.OK);
+		Agent agent = service.save(korisnik);
+		
+		return new ResponseEntity<Agent>(agent, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, path="/agent")
 	public ResponseEntity<Agent> updateUser(@RequestBody Agent korisnik) {
 		
-		return new ResponseEntity<Agent>(korisnik, HttpStatus.OK);
+		Agent a = service.save(korisnik);
+		
+		return new ResponseEntity<Agent>(a, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path="/agent/{id}")
 	public ResponseEntity<Agent> deleteAgent(@PathVariable("id") Long id) {
 		
-		Agent a = new Agent();
-		a.setId(id);
+		service.deleteById(id);
 		
-		return new ResponseEntity<Agent>(a, HttpStatus.OK);
+		return new ResponseEntity<Agent>(HttpStatus.OK);
 		
 	}
 	

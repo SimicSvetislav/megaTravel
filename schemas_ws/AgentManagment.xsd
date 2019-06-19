@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/messages/agent/managment"
+    xmlns="www.model.megatravel.project.com/messages/agent/managment"
+    xmlns:agg="www.model.megatravel.project.com/messages/agent">
+    <xs:import namespace="www.model.megatravel.project.com/messages/agent"
+        schemaLocation="KomunikacijaAgentBackend.xsd"/>
+    <xs:element name="getBookingsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="agg:Rezervacija"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getBookingsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="agg:Rezervacija"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

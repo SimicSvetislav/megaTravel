@@ -1,7 +1,7 @@
 <form #f ="ngForm">
     <div class="row">    
         <div class="col-md-3 mb-3">
-           <label for="objectName">Ime objekta* :</label>
+           <label for="objectName">Ime objekta :</label>
         </div>
         <div class="col-md-3 mb-3">
            
@@ -13,13 +13,13 @@
      </div>
     <div class="row">    
        <div class="col-md-3 mb-3">
-          <label for="unitName">Ime sobe* :</label>
+          <label for="unitName">Ime sobe :</label>
        </div>
        <div class="col-md-3 mb-3">
           
         </div>
        <div class="col-md-3 mb-3">
-          <input id="unitName" type="text" class="form-control" [(ngModel)]="naziv" name="unitName" required>
+          <input id="unitName" type="text" class="form-control" [(ngModel)]="naziv" name="unitName" >
        </div>
     </div>
     <div class="row">    
@@ -27,13 +27,13 @@
            <label for="bedNum">Broj kreveta* :</label>
         </div>
         <div class="col-md-3 mb-3">
-           <input id="bedNum" type="text" class="form-control" [(ngModel)]="unit.brojKreveta" name="bedNum" required>
+           <input id="bedNum" type="text" class="form-control" [(ngModel)]="brojKreveta" name="bedNum" required>
         </div>
         <div class="col-md-3 mb-3">
             <label for="terrace">Terasa :</label>
          </div>
          <div class="col-md-3 mb-3">
-            <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="unit.balkon" id="terrace" name="terrace" value="Moguce">Postoji</label>
+            <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="balkon" id="terrace" name="terrace" value="Moguce">Postoji</label>
          </div>
      </div>
     <div class="row">    
@@ -41,7 +41,7 @@
            <label >Otkazivanje :</label>
         </div>
         <div class="col-md-3 mb-3">
-            <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="otkazivanje" id="cancelOption" name="cancelOption" value="Moguce">Moguće</label>
+            <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="dozvoljenoOtkazivanje" id="cancelOption" name="cancelOption" value="Moguce">Moguće</label>
         </div>
         <div class="col-md-2 mb-3">
           <label for="objectCancelDaysNum">Broj dana :</label>

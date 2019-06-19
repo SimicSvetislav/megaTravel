@@ -7,6 +7,9 @@ export class KrajnjiKorisnik extends Korisnik {
     ponudjeniPopustiNakonOtkazivanja: boolean;
     lokacija: Lokacija;
 
+    ime: string;
+    prezime: string;
+
     rezervacije: RezervacijaKorisnika[];
 
     constructor(ime: string, prezime: string, email: string, telefon: string) {

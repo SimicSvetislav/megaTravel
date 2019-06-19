@@ -1,3 +1,4 @@
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Agent } from './../../types';
@@ -11,20 +12,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AgentAddComponent implements OnInit {
 
-  constructor(private service: AgentsService, private toastr: ToastrService, private router: Router,) { }
-
   agent: Agent = new Agent();
+
+  title = 'Angular Form Validation Tutorial';
+  angForm: FormGroup;
+
+  constructor(private service: AgentsService, private toastr: ToastrService, private router: Router, ) {
+  }
 
   ngOnInit() {
 
   }
 
-  add() {
-
-    this.service.post(this.agent).subscribe( data => {
+  onSubmit() { 
+    this.service.post(this.agent).subscribe(data => {
       this.router.navigate(['/agents']);
     }, error => this.toastr.error(error));
-
   }
 
 }

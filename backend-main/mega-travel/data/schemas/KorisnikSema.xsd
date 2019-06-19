@@ -198,8 +198,8 @@
                                     </xs:appinfo>
                                 </xs:annotation>
                                 <xs:restriction base="xs:long">
-                                    <xs:minInclusive value="1000000000"/>
-                                    <xs:totalDigits value="10"/>
+                                    <xs:minInclusive value="0000000000"/>
+                                    <xs:totalDigits value="9"/>
                                     <xs:maxInclusive value="9999999999"/>
                                 </xs:restriction>
                             </xs:simpleType>

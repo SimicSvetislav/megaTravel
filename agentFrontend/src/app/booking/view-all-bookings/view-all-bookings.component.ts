@@ -98,6 +98,7 @@ import { RezervacijaKorisnika } from 'src/app/model/rezervacija/rezervacija-kori
 import { TipSmestaja } from 'src/app/model/smestaj/tip-smestaja.model';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
 import { Korisnik } from 'src/app/model/korisnik/korisnik-abstract.model';
+import { Otkazivanje } from 'src/app/model/smestaj/otkazivanje.model';
 
 
 @Component({
@@ -124,7 +125,9 @@ export class ViewAllBookingsComponent implements OnInit {
     return this.allBookings.filter(booking => {
       if (obj) {
         const term = obj.naziv.toLowerCase();
-        return booking.smestaj.sObjekat.naziv.toLowerCase().includes(term);
+        const id = obj.id;
+        return booking.smestaj.sObjekat === id;
+        // return booking.smestaj.sObjekat.naziv.toLowerCase().includes(term);
       } else {
         return booking;
       }
@@ -165,12 +168,12 @@ export class ViewAllBookingsComponent implements OnInit {
     let rez;
     let smestaj: SmestajnaJedinica;
     for (let i = 0; i < 6; ++i) {
-      smestaj = new SmestajnaJedinica(i, i, true, new Cenovnik(), []);
+      smestaj = {id: i, brojKreveta: i + 2, otkazivanje : new Otkazivanje(), balkon: true, sObjekat : i};
 
       if (i % 3 === 0) {
-        smestaj.sObjekat = new SmestajniObjekat(i, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, '5*'));
+        smestaj.sObjekat = 1;
       } else {
-        smestaj.sObjekat = new SmestajniObjekat(i, 'Fortuna', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, '5*'));
+        smestaj.sObjekat = 1;
       }
 
 

@@ -16,11 +16,13 @@ export class ViewObjectFacilitiesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.facilities = [{id: 1, ime: 'Wifi', cena: undefined, jedinicaPlacanja: undefined, smestajniObjekat: undefined},
-    {id: 5, ime: 'Parking', cena: undefined, jedinicaPlacanja: undefined, smestajniObjekat: undefined},
-    {id: 2, ime: 'Room service', cena: undefined, jedinicaPlacanja: undefined, smestajniObjekat: undefined},
-    {id: 3, ime: 'Pansion', cena: undefined, jedinicaPlacanja: undefined, smestajniObjekat: undefined},
-    {id: 4, ime: 'Kucni ljubimci', cena: undefined, jedinicaPlacanja: undefined, smestajniObjekat: undefined}, ];
+    this.facilities = this.object.dodatnaUsluga;
+
+    // this.facilities = [{id: 1, ime: 'Wifi', cena: undefined, jedinicaPlacanja: undefined},
+    // {id: 5, ime: 'Parking', cena: undefined, jedinicaPlacanja: undefined},
+    // {id: 2, ime: 'Room service', cena: undefined, jedinicaPlacanja: undefined},
+    // {id: 3, ime: 'Pansion', cena: undefined, jedinicaPlacanja: undefined},
+    // {id: 4, ime: 'Kucni ljubimci', cena: undefined, jedinicaPlacanja: undefined}, ];
   }
 
 }

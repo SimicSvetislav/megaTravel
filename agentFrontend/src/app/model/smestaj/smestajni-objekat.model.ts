@@ -6,24 +6,31 @@ import { TipSmestaja } from './tip-smestaja.model';
 import { Rejting } from './rejting.model';
 import { DodatnaUsluga } from './dodatna-usluga.model';
 import { Otkazivanje } from './otkazivanje.model';
+import { Cenovnik } from './cenovnik.model';
 
 export class SmestajniObjekat {
     id: number;
     tipSmestaja: TipSmestaja;
     lokacija: Lokacija;
-   // otkazivanje: Otkazivanje;
+    // opis: string;   //
+
+    // cenovnici: Cenovnik[];
+    // podrazumevaniCenovnik: Cenovnik;
+
     kategorija: KategorijaSmestaja;
    // zvezdice: number;       // ??????????????/
 
     // PRIVREMENO...
     // rejting: Rejting;
 
-   // smestajneJedinice: SmestajnaJedinica[];
-  //  dodatneUsluge: DodatnaUsluga[];
+    smestajnaJedinica: SmestajnaJedinica[];
+    dodatnaUsluga: DodatnaUsluga[];
 
   //  agent: Agent;
 
-    // ????????????????????
+  // FileSet??? digli na objekat
+    // slike: File[];
+
     naziv: string;
 
     constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja) {

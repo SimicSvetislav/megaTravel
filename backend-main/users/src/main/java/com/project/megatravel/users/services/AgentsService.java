@@ -31,5 +31,19 @@ public class AgentsService {
 		return agents;
 		
 	}
+
+	public Agent save(Agent korisnik) {
+		
+		Agent agent = repo.save(korisnik);
+		
+		return agent;
+	}
+
+	public Agent deleteById(Long id) {
+		
+		Agent a = repo.deleteById(id);
+		
+		return a;
+	}
 	
 }

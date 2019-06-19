@@ -3,12 +3,12 @@ export abstract class Korisnik {
     datumRegistracije: Date;
     korisnickoIme: string;
     sifra: string;
-    ime: string;
-    prezime: string;
+    ime: string;        // remove
+    prezime: string;    // remove
     email: string;
     adresa: string;
     telefon: string;
-    uloga: string;
+    uloga: string;       // remove
     stanje: string;
 
     constructor(ime: string, prezime: string, email: string, telefon: string) {
