@@ -13,7 +13,7 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 
 public final class Creator {
 	
-	private Creator() {
+	public Creator() {
 		
 	}
 	
@@ -76,13 +76,12 @@ public final class Creator {
 
 	}
 	
-	public static RezervacijaKorisnika createRezervacija(long id, double cena, int ocena, String datumR, String datumP, String datumZ, String stanje, SmestajnaJedinica sj) {
+	public static RezervacijaKorisnika createRezervacija(double cena, int ocena, String datumR, String datumP, String datumZ, String stanje, SmestajnaJedinica sj) {
 		
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
         rez.setProcenatOtkazivanje(-1.0);
-        rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
         rez.setSmestaj(sj);
@@ -155,6 +154,17 @@ public final class Creator {
 
 	}
 	
+public static SmestajniObjekat createSmestajniObjekat(String kat) {
+		
+        SmestajniObjekat o = new SmestajniObjekat();
+        
+        
+        o.setKategorija(kat);
+        
+        return o;
+
+	}
+	
 	public static Lokacija createLokacija(long id, String naziv) {
 		
 		Lokacija l = new Lokacija();
@@ -171,6 +181,17 @@ public final class Creator {
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
         j.setId(id);
+        j.setSObjekat(so);
+        
+        return j;
+
+	}
+	
+	public static SmestajnaJedinica createSmestajnaJedinica(SmestajniObjekat so) {
+		
+		SmestajnaJedinica j = new SmestajnaJedinica();
+        
+
         j.setSObjekat(so);
         
         return j;

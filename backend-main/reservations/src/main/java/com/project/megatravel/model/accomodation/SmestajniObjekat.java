@@ -14,6 +14,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import com.project.megatravel.model.users.Agent;
 
@@ -88,6 +89,7 @@ import com.project.megatravel.model.users.Agent;
     "rejting",
     "agent"
 })
+@XmlRootElement(name = "SmestajniObjekat")
 public class SmestajniObjekat {
 
     @XmlElement(required = true)
@@ -358,5 +360,10 @@ public class SmestajniObjekat {
     public void setZvezdice(Integer value) {
         this.zvezdice = value;
     }
+
+	public List<SmestajnaJedinica> getSmestajnaJedinica() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
