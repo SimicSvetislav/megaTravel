@@ -56,9 +56,9 @@ public class ReservationsApplication {
 		
 		
 		
-		sjo.save(so);
-		sjr.save(sj);
-		r.save(rk);
+		//sjo.save(so);
+		//sjr.save(sj);
+		//r.save(rk);
 		
 	}
 
