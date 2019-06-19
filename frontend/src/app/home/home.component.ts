@@ -1,3 +1,4 @@
+import { User } from './../user';
 import { TokenStorageService } from './../services/auth/token-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
   hoveredDate: NgbDate;
+  user: User = new User();
 
   id;
   boolLogIn: boolean = false;
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
     } else {
       this.boolLogIn = true;
       this.boolLogOff = false;
+      
     }
 
 

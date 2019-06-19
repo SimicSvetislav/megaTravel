@@ -67,12 +67,12 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.signupInfo = new SignUpInfo(
-      this.user.firstName,
+      this.user.ime,
       this.user.email,
-      this.user.password,
-      this.user.lastName,
-      this.user.address,
-      this.user.phoneNumber,
+      this.user.sifra,
+      this.user.prezime,
+      this.user.adresa,
+      this.user.telefon,
   )
 
 
