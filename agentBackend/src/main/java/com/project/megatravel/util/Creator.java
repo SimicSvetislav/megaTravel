@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -207,6 +208,16 @@ public final class Creator {
 			
 			return rez;
 	}
+	
+	public static DodatnaUsluga createDodatnaUsluge(Long id, String ime, Double cena, String jedinaPlacanja) {
+		DodatnaUsluga rez = new DodatnaUsluga();
+		rez.setId(id);
+		rez.setIme(ime);
+		rez.setCena(cena);
+		rez.setJedinicaPlacanja(jedinaPlacanja);
+		
+		return rez;
+}
 
 	/*public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {
 		

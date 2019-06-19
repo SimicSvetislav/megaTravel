@@ -9,14 +9,12 @@ export class RezervacijaKorisnika extends Rezervacija {
 
     cenaSmestaja: number;
     stanje: string;
-    korisnik: KrajnjiKorisnik;
+    korisnik: KrajnjiKorisnik; // trebace da bude number id...
 
 
     // ??????????????????
     ocena: number;
     komentar: Komentar;
-
-    // ???????????????
     obradjeno: boolean;
     procenatOtkazivanje: number;
 

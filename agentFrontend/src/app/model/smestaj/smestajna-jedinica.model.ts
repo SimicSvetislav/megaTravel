@@ -10,30 +10,26 @@ export class SmestajnaJedinica {
     brojKreveta: number;
     balkon: boolean;
 
-    cenovnici: Cenovnik[];
-    podrazumevaniCenovnik: Cenovnik;
+    // ova dva digli na ojekat
+    // cenovnici: Cenovnik[];
+    // podrazumevaniCenovnik: Cenovnik;
 
-    // privremeno zakomentarisano
-    // opis: string;   // ?????? digli na objekat
-   // dodatneUsluge: DodatnaUsluga[];
-   // otkazivanje: Otkazivanje;
+    otkazivanje: Otkazivanje;
 
     // ??????????????????????
-    // povecanjeVeciBrojOsoba: number;
-     sObjekat: SmestajniObjekat;
     // komentari: Komentar[];
-    // rejting: Rejting;
 
-    // FileSet??? digli na objekat
-    // slike: File[];
+     // id objekta
+     sObjekat: number;
 
-    constructor(id: number, kreveta: number, balkon: boolean, podrazumevani: Cenovnik, cenovnici: Cenovnik[]) {
+    // constructor() { }
+
+    constructor(id: number, kreveta: number, balkon: boolean, sObjekat: number, otkazivanje: Otkazivanje) {
         this.id = id;
         this.brojKreveta = kreveta;
         this.balkon = balkon;
-        this.podrazumevaniCenovnik = podrazumevani;
-        this.cenovnici = cenovnici;
-       // this.sObjekat = objekat;
+        this.sObjekat = sObjekat;
+        this.otkazivanje = otkazivanje;
     }
 }
 

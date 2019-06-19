@@ -16,19 +16,13 @@ export class ViewAllUnitsComponent implements OnInit {
 
   units: SmestajnaJedinica[];
 
-  constructor(private accomodation: AccomodationService, private router: Router) { }
+  constructor(private accomodationService: AccomodationService, private router: Router) { }
 
   ngOnInit() {
-    this.units = [{id: 1, brojKreveta: 2, balkon: true,  sObjekat: undefined, cenovnici: [], podrazumevaniCenovnik:
-      {cena: {iznos: 155, valuta: 'RSD'}, pocetak: new Date(),
-      pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}},
-      {id: 1, brojKreveta: 2, balkon: false,  sObjekat: undefined, cenovnici: [], podrazumevaniCenovnik:
-        {cena: {iznos: 155.03, valuta: 'RSD'}, pocetak: new Date(),
-        pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}},
-        {id: 1, brojKreveta: 2, balkon: false, sObjekat: undefined, cenovnici: [], podrazumevaniCenovnik:
-          {cena: {iznos: 155, valuta: 'RSD'},  pocetak: new Date(),
-          pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}},
-    ];
+    this.units = this.object.smestajnaJedinica;
+    // this.accomodationService.getUnits( this.object.id.toString() ).subscribe(data => {
+    //   this.units = data;
+    // });
   }
 
   detail(unit: SmestajnaJedinica) {

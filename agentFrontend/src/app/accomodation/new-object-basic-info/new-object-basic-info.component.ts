@@ -114,7 +114,7 @@ export class NewObjectBasicInfoComponent implements OnInit {
     if (this.otkazivanje && this.brojDanaOtkazivanja && this.faktorOtkazivanja) {
       const otkazivanje: Otkazivanje = new Otkazivanje();
       otkazivanje.brojDana = +this.brojDanaOtkazivanja;
-      otkazivanje.faktorOtkazivanja = +this.faktorOtkazivanja;
+      // otkazivanje.faktorOtkazivanja = +this.faktorOtkazivanja;
       otkazivanje.dozvoljeno = this.otkazivanje;
       // this.object.otkazivanje = otkazivanje;
     }

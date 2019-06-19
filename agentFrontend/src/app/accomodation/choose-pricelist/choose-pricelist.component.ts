@@ -3,7 +3,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SmestajniObjekat } from 'src/app/model/smestaj/smestajni-objekat.model';
 import { Cenovnik } from 'src/app/model/smestaj/cenovnik.model';
 import { NgForm } from '@angular/forms';
-import { Cena } from 'src/app/model/smestaj/cena.model';
 
 @Component({
   selector: 'app-choose-pricelist',
@@ -88,7 +87,7 @@ export class ChoosePricelistComponent implements OnInit {
     trueDay = ('0' + this.end['day']).slice(-2);
     const e = this.end['year'] + '-' + trueMonth + '-' + trueDay;
 
-    const novaCena: Cena = new Cena(this.valuta, num);
+    const novaCena: number =  num;
     const noviCenovnik: Cenovnik = new Cenovnik();
     noviCenovnik.cena = novaCena;
     noviCenovnik.pocetak = this.start;

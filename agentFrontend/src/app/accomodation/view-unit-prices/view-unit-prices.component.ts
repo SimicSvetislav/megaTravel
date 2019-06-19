@@ -12,6 +12,9 @@ export class ViewUnitPricesComponent implements OnInit {
   @Input()
   unit: SmestajnaJedinica;
 
+  @Input()
+  object: SmestajnaJedinica;
+
   cenovnici: Cenovnik[];
   podrazumevaniCenovnik: Cenovnik;
 
@@ -19,13 +22,13 @@ export class ViewUnitPricesComponent implements OnInit {
 
   ngOnInit() {
     this.cenovnici = [
-        {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: undefined,
+        {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
         pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-        {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: undefined,
+        {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
         pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-        {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: undefined,
+        {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
         pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-        {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: undefined,
+        {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
         pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
     ];
     this.podrazumevaniCenovnik = this.cenovnici[0];

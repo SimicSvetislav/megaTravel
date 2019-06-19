@@ -1,12 +1,14 @@
 package com.project.megatravel.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,19 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.megatravel.controller.ws.client.AccomodationClient;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
-import com.project.megatravel.model.accomodation.managment.AddObjectResponse;
+import com.project.megatravel.service.AccomodationService;
 
 @RestController
 @RequestMapping("/accomodation")
+@CrossOrigin
 public class AccomodationController {
 
 	@Autowired
 	private AccomodationClient accClient;
 	
+	@Autowired
+	private AccomodationService accomodationService;
+	
 	@RequestMapping(value="/object", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SmestajniObjekat>> getAllAccomodationObjects() {
-		AddObjectResponse r =  accClient.getCountry("");
-		return new ResponseEntity<>(new ArrayList<SmestajniObjekat>(), HttpStatus.OK);
+	public ResponseEntity<Collection<SmestajniObjekat>> getAllAccomodationObjects() {
+			try {
+				Collection<SmestajniObjekat> objects = accomodationService.getAllAccomodationObjects();
+				return new ResponseEntity<>(objects, HttpStatus.OK);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+
 	}
 	
 	@RequestMapping(value="/object/agentId/{agentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,10 +52,19 @@ public class AccomodationController {
 	}
 	
 	@RequestMapping(value="/object/{objectId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SmestajniObjekat> getAccomodationObject(@PathVariable("agentId") String objectId) {
-		
-		
-		return new ResponseEntity<>(new SmestajniObjekat(), HttpStatus.OK);
+	public ResponseEntity<SmestajniObjekat> getAccomodationObject(@PathVariable("objectId") String objectId) {
+		try {
+			Long id = Long.parseLong(objectId);
+			SmestajniObjekat objekat = accomodationService.getAccomodationObject(id);
+			
+			return new ResponseEntity<>(objekat, HttpStatus.OK);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value="/object", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
@@ -53,24 +75,54 @@ public class AccomodationController {
 	}
 	
 	@RequestMapping(value="/object/{objectId}/unit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SmestajnaJedinica>> getAllObjectUnits(@PathVariable("agentId") String objectId) {
-		
-		
-		return new ResponseEntity<>(new ArrayList<SmestajnaJedinica>(), HttpStatus.OK);
+	public ResponseEntity<List<SmestajnaJedinica>> getAllObjectUnits(@PathVariable("objectId") String objectId) {
+		try {
+			Long id = Long.parseLong(objectId);
+			List<SmestajnaJedinica> jedinice = accomodationService.getAllObjectUnits(id);
+			
+			return new ResponseEntity<>(jedinice, HttpStatus.OK);		
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}	
 	}
 	
-	@RequestMapping(value="/object/{objectId}/unit",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<SmestajnaJedinica> addNewObjectUnit(@PathVariable("agentId") String objectId, @RequestBody SmestajnaJedinica newUnit) {
+	@RequestMapping(value="/object/{objectId}/unit/new",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<SmestajnaJedinica> addNewObjectUnit(@PathVariable("objectId") String objectId, @RequestBody SmestajnaJedinica newUnit) {
+		try {
+			Long id = Long.parseLong(objectId);
+			newUnit.setSObjekat(id);  //ne parsira se long id...
+			SmestajnaJedinica jedinica = accomodationService.addNewObjectUnit(newUnit);
+			
+			return new ResponseEntity<>(jedinica, HttpStatus.CREATED);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}	
 		
-		
-		return new ResponseEntity<>(new SmestajnaJedinica(), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value="/object/{objectId}/unit/{unitId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SmestajnaJedinica> getObjectUnit(@PathVariable("objectId") String objectId, @PathVariable("unitId") String unitId) {
-		
-		
-		return new ResponseEntity<>(new SmestajnaJedinica(), HttpStatus.OK);
+		try {
+			Long id = Long.parseLong(objectId);
+			Long uId= Long.parseLong(unitId);
+			SmestajnaJedinica jedinica = accomodationService.getObjectUnit(uId);
+			
+			return new ResponseEntity<>(jedinica, HttpStatus.OK);		
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@RequestMapping(value="/object/{objectId}/unit/{unitId}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)

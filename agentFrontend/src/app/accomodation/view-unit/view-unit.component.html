@@ -1,9 +1,9 @@
-<h1 class="text-center">Podaci o sobi smeštaja {{object.naziv}}</h1>
+<h1 class="text-center">Podaci o sobi smeštaja {{object?.naziv}} [soba br. {{unit?.id}}]</h1>
 <div class="row">
   <div class="col-lg-3 themed-grid-col">
     <div class="list-group">
       <a  [class.active]="activeTab === 'basic-info'" (click)="activeTab = 'basic-info'" class="list-group-item list-group-item-action" >Osnovne informacije</a>
-      <a  [class.active]="activeTab === 'prices'" (click)="activeTab = 'prices'" class="list-group-item list-group-item-action" >Plan cena</a>
+      <!-- <a  [class.active]="activeTab === 'prices'" (click)="activeTab = 'prices'" class="list-group-item list-group-item-action" >Plan cena</a> -->
       <a  [class.active]="activeTab === 'comments'" (click)="activeTab = 'comments'" class="list-group-item list-group-item-action" >Komentari</a>
       <a  [class.active]="activeTab === 'booking'" (click)="activeTab = 'booking'" class="list-group-item list-group-item-action" >Rezervacije</a> 
     </div>
@@ -16,9 +16,9 @@
       <div *ngSwitchCase="'basic-info'">
         <app-view-unit-basic-info [unit] = "unit"></app-view-unit-basic-info>
       </div>
-      <div *ngSwitchCase="'prices'">
+      <!-- <div *ngSwitchCase="'prices'">
         <app-view-unit-prices [unit] = "unit"></app-view-unit-prices>
-      </div>
+      </div> -->
       <div *ngSwitchCase="'comments'">
         <app-view-unit-comments [unit] = "unit"></app-view-unit-comments>
       </div>

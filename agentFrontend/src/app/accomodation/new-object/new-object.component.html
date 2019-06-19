@@ -18,12 +18,18 @@
   <li class="nav-item" [class.active]="activeTab === 'facilities'">
     <a class="nav-link" (click)="activeTab = 'facilities'">Dodatne usluge</a>
   </li>
+  <li class="nav-item" [class.active]="activeTab === 'images'">
+    <a class="nav-link" (click)="activeTab = 'images'">Slike smestaja</a>
+</li>
 </ul>
 <div [ngSwitch]="activeTab">
   <div *ngSwitchCase="'basic-info'">
     <app-new-object-basic-info [object] = "newObject" (addBasicInfo)="addBasicInfo()"></app-new-object-basic-info>
   </div>
   <div *ngSwitchCase="'facilities'">
-    <app-choose-facilities [object] = "newObject" (chooseFacilites) = "addNewObject()" (backFacilities)="backFacilities()"></app-choose-facilities>
+    <app-choose-facilities [object] = "newObject" (chooseFacilities)="addFacilities()" (backFacilities)="backFacilities()"></app-choose-facilities>
+  </div>
+  <div *ngSwitchCase="'images'">
+    <app-choose-images [object] = "newObject"  (addImages)="addImages()" (backImages)="backImages()"></app-choose-images>
   </div>
 </div>

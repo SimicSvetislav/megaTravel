@@ -21,8 +21,13 @@ export class NewUnitBasicInfoComponent implements OnInit {
   @Output()
   addBasicInfo = new EventEmitter();
 
-  otkazivanje: boolean;
-  brojDanaOtkazivanja: string;
+  @Output()
+  backBasicInfo = new EventEmitter();
+
+  balkon: boolean;
+  brojKreveta: number;
+  dozvoljenoOtkazivanje: boolean;
+  brojDanaOtkazivanja: number;
   faktorOtkazivanja: string;
 
   naziv: string;
@@ -30,10 +35,12 @@ export class NewUnitBasicInfoComponent implements OnInit {
   constructor(private accomodationService: AccomodationService) { }
 
   ngOnInit() {
+    this.dozvoljenoOtkazivanje = false;
+    this.balkon = false;
   }
 
   back() {
-
+    this.backBasicInfo.emit();
   }
 
   next(f: NgForm) {
@@ -42,17 +49,23 @@ export class NewUnitBasicInfoComponent implements OnInit {
       return;
     }
 
-    if (this.otkazivanje && this.brojDanaOtkazivanja && this.faktorOtkazivanja) {
-      const otkazivanje: Otkazivanje = new Otkazivanje();
-      otkazivanje.brojDana = +this.brojDanaOtkazivanja;
-      otkazivanje.faktorOtkazivanja = +this.faktorOtkazivanja;
-      otkazivanje.dozvoljeno = this.otkazivanje;
-      // this.object.otkazivanje = otkazivanje;
+    const otkazivanje: Otkazivanje = new Otkazivanje();
+    otkazivanje.dozvoljeno = this.dozvoljenoOtkazivanje;
+    // otkazivanje.dozvoljeno = this.dozvoljenoOtkazivanje === undefined ? false : true;
+    otkazivanje.brojDana = this.brojDanaOtkazivanja === undefined ? 0 : +this.brojDanaOtkazivanja;
+    if (!otkazivanje.dozvoljeno && otkazivanje.brojDana > 0 ) {
+      otkazivanje.brojDana = 0;
+
     }
 
-    console.log(this.otkazivanje);
-    this.unit.brojKreveta = +this.unit.brojKreveta;
-
+    console.log(this.dozvoljenoOtkazivanje);
+    // this.balkon = this.balkon === undefined ? false : true;
+    this.brojKreveta = +this.brojKreveta;
+    // this.unit.id = null;
+   // this.unit = new SmestajnaJedinica(null, this.brojKreveta, this.balkon, this.object.id, otkazivanje);
+    this.unit.balkon = this.balkon;
+    this.unit.brojKreveta = this.brojKreveta;
+    this.unit.otkazivanje = otkazivanje;
 
     this.addBasicInfo.emit();
   }

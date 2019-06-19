@@ -1,13 +1,11 @@
 import { SmestajniObjekat } from './smestajni-objekat.model';
-import { Cena } from './cena.model';
 
 export class DodatnaUsluga {
     id: number;
     ime: string;
 
-    cena: Cena;
+    cena: number;
     jedinicaPlacanja: string;
 
-    // ??????????????????????????????????
-    smestajniObjekat: SmestajniObjekat;
+
 }

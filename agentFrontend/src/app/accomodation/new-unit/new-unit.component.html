@@ -3,27 +3,27 @@
     <li class="nav-item"  [class.active]="activeTab === 'basic-info'">
       <a class="nav-link" (click)="activeTab = 'basic-info'">Osnovni podaci</a>
     </li>
-    <li class="nav-item" [class.active]="activeTab === 'facilities'">
+    <!-- <li class="nav-item" [class.active]="activeTab === 'facilities'">
       <a class="nav-link" (click)="activeTab = 'facilities'">Dodatne usluge</a>
     </li>
     <li class="nav-item" [class.active]="activeTab === 'pricelist'">
         <a class="nav-link" (click)="activeTab = 'pricelist'">Cenovnik</a>
-    </li>
-    <li class="nav-item" [class.active]="activeTab === 'images'">
+    </li> -->
+    <!-- <li class="nav-item" [class.active]="activeTab === 'images'">
         <a class="nav-link" (click)="activeTab = 'images'">Slike smestaja</a>
-    </li>
+    </li> -->
 </ul>
 <div [ngSwitch]="activeTab">
   <div *ngSwitchCase="'basic-info'">
-    <app-new-unit-basic-info [object] = "object" [unit]="newUnit" (addBasicInfo)="addBasicInfo()"></app-new-unit-basic-info>
+    <app-new-unit-basic-info [object] = "object" [unit]="newUnit" (addBasicInfo)="addBasicInfo()" (backBasicInfo)="backBasicInfo()"></app-new-unit-basic-info>
   </div>
-  <div *ngSwitchCase="'facilities'">
+  <!-- <div *ngSwitchCase="'facilities'">
     <app-choose-facilities [object] = "object" [unit]="newUnit" (chooseFacilities) =  "addFacilities()" (backFacilities)="backFacilities()"></app-choose-facilities>
   </div>
   <div *ngSwitchCase="'pricelist'">
     <app-choose-pricelist [object] = "object" [unit]="newUnit" (addPricelist) =  "addPricelist()" (pricelistBack)="backPricelist()"></app-choose-pricelist>
-  </div>
-  <div *ngSwitchCase="'images'">
+  </div> -->
+  <!-- <div *ngSwitchCase="'images'">
       <app-choose-images [object] = "object" [unit]="newUnit" (addImages) = "addImages()" (backImages)="backImages()"></app-choose-images>
-  </div>
+  </div> -->
 </div>

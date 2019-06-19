@@ -97,6 +97,27 @@
                <groupId>org.springframework.ws</groupId>
                <artifactId>spring-ws-core</artifactId>
         </dependency>
+        
+        <!-- Fix za stackoverflow reference -->
+        <dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-slf4j-impl</artifactId>
+    		<version>2.11.2</version>
+  			<exclusions>
+  				<exclusion>
+     				 <groupId>ch.qos.logback</groupId>
+      				 <artifactId>logback-core</artifactId>
+    			</exclusion>
+    			<exclusion>
+      				<groupId>ch.qos.logback</groupId>
+      				<artifactId>logback-core</artifactId>
+    			</exclusion>
+    			<exclusion>
+      				<groupId>ch.qos.logback</groupId>
+      				<artifactId>logback-classic</artifactId>
+    			</exclusion>
+  			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>

@@ -7,6 +7,7 @@ import { BookingService } from 'src/app/service/booking.service';
 import { TipSmestaja } from 'src/app/model/smestaj/tip-smestaja.model';
 import { KategorijaSmestaja } from 'src/app/model/smestaj/kategorija-smestaja.model';
 import { Cenovnik } from 'src/app/model/smestaj/cenovnik.model';
+import { Otkazivanje } from 'src/app/model/smestaj/otkazivanje.model';
 
 @Component({
   selector: 'app-new-unit',
@@ -23,47 +24,65 @@ export class NewUnitComponent implements OnInit {
   object: SmestajniObjekat;
 
   ngOnInit() {
+
     this.activatedRoute.paramMap.subscribe(params => {
       const objectId = params.get('objectId');
-      this.accomodationService.getObject();
-    });
-    this.object = new SmestajniObjekat(1, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, '4*'));
+      this.accomodationService.getObject(objectId).subscribe(data => {
+        this.object = data;
+        this.newUnit = new SmestajnaJedinica(null, -1, false, this.object.id, new Otkazivanje());
 
-    this.newUnit = new SmestajnaJedinica(1, 2, true, new Cenovnik(), []);
+      });
+    });
+
     this.activeTab = 'basic-info';
   }
 
   addBasicInfo() {
-    this.activeTab = 'facilities';
+    // this.activeTab = 'facilities';
+    this.accomodationService.addUnit(this.object.id.toString(), this.newUnit).subscribe(data => {
+      const url: string = this.backToUnitsUrl();
+      this.router.navigate([url]);
+    }, (error: Response) => {
+
+    });
   }
 
-  // zavrsna operacija
-  addImages() {
-    const url: string = 'object/' + this.object.id + '/units';
+  backBasicInfo() {
+    const url: string = this.backToUnitsUrl();
     this.router.navigate([url]);
   }
 
-  backImages() {
-    this.activeTab = 'pricelist';
-
+  backToUnitsUrl() {
+    return 'object/' + this.object.id + '/units';
   }
 
-  addFacilities() {
-    this.activeTab = 'pricelist';
-  }
+  // zavrsna operacija
+  // addImages() {
+  //   const url: string = 'object/' + this.object.id + '/units';
+  //   this.router.navigate([url]);
+  // }
 
-  backFacilities() {
-    this.activeTab = 'basic-info';
+  // backImages() {
+  //   this.activeTab = 'pricelist';
 
-  }
+  // }
 
-  addPricelist() {
-    this.activeTab = 'images';
-  }
+  // addFacilities() {
+  //   this.activeTab = 'pricelist';
+  // }
 
-  backPricelist() {
-    this.activeTab = 'facilities';
+  // backFacilities() {
+  //   this.activeTab = 'basic-info';
 
-  }
+  // }
+
+  // addPricelist() {
+  //   this.activeTab = 'images';
+  // }
+
+  // backPricelist() {
+  //   this.activeTab = 'facilities';
+
+  // }
 
 }

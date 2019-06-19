@@ -21,22 +21,32 @@ export class ViewUnitComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(data => {
-      const id: string = data.get('objectId');
-      console.log(id);
+      const objectId: string = data.get('objectId');
+      const unitId: string = data.get('unitId');
+      console.log(objectId);
+      console.log(unitId);
+
+      this.accomodationService.getObject(objectId).subscribe( obj => {
+        this.object = obj;
+      });
+
+      this.accomodationService.getUnit(objectId, unitId).subscribe( unit => {
+        this.unit = unit;
+      });
     });
-    // this.accomodationService.getObject().subscribe( data => {
-
-    // });
-    this.object = {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'};
 
 
-    this.unit = {id: 1, brojKreveta: 2, balkon: true, sObjekat: undefined,
-      cenovnici: [{cena: {iznos: 155, valuta: 'RSD'}, pocetak: new Date(),
-    pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}], podrazumevaniCenovnik:
-      {cena: {iznos: 155, valuta: 'RSD'}, pocetak: new Date(),
-      pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}};
+
+    // this.object = {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
+    // kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  { naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
+    //  geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'};
+
+
+    // this.unit = {id: 1, brojKreveta: 2, balkon: true, sObjekat: undefined,
+    //   cenovnici: [{cena: 155, pocetak: new Date(),
+    // pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}], podrazumevaniCenovnik:
+    //   {cena: 155, pocetak: new Date(),
+    //   pocetakStr: '2019-06-13', kraj: new Date(), krajStr: '2019-08-05', smestaj: undefined}};
 
     this.activeTab = 'basic-info';
   }

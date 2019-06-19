@@ -29,9 +29,6 @@ export class NewObjectComponent implements OnInit {
 
       });
     }
-
-
-
   }
 
   addBasicInfo() {
@@ -39,8 +36,20 @@ export class NewObjectComponent implements OnInit {
     this.activeTab = 'facilities';
   }
 
+  addFacilities() {
+   this.activeTab = 'images';
+  }
+
   backFacilities() {
     this.activeTab = 'basic-info';
+  }
+
+  addImages() {
+    this.addNewObject();
+  }
+
+  backImages () {
+    this.activeTab = 'facilities';
   }
 
 }

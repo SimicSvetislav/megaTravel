@@ -16,28 +16,10 @@ export class ViewAllObjectsComponent implements OnInit {
 
   ngOnInit() {
     this.accomodationService.getObjects().subscribe( data => {
-
+        this.objektiAgenta = data;
+    }, ( error: Response) => {
+      console.log(error);
     });
-
-    this.objektiAgenta = [{id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'},
-     {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'},
-     {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'},
-     {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'},
-     {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'},
-     {id: 1, tipSmestaja: {id: 1, naziv: 'Bed and breakfast'},
-    kategorija: {id: 1, naziv: '5 zvezdica'}, lokacija:  {id: 1, naziv: 'naziv', geoDuzina: {stepeni: 23, strana: 'W'},
-     geoSirina: {stepeni: 45, strana: 'N'}}, naziv: 'Talija'},
-      ];
   }
 
   detail(obj: SmestajniObjekat) {

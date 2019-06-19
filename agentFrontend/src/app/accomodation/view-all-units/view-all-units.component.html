@@ -28,15 +28,15 @@
           <div class="col-lg-3"  style="font-size: 17px">
             <p><b>{{unit.balkon ? 'Da' : 'Ne'}}</b></p>
           </div>
-          <div class="col-lg-3"  style="font-size: 17px">
+          <!-- <div class="col-lg-3"  style="font-size: 17px">
             <p><b>{{unit.podrazumevaniCenovnik.cena.iznos}} {{unit.podrazumevaniCenovnik.cena.valuta}}</b></p>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-lg-2 priceDiv">
         <!-- <div class="w-100">fdfd</div> -->
         <div style="text-align: center">
-          <button type="submit" class="btn btn-primary btn-block detail" (click)="detail(object)" >
+          <button type="submit" class="btn btn-primary btn-block detail" (click)="detail(unit)" >
             Detalji
           </button>
         </div>
