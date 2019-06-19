@@ -7,17 +7,18 @@ import { Rejting } from './rejting.model';
 import { DodatnaUsluga } from './dodatna-usluga.model';
 import { Otkazivanje } from './otkazivanje.model';
 import { Cenovnik } from './cenovnik.model';
+import { DisplayImageWrapper } from '../display-image-wrapper';
 
 export class SmestajniObjekat {
     id: number;
     tipSmestaja: TipSmestaja;
     lokacija: Lokacija;
-    // opis: string;   //
+     opis: string;   //
 
-    // cenovnici: Cenovnik[];
-    // podrazumevaniCenovnik: Cenovnik;
+     cenovnici: Cenovnik[];
+     podrazumevaniCenovnik: Cenovnik;
 
-    kategorija: KategorijaSmestaja;
+     kategorijaSm: KategorijaSmestaja;
    // zvezdice: number;       // ??????????????/
 
     // PRIVREMENO...
@@ -28,15 +29,30 @@ export class SmestajniObjekat {
 
   //  agent: Agent;
 
-  // FileSet??? digli na objekat
-    // slike: File[];
+     // FileSet???
+     // slike: File[];
+     slike: DisplayImageWrapper[];
 
     naziv: string;
 
-    constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja) {
+    // constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja) {
+    //   this.id = id;
+    //   this.naziv = naziv;
+    //   this.tipSmestaja = tip;
+    //   this.kategorijaSm = kategorija;
+    // }
+
+    constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja, opis: string, podrazumevaniCenovnik: Cenovnik
+      , cenovnici: Cenovnik[], dodatneUsluge: DodatnaUsluga[], slike: DisplayImageWrapper[]) {
       this.id = id;
       this.naziv = naziv;
       this.tipSmestaja = tip;
-      this.kategorija = kategorija;
+      this.kategorijaSm = kategorija;
+
+      this.opis = opis;
+      this.podrazumevaniCenovnik = podrazumevaniCenovnik;
+      this.cenovnici = cenovnici;
+      this.dodatnaUsluga = dodatneUsluge;
+      this.slike = slike;
     }
 }

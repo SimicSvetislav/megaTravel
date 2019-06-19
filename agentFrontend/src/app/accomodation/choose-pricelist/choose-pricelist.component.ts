@@ -48,6 +48,8 @@ export class ChoosePricelistComponent implements OnInit {
     //   {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: new SmestajnaJedinica(), pocetakStr: '',
     //   krajStr: ''},
     // ];
+    this.dodatiCenovnici = this.object.cenovnici;
+    this.podrazumevaniCenovnik = this.object.podrazumevaniCenovnik;
   }
 
   back() {
@@ -55,6 +57,13 @@ export class ChoosePricelistComponent implements OnInit {
   }
 
   add() {
+    if (this.podrazumevaniCenovnik === undefined && this.dodatiCenovnici.length === 0) {
+      alert('Morate uneti bar jedan cenovnik');
+      return;
+    }
+
+    this.object.cenovnici = this.dodatiCenovnici;
+    this.object.podrazumevaniCenovnik = this.podrazumevaniCenovnik;
     this.addPricelist.emit();
   }
 
@@ -90,11 +99,14 @@ export class ChoosePricelistComponent implements OnInit {
     const novaCena: number =  num;
     const noviCenovnik: Cenovnik = new Cenovnik();
     noviCenovnik.cena = novaCena;
-    noviCenovnik.pocetak = this.start;
-    noviCenovnik.kraj = this.end;
-    noviCenovnik.pocetakStr = b;
-    noviCenovnik.krajStr = e;
+    noviCenovnik.pocetakDateType = this.start;
+    noviCenovnik.krajDateType = this.end;
+    noviCenovnik.pocetak = b;
+    noviCenovnik.kraj = e;
     this.dodatiCenovnici.push(noviCenovnik);
+    if (this.dodatiCenovnici.length === 1) {
+      this.podrazumevaniCenovnik = noviCenovnik;
+    }
 
     this.start = undefined;
     this.end = undefined;
@@ -118,9 +130,27 @@ export class ChoosePricelistComponent implements OnInit {
     // da se izbegne poklapanje nekih termina
     for (const cenovnik of this.dodatiCenovnici) {
       // cenovnik.pocetak
-      const retVal1: boolean = this.compareTwoDates(this.end, cenovnik.pocetak);
-      const retVal2: boolean = this.compareTwoDates(cenovnik.kraj, this.start);
+      const retValB1B2: boolean = this.compareTwoDates(this.start, cenovnik.pocetakDateType);
+      const retValB1E2: boolean = this.compareTwoDates(this.start, cenovnik.krajDateType);
+      const retValB2B1: boolean = this.compareTwoDates(cenovnik.pocetakDateType, this.start);
+      const retValB2E1: boolean = this.compareTwoDates(cenovnik.pocetakDateType, this.end);
+
+      let retVal1: boolean;
+      if (!retValB1B2 && !retValB1E2) {
+        retVal1 = false;
+      } else {
+        retVal1 = true;
+      }
+      let retVal2: boolean;
+      if (!retValB2B1 && !retValB2E1) {
+        retVal2 = false;
+      } else {
+        retVal2 = true;
+      }
+
       if (!retVal1 || !retVal2) {
+        console.log('Nema poklapanja intervala');
+      } else {
         alert('Datum pocetka je veci od datuma zavrsetka');
         return false;
       }

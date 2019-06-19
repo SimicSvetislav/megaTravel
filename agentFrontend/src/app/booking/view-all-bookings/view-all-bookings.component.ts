@@ -143,9 +143,9 @@ export class ViewAllBookingsComponent implements OnInit {
   ngOnInit() {
     this.activeTab = 'upcoming';
 
-    let j = new SmestajniObjekat(1, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, '5*'));
+    let j = new SmestajniObjekat(1, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 5), '', new Cenovnik(), [], [], []);
     this.objects.push(j);
-    j = new SmestajniObjekat(1, 'Fortuna', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, '5*'));
+    j = new SmestajniObjekat(1, 'Fortuna', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 5), '', new Cenovnik(), [], [], []);
     this.objects.push(j);
 
     this.allBookings = this.genData();

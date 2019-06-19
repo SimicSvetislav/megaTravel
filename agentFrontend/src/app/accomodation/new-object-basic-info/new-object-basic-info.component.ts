@@ -22,6 +22,8 @@ export class NewObjectBasicInfoComponent implements OnInit {
   @Output()
   addBasicInfo = new EventEmitter();
 
+  @Output()
+  backBasicInfo = new EventEmitter();
 
   // select opcije
   types: TipSmestaja[];
@@ -41,7 +43,7 @@ export class NewObjectBasicInfoComponent implements OnInit {
   duzinaOrijentacija: string;
   sirinaOrijentacija: string;
 
-  otkazivanje: boolean;
+  dozvoljenoOtkazivanje: boolean;
   brojDanaOtkazivanja: string;
   faktorOtkazivanja: string;
 
@@ -63,14 +65,14 @@ export class NewObjectBasicInfoComponent implements OnInit {
 
     const s4: TipSmestaja = new TipSmestaja(4, 'hotel');
     s4.id = 1;
-    s4.naziv = 'hotel';
+    s4.naziv = 'aprathotel';
 
     t.push(s);
     t.push(s2);
     t.push(s3);
     t.push(s4);
 
-    this.categories = [{ id: 1, naziv: 'nekategorisan'}, {id: 1, naziv: '1 zvezdica'}, {id: 1, naziv: '2 zvezdice'}];
+    this.categories = [{ id: 1, zvezdice: 8}, {id: 1, zvezdice: 8}, {id: 1, zvezdice: 1}];
 
     // this.accomodationService.getObjectCategories().subscribe(data => {
     //   this.categories = data;
@@ -81,10 +83,11 @@ export class NewObjectBasicInfoComponent implements OnInit {
     // });
 
     this.types = t;
+    this.dozvoljenoOtkazivanje = false;
   }
 
   back() {
-
+    this.backBasicInfo.emit();
   }
 
   next(f: NgForm) {
@@ -111,22 +114,17 @@ export class NewObjectBasicInfoComponent implements OnInit {
     this.object.lokacija = lokacija;
 
 
-    if (this.otkazivanje && this.brojDanaOtkazivanja && this.faktorOtkazivanja) {
-      const otkazivanje: Otkazivanje = new Otkazivanje();
-      otkazivanje.brojDana = +this.brojDanaOtkazivanja;
-      // otkazivanje.faktorOtkazivanja = +this.faktorOtkazivanja;
-      otkazivanje.dozvoljeno = this.otkazivanje;
-      // this.object.otkazivanje = otkazivanje;
+    const otkazivanje: Otkazivanje = new Otkazivanje();
+    otkazivanje.dozvoljeno = this.dozvoljenoOtkazivanje;
+    otkazivanje.brojDana = this.brojDanaOtkazivanja === undefined ? 0 : +this.brojDanaOtkazivanja;
+    if (!otkazivanje.dozvoljeno && otkazivanje.brojDana > 0 ) {
+      otkazivanje.brojDana = 0;
+
     }
 
-    console.log(this.otkazivanje);
-    console.log(this.opisObjekta);
-    console.log(this.duzinaOrijentacija);
-    console.log(this.sirinaOrijentacija);
-
-    console.log(this.object.tipSmestaja);
-    console.log(this.object.kategorija);
-
+    this.object.tipSmestaja = this.tip;
+    this.object.kategorijaSm = this.kategorija;
+    this.object.opis = this.opisObjekta;
 
     this.addBasicInfo.emit();
   }

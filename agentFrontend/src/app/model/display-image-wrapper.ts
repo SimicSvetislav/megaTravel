@@ -1,4 +1,5 @@
 export class DisplayImageWrapper {
-    imeSlike: string;
-    sadrzajSlike: string | ArrayBuffer;
+    putanja: string;
+    value: string | ArrayBuffer;
+    // value:  ArrayBuffer;
 }

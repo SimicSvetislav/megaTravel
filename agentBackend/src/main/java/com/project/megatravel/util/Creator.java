@@ -5,10 +5,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
+import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
@@ -137,7 +139,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        ///o.setRejting(r);
         
         return o;
 
@@ -149,7 +151,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         o.setLokacija(lokacija);
         
         return o;
@@ -217,7 +219,22 @@ public final class Creator {
 		rez.setJedinicaPlacanja(jedinaPlacanja);
 		
 		return rez;
-}
+	}
+	
+	public static TipSmestaja createTipSmetaja(Long id, Object naziv) {
+		TipSmestaja  rez = new TipSmestaja();
+		rez.setId(id);
+		rez.setNaziv(naziv);
+		return rez;
+	}
+	
+	public static KategorijaSm createKategorijaSm(Long id, Integer value) {
+		KategorijaSm rez = new KategorijaSm();
+		
+		rez.setId(id);
+		rez.setZvezdice(value);
+		return rez;
+	}
 
 	/*public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {
 		

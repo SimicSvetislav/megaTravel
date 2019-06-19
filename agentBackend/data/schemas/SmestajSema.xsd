@@ -10,68 +10,6 @@
     <xs:import namespace="www.model.megatravel.project.com/reservations"
         schemaLocation="Rezervacija.xsd"/>
     <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
-    <xs:complexType name="TSmestajniObjekat">
-        <xs:annotation>
-            <xs:appinfo>
-                <jxb:class name="TSmestajniObjekat"/>
-            </xs:appinfo>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="tipSmestaja">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="Hotel"/>
-                        <xs:enumeration value="Apartman"/>
-                        <xs:enumeration value="Bed&amp;Breakfast"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="lokacija" type="TLokacija"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="smestajneJedinice"
-                type="TSmestajnaJedinica"/>
-            <xs:element name="otkazivanje" type="TOtkazivanje"/>
-            <xs:element default="NA" name="kategorija">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="BRONZE"/>
-                        <xs:enumeration value="SILVER"/>
-                        <xs:enumeration value="GOLD"/>
-                        <xs:enumeration value="PLATINUM"/>
-                        <xs:enumeration value="NA"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="rejting" type="TRejting"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" ref="DodatnaUsluga"/>
-            <xs:element name="agent">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:appinfo>
-                            <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
-                        </xs:appinfo>
-                    </xs:annotation>
-                    <xs:restriction base="xs:long">
-                        <xs:minInclusive value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id">
-            <xs:simpleType>
-                <xs:restriction base="xs:long">
-                    <xs:minInclusive value="1"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="zvezdice">
-            <xs:simpleType>
-                <xs:restriction base="xs:integer">
-                    <xs:minInclusive value="1"/>
-                    <xs:maxInclusive value="5"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
     <xs:complexType name="TLokacija">
         <xs:annotation>
             <xs:appinfo>
@@ -89,53 +27,6 @@
             <xs:element name="geoSirina" type="TPolozaj"/>
             <xs:element name="geoDuzina" type="TPolozaj"/>
         </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="TSmestajnaJedinica">
-        <xs:annotation>
-            <xs:appinfo>
-                <jxb:class name="TSmestajnaJedinica"/>
-            </xs:appinfo>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="brojKreveta" type="xs:integer"/>
-            <xs:element default="false" name="balkon" type="xs:boolean"/>
-            <xs:element maxOccurs="unbounded" name="slike">
-                <xs:complexType>
-                    <xs:simpleContent>
-                        <xs:extension base="xs:base64Binary">
-                            <xs:attribute name="putanja" type="xs:string"/>
-                        </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="rejting" type="TRejting"/>
-            <xs:element name="sObjekat" type="TSmestajniObjekat"/>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="komentari" type="res:TKomentar"/>
-            <xs:element maxOccurs="unbounded" name="cenovnici" type="TCenovnik"/>
-            <xs:element name="podrazumevaniCenovnik" type="TCenovnik"/>
-            <xs:element name="opis">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="1024"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="otkazivanje" type="TOtkazivanje"/>
-            <xs:element name="povecanjeVeciBrojOsoba">
-                <xs:simpleType>
-                    <xs:restriction base="xs:double">
-                        <xs:minInclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-        <xs:attribute name="id">
-            <xs:simpleType>
-                <xs:restriction base="xs:long">
-                    <xs:minInclusive value="1"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
     </xs:complexType>
     <xs:complexType name="TRejting">
         <xs:annotation>
@@ -192,18 +83,29 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="cena">
+                <xs:annotation>
+                    <xs:appinfo>
+                        <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
+                    </xs:appinfo>
+                </xs:annotation>
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:appinfo>
-                            <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
-                        </xs:appinfo>
-                    </xs:annotation>
-                    <xs:restriction base="xs:double">
-                        <xs:minInclusive value="0"/>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="smestaj" type="TSmestajnaJedinica"/>
+            <xs:element name="smestaj">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TOtkazivanje">
@@ -214,15 +116,18 @@
         </xs:annotation>
         <xs:sequence>
             <xs:element default="false" name="dozvoljeno" type="xs:boolean"/>
-            <xs:element name="brojDana" default="0">
+            <xs:element name="brojDana">
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:appinfo>
-                            <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
-                        </xs:appinfo>
-                    </xs:annotation>
-                    <xs:restriction base="xs:int">
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="faktorOtkazivanja">
+                <xs:simpleType>
+                    <xs:restriction base="xs:double">
                         <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -232,27 +137,23 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="brojKreveta">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
+                        </xs:appinfo>
+                    </xs:annotation>
                     <xs:simpleType>
-                        <xs:annotation>
-                            <xs:appinfo>
-                                <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
-                            </xs:appinfo>
-                        </xs:annotation>
                         <xs:restriction base="xs:int">
                             <xs:minInclusive value="1"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
                 <xs:element default="false" name="balkon" type="xs:boolean"/>
-                <xs:element name="sObjekat">
+                <xs:element name="sObjekat" type="xs:long"/>
+                <xs:element name="opis">
                     <xs:simpleType>
-                        <xs:annotation>
-                            <xs:appinfo>
-                                <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
-                            </xs:appinfo>
-                        </xs:annotation>
-                        <xs:restriction base="xs:long">
-                            <xs:minInclusive value="1"/>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="1024"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
@@ -270,18 +171,6 @@
     <xs:element name="SmestajniObjekat">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="tipSmestaja">
-                    <xs:simpleType>
-                        <xs:annotation>
-                            <xs:appinfo>
-                                <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
-                            </xs:appinfo>
-                        </xs:annotation>
-                        <xs:restriction base="xs:long">
-                            <xs:minInclusive value="1"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
                 <xs:element name="lokacija" type="TLokacija"/>
                 <xs:element default="NA" name="kategorija">
                     <xs:simpleType>
@@ -294,7 +183,6 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="rejting" type="TRejting"/>
                 <xs:element name="agent">
                     <xs:simpleType>
                         <xs:annotation>
@@ -318,14 +206,8 @@
                         </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="naziv" type="xs:string"/>
-                <xs:element name="opis">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:maxLength value="2048"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element ref="tipSmestaja"/>
+                <xs:element ref="kategorijaSm"/>
                 <xs:element maxOccurs="unbounded" name="cenovnici" type="TCenovnik"/>
                 <xs:element name="podrazumevaniCenovnik" type="TCenovnik"/>
             </xs:sequence>
@@ -353,6 +235,18 @@
     <xs:element name="DodatnaUsluga">
         <xs:complexType>
             <xs:sequence>
+                <xs:element name="cena">
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                        <xs:restriction base="xs:double">
+                            <xs:minInclusive value="0"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element name="ime">
                     <xs:simpleType>
                         <xs:restriction base="xs:string">
@@ -370,15 +264,42 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="cena">
+            </xs:sequence>
+            <xs:attribute name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tipSmestaja">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv"/>
+            </xs:sequence>
+            <xs:attribute name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="kategorijaSm">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="zvezdice">
                     <xs:simpleType>
                         <xs:annotation>
                             <xs:appinfo>
-                                <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
+                                <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
                             </xs:appinfo>
                         </xs:annotation>
-                        <xs:restriction base="xs:double">
-                            <xs:minInclusive value="0"/>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="1"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
@@ -396,20 +317,25 @@
         <xs:sequence>
             <xs:element name="stepeni">
                 <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
+                        </xs:appinfo>
+                    </xs:annotation>
                     <xs:restriction base="xs:double">
                         <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="90"/>
+                        <xs:maxInclusive value="180"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="strana">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="SEVER"/>
-                        <xs:enumeration value="JUG"/>
-                        <xs:enumeration value="ISTOK"/>
-                        <xs:whiteSpace value="preserve"/>
-                        <xs:enumeration value="ZAPAD"/>
+                        <xs:enumeration value="N"/>
+                        <xs:enumeration value="S"/>
+                        <xs:enumeration value="W"/>
+                        <xs:enumeration value="E"/>
+                        <xs:length value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

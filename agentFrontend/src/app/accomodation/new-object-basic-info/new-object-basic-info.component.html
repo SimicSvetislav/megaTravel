@@ -16,7 +16,7 @@
           <label for="objectType">Tip smestaja* :</label>
       </div>
       <div class="col-md-3 mb-3">
-        <select [(ngModel)]="object.tipSmestaja" name="objectType" id="objectType" class="custom-select d-block" required>
+        <select [(ngModel)]="tip" name="objectType" id="objectType" class="custom-select d-block" required>
               <option *ngFor="let type of types;" [ngValue]="type">{{type.naziv}}</option>
         </select>
       </div>
@@ -24,8 +24,8 @@
           <label for="objectCat">Kategorija smestaja* :</label>
       </div>
       <div class="col-md-3 mb-3">
-        <select [(ngModel)]="object.kategorija" name="objectCat" id="objectCat" class="custom-select d-block" required>
-          <option *ngFor="let cat of categories;" [ngValue]="cat">{{cat.naziv}}</option>
+        <select [(ngModel)]="kategorija" name="objectCat" id="objectCat" class="custom-select d-block" required>
+          <option *ngFor="let cat of categories;" [ngValue]="cat">{{cat.zvezdice}}</option>
         </select>
       </div>   
   </div>
@@ -55,7 +55,7 @@
       <select [(ngModel)]="duzinaOrijentacija" name="objectLatitudeOrientation" id="objectLatitudeOrientation"  class="form-control">
           <!-- <select  name="objectLatitudeOrientation" id="objectLatitudeOrientation"> -->
             <!-- <option [ngValue]="null">Strana sveta</option> -->
-            <option >N</option>
+            <option>N</option>
             <option>S</option>
 
       </select>
@@ -81,7 +81,7 @@
          <label >Otkazivanje :</label>
       </div>
       <div class="col-md-3 mb-3">
-          <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="otkazivanje" id="cancelOption" name="cancelOption" value="Moguce">Moguće</label>
+          <label class="checkbox-inline"><input type="checkbox" [(ngModel)]="dozvoljenoOtkazivanje" id="cancelOption" name="cancelOption" value="Moguce">Moguće</label>
       </div>
       <div class="col-md-2 mb-3">
         <label for="objectCancelDaysNum">Broj dana :</label>
@@ -89,12 +89,12 @@
       <div class="col-md-1 mb-3">
          <input id="objectCancelDaysNum" type="text" class="form-control" [(ngModel)]="brojDanaOtkazivanja" name="objectCancelDaysNum" >
       </div>
-      <div class="col-md-2 mb-3">
+      <!-- <div class="col-md-2 mb-3">
           <label for="objectCancelFactor">Faktor :</label>
       </div>
       <div class="col-md-1 mb-3">
         <input id="objectCancelFactor" type="text" class="form-control" [(ngModel)]="faktorOtkazivanja" name="objectCancelFactor" >
-      </div>
+      </div> -->
    </div>
   <div class="form-group">
       <label for="objectcomment">Opis objekta:</label>

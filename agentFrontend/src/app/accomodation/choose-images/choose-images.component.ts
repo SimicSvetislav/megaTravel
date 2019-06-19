@@ -32,9 +32,12 @@ export class ChooseImagesComponent implements OnInit {
 
   ngOnInit() {
     this.url = '../../../assets/hotel-icon.png';
+
+    this.selectedImages = this.object.slike;
   }
 
   add() {
+    this.object.slike = this.selectedImages;
     this.addImages.emit();
   }
 
@@ -56,13 +59,12 @@ export class ChooseImagesComponent implements OnInit {
       // ucitavanje fajla preko readera, pregled fajla -> filter formata
       reader.onload = () => {
 
-        imageWrapper.imeSlike = file.name;
-        imageWrapper.sadrzajSlike = reader.result;
+        imageWrapper.putanja = file.name;
+        imageWrapper.value = reader.result;
         this.selectedImages.push(imageWrapper);
       };
       // ovo ispod trigerije ovo iznad
       reader.readAsDataURL(file);   // rezultat na kraju je 64bitni enkodirana slika
-
     }
   }
 
