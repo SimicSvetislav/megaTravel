@@ -28,19 +28,19 @@ export class ExtrasComponent implements OnInit {
     let extra = this.extras[index]
 
     if (!extra.cena || !extra.ime) {
-      alert("Please enter name and price");
+      this.toastr.warning("Please enter name and price");
       return;
     }
 
     if (extra.cena <= 0) {
-      alert("Price must be positive number");
+      this.toastr.warning("Price must be positive number");
       return;
     }
 
     this.service.update(extra).subscribe(data => {
       this.refresh()
       console.log("Updated " + data.id);
-      this.toastr.info('Extra updated');
+      this.toastr.success('Extra updated');
     }, error =>  { 
       console.log(error);
       this.toastr.error('Update failed');
@@ -51,15 +51,12 @@ export class ExtrasComponent implements OnInit {
     this.service.delete(id).subscribe(data => {
       this.refresh()
       console.log("Deleted " + data.id);
-      this.toastr.info('Extra deleted');
+      this.toastr.success('Extra deleted');
     }, error => console.log(error));
   }
 
   refresh() {
     this.service.getAll().subscribe(data => {
-      /*data.forEach(element => {
-        this.extras.set(element.id, element);
-      });*/
       this.extras = data;
     }, error => console.log(error));
   }
@@ -67,18 +64,18 @@ export class ExtrasComponent implements OnInit {
   add() {
 
     if (!this.newExtra.cena || !this.newExtra.ime) {
-      alert("Please enter name and price");
+      this.toastr.warning("Please enter name and price");
       return;
     }
 
     if (this.newExtra.cena <= 0) {
-      alert("Price must be positive number");
+      this.toastr.warning("Price must be positive number");
       return;
     }
 
     this.service.post(this.newExtra).subscribe(data => {
       console.log("Added " + data.id);
-      this.toastr.info('Extra added');
+      this.toastr.success('Extra added');
       this.refresh();
       this.newExtra = new Extra();
     }, error => console.log(error));

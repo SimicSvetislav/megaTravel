@@ -1,3 +1,43 @@
-<p>
-  agent-add works!
-</p>
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form #addForm="ngForm" (ngSubmit)="add()">
+      <br />
+      <div class="form-content">
+        <div class="form-group">
+          <div class="form-group">
+            <input type="text" [(ngModel)]="agent.ime" required class="form-control" name="name" id="name"
+              placeholder="Name">
+            <small id="nameMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="text" [(ngModel)]="agent.prezime" required class="form-control" name="prezime" id="prezime"
+              placeholder="Last name">
+            <small id="lnMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="email" required [(ngModel)]="agent.email" required class="form-control" name="email" id="email"
+              placeholder="E-mail">
+            <small id="emailMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="text" required [(ngModel)]="agent.adresa" required class="form-control" name="adresa" id="adresa"
+              placeholder="Address">
+            <small id="addrMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="text" required [(ngModel)]="agent.telefon" class="form-control" name="telefon" id="telefon"
+              placeholder="Telephone">
+            <small id="telMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="text" required [(ngModel)]="agent.poslovniMaticniBroj" required class="form-control" name="pmb" id="pmb"
+              placeholder="PMB">
+            <small id="pmbMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+        </div>
+        <button id="btnUpdate" class="btn btn-success" type="submit"
+          [disabled]="!addForm.form.valid">Add</button>
+      </div>
+    </form>
+  </div>
+</div>

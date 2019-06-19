@@ -1,3 +1,7 @@
+import { CategorySm } from './../types';
+import { Observable } from 'rxjs';
+import { CATEGORIES_API } from './../globals';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +9,27 @@ import { Injectable } from '@angular/core';
 })
 export class CategoriesService {
 
-  constructor() { }
+  private headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  constructor(private http: HttpClient) { }
+
+  getAll(): Observable<any> { 
+    return this.http.get(CATEGORIES_API);
+  }
+
+  getOne(id: Number): Observable<any> {
+    return this.http.get(CATEGORIES_API + id);
+  }
+
+  update(extra: Object): Observable<any> {
+    return this.http.put(CATEGORIES_API, extra);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(CATEGORIES_API + id);
+  }
+
+  post(extra: CategorySm): Observable<any> {
+    return this.http.post(CATEGORIES_API, extra);
+  }
 }

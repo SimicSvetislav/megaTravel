@@ -2,14 +2,10 @@ package com.project.megatravel.users;
 
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import com.fasterxml.jackson.databind.deser.impl.CreatorCollector;
 import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.repository.AdminRepository;
@@ -54,7 +50,7 @@ public class UsersApplication {
 	//	r.sa
 		
 	/*	Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
-		a.save(aa);*/
+		a.save(aa);
 		
 		
 		System.out.println(r.getByEmail("ppera@gmail.com"));
@@ -62,7 +58,7 @@ public class UsersApplication {
 
 		
 		KrajnjiKorisnik pom = r.getByEmail("pera@gmail.com");
-		System.out.println(pom.getEmail() + " " +pom.getSifra());
+		System.out.println(pom.getEmail() + " " +pom.getSifra());*/
 	}
 
 }

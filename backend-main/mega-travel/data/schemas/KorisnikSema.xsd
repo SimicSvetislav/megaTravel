@@ -55,14 +55,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="stanje" default="AKTIVAN">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="AKTIVAN"/>
-                        <xs:enumeration value="BLOKIRAN"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>
@@ -131,6 +123,14 @@
                             <xs:simpleType>
                                 <xs:restriction base="xs:string">
                                     <xs:maxLength value="64"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="stanje" default="AKTIVAN">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="AKTIVAN"/>
+                                    <xs:enumeration value="BLOKIRAN"/>
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
@@ -204,6 +204,8 @@
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
+                        <xs:element name="ime" type="xs:string"/>
+                        <xs:element name="prezime" type="xs:string"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>

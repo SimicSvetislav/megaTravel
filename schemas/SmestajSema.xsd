@@ -17,15 +17,6 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="tipSmestaja">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="Hotel"/>
-                        <xs:enumeration value="Apartman"/>
-                        <xs:enumeration value="Bed&amp;Breakfast"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
             <xs:element name="lokacija" type="TLokacija"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="smestajneJedinice"
                 type="TSmestajnaJedinica"/>
@@ -45,19 +36,13 @@
             </xs:element>
             <xs:element name="rejting" type="TRejting"/>
             <xs:element name="agent" type="usr:TAgent"/>
+            <xs:element ref="tipSmestaja"/>
+            <xs:element ref="kategorijaSm"/>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>
                 <xs:restriction base="xs:long">
                     <xs:minInclusive value="1"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="zvezdice">
-            <xs:simpleType>
-                <xs:restriction base="xs:integer">
-                    <xs:minInclusive value="1"/>
-                    <xs:maxInclusive value="5"/>
                 </xs:restriction>
             </xs:simpleType>
         </xs:attribute>
@@ -387,15 +372,6 @@
     <xs:element name="SmestajniObjekat">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="tipSmestaja">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:string">
-                            <xs:enumeration value="Hotel"/>
-                            <xs:enumeration value="Apartman"/>
-                            <xs:enumeration value="Bed&amp;Breakfast"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:element>
                 <xs:element name="lokacija" type="TLokacija"/>
                 <xs:element name="otkazivanje" type="TOtkazivanje"/>
                 <xs:element default="NA" name="kategorija">
@@ -422,6 +398,8 @@
                         </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
+                <xs:element ref="tipSmestaja"/>
+                <xs:element ref="kategorijaSm"/>
             </xs:sequence>
             <xs:attribute name="id">
                 <xs:simpleType>
@@ -466,6 +444,45 @@
                             <xs:enumeration value="PO_OSOBI"/>
                             <xs:enumeration value="UKUPNO"/>
                             <xs:enumeration value="PO_DANU_PO_OSOBI"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tipSmestaja">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="naziv"/>
+            </xs:sequence>
+            <xs:attribute name="id">
+                <xs:simpleType>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="kategorijaSm">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="zvezdice">
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                        <xs:restriction base="xs:int">
+                            <xs:minInclusive value="1"/>
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>

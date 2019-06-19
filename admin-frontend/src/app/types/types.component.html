@@ -1,3 +1,20 @@
-<p>
-  types works!
-</p>
+<div class="col-md-10 offset-md-1">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let type of types; let ind = index">
+            <td scope="row"><input type="text" name="ime" [(ngModel)]="type.naziv" /></td>
+            <td><button class="btn btn-warning" (click)="update(ind)">Update</button></td>
+            <td><button class="btn btn-danger" (click)="delete(type.id)">Delete</button></td>
+        </tr>
+        <tr>
+            <td scope="row"><input type="text" name="ime" [(ngModel)]="newType.naziv" placeholder="Name"  /></td>
+            <td><button class="btn btn-success" (click)="add()">Add</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
