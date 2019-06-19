@@ -13,6 +13,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
@@ -57,6 +58,7 @@ import com.project.megatravel.model.reservations.RezervacijaKorisnika;
     "ponudjenPopustNakonOtkazivanja",
     "lokacija"
 })
+@XmlRootElement(name = "KrajnjiKorisnik")
 public class KrajnjiKorisnik
     extends Korisnik
 {

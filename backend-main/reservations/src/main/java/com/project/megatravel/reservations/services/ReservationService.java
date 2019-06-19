@@ -3,13 +3,18 @@ package com.project.megatravel.reservations.services;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.reservations.repository.ReservationsRepository;
 
 @Service
 public class ReservationService {
+	
+	@Autowired
+	private ReservationsRepository repo;
 
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		
@@ -33,12 +38,27 @@ public class ReservationService {
 
 	public List<RezervacijaKorisnika> getAll() {
 		
-		return new ArrayList<>();
+		@SuppressWarnings("unchecked")
+		List<RezervacijaKorisnika> rk = (List<RezervacijaKorisnika>)repo.getAll();
+		
+		return rk;
 	}
 
 	public List<RezervacijaKorisnika> getAllByUser(Long id) {
 		
-		return new ArrayList<>();
+		List<RezervacijaKorisnika> pom = new ArrayList<RezervacijaKorisnika>();
+		
+		@SuppressWarnings("unchecked")
+		List<RezervacijaKorisnika> rk = (List<RezervacijaKorisnika>)repo.getAll();
+		
+		for (RezervacijaKorisnika rezervacijaKorisnika : rk) {
+			if(rezervacijaKorisnika.getKorisnik().getId().equals(id)) {
+				pom.add(rezervacijaKorisnika);
+			}
+		}
+		
+		
+		return pom;
 	}
 	
 	public List<RezervacijaKorisnika> getAllByUnit(Long id) {
