@@ -5,7 +5,7 @@ export const AGENT_API= API + 'agent/';
 export const USER_API= API + 'user/';
 export const EXTRAS_API= API + 'extras/';
 export const TYPES_API= API + 'types/';
-export const CATEGORIES_API= API + 'cat/'; 
+export const CATEGORIES_API= API + 'cat/';
 
 // Roles
 export const ROLE_USER = "ROLE_USER";

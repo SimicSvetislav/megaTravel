@@ -45,14 +45,14 @@ public class AdminController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, path="/agent")
-	public ResponseEntity<Agent> updateUser(@RequestBody Agent korisnik) {
+	public ResponseEntity<Agent> updateAgent(@RequestBody Agent korisnik) {
 		
 		return new ResponseEntity<Agent>(korisnik, HttpStatus.OK);
 		
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path="/agent/{id}")
-	public ResponseEntity<Agent> registration(@PathVariable("id") Long id) {
+	public ResponseEntity<Agent> deleteAgent(@PathVariable("id") Long id) {
 		
 		String url = USERS_MS + "agent/" + id;
 		
@@ -74,11 +74,25 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping(method = RequestMethod.DELETE, path="/user/{id}")
+	public ResponseEntity<KrajnjiKorisnik> deleteUser(@PathVariable("id") Long id) {
+		
+		String url = USERS_MS + "user/" + id;
+		
+		restClient.delete(url);
+		
+		KrajnjiKorisnik kk = new KrajnjiKorisnik();
+		kk.setId(id);
+		
+		return new ResponseEntity<>(kk, HttpStatus.OK);
+		
+	}
+	
 	@RequestMapping(method = RequestMethod.GET, path="/user/block/{id}", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<KrajnjiKorisnik> blockUser(@PathVariable("id") Long id) {
 		
-		String url = USERS_MS + "block/" + id;
+		String url = USERS_MS + "user/block/" + id;
 		
 		ResponseEntity<KrajnjiKorisnik> response = restClient.getForEntity(url, KrajnjiKorisnik.class);
 		
@@ -90,7 +104,7 @@ public class AdminController {
 	@ResponseBody
 	public ResponseEntity<KrajnjiKorisnik> activateUser(@PathVariable("id") Long id) {
 		
-		String url = USERS_MS + "activate/" + id;
+		String url = USERS_MS + "user/activate/" + id;
 		
 		ResponseEntity<KrajnjiKorisnik> response = restClient.getForEntity(url, KrajnjiKorisnik.class);
 		
@@ -117,7 +131,7 @@ public class AdminController {
 	@RequestMapping(method = RequestMethod.GET, path="/user")
 	public ResponseEntity<List<KrajnjiKorisnik>> getUsers() {
 		
-		String url = USERS_MS;
+		String url = USERS_MS + "user";
 		
 		ResponseEntity<List<KrajnjiKorisnik>> response = restClient.exchange(
 				  url,

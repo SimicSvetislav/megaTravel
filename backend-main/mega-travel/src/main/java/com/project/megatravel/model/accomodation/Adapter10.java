@@ -6,22 +6,21 @@
 //
 
 
-package com.project.megatravel.model.reservations;
+package com.project.megatravel.model.accomodation;
 
-import java.util.Date;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class Adapter5
-    extends XmlAdapter<String, Date>
+public class Adapter10
+    extends XmlAdapter<String, Long>
 {
 
 
-    public Date unmarshal(String value) {
-        return (com.project.megatravel.util.MyDatatypeConverter.parseDate(value));
+    public Long unmarshal(String value) {
+        return (com.project.megatravel.util.MyDatatypeConverter.parseLong(value));
     }
 
-    public String marshal(Date value) {
-        return (com.project.megatravel.util.MyDatatypeConverter.printDate(value));
+    public String marshal(Long value) {
+        return (com.project.megatravel.util.MyDatatypeConverter.printLong(value));
     }
 
 }

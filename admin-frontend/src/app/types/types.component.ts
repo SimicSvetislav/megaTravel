@@ -22,7 +22,7 @@ export class TypesComponent implements OnInit {
   }
 
   update(index: number) {
-    let type = this.types[index]
+    let type = this.types[index] 
 
     if (!type.naziv) {
       this.toastr.warning("Please enter name");

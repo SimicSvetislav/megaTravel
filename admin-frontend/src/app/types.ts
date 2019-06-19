@@ -13,3 +13,16 @@ export class CategorySm {
     id: number;
     zvezdice: number;
 }
+
+export class Agent {
+    id: number;
+    datumRegistracije: Date;
+    korisnickoIme: string;
+    sifra: string;
+    email: string;
+    adresa: string;
+    telefon = '';
+    poslovniMaticniBroj: string;
+    ime: string;
+    prezime: string;
+}

@@ -1,41 +1,42 @@
 <div class="row">
-  <div class="col-md-10 offset-md-1">
-    <form #hotelEditForm="ngForm" (ngSubmit)="update()">
-      <br />
-      <div>
-        Rating: <span style="color:gold"><i class="fas fa-star"></i></span><span
-          class="ml-1"><b>{{hotel.ratingsSum/hotel.ratingsCount | number: '1.0-2'}}</b></span>
-      </div>
+  <div class="col-md-6 offset-md-3">
+    <form #addForm="ngForm" (ngSubmit)="add()">
       <br />
       <div class="form-content">
         <div class="form-group">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" [(ngModel)]="hotel.name" required class="form-control" name="name" id="name"
-              placeholder="Hotel name">
+            <input type="text" [(ngModel)]="agent.ime" required class="form-control" name="name" id="name"
+              placeholder="Name">
             <small id="nameMsg" class="form-text text-muted" hidden>Invalid</small>
           </div>
           <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" [(ngModel)]="hotel.address" class="form-control" name="address" id="address"
-              placeholder="Hotel address">
-            <small id="addressMsg" class="form-text text-muted" hidden>Invalid</small>
+            <input type="text" [(ngModel)]="agent.prezime" required class="form-control" name="prezime" id="prezime"
+              placeholder="Last name">
+            <small id="lnMsg" class="form-text text-muted" hidden>Invalid</small>
           </div>
           <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" required [(ngModel)]="hotel.city" class="form-control" name="city" id="city"
-              placeholder="Enter city">
-            <small id="cityMsg" class="form-text text-muted" hidden>Invalid</small>
+            <input type="email" required [(ngModel)]="agent.email" required class="form-control" name="email" id="email"
+              placeholder="E-mail">
+            <small id="emailMsg" class="form-text text-muted" hidden>Invalid</small>
           </div>
           <div class="form-group">
-            <label for="description">Description</label>
-            <textarea placeholder="Description" [(ngModel)]="hotel.description" class="form-control" name="description"
-              id="description" placeholder="Type description" rows="5"></textarea>
-            <small id="descriptionMsg" class="form-text text-muted" hidden>Invalid</small>
+            <input type="text" required [(ngModel)]="agent.adresa" required class="form-control" name="adresa" id="adresa"
+              placeholder="Address">
+            <small id="addrMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="text" required [(ngModel)]="agent.telefon" class="form-control" name="telefon" id="telefon"
+              placeholder="Telephone">
+            <small id="telMsg" class="form-text text-muted" hidden>Invalid</small>
+          </div>
+          <div class="form-group">
+            <input type="text" required [(ngModel)]="agent.poslovniMaticniBroj" required class="form-control" name="pmb" id="pmb"
+              placeholder="PMB">
+            <small id="pmbMsg" class="form-text text-muted" hidden>Invalid</small>
           </div>
         </div>
-        <button id="btnUpdate" class="btn btn-primary" type="submit"
-          [disabled]="!hotelEditForm.form.valid">Update</button>
+        <button id="btnUpdate" class="btn btn-success" type="submit"
+          [disabled]="!addForm.form.valid">Add</button>
       </div>
     </form>
   </div>

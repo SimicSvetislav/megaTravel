@@ -138,7 +138,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         
         return o;
 
@@ -150,7 +150,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         o.setLokacija(lokacija);
         
         return o;
