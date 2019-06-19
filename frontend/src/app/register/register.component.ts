@@ -82,7 +82,7 @@ export class RegisterComponent implements OnInit {
     this.isSignedUp = true;
     this.isSignUpFailed = false;
 
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login'])
   })
   }
 

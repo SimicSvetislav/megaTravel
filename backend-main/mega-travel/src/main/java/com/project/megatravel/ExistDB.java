@@ -249,6 +249,8 @@ public class ExistDB {
         	ExistDB.getOrCreateCollection(colRoot + "/korisnici");
         	ExistDB.getOrCreateCollection(colRoot + "/objekti");
         	ExistDB.getOrCreateCollection(colRoot + "/rezervacije");
+        	ExistDB.getOrCreateCollection(colRoot + "/tipovi");
+        	ExistDB.getOrCreateCollection(colRoot + "/kategorije");
         	//ExistDB.getOrCreateCollection(colRoot + "/poruke");
         	
         	/*try {

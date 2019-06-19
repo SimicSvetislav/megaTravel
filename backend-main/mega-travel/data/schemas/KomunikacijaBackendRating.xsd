@@ -45,6 +45,18 @@
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
+                <xs:element name="object">
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:appinfo>
+                                <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
+                            </xs:appinfo>
+                        </xs:annotation>
+                        <xs:restriction base="xs:long">
+                            <xs:minInclusive value="1"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

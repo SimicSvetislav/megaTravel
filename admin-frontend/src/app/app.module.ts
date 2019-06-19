@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +14,9 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AgentEditComponent } from './agents/agent-edit/agent-edit.component';
 import { AgentAddComponent } from './agents/agent-add/agent-add.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
@@ -27,7 +29,10 @@ const appRoutes: Routes = [
   { path: 'extras', component: ExtrasComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'types', component: TypesComponent },
+  {path: 'login', component: LoginComponent},
+  {path: 'register', component: RegisterComponent},
   { path: '**', component: NotFoundComponent }
+  
 ];
 
 @NgModule({
@@ -42,10 +47,15 @@ const appRoutes: Routes = [
     NotFoundComponent,
     AgentEditComponent,
     AgentAddComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
+    ReactiveFormsModule,
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true }
@@ -53,7 +63,11 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

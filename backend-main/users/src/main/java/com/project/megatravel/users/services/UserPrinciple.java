@@ -3,7 +3,10 @@ package com.project.megatravel.users.services;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.megatravel.model.users.Administrator;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.model.users.TKorisnik;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -30,33 +33,58 @@ public class UserPrinciple implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrinciple(Long id, String name, 
-			    		String email, String password//,
-			    		/*Collection<? extends GrantedAuthority> authorities*/) {
+    public UserPrinciple(Long id,
+			    		String email, String password,
+			    		Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.name = name;
         this.email = email;
         this.password = password;
-       // this.authorities = authorities;
+        this.authorities = authorities;
 
     }
 
-    public static UserPrinciple build(KrajnjiKorisnik user) {
+    public static UserPrinciple build(Object obj) {
     	
     	List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-    	auth.add(new SimpleGrantedAuthority("USER"));
+    	
+    	
+    	
+    	
+    	
+    	if(obj instanceof KrajnjiKorisnik) {
+    		auth.add(new SimpleGrantedAuthority("USER"));
+    		 return new UserPrinciple(
+    	                ((KrajnjiKorisnik) obj).getId(),
+    	                ((KrajnjiKorisnik) obj).getEmail(),
+    	                ((KrajnjiKorisnik) obj).getSifra(),
+    	                auth
+    	        );
+    	} else if(obj instanceof Agent) {
+    		auth.add(new SimpleGrantedAuthority("AGENT"));
+    		return new UserPrinciple(
+	                ((Agent) obj).getId(),
+	                ((Agent) obj).getEmail(),
+	                ((Agent) obj).getSifra(),
+	                auth
+	        );
+    	} else {
+    		auth.add(new SimpleGrantedAuthority("ADMIN"));
+    		return new UserPrinciple(
+	                ((Administrator) obj).getId(),
+	                ((Administrator) obj).getEmail(),
+	                ((Administrator) obj).getSifra(),
+	                auth
+	        );
+    	}
+    	
+    	/*List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+    	auth.add(new SimpleGrantedAuthority("USER"));*/
     	
      /*   List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())
         ).collect(Collectors.toList());*/
 
-        return new UserPrinciple(
-                user.getId(),
-                user.getIme(),
-                user.getEmail(),
-                user.getSifra()//,
-              //  auth
-        );
+       
     }
 
     public Long getId() {

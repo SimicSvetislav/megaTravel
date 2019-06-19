@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.users.repository.AdminRepository;
 import com.project.megatravel.users.repository.KorisnikRepository;
 
 @Service
@@ -15,6 +17,9 @@ public class UsersService {
 
 	@Autowired
 	private KorisnikRepository repo;
+	
+	@Autowired
+	private AdminRepository adminRepo;
 	
 	public KrajnjiKorisnik getById(Long id) {
 		
@@ -44,6 +49,14 @@ public class UsersService {
 	public KrajnjiKorisnik remove(Long id) {
 		
 		KrajnjiKorisnik kk = repo.deleteById(id);
+		
+		return kk;
+		
+	}
+	
+	public Administrator getAdminById(Long id) {
+		
+		Administrator kk = adminRepo.getOneById(id);
 		
 		return kk;
 		

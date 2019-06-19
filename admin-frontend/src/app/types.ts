@@ -3,3 +3,26 @@ export class Extra {
     ime: string;
     cena: number;
 }
+
+export class Type {
+    id: number;
+    naziv: string;
+}
+
+export class CategorySm {
+    id: number;
+    zvezdice: number;
+}
+
+export class Agent {
+    id: number;
+    datumRegistracije: Date;
+    korisnickoIme: string;
+    sifra: string;
+    email: string;
+    adresa = '';
+    telefon = '';
+    poslovniMaticniBroj: string;
+    ime = '';
+    prezime = '';
+}

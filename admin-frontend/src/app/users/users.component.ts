@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { AGENT_API } from './../globals';
 import { UsersService } from './../services/users.service';
 import { Component, OnInit } from '@angular/core';
@@ -9,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(private service: UsersService) { }
+  constructor(private service: UsersService, private toastr: ToastrService) { }
 
   users: any;
 
@@ -38,4 +39,15 @@ export class UsersComponent implements OnInit {
       }, error => console.log(error));
     }, error => console.log(error));
   }
+
+  delete(id: number) {
+    this.service.remove(id).subscribe(user => {
+      console.log('Deleted ' + user.id)
+      this.toastr.success('User deleted')
+      this.service.getAll().subscribe(data => {
+        this.users = data;
+      }, error => console.log(error));
+    }, error => console.log(error));
+  }
+
 }

@@ -1,4 +1,4 @@
-import { USER_API } from './../globals';
+import { USER_API, API_USER } from './../globals';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -14,12 +14,20 @@ export class UsersService {
     return this.http.get(USER_API);
   }
 
-  block(id: Number): Observable<any> {
+  block(id: number): Observable<any> {
     return this.http.get(USER_API + 'block/' + id);
   }
 
-  activate(id: Number): Observable<any> {
+  activate(id: number): Observable<any> {
     return this.http.get(USER_API + 'activate/' + id);
+  }
+
+  getOneById(id: number): Observable<any> {
+    return this.http.get(API_USER + 'admin/' + id);
+  }
+
+  remove(id: number): Observable<any> {
+    return this.http.delete(USER_API + id);
   }
 
 }

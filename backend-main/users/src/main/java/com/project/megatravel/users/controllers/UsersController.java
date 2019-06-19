@@ -1,21 +1,20 @@
 package com.project.megatravel.users.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.services.UsersService;
-import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -32,22 +31,24 @@ public class UsersController {
 		
 	}*/
 	
-	@RequestMapping(method = RequestMethod.POST, path="/")
+	@RequestMapping(method = RequestMethod.POST, path="/user")
 	public ResponseEntity<KrajnjiKorisnik> registration(@RequestBody KrajnjiKorisnik korisnik) {
 		
 		return new ResponseEntity<KrajnjiKorisnik>(korisnik, HttpStatus.OK);
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, path="/")
+	@RequestMapping(method = RequestMethod.PUT, path="/user")
 	public ResponseEntity<KrajnjiKorisnik> updateUser(@RequestBody KrajnjiKorisnik korisnik) {
 		
 		return new ResponseEntity<KrajnjiKorisnik>(korisnik, HttpStatus.OK);
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE, path="/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path="/user/{id}")
 	public ResponseEntity<KrajnjiKorisnik> registration(@PathVariable("id") Long id) {
+		
+		service.remove(id);
 		
 		KrajnjiKorisnik kk = new KrajnjiKorisnik();
 		kk.setId(id);
@@ -56,14 +57,14 @@ public class UsersController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/{id}")
+	@RequestMapping(method = RequestMethod.GET, path="/user/{id}")
 	public  ResponseEntity<KrajnjiKorisnik> getUser(@PathVariable("id") Long id) {
 		
 		return new ResponseEntity<KrajnjiKorisnik>(service.getById(id), HttpStatus.OK);
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/block/{id}", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, path="/user/block/{id}", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<KrajnjiKorisnik> blockUser(@PathVariable("id") Long id) {
 		
@@ -76,7 +77,7 @@ public class UsersController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/activate/{id}", produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, path="/user/activate/{id}", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<KrajnjiKorisnik> activateUser(@PathVariable("id") Long id) {
 		
@@ -89,7 +90,7 @@ public class UsersController {
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/")
+	@RequestMapping(method = RequestMethod.GET, path="/user")
 	public ResponseEntity<List<KrajnjiKorisnik>> getUsers() {
 		
 		return new ResponseEntity<List<KrajnjiKorisnik>>(service.getAll(), HttpStatus.OK);
