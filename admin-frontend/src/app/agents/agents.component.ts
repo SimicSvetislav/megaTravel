@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,7 +13,7 @@ export class AgentsComponent implements OnInit {
 
   agents: any;
 
-  constructor(private agentService: AgentsService, private router: Router) { }
+  constructor(private agentService: AgentsService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
     this.agentService.getAgents().subscribe(data => {
@@ -22,6 +23,19 @@ export class AgentsComponent implements OnInit {
 
   add() {
     this.router.navigateByUrl('/agents/add');
+  }
+
+  delete(id: number) {
+    this.agentService.remove(id).subscribe(data => {
+      this.toastr.success("Agent deleted");
+      this.refresh();
+    }, error => console.log(error));
+  }
+
+  refresh() {
+    this.agentService.getAgents().subscribe(data => {
+      this.agents = data;
+    }, error => console.log(error));
   }
 
 }

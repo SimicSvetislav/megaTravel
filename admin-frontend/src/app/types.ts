@@ -20,9 +20,9 @@ export class Agent {
     korisnickoIme: string;
     sifra: string;
     email: string;
-    adresa: string;
+    adresa = '';
     telefon = '';
     poslovniMaticniBroj: string;
-    ime: string;
-    prezime: string;
+    ime = '';
+    prezime = '';
 }

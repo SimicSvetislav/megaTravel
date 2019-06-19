@@ -37,15 +37,24 @@ public class AdminController {
 	@Autowired
 	private RestTemplate restClient;
 	
-	@RequestMapping(method = RequestMethod.POST, path="/agent")
+	@RequestMapping(method = RequestMethod.POST, path="/agent", consumes="application/json", produces="application/json")
+	@ResponseBody
 	public ResponseEntity<Agent> registration(@RequestBody Agent korisnik) {
 		
-		return new ResponseEntity<Agent>(korisnik, HttpStatus.OK);
+		String url = USERS_MS + "agent";
+
+		ResponseEntity<Agent> response = restClient.postForEntity(url, korisnik, Agent.class);
+		
+		return response;
 		
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT, path="/agent")
+	@RequestMapping(method = RequestMethod.PUT, path="/agent", consumes="application/json", produces="application/json")
 	public ResponseEntity<Agent> updateAgent(@RequestBody Agent korisnik) {
+		
+		String url = USERS_MS + "agent";
+		
+		restClient.put(url, korisnik);
 		
 		return new ResponseEntity<Agent>(korisnik, HttpStatus.OK);
 		
@@ -58,7 +67,10 @@ public class AdminController {
 		
 		restClient.delete(url);
 		
-		return new ResponseEntity<>(HttpStatus.OK);
+		Agent a = new Agent();
+		a.setId(id);
+		
+		return new ResponseEntity<>(a, HttpStatus.OK);
 		
 	}
 	

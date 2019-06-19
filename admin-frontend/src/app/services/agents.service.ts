@@ -27,4 +27,12 @@ export class AgentsService {
     return this.http.post(AGENT_API, agent);
   }
 
+  put(agent: Agent): Observable<any> {
+    return this.http.put(AGENT_API, agent);
+  }
+
+  remove(id: number): Observable<any> {
+    return this.http.delete(AGENT_API + id);
+  }
+
 }

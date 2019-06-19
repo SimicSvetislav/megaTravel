@@ -1,43 +1,65 @@
-<div class="row">
-  <div class="col-md-6 offset-md-3">
-    <form #addForm="ngForm" (ngSubmit)="add()">
-      <br />
-      <div class="form-content">
-        <div class="form-group">
-          <div class="form-group">
-            <input type="text" [(ngModel)]="agent.ime" required class="form-control" name="name" id="name"
-              placeholder="Name">
-            <small id="nameMsg" class="form-text text-muted" hidden>Invalid</small>
-          </div>
-          <div class="form-group">
-            <input type="text" [(ngModel)]="agent.prezime" required class="form-control" name="prezime" id="prezime"
-              placeholder="Last name">
-            <small id="lnMsg" class="form-text text-muted" hidden>Invalid</small>
-          </div>
-          <div class="form-group">
-            <input type="email" required [(ngModel)]="agent.email" required class="form-control" name="email" id="email"
-              placeholder="E-mail">
-            <small id="emailMsg" class="form-text text-muted" hidden>Invalid</small>
-          </div>
-          <div class="form-group">
-            <input type="text" required [(ngModel)]="agent.adresa" required class="form-control" name="adresa" id="adresa"
-              placeholder="Address">
-            <small id="addrMsg" class="form-text text-muted" hidden>Invalid</small>
-          </div>
-          <div class="form-group">
-            <input type="text" required [(ngModel)]="agent.telefon" class="form-control" name="telefon" id="telefon"
-              placeholder="Telephone">
-            <small id="telMsg" class="form-text text-muted" hidden>Invalid</small>
-          </div>
-          <div class="form-group">
-            <input type="text" required [(ngModel)]="agent.poslovniMaticniBroj" required class="form-control" name="pmb" id="pmb"
-              placeholder="PMB">
-            <small id="pmbMsg" class="form-text text-muted" hidden>Invalid</small>
-          </div>
+<div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                    <div class="form-group">
+                        <label for="firstName">First Name*</label>
+                        <input type="text" class="form-control" name="firstName" [(ngModel)]="agent.ime" #firstName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && firstName.invalid }" required />
+                        <div *ngIf="f.submitted && firstName.invalid" class="invalid-feedback">
+                            <div *ngIf="firstName.errors.required">First Name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name*</label>
+                        <input type="text" class="form-control" name="lastName" [(ngModel)]="agent.prezime" #lastName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lastName.invalid }" required />
+                        <div *ngIf="f.submitted && lastName.invalid" class="invalid-feedback">
+                            <div *ngIf="lastName.errors.required">Last Name is required</div>
+                        </div>
+                    </div> 
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="text" class="form-control" name="email" [(ngModel)]="agent.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                            <div *ngIf="email.errors.required">Email is required</div>
+                            <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username*</label>
+                        <input type="text" class="form-control" name="username" [(ngModel)]="agent.korisnickoIme" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.invalid }" required />
+                        <div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
+                            <div *ngIf="username.errors.required">Username is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address*</label>
+                        <input type="text" class="form-control" name="address" [(ngModel)]="agent.adresa" #address="ngModel" [ngClass]="{ 'is-invalid': f.submitted && address.invalid }" required />
+                        <div *ngIf="f.submitted && address.invalid" class="invalid-feedback">
+                            <div *ngIf="address.errors.required">Address is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">PMB*</label>
+                        <input type="text" class="form-control" name="pmb" [(ngModel)]="agent.poslovniMaticniBroj" #pmb="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pmb.invalid }" required minlength="9" maxlength="9" pattern="[0-9]*" />
+                        <div *ngIf="f.submitted && pmb.invalid" class="invalid-feedback">
+                            <div *ngIf="pmb.errors.required">PMB is required</div>
+                            <div *ngIf="pmb.errors.pattern">Only digits are allowed</div>
+                            <div *ngIf="pmb.errors.minlength || pmb.errors.maxlength">PMB must be 9 digits long</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Telephone</label>
+                        <input type="text" class="form-control" name="telephone" [(ngModel)]="agent.telefon" #telephone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && telephone.invalid }" />
+                    </div>
+                    <div class="float-right">
+                        <small>* required</small>
+                    </div> 
+                    <div class="form-group">
+                        <button class="btn btn-success">Add</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <button id="btnUpdate" class="btn btn-success" type="submit"
-          [disabled]="!addForm.form.valid">Add</button>
-      </div>
-    </form>
-  </div>
+    </div>
 </div>
