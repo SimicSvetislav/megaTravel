@@ -4,5 +4,5 @@ export class SmestajnaJedinica {
     brojKreveta: number;
     balkon: Boolean;
     rejting: number;
-    smestajniObjekat: SmestajniObjekat;
+    sobjekat: SmestajniObjekat;
 }

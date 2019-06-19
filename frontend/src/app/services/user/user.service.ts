@@ -14,4 +14,6 @@ export class UserService {
   getAllReservationsById(id): Observable<any> {
     return this.http.get(this.RESERVATION_API + 'user/' + id);
   }
+
+
 }

@@ -1,5 +1,6 @@
 package com.project.megatravel.util;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -99,6 +100,30 @@ public final class Creator {
 
 	}
 	
+	public static RezervacijaKorisnika createRezervacija(double cena, int ocena, String datumR, String datumP, String datumZ, String stanje, SmestajnaJedinica sj, KrajnjiKorisnik kk) {
+		
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
+        RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        rez.setProcenatOtkazivanje(-1.0);
+        rez.setCenaSmestaja(cena);
+        rez.setStanje(stanje);
+        rez.setSmestaj(sj);
+        rez.setOcena(ocena);
+        rez.setKorisnik(kk);
+        
+        try {
+			rez.setDatumPocetka(sdf.parse(datumP));
+			rez.setDatumZavrsetka(sdf.parse(datumZ));
+			rez.setDatumRezervacije(sdf.parse(datumR));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+        
+        return rez;
+
+	}
+	
 	public static KrajnjiKorisnik createKrajnjiKorisnik(long id, String kat, String datumReg) {
 		
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -176,7 +201,7 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
 		
 	}
 	
-	public static SmestajnaJedinica createSmestajnaJedinica(long id, SmestajniObjekat so) {
+	/*public static SmestajnaJedinica createSmestajnaJedinica(long id, SmestajniObjekat so) {
 		
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
@@ -185,13 +210,13 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
         
         return j;
 
-	}
+	}*/
 	
-	public static SmestajnaJedinica createSmestajnaJedinica(SmestajniObjekat so) {
+	public static SmestajnaJedinica createSmestajnaJedinica(BigInteger brkr, SmestajniObjekat so) {
 		
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
-
+		j.setBrojKreveta(brkr);
         j.setSObjekat(so);
         
         return j;

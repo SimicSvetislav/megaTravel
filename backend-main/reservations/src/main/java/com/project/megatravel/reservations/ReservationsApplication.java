@@ -1,5 +1,6 @@
 package com.project.megatravel.reservations;
 
+import java.math.BigInteger;
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;
@@ -10,9 +11,11 @@ import com.fasterxml.jackson.databind.deser.impl.CreatorCollector;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.reservations.repository.ReservationsRepository;
 import com.project.megatravel.reservations.repository.SjRepository;
 import com.project.megatravel.reservations.repository.SoRepository;
+import com.project.megatravel.reservations.repository.KorisnikRepository;
 import com.project.megatravel.reservations.ExistDB;
 import com.project.megatravel.util.Creator;
 
@@ -43,10 +46,14 @@ public class ReservationsApplication {
 		ReservationsRepository r = new ReservationsRepository();
 		SjRepository sjr = new SjRepository();
 		SoRepository sjo = new SoRepository();
+		KorisnikRepository kr = new KorisnikRepository();
 		
+		
+		KrajnjiKorisnik kk = kr.getByEmail("pera@gmail.com");
 		SmestajniObjekat so = cr.createSmestajniObjekat("Hotel 5*");
-		SmestajnaJedinica sj = cr.createSmestajnaJedinica(so);
-		RezervacijaKorisnika rk = cr.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj);
+		SmestajnaJedinica sj = cr.createSmestajnaJedinica(new BigInteger("4"),so);
+		RezervacijaKorisnika rk = cr.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj,kk);
+		
 		
 		
 		sjo.save(so);

@@ -42,33 +42,33 @@
           <tr>
             <th>Id</th>
             <th>Reservation Date</th>
-            <th>Pickup Date</th>
-            <th>Dropoff Date</th>
+            <th>Start Date</th>
+            <th>End Date</th>
             <th>Price</th>
             <th>
-              Vehicle
+              Smestajna jedinica - Balkon
             </th>
             <th>
-              Rent a car
+              Smestajni objekat - Kategorija
             </th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let r of listActiveRes">
+          <tr *ngFor="let r of reservationsActive">
             <td>{{r.id}}</td>
-            <td>{{r.reservationdate}}</td>
-            <td>{{r.pickupdate}}</td>
-            <td>{{r.dropoffdate}}</td>
-            <td>{{r.price}}</td>
-            <td>{{r.vehicle.brand}} {{r.vehicle.model}}   
+            <td>{{r.datumRezervacije}}</td>
+            <td>{{r.datumPocetka}}</td>
+            <td>{{r.datumZavrsetka}}</td>
+            <td>{{r.cenaSmestaja}}</td>
+            <td>{{r.smestaj.balkon}} 
             </td>      
-            <td>{{r.rentacar.name}}                     
+            <td>{{r.smestaj.sobjekat.kategorija}}                     
                 
             </td>
             <th>
               <div *ngIf = "cancelFlag">
-                  <button class="list-group-item list-group-item-action" (click)="cancelVehicle(r.id,r.pickupdate)">Cancel reservation</button>
+                  <button class="list-group-item list-group-item-action" (click)="cancelVehicle(r.id,r.datumPocetka)">Cancel reservation</button>
               </div>
             </th>                 
           </tr>
@@ -86,39 +86,39 @@
                   <tr>
                     <th>Id</th>
                     <th>Reservation Date</th>
-                    <th>Pickup Date</th>
-                    <th>Dropoff Date</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
                     <th>Price</th>
                     <th>
-                      Vehicle
+                      Smestajna jedinica - Balkon
                     </th>
                     <th>
-                      Rent a car
+                      Smestajni objekat - Kategorija
                     </th>
                     <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let r of listOutOfDateRes">
+                  <tr *ngFor="let r of reservationsOutOfDate">
                     <td>{{r.id}}</td>
-                    <td>{{r.reservationdate}}</td>
-                    <td>{{r.pickupdate}}</td>
-                    <td>{{r.dropoffdate}}</td>
-                    <td>{{r.price}}</td>
-                    <td>{{r.vehicle.brand}} {{r.vehicle.model}}
+                    <td>{{r.datumRezervacije}}</td>
+                    <td>{{r.datumPocetka}}</td>
+                    <td>{{r.datumZavrsetka}}</td>
+                    <td>{{r.cenaSmestaja}}</td>
+                    <td>{{r.smestaj.balkon}} 
                       <div *ngIf="!r.rateVehicle">
                           <ngb-rating [(rate)]="r.vehicle.rating" (hover)="hovered=$event" (leave)="hovered=0" max="5">      
                             </ngb-rating>
-                            <button class="list-group-item list-group-item-action" (click)="pobediVehicle(r.vehicle.id,r.vehicle.rating,r.id)">
+                            <button class="list-group-item list-group-item-action" (click)="oceniJedinicu(r.vehicle.id,r.vehicle.rating,r.id)">
                                 Oceni
                             </button>
                       </div>          
                     </td>      
-                    <td>{{r.rentacar.name}}
+                    <td>{{r.smestaj.sobjekat.kategorija}}
                       <div *ngIf="!r.rateRentacar">
                           <ngb-rating [(rate)]="r.rentacar.lastRating" (hover)="hovered=$event" (leave)="hovered=0" max="5">                     
                             </ngb-rating>
-                            <button class="list-group-item list-group-item-action" (click)="pobediRentacar(r.rentacar.id,r.rentacar.lastRating,r.id)">
+                            <button class="list-group-item list-group-item-action" (click)="oceniObjekat(r.rentacar.id,r.rentacar.lastRating,r.id)">
                               Oceni
                           </button>
                       </div>

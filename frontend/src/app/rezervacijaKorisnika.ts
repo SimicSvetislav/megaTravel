@@ -6,8 +6,8 @@ export class RezervacijaKorisnika {
     stanje: string;
     korisnik: User;
     obradjeno: Boolean;
-    datumRezervacije: Date;
-    datumPocetka: Date;
-    datumZavrsetka: Date;
-    smestajnaJedinica: SmestajnaJedinica;
+    datumRezervacije: string;
+    datumPocetka: string;
+    datumZavrsetka: string;
+    smestaj: SmestajnaJedinica;
 }
