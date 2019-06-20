@@ -6,6 +6,7 @@ import { SmestajniObjekat } from '../smestajniObjekat';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { Route, Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -25,10 +26,13 @@ export class ProfileComponent implements OnInit {
   boolLogIn: boolean = false;
   boolLogOff: boolean = false;
 
+  komentar: string = "";
+
   constructor(private userService: UserService,
     private tokenService: TokenStorageService,
     private datePipe: DatePipe,
-    private router: Router) { }
+    private router: Router,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
 
@@ -92,6 +96,14 @@ export class ProfileComponent implements OnInit {
 
   chat(res: number) {
     this.router.navigate(['/chat/' + res]);
+  }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
+  }
+
+  sendKomentar(komentar) {
+    
   }
 
 }

@@ -1,3 +1,4 @@
+import { Komentar } from './komentar';
 import { SmestajnaJedinica } from './smestajnaJedinica';
 import { User } from './user';
 export class RezervacijaKorisnika {
@@ -10,4 +11,6 @@ export class RezervacijaKorisnika {
     datumPocetka: string;
     datumZavrsetka: string;
     smestaj: SmestajnaJedinica;
+    komentar: Komentar;
+    ocenjeno: Boolean;
 }

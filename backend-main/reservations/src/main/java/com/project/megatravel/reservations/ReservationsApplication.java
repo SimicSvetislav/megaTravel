@@ -50,9 +50,9 @@ public class ReservationsApplication {
 		
 		
 		KrajnjiKorisnik kk = kr.getByEmail("pera@gmail.com");
-		SmestajniObjekat so = cr.createSmestajniObjekat("Hotel 5*");
-		SmestajnaJedinica sj = cr.createSmestajnaJedinica(new BigInteger("4"),so);
-		RezervacijaKorisnika rk = cr.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj,kk);
+		SmestajniObjekat so = cr.createSmestajniObjekat("Apartman");
+		SmestajnaJedinica sj = cr.createSmestajnaJedinica(new BigInteger("5"),so);
+		RezervacijaKorisnika rk = cr.createRezervacija(160, 5, "10/1/2019", "19/5/2019", "28/5/2019", "Stanje?", sj,kk);
 		
 		
 		sjo.save(so);
