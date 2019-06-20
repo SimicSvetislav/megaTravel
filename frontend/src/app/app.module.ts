@@ -16,12 +16,14 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DatePipe } from '@angular/common';
+import { ChatComponent } from './chat/chat.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile', component: ProfileComponent},
+  {path: 'chat/:id', component: ChatComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -31,7 +33,8 @@ const appRoutes: Routes = [
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChatComponent
   ],
   imports: [
     ReactiveFormsModule,

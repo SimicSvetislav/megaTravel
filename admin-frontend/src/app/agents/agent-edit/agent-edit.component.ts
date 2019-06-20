@@ -30,5 +30,4 @@ export class AgentEditComponent implements OnInit {
       this.router.navigate(['/agents']);
     }, error => this.toastr.error(error));
   }
-
 }

@@ -26,48 +26,48 @@ export class ProfileComponent implements OnInit {
   boolLogOff: boolean = false;
 
   constructor(private userService: UserService,
-              private tokenService: TokenStorageService,
-              private datePipe: DatePipe,
-              private router: Router) { }
+    private tokenService: TokenStorageService,
+    private datePipe: DatePipe,
+    private router: Router) { }
 
   ngOnInit() {
 
     this.id = this.tokenService.getUser();
 
-    if(this.id == null) {
+    if (this.id == null) {
       this.boolLogIn = false;
       this.boolLogOff = true;
     } else {
       this.boolLogIn = true;
       this.boolLogOff = false;
-      
+
     }
-   
-    if(this.id == null) {
+
+    if (this.id == null) {
       alert("Ne postoji ulogovan korisnik!");
       this.router.navigate(["/home"]);
     }
     this.today = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-    alert("ID: " + this.id)
+    //alert("ID: " + this.id)
 
     this.userService.getAllReservationsById(this.id).subscribe(data => {
-        this.reservations = data;
+      this.reservations = data;
 
-        for(let r of this.reservations) {
-          var now = moment(this.today); 
-          var end = moment(r.datumZavrsetka); 
-          var duration = moment.duration(end.diff(now));
-          this.days = duration.asDays();
-          alert("days : " + this.days)
-          if(this.days < 0) {
-            this.reservationsOutOfDate.push(r)
-          } else {
-            this.reservationsActive.push(r);
-          }
-
-          
-          
+      for (let r of this.reservations) {
+        var now = moment(this.today);
+        var end = moment(r.datumZavrsetka);
+        var duration = moment.duration(end.diff(now));
+        this.days = duration.asDays();
+        //alert("days : " + this.days)
+        if (this.days < 0) {
+          this.reservationsOutOfDate.push(r)
+        } else {
+          this.reservationsActive.push(r);
         }
+
+
+
+      }
 
 
 
@@ -88,6 +88,10 @@ export class ProfileComponent implements OnInit {
 
   register() {
     this.router.navigate(['/register'])
+  }
+
+  chat(res: number) {
+    this.router.navigate(['/chat/' + res]);
   }
 
 }
