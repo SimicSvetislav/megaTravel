@@ -4,7 +4,6 @@ package com.project.megatravel.users.controllers;
 
 import javax.validation.Valid;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +29,9 @@ import com.project.megatravel.users.repository.AgentRepository;
 import com.project.megatravel.users.repository.KorisnikRepository;
 import com.project.megatravel.users.request.LoginForm;
 import com.project.megatravel.users.request.SignUpForm;
-import com.project.megatravel.users.response.ErrorResponse;
 import com.project.megatravel.users.response.JwtResponse;
 import com.project.megatravel.users.security.jwt.JwtProvider;
 import com.project.megatravel.users.services.UsersService;
-
-
 import com.project.megatravel.util.Creator;
 
 @CrossOrigin(origins = "*", maxAge = 3600)

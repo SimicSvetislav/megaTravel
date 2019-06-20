@@ -18,6 +18,10 @@ import { ProfileComponent } from './profile/profile.component';
 import { DatePipe } from '@angular/common';
 import { ChatComponent } from './chat/chat.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+ 
+import { ToastrModule } from 'ngx-toastr';
+
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
@@ -48,7 +52,13 @@ const appRoutes: Routes = [
       appRoutes,{
         enableTracing: true
       }
-    )
+    ),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+    }),
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

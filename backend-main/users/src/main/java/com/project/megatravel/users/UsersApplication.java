@@ -45,8 +45,8 @@ public class UsersApplication {
 		Creator cr = new Creator();
 	//	JAXBContext context = JAXBContext.newInstance(jaxbContext);
 	///	Marshaller marshaller = context.createMarshaller();
-		KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","pera@gmail.com","pera","pera","pera","pera");
-		r.save(kk);
+	//	KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","pera@gmail.com","pera","pera","pera","pera");
+	//	r.save(kk);
 	//	r.sa
 		
 	/*	Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");

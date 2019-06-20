@@ -1,6 +1,7 @@
 import { User } from './../user';
 import { Message } from './../message';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-chat',
@@ -9,12 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChatComponent implements OnInit {
 
-  constructor() { }
+  constructor(private toastr: ToastrService) { }
 
   url = 'ws://localhost:7878/';
   connection = new WebSocket(this.url);
   message: Message = new Message();
   user: User = new User();
+  chatArea = '';
 
   ngOnInit() {
 
@@ -41,6 +43,11 @@ export class ChatComponent implements OnInit {
   }
 
   onSend() {
+    if (!this.message.text) {
+      return;
+    }
+    this.toastr.success("Message sent");
+    this.chatArea += "You: " + this.message.text + '\n';
     this.message.timestamp = new Date();
     this.message.payload = null;
     this.message.receiver = 1; // id primaoca

@@ -17,6 +17,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -43,6 +44,8 @@ public class ExistDB {
 	
 	public static <T> T save(T entity, Long id, String collectionName, String schemaLocation, String jaxbContext) {
 		
+		XMLResource resource = null;
+		
 		try {
 			Collection col = ExistDB.getOrCreateCollection(colRoot + collectionName);
 		
@@ -58,7 +61,7 @@ public class ExistDB {
 			
 			//System.out.println("Data:\n" + os.toString());
 			
-			XMLResource resource = (XMLResource) col.createResource(id + ".xml", XMLResource.RESOURCE_TYPE);
+			resource = (XMLResource) col.createResource(id + ".xml", XMLResource.RESOURCE_TYPE);
 			
 			resource.setContent(os);
 			col.storeResource(resource);
@@ -66,6 +69,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			logger.warning("Exception occured while savind resource");
 			e.printStackTrace();
+		} finally {
+			try {
+				((EXistResource)resource).freeResources();
+			} catch (XMLDBException e) {
+				e.printStackTrace();
+			}
 		}
 	        
 		return entity;
@@ -99,6 +108,12 @@ public class ExistDB {
 			
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				((EXistResource)res).freeResources();
+			} catch (XMLDBException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return entity;
@@ -132,6 +147,12 @@ public class ExistDB {
 		
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				((EXistResource)res).freeResources();
+			} catch (XMLDBException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return entities;
@@ -167,6 +188,12 @@ public class ExistDB {
 			
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				((EXistResource)res).freeResources();
+			} catch (XMLDBException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return entity;
