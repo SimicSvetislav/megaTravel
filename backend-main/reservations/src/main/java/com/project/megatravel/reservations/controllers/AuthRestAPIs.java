@@ -1,4 +1,4 @@
-package com.project.megatravel.users.controllers;
+package com.project.megatravel.reservations.controllers;
 
 
 
@@ -24,14 +24,14 @@ import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.model.users.TKorisnik;
-import com.project.megatravel.users.repository.AdminRepository;
-import com.project.megatravel.users.repository.AgentRepository;
-import com.project.megatravel.users.repository.KorisnikRepository;
-import com.project.megatravel.users.request.LoginForm;
-import com.project.megatravel.users.request.SignUpForm;
-import com.project.megatravel.users.response.JwtResponse;
-import com.project.megatravel.users.security.jwt.JwtProvider;
-import com.project.megatravel.users.services.UsersService;
+import com.project.megatravel.reservations.repository.AdminRepository;
+import com.project.megatravel.reservations.repository.AgentRepository;
+import com.project.megatravel.reservations.repository.KorisnikRepository;
+import com.project.megatravel.reservations.request.LoginForm;
+import com.project.megatravel.reservations.request.SignUpForm;
+import com.project.megatravel.reservations.response.JwtResponse;
+import com.project.megatravel.reservations.security.jwt.JwtProvider;
+
 import com.project.megatravel.util.Creator;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -39,8 +39,7 @@ import com.project.megatravel.util.Creator;
 @RequestMapping("/api/auth")
 public class AuthRestAPIs {
 
-	@Autowired
-	UsersService usersService;
+
 	
     @Autowired
     AuthenticationManager authenticationManager;
@@ -66,6 +65,7 @@ public class AuthRestAPIs {
     @PostMapping("/signin/{role}")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest, @PathVariable String role) {
 
+    	
     	KrajnjiKorisnik korisnik;
     	Administrator admin;
     	Agent agent;
@@ -84,7 +84,6 @@ public class AuthRestAPIs {
     		System.out.println("Ja sam korisnik");
     		korisnik = userRepository.getByEmail(loginRequest.getEmail());
     		if(korisnik == null) {
-    			System.out.println("NULL JE ?");
     			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     		}
     		retVal = korisnik;
@@ -114,13 +113,15 @@ public class AuthRestAPIs {
 
     	
         
+    	
+        
        
     }
 
     @PostMapping(value = "/signup/{role}")
     public ResponseEntity<TKorisnik> registerUser(@Valid @RequestBody SignUpForm signUpRequest,@PathVariable String role) {
         	
-    	
+
     	if(role.contains("admin")) {
     		Administrator kk = Creator.createAdmin(encoder.encode(signUpRequest.getPassword()),
         			signUpRequest.getEmail(),signUpRequest.getAddress(),signUpRequest.getPhoneNumber(),
@@ -154,7 +155,7 @@ public class AuthRestAPIs {
     	} else {
     		  return new ResponseEntity<TKorisnik>(HttpStatus.FORBIDDEN);
     	}
-
+           
       
     }
 }
