@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
 import { Route, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SmestajnaJedinica } from '../smestajnaJedinica';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +28,9 @@ export class ProfileComponent implements OnInit {
   boolLogOff: boolean = false;
 
   komentar: string = "";
+  ocenaTemp;
+
+  sj: SmestajnaJedinica = new SmestajnaJedinica();
 
   constructor(private userService: UserService,
     private tokenService: TokenStorageService,
@@ -69,11 +73,12 @@ export class ProfileComponent implements OnInit {
           this.reservationsActive.push(r);
         }
 
-
-
+        this.userService.getSmestajnaJedinica(r.smestajnaJedinica).subscribe(data => {
+            this.sj = data;
+            //neka ideja da se vrati Smestajna jedinica konkretne rezervacije, 
+            //al ne znam jel to potrebno ovde
+        })
       }
-
-
 
     })
 
@@ -103,7 +108,11 @@ export class ProfileComponent implements OnInit {
   }
 
   sendKomentar(komentar) {
-    
+
+  }
+
+  oceni(idSobe,ocena,userId) {
+    this.userService.setRate(idSobe,ocena,userId);
   }
 
 }

@@ -39,10 +39,8 @@ public class ReservationsApplication {
 		
 		logger.info("Reservations microservice successfully started");
 		
-		//Creator cr = new Creator();
+	/*	Creator cr = new Creator();
 		
-
-	/*	ReservationsRepository r = new ReservationsRepository();
 
 		RezervacijeRepository r = new RezervacijeRepository();
 
@@ -54,21 +52,24 @@ public class ReservationsApplication {
 		KrajnjiKorisnik kk = kr.getByEmail("pera@gmail.com");
 
 		SmestajniObjekat so = cr.createSmestajniObjekat("Apartman");
-		SmestajnaJedinica sj = cr.createSmestajnaJedinica(new BigInteger("5"),so);
+		sjo.save(so);
+		SmestajnaJedinica sj = cr.createSmestajnaJedinica(5,so);
+		sjr.save(sj);
 		RezervacijaKorisnika rk = cr.createRezervacija(160, 5, "10/1/2019", "19/5/2019", "28/5/2019", "Stanje?", sj,kk);
+		r.save(rk);
 		
 		kk = kr.save(kk);
-		SmestajniObjekat so = Creator.createSmestajniObjekat("Hotel 5*");
-		so = sjo.save(so);
-		SmestajnaJedinica sj = Creator.createSmestajnaJedinica(new BigInteger("4"),so);
-		sj = sjr.save(sj);
-		RezervacijaKorisnika rk = Creator.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj,kk);
-		rk = r.save(rk);
+		SmestajniObjekat so1 = Creator.createSmestajniObjekat("Hotel 5*");
+		so1	 = sjo.save(so1);
+		SmestajnaJedinica sj1 = Creator.createSmestajnaJedinica(4,so1);
+		sj1	 = sjr.save(sj1);
+		RezervacijaKorisnika rk1 = Creator.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj1,kk);
+		rk1 = r.save(rk1);
 
 		
-		sjo.save(so);
-		sjr.save(sj);
-		r.save(rk);*/
+	/*	sjo.save(so1);
+		sjr.save(sj1);
+		r.save(rk1);*/
 
 		//sjo.save(so);
 		//sjr.save(sj);

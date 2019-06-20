@@ -21,7 +21,15 @@ export class UserService {
     return this.http.get(API_USER + 'user/' + id);
   }
 
-  
+  setRate(roomId,ocena,userId): Observable<any> {
+    return this.http.get(API_RESERVATION + 'rate/' + roomId + '/' + ocena + '/' + userId);
+    //ovde bi trebalo mozda post metoda jer se ocenjuje rating, medjutim
+    //mora se nesto slati u reqBody
+  }
+
+  getSmestajnaJedinica(id): Observable<any> {
+    return this.http.get(API_RESERVATION + 'sj/' + id);
+  }
 
 
 }

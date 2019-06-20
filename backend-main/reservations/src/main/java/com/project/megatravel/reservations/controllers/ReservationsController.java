@@ -1,5 +1,6 @@
 package com.project.megatravel.reservations.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.reservations.services.ReservationService;
@@ -66,11 +68,18 @@ public class ReservationsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/user/{id}")
-	public ResponseEntity<List<RezervacijaKorisnika>> getReservationsByUser(@PathVariable Long id) {
-		
+	public ResponseEntity<List<ReservationDTO>> getReservationsByUser(@PathVariable Long id) {
+		List<ReservationDTO> dtoList = new ArrayList<>();
 		List<RezervacijaKorisnika> rez = service.getAllByUser(id);
+		System.out.println("BIO OVDE ???");
+		for (RezervacijaKorisnika rezervacijaKorisnika : rez) {
+			System.out.println("Ima nesto ?");
+			ReservationDTO dto = new ReservationDTO(rezervacijaKorisnika);
+			dtoList.add(dto);
+			
+		}
 		
-		return new ResponseEntity<List<RezervacijaKorisnika>>(rez, HttpStatus.OK);
+		return new ResponseEntity<List<ReservationDTO>>(dtoList, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/object/{id}")
@@ -90,6 +99,18 @@ public class ReservationsController {
 	@RequestMapping(method = RequestMethod.GET, path="/hello")
 	public String hello() {
 		return "Hello world 3";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/rate/{roomId}/{ocena}/{userId}")
+	public ResponseEntity<?> rateReservation(@PathVariable String roomId, @PathVariable int ocena, @PathVariable String userId) {
+			
+		/*RezervacijaKorisnika rez = service.getById(userId);
+		
+		rez.getSmestajnaJedinica().getClas
+		
+		
+		return new ResponseEntity<?>(HttpStatus.OK);*/
+		return null;
 	}
 	
 }

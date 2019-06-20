@@ -215,11 +215,11 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
 
 	}*/
 	
-	public static SmestajnaJedinica createSmestajnaJedinica(BigInteger brkr, SmestajniObjekat so) {
+	public static SmestajnaJedinica createSmestajnaJedinica(Integer brkr, SmestajniObjekat so) {
 		
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
-		//j.setBrojKreveta(brkr);
+		j.setBrojKreveta(brkr);
         j.setSObjekat(so.getId());
         
         return j;
