@@ -1,0 +1,61 @@
+{
+	"info": {
+		"_postman_id": "071cdcb0-98ae-4f3f-b75e-2e817a7f51d9",
+		"name": "chat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"sender\": 1,\n\t\"receiver\": 2,\n\t\"text\": \"Hello\",\n\t\"payload\": null,\n\t\"reservation\": 10,\n\t\"timestamp\": \"2019-06-19T17:28:06.137Z\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:7070/messages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7070",
+					"path": [
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by reservation",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
