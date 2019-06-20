@@ -27,9 +27,9 @@
         <tbody>
           <tr *ngFor="let r of reservationsActive">
             <td>{{r.id}}</td>
-            <td>{{r.datumRezervacije}}</td>
-            <td>{{r.datumPocetka}}</td>
-            <td>{{r.datumZavrsetka}}</td>
+            <td>{{r.datumRezervacije | date}}</td>
+            <td>{{r.datumPocetka | date}}</td>
+            <td>{{r.datumZavrsetka | date}}</td>
             <td>{{r.cenaSmestaja}}</td>
             <td>{{r.smestajnaJedinica}}
             </td>
@@ -77,9 +77,9 @@
         <tbody>
           <tr *ngFor="let r of reservationsOutOfDate">
             <td>{{r.id}}</td>
-            <td>{{r.datumRezervacije}}</td>
-            <td>{{r.datumPocetka}}</td>
-            <td>{{r.datumZavrsetka}}</td>
+            <td>{{r.datumRezervacije | date}}</td>
+            <td>{{r.datumPocetka | date}}</td>
+            <td>{{r.datumZavrsetka | date}}</td>
             <td>{{r.cenaSmestaja}}</td>
             <td>
               <div *ngIf="!r.ocenjeno">
