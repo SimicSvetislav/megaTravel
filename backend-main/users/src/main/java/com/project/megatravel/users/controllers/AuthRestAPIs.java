@@ -84,6 +84,7 @@ public class AuthRestAPIs {
     		System.out.println("Ja sam korisnik");
     		korisnik = userRepository.getByEmail(loginRequest.getEmail());
     		if(korisnik == null) {
+    			System.out.println("NULL JE ?");
     			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     		}
     		retVal = korisnik;

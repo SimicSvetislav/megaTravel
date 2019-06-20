@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
     alert("Usao!")
 
     this.loginInfo = new AuthLoginInfo(this.user.email,this.user.sifra);
+    alert("LOGIN: " + this.loginInfo.email + " + " + this.loginInfo.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
       
@@ -54,8 +55,7 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-       /* this.roles = this.tokenStorage.getAuthorities();
-        localStorage["sent"] = false;*/
+      
 
         this.router.navigate(['/home']);
         
@@ -70,10 +70,6 @@ export class LoginComponent implements OnInit {
       
     })
 
-  /*  this.testing.test().subscribe(data => {
-      this.str = JSON.stringify(data);
-      alert("Vratio se sime: " + this.str);
-    })*/
   }
 
 }

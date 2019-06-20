@@ -39,7 +39,7 @@ public class ReservationsApplication {
 		
 		logger.info("Reservations microservice successfully started");
 		
-	/*	Creator cr = new Creator();
+		/*Creator cr = new Creator();
 		
 
 		RezervacijeRepository r = new RezervacijeRepository();
@@ -67,7 +67,7 @@ public class ReservationsApplication {
 		rk1 = r.save(rk1);
 
 		
-	/*	sjo.save(so1);
+		sjo.save(so1);
 		sjr.save(sj1);
 		r.save(rk1);*/
 

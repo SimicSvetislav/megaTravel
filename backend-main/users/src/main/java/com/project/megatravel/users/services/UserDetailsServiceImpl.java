@@ -42,12 +42,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         
         
         if(user != null) {
+        	System.out.println("Nasao usera");
         	 return UserPrinciple.build(user);
         } else if(agent != null) {
         	 return UserPrinciple.build(agent);
         } else if(admin != null) {
         	return UserPrinciple.build(admin);
         } else {
+        	System.out.println("Nista nije nasao?");
         	return null;
         }
                

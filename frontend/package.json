@@ -27,11 +27,11 @@
     "jquery": "^3.4.1",
     "moment": ">=2.19.3",
     "ng-bootstrap": "^1.6.3",
+    "ngx-rating": "0.0.9",
     "ngx-toastr": "^10.0.4",
     "popper.js": "^1.15.0",
-    "ngx-rating": "0.0.9",
-    "rxjs": "~6.3.3",
-    "zone.js": "~0.8.26"
+    "rxjs": "^6.3.3",
+    "zone.js": "^0.8.29"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.8",

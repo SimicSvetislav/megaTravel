@@ -1,9 +1,9 @@
 import { AuthLoginInfo } from './../../forms/loginForm';
 import { SignUpInfo } from './../../forms/registerForm';
 import { JwtResponse } from './../../jwt-response';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
