@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.project.megatravel.reservations.ExistDB;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.reservations.ExistDB;
 
 @Repository
 public class SjRepository implements ExistRepository {
@@ -29,7 +29,7 @@ public class SjRepository implements ExistRepository {
 			sj.setId(++currentId);
 		} else {
 			// Id postoji, radi se update
-			Long soId = sj.getSObjekat().getId();
+			Long soId = sj.getSObjekat();
 			if (soId!=null) {
 				SmestajniObjekat so = soRepo.getOneById(soId);
 				List<SmestajnaJedinica> jedinice = so.getSmestajnaJedinica();
@@ -68,7 +68,7 @@ public class SjRepository implements ExistRepository {
 		
 		SmestajnaJedinica sj = ExistDB.deleteById(id, collectionName, jaxbContext);
 		
-		Long soId = sj.getSObjekat().getId();
+		Long soId = sj.getSObjekat();
 		if (soId!=null) {
 			SmestajniObjekat so = soRepo.getOneById(soId);
 			List<SmestajnaJedinica> jedinice = so.getSmestajnaJedinica();

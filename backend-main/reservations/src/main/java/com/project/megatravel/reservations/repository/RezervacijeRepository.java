@@ -1,11 +1,11 @@
-package com.project.megatravel.repository;
+package com.project.megatravel.reservations.repository;
 
 import java.util.Collection;
 
 import org.springframework.stereotype.Repository;
 
-import com.project.megatravel.ExistDB;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.reservations.ExistDB;
 
 @Repository
 public class RezervacijeRepository implements ExistRepository {

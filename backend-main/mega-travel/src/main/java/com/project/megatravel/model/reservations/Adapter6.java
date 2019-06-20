@@ -6,12 +6,12 @@
 //
 
 
-package com.project.megatravel.model.accomodation;
+package com.project.megatravel.model.reservations;
 
 import java.util.Date;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-public class Adapter8
+public class Adapter6
     extends XmlAdapter<String, Date>
 {
 

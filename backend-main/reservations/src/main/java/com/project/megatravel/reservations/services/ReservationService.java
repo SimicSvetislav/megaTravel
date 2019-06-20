@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
-import com.project.megatravel.reservations.repository.ReservationsRepository;
+import com.project.megatravel.reservations.repository.RezervacijeRepository;
 
 @Service
 public class ReservationService {
 	
 	@Autowired
-	private ReservationsRepository repo;
+	private RezervacijeRepository repo;
 
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		
@@ -52,7 +51,7 @@ public class ReservationService {
 		List<RezervacijaKorisnika> rk = (List<RezervacijaKorisnika>)repo.getAll();
 		
 		for (RezervacijaKorisnika rezervacijaKorisnika : rk) {
-			if(rezervacijaKorisnika.getKorisnik().getId().equals(id)) {
+			if(rezervacijaKorisnika.getId().equals(id)) {
 				pom.add(rezervacijaKorisnika);
 			}
 		}
