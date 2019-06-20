@@ -13,13 +13,15 @@ exports.postRating = function postRating(req, res) {
 		if (err) {
 			client.close()
 			res.status(500).send(err)
+			return;
 		}
 
 		const collection = client.db(dbName).collection(colName)
 			
-		if (!req.body.grade || !req.body.room || !req.body.user) {
+		if (!req.body.grade || !req.body.room || !req.body.user || !req.body.object) {
 			client.close()
-			res.status(400).send('Grade, room and user must be specified in request body!')
+			res.status(400).send('Grade, room, object and user must be specified in request body!')
+			return;
 		}
 		
 		if (!req.body.comment) {
@@ -27,7 +29,7 @@ exports.postRating = function postRating(req, res) {
 		}
 
 		
-		collection.insertOne({grade: req.body.grade, room: req.body.room, comment: req.body.comment, user: req.body.user, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
+		collection.insertOne({grade: req.body.grade, object: req.body.object, room: req.body.room, comment: req.body.comment, user: req.body.user, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
 			
 			client.close()
 		
@@ -57,12 +59,17 @@ exports.deleteRating = function deleteRating(req, res) {
 
 exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
   
-	if (!req.body.room) {
-		res.status(400).send('Room must be specified in request body!')
+	// Plus konvertuje string u broj
+	let room = +req.query.room;
+  
+	if (!room) {
+		room = req.body.room;
+		if (!room) {
+			res.status(400).send('Room must be specified in request body or as query parameter!')
+			return;
+		}
 	}
-
-	let room = req.body.room
-
+	
 	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
@@ -73,6 +80,44 @@ exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
 		const collection = client.db(dbName).collection(colName)
 
 		collection.find({room: room}, { projection: { _id: 0 } }).toArray(function(err, result) {
+			
+			client.close()
+			
+			if (err) { 
+				throw err
+			}
+
+			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result))
+		})
+		
+	})
+  
+}
+
+exports.getRatingsByObject = function getRatingsByObject(req, res) {
+  
+	// Plus konvertuje string u broj
+	let object = +req.query.object;
+	
+	if (!object) {
+		object = req.body.object;
+		if (!object) {
+			res.status(400).send('Object must be specified in request body or as query parameter!')
+			return;
+		}
+	}
+
+	const client = new MongoClient(uri, { useNewUrlParser: true })
+	client.connect(err => {
+		
+		if (err) {
+			client.close()
+			res.status(500).send(err)
+		}			
+		const collection = client.db(dbName).collection(colName)
+
+		collection.find({object: object}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
 			client.close()
 			
@@ -88,18 +133,23 @@ exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
 
 exports.getRatingsByUser = function getRatingsByUser(req, res) {
   
-	if (!req.body.user) {
-		res.status(400).send('User must be specified in request body!')
+	let user = +req.query.user;
+  
+	if (!user) {
+		user = req.body.user;
+		if (!user) {
+			res.status(400).send('User must be specified in request body or as query parameter!')
+			return;
+		}
 	}
-
-	let user = req.body.user
 
 	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
 			client.close()
-			res.status(500).send(err)
+			res.status(500).send(err);
+			return;
 		}			
 		const collection = client.db(dbName).collection(colName)
 
@@ -125,6 +175,7 @@ exports.getRatings = function getRatings(req, res) {
 		if (err) {
 			client.close()
 			res.status(500).send(err)
+			return;
 		}			
 		const collection = client.db(dbName).collection(colName)
 
@@ -150,11 +201,15 @@ exports.getComment = function getComment(req, res) {
 
 exports.getApprovedCommentsForRoom = function getApprovedCommentsForRoom(req, res) {
   
-	if (!req.body.room) {
-		res.status(400).send('Room must be specified in request body!')
+	let room = +req.query.room;
+  
+	if (!room) {
+		room = req.body.room
+		if (!room) {
+			res.status(400).send('Room must be specified in request body or as query parameter!');
+			return;
+		}
 	}
-
-	let room = req.body.room
 
 	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
@@ -181,12 +236,16 @@ exports.getApprovedCommentsForRoom = function getApprovedCommentsForRoom(req, re
 
 exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
   
+	let grade = +req.query.grade;
+  
 	if (!req.body.grade) {
-		res.status(400).send('Grade must be specified in request body!')
+		grade = req.body.grade
+		if (!grade) {
+			res.status(400).send('Grade must be specified in request body or as query parameter!');
+			return;
+		}
 	}
-
-	let grade = req.body.grade
-
+	
 	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
@@ -202,6 +261,11 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 			client.close()
 			
 			if (err) throw err
+			
+			if (result.length==0) {
+				res.status(200).send(result);
+				return;
+			}
 
 			let comments = result
 				.map((item) => {
@@ -217,11 +281,15 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 
 exports.averageGrade = function averageGrade(req, res) {
   
-	if (!req.body.room) {
-		res.status(400).send('Room must be specified in request body!')
+	let room = +req.query.room;
+  
+	if (!room) {
+		room = req.body.room;
+		if (!room) {
+			res.status(400).send('Room must be specified in request body!');
+			return;
+		}
 	}
-
-	let room = req.body.room
 
 	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
@@ -238,6 +306,11 @@ exports.averageGrade = function averageGrade(req, res) {
 			client.close()
 			
 			if (err) throw err
+			
+			if (result.length==0) {
+				res.status(200).send(result);
+				return;
+			}
 
 			// Traditional method
 			/*let total = 0
@@ -256,6 +329,55 @@ exports.averageGrade = function averageGrade(req, res) {
 				}) / result.length
 
 			//res.status(200).send('Average grade for room ' + room + ' is ' + JSON.stringify(total/result.length))
+			res.status(200).send(JSON.stringify(avg))
+
+		})
+
+	}) 
+}
+
+exports.averageGradeObject = function averageGradeObject(req, res) {
+  
+	let object = +req.query.object;
+  
+	if (!object) {
+		object = req.body.object;
+		if (!object) {
+			res.status(400).send('Object ID must be specified in request body or as query parameter!');
+			return;
+		}
+	}
+
+	const client = new MongoClient(uri, { useNewUrlParser: true })
+	client.connect(err => {
+		
+		if (err) {
+			client.close()
+			res.status(500).send(err)
+		}
+
+		const collection = client.db(dbName).collection(colName)
+
+		collection.find({object: object}, { projection: { _id: 0 } }).toArray(function(err, result) {
+			
+			client.close()
+			
+			if (err) throw err
+			
+			if (result.length==0) {
+				res.status(200).send(result);
+				return;
+			}
+
+			let avg = result
+				.map((item) => {
+					return item.grade
+				})
+				.reduce( (x, y) => {
+					return x + y
+				}) / result.length
+
+			//res.status(200).send('Average grade for object ' + object + ' is ' + JSON.stringify(total/result.length))
 			res.status(200).send(JSON.stringify(avg))
 
 		})
