@@ -1,4 +1,4 @@
-package com.project.megatravel.users;
+package com.project.megatravel.reservations;
 
 
 
@@ -19,9 +19,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.project.megatravel.users.security.jwt.JwtAuthEntryPoint;
-import com.project.megatravel.users.security.jwt.JwtAuthTokenFilter;
-import com.project.megatravel.users.services.UserDetailsServiceImpl;
+import com.project.megatravel.reservations.security.jwt.JwtAuthEntryPoint;
+import com.project.megatravel.reservations.security.jwt.JwtAuthTokenFilter;
+import com.project.megatravel.reservations.services.UserDetailsServiceImpl;
+
 
 
 

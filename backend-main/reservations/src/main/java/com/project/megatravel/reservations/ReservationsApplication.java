@@ -43,7 +43,7 @@ public class ReservationsApplication {
 
 		
 
-		/*RezervacijeRepository r = new RezervacijeRepository();
+		RezervacijeRepository r = new RezervacijeRepository();
 
 		SjRepository sjr = new SjRepository();
 		SoRepository sjo = new SoRepository();

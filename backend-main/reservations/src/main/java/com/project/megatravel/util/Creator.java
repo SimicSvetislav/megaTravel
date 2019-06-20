@@ -10,6 +10,8 @@ import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Administrator;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
 public final class Creator {
@@ -144,6 +146,51 @@ public final class Creator {
         
         return k;
 
+	}
+	
+	public static KrajnjiKorisnik createKrajnjiKorisnik(String sifra,
+			String email, String adresa, String telefon,
+			String ime, String prezime) {
+		
+		KrajnjiKorisnik k = new KrajnjiKorisnik();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		k.setIme(ime);
+		k.setPrezime(prezime);
+		
+		return k;
+	}
+	
+	public static Administrator createAdmin(String sifra,
+			String email, String adresa, String telefon,
+			String ime, String prezime) {
+		
+		Administrator k = new Administrator();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		k.setIme(ime);
+		k.setPrezime(prezime);
+		
+		return k;
+	}
+	
+	public static Agent createAgent(String sifra,
+			String email, String adresa, String telefon) {
+		
+		Agent k = new Agent();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		
+		return k;
 	}
 	
 	public static SmestajniObjekat createSmestajniObjekat(long id, String kat) {

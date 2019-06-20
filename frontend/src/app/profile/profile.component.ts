@@ -60,29 +60,29 @@ export class ProfileComponent implements OnInit {
 
     this.userService.getAllReservationsById(this.id).subscribe(data => {
       this.reservations = data;
-
+      //alert("ALERT ")
       for (let r of this.reservations) {
         var now = moment(this.today);
         var end = moment(r.datumZavrsetka);
         var duration = moment.duration(end.diff(now));
         this.days = duration.asDays();
-        //alert("days : " + this.days)
+       // alert("days : " + this.days)
         if (this.days < 0) {
           this.reservationsOutOfDate.push(r)
         } else {
           this.reservationsActive.push(r);
         }
 
-        this.userService.getSmestajnaJedinica(r.smestajnaJedinica).subscribe(data => {
+       /* this.userService.getSmestajnaJedinica(r.smestajnaJedinica).subscribe(data => {
             this.sj = data;
             //neka ideja da se vrati Smestajna jedinica konkretne rezervacije, 
             //al ne znam jel to potrebno ovde
-        })
+        })*/
       }
 
     })
 
-
+  
   }
 
 
