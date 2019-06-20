@@ -51,7 +51,7 @@ public class ReservationService {
 		List<RezervacijaKorisnika> rk = (List<RezervacijaKorisnika>)repo.getAll();
 		
 		for (RezervacijaKorisnika rezervacijaKorisnika : rk) {
-			if(rezervacijaKorisnika.getId().equals(id)) {
+			if(rezervacijaKorisnika.getKorisnik().equals(id)) {
 				pom.add(rezervacijaKorisnika);
 			}
 		}

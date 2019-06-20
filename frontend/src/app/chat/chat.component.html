@@ -1,39 +1,5 @@
 <div class="image">
-  <nav class="navbar-default navbar-fixed-top navbar navbar-fixed-top navbar-expand-lg navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <img src="assets/megatravellogo.jpg" class="user-avatar" style="width:50px;height:50px;" /> <a
-        class="navbar-brand">MegaTravel</a>
-      <ul class="flow-right navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/home"> Accommodation <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/home"> MyProfile <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <a id="sb" class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button">
-          <i class="fa fa-search"></i>
-        </a>
-        <div *ngIf="logged;else other_content">
-          <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Sign out</button>
-        </div>
-
-        <ng-template #other_content>
-          <button *ngIf="boolLogOff" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="login()">Sign
-            in</button>
-          <button *ngIf="boolLogIn" class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="signOut()">Sign
-            out</button>
-          <button *ngIf="boolLogOff" class="btn btn-outline-success my-2 my-sm-0" type="submit"
-            (click)="register()">Register</button>
-        </ng-template>
-
-      </form>
-    </div>
-  </nav>
+  
 
   <div class="jumbotron col-md-6 offset-md-3" id="chatJumbo">
     <div class="container" id="chatSlot">
