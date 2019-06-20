@@ -1,3 +1,4 @@
+import { UserService } from './../services/users/user.service';
 import { AgentService } from './../services/users/agent.service';
 import { ChatService } from '../services/chat/chat.service';
 import { User } from './../user';
@@ -14,10 +15,11 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
 export class ChatComponent implements OnInit {
 
   message: Message = new Message();
-  user: User = new User();
   chatArea = '';
 
-  constructor(private router: Router, private token: TokenStorageService, private chatService: ChatService, private route: ActivatedRoute, private agetnService: AgentService) {
+  constructor(private router: Router, private token: TokenStorageService,
+    private chatService: ChatService, private route: ActivatedRoute,
+    private agentService: AgentService) {
     chatService.messages.subscribe(msg => {
       if (msg.text.startsWith('[INFO]')) {
         // INFO message
@@ -31,7 +33,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
 
-    var user = this.token.getUser();
+    let user = this.token.getUser();
 
     if (user==null) {
       this.router.navigate(['/home']);
@@ -40,12 +42,12 @@ export class ChatComponent implements OnInit {
     // Cita se id rezervacije
     const id = this.route.snapshot.params['id'];
 
-    this.agetnService.getByReservation(id).subscribe( data => {
+    this.agentService.getByReservation(id).subscribe( data => {
       this.message.receiver = data.id;
     }, error => console.log(error));
 
-    //this.message.receiver = 1; // id primaoca
-    this.message.sender = this.user.id; // id posoljaoca
+    // this.message.receiver = 1; // id primaoca
+    this.message.sender = +user; // id posiljaoca
     this.message.reservation = id; // id rezervacije
     this.message.payload = null;
   }
@@ -55,7 +57,7 @@ export class ChatComponent implements OnInit {
       return;
     }
 
-    this.chatArea += "You: " + this.message.text + '\n';
+    this.chatArea += 'You: ' + this.message.text + '\n';
     this.message.timestamp = new Date();
 
     // Sending message

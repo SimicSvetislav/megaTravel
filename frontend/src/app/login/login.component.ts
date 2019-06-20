@@ -48,8 +48,6 @@ export class LoginComponent implements OnInit {
     alert("LOGIN: " + this.loginInfo.email + " + " + this.loginInfo.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
-      
-
       if(data.accessToken === undefined) {
         alert("Nesto nije u redu!");
       } else {
@@ -63,26 +61,18 @@ export class LoginComponent implements OnInit {
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
-      
-
         this.router.navigate(['/home']);
-        
-
       }
-
-
-
-
     }, error => {
       console.log(error);
-      
-    })
+    });
 
   }
 
-  @HostListener('window:popstate', ['$event'])
+  // Callback za klik na back dugme
+  /*@HostListener('window:popstate', ['$event'])
   onPopState(event) {
     this.eventBroker.myEmit("refresh");
-  }
+  }*/
 
 }

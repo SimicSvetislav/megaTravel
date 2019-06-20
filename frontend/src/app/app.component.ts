@@ -57,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   signOut() {
     this.token.signOut();
+    this.ngOnInit();
     this.router.navigate(['/login']);
   }
 
