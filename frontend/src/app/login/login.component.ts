@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    alert("Usao!")
+    //alert("Usao!")
 
     this.loginInfo = new AuthLoginInfo(this.user.email,this.user.sifra);
     alert("LOGIN: " + this.loginInfo.email + " + " + this.loginInfo.password);

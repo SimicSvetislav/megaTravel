@@ -1,4 +1,4 @@
-import { UserService } from './../services/user/user.service';
+import { UserService } from '../services/users/user.service';
 import { Component, OnInit } from '@angular/core';
 import { RezervacijaKorisnika } from '../rezervacijaKorisnika';
 import { TokenStorageService } from '../services/auth/token-storage.service';

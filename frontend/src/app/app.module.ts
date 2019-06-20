@@ -1,3 +1,5 @@
+import { SocketService } from './services/chat/socket.service';
+import { ChatService } from './services/chat/chat.service';
 
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,7 +22,7 @@ import { ChatComponent } from './chat/chat.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -60,7 +62,7 @@ const appRoutes: Routes = [
       positionClass: 'toast-top-right',
     }),
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, ChatService, ToastrService, SocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

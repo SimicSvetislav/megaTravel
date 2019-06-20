@@ -1,7 +1,9 @@
+import { AgentService } from './../services/users/agent.service';
+import { ChatService } from '../services/chat/chat.service';
 import { User } from './../user';
 import { Message } from './../message';
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -10,51 +12,49 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private toastr: ToastrService) { }
-
-  url = 'ws://localhost:7878/';
-  connection = new WebSocket(this.url);
   message: Message = new Message();
   user: User = new User();
   chatArea = '';
 
+  constructor(private chatService: ChatService, private route: ActivatedRoute, private agetnService: AgentService) {
+    chatService.messages.subscribe(msg => {
+      if (msg.text.startsWith('[INFO]')) {
+        // INFO message
+        console.log(msg.text.substring(6));
+      } else {
+        // Proveriti da li je poruka namenjena njemu
+        this.chatArea += 'Agent: ' + msg.text + '\n';
+      }
+    });
+  }
+
   ngOnInit() {
 
-    this.connection.onopen = this.onOpen;
-    this.connection.onerror = this.onError;
-    this.connection.onmessage = this.onMessage;
-  }
+    // Cita se id rezervacije
+    const id = this.route.snapshot.params['id'];
 
-  onOpen() {
-    console.log("Connection established")
-  }
+    this.agetnService.getByReservation(id).subscribe( data => {
+      this.message.receiver = data.id;
+    }, error => console.log(error));
 
-  onError(error) {
-    console.log(`WebSocket error: ${error}`)
-  }
-
-  onMessage(e) {
-
-    console.log(e.data)
-    let msg:Message = JSON.parse(e.data);
-
-    alert(msg.text);
-
+    //this.message.receiver = 1; // id primaoca
+    this.message.sender = this.user.id; // id posoljaoca
+    this.message.reservation = id; // id rezervacije
+    this.message.payload = null;
   }
 
   onSend() {
     if (!this.message.text) {
       return;
     }
-    this.toastr.success("Message sent");
+
     this.chatArea += "You: " + this.message.text + '\n';
     this.message.timestamp = new Date();
-    this.message.payload = null;
-    this.message.receiver = 1; // id primaoca
-    this.message.sender = this.user.id; // id posoljaoca
-    this.message.reservation = 1; // id rezervacije
-    this.connection.send(JSON.stringify(this.message));
-    this.message = new Message();
+
+    // Sending message
+    this.chatService.messages.next(this.message);
+    
+    this.message.text = '';
   }
 
 }
