@@ -5,13 +5,15 @@
     <img src="assets/megatravellogo.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
     Admin module
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item" [ngClass]="activeTab=='Profile' ? 'active' : 'inactive'">
-        <a class="nav-link" href="#" (click)="navigate('Profile', '/profile')">Profile <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="#" (click)="navigate('Profile', '/profile')">Profile <span
+            class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" [ngClass]="activeTab=='Agents' ? 'active' : 'inactive'">
         <a class="nav-link" href="#" (click)="navigate('Agents', '/agents')">Agents </a>
@@ -26,21 +28,24 @@
         <a class="nav-link" href="#" (click)="navigate('Categories', '/categories')">Categories </a>
       </li>
       <li class="nav-item" [ngClass]="activeTab=='Types' ? 'active' : 'inactive'">
-        <a class="nav-link" href="#" (click)="navigate('Types', '/types')">Types </a> 
+        <a class="nav-link" href="#" (click)="navigate('Types', '/types')">Types </a>
+      </li>
+      <li class="nav-item" [ngClass]="activeTab=='Types' ? 'active' : 'inactive'">
+        <a class="nav-link" href="#" (click)="navigate('Comments', '/comments')">Comments </a>
       </li>
     </ul>
-    
+
   </div>
   <form class="form-inline my-2 my-lg-0">
     <div *ngIf="logged;else other_content">
       <button class="btn btn-outline-success my-2 my-sm-0" (click)="logout()">Sign out</button>
     </div>
-      <ng-template #other_content>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="login()">Log in</button>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="register()">Register</button>
-      </ng-template>
+    <ng-template #other_content>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="login()">Log in</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="register()">Register</button>
+    </ng-template>
 
-    
+
   </form>
 </nav>
 
