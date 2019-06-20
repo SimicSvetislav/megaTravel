@@ -1,10 +1,10 @@
 export class KategorijaSmestaja {
     id: number;
-    naziv: string;
+    zvezdice: number;
 
-    constructor(id: number, naziv: string) {
+    constructor(id: number, zvezdice: number) {
         this.id = id;
-        this.naziv = naziv;
+        this.zvezdice = zvezdice;
     }
 
 }

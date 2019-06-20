@@ -1,8 +1,8 @@
 <div class="card d-inline-block w-33">
-    <img [src]="imageWrapper.sadrzajSlike.toString()" class="card-img-top " alt="...">
+    <img [src]="imageWrapper.value.toString()" class="card-img-top " alt="...">
     <div class="card-footer">
       <div class="row">
-        <div class="col">{{imageWrapper.imeSlike}}</div>
+        <div class="col">{{imageWrapper.putanja}}</div>
         <div class="col">
           <button type="button" class="btn btn-danger" (click)="removeImage()">
             <fa name="times" size="lg"></fa> Ukloni

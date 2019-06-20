@@ -4,18 +4,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { SmestajniObjekat } from '../model/smestaj/smestajni-objekat.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccomodationService {
 
-  private getObjectCategoriesUrl = '';
-  private getObjectTypesUrl = '';
+  private getObjectCategoriesUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort +
+  '/agent/accomodation/object/categories';
+  private getObjectTypesUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/accomodation/object/types';
+  private getExtrasUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/accomodation/object/extras';
 
   private getObjectBaseUrl = '';
   private getObjectsUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/accomodation/object';
-  private addObjectUrl = '';
+  private addObjectUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/accomodation/object/new';
 
   private getUnitBaseUrl = '';
   private getUnitsUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/accomodation/object/(%OBJECTID%)/unit';
@@ -33,6 +36,10 @@ export class AccomodationService {
     return this.http.get(this.getObjectTypesUrl);
   }
 
+  getExtras(): Observable<any> {
+    return this.http.get(this.getExtrasUrl);
+  }
+
   getObject(objectId: string): Observable<any> {
     return this.http.get(this.getObjectsUrl + '/' + objectId);
   }
@@ -44,8 +51,12 @@ export class AccomodationService {
       catchError(this.handlerError));
   }
 
-  addObject(): Observable<any> {
-    return this.http.get(this.addObjectUrl);
+  addObject(newObject: SmestajniObjekat): Observable<any> {
+    return this.http.post(this.addObjectUrl, newObject)
+    .pipe(
+      retry(1),
+      catchError(this.handlerError)
+    );
   }
 
   getUnit(objectId: string, unitId: string): Observable<any> {

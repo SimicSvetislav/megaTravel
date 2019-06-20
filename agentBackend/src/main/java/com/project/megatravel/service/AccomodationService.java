@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.repository.ExtrasRepository;
 import com.project.megatravel.repository.SjRepository;
 import com.project.megatravel.repository.SoRepository;
 
@@ -20,6 +22,9 @@ public class AccomodationService {
 	@Autowired
 	private SjRepository sjRepository;
 	
+	@Autowired
+	private ExtrasRepository extrasRepository;
+	
 	public Collection<SmestajniObjekat> getAllAccomodationObjects(){
 		return soRepository.getAll();
 	}
@@ -28,11 +33,8 @@ public class AccomodationService {
 		return soRepository.getOneById(objekatId);
 	}
 	
-	public SmestajnaJedinica addNewObjectUnit(SmestajnaJedinica jedinica) {
-		jedinica = sjRepository.save(jedinica); 
-		updateSmestajniObjekat(jedinica);
-		
-		return jedinica;
+	public SmestajniObjekat addNewObject(SmestajniObjekat objekat) {		
+		return soRepository.save(objekat);
 	}
 	
 	public List<SmestajnaJedinica> getAllObjectUnits(Long objekatId){
@@ -44,10 +46,29 @@ public class AccomodationService {
 		return sjRepository.getOneById(unitId);
 	}
 	
+	public SmestajnaJedinica addNewObjectUnit(SmestajnaJedinica jedinica) {
+		jedinica = sjRepository.save(jedinica); 
+		updateSmestajniObjekat(jedinica);
+		
+		return jedinica;
+	}
+	
 	private void updateSmestajniObjekat(SmestajnaJedinica jedinica) {
 		SmestajniObjekat objekat = soRepository.getOneById(jedinica.getSObjekat());
 		objekat.getSmestajnaJedinica().add(jedinica);
 		soRepository.save(objekat);
+	}
+	
+	public Collection<DodatnaUsluga> getAllAccomodationExtras() {
+		return extrasRepository.getAll(); 
+	}
+	
+	public Collection<DodatnaUsluga> getAllAccomodationTypes() {
+		return extrasRepository.getAll(); 
+	}
+	
+	public Collection<DodatnaUsluga> getAllAccomodationCategories() {
+		return extrasRepository.getAll(); 
 	}
 
 }

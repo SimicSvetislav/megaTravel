@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.megatravel.controller.ws.client.AccomodationClient;
+import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.service.AccomodationService;
@@ -25,8 +25,8 @@ import com.project.megatravel.service.AccomodationService;
 @CrossOrigin
 public class AccomodationController {
 
-	@Autowired
-	private AccomodationClient accClient;
+//	@Autowired
+//	private AccomodationClient accClient;
 	
 	@Autowired
 	private AccomodationService accomodationService;
@@ -67,11 +67,14 @@ public class AccomodationController {
 		}
 	}
 	
-	@RequestMapping(value="/object", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/object/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SmestajniObjekat> addNewAccomodationObject(@RequestBody SmestajniObjekat newObject) {
-		
-		
-		return new ResponseEntity<>(new SmestajniObjekat(), HttpStatus.CREATED);
+		try {
+			SmestajniObjekat objekat = accomodationService.addNewObject(newObject);
+			return new ResponseEntity<>(objekat, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	@RequestMapping(value="/object/{objectId}/unit", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -133,6 +136,29 @@ public class AccomodationController {
 		return new ResponseEntity<>(new SmestajnaJedinica(), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/object/extras", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<DodatnaUsluga>> getAllExtras() {
+		try {
+			Collection<DodatnaUsluga> usluge = accomodationService.getAllAccomodationExtras();
+			return new ResponseEntity<>(usluge, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
+	}
 	
+	@RequestMapping(value="/object/types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SmestajniObjekat>> getAllAccomodationTypes() {
+		
+		
+		return new ResponseEntity<>(new ArrayList<SmestajniObjekat>(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/object/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<SmestajniObjekat>> getAllAccomodationCategories() {
+		
+		
+		return new ResponseEntity<>(new ArrayList<SmestajniObjekat>(), HttpStatus.OK);
+	}
 	
 }

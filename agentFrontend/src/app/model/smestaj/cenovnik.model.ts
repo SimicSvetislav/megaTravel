@@ -1,10 +1,13 @@
 import { SmestajnaJedinica } from './smestajna-jedinica.model';
 export class Cenovnik {
-    pocetak: Date;
-    kraj: Date;
+     pocetakDateType: Date;
+     krajDateType: Date;
 
-    pocetakStr: string;
-    krajStr: string;
+    // pocetakStr: string;
+    // krajStr: string;
+
+    pocetak: string;
+    kraj: string;
 
     cena: number;
     smestaj: SmestajnaJedinica;

@@ -55,14 +55,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="stanje" default="AKTIVAN">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="AKTIVAN"/>
-                        <xs:enumeration value="BLOKIRAN"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
         </xs:sequence>
         <xs:attribute name="id">
             <xs:simpleType>
@@ -134,6 +126,14 @@
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
+                        <xs:element name="stanje" default="AKTIVAN">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="AKTIVAN"/>
+                                    <xs:enumeration value="BLOKIRAN"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
                         <xs:element maxOccurs="unbounded" minOccurs="0" name="rezervacije">
                             <xs:complexType>
                                 <xs:complexContent>
@@ -198,12 +198,14 @@
                                     </xs:appinfo>
                                 </xs:annotation>
                                 <xs:restriction base="xs:long">
-                                    <xs:minInclusive value="1000000000"/>
-                                    <xs:totalDigits value="10"/>
+                                    <xs:minInclusive value="0000000000"/>
+                                    <xs:totalDigits value="9"/>
                                     <xs:maxInclusive value="9999999999"/>
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
+                        <xs:element name="ime" type="xs:string"/>
+                        <xs:element name="prezime" type="xs:string"/>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>

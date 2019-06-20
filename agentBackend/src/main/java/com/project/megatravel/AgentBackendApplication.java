@@ -11,6 +11,7 @@ import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.Otkazivanje;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.repository.ExtrasRepository;
 import com.project.megatravel.repository.SjRepository;
 import com.project.megatravel.repository.SoRepository;
 import com.project.megatravel.util.Creator;
@@ -36,6 +37,7 @@ public class AgentBackendApplication {
 		//testSoRepo();
 		 //testSjRepo();
 		 //setDodatneUsluge();
+		// testDodatneUslugeRepo();
 
 	}
 	
@@ -44,34 +46,34 @@ public class AgentBackendApplication {
 		SoRepository repo = new SoRepository();
 		
 		SmestajniObjekat so = new SmestajniObjekat();
-		so.setNaziv("Talija");
+		//so.setNaziv("Talija");
 		so.setKategorija("GOLD");
 		so.setLokacija(Creator.createLokacija(1L, "Novi Sad"));
 		so.setAgent(1L);
-		so.setRejting(Creator.createRejting(20, 89));
-		so.setTipSmestaja(1L);
+		//so.setRejting(Creator.createRejting(20, 89));
+		so.setTipSmestaja(Creator.createTipSmetaja(1L, "hotel"));
 		so.setZvezdice(4);
 		
 		so = repo.save(so);
 		
-		so.setNaziv("Negresku");
+		//so.setNaziv("Negresku");
 		so.setKategorija("SILVER");
 		so.setLokacija(Creator.createLokacija(2L, "Beograd"));
 		so.setAgent(1L);
-		so.setRejting(Creator.createRejting(8, 32));
-		so.setTipSmestaja(2L);
+		//so.setRejting(Creator.createRejting(8, 32));
+		so.setTipSmestaja(Creator.createTipSmetaja(2L, "aparthotel"));
 		so.setZvezdice(3);
 		so.setId(null);
 		
 		so = repo.save(so);
 
 		
-		so.setNaziv("La Fiesta");
+		//so.setNaziv("La Fiesta");
 		so.setKategorija("bronze");
 		so.setLokacija(Creator.createLokacija(2L, "Nis"));
 		so.setAgent(1L);
-		so.setRejting(Creator.createRejting(8, 32));
-		so.setTipSmestaja(2L);
+		// so.setRejting(Creator.createRejting(8, 32));
+		so.setTipSmestaja(Creator.createTipSmetaja(3L, "motel"));
 		so.setZvezdice(3);
 		so.setId(null);
 		
@@ -133,7 +135,7 @@ public class AgentBackendApplication {
 		lista.add(sj3);
 		
 		SmestajniObjekat objekat = r.getOneById(1L);
-		objekat.setSmestajnaJedinica(lista);
+		// objekat.setSmestajnaJedinica(lista); //dodat seter
 		r.save(objekat);
 		
 		Collection<SmestajnaJedinica> sve = repo.getAll();
@@ -141,6 +143,28 @@ public class AgentBackendApplication {
 		for (SmestajnaJedinica s : sve) {
 			System.out.print(s.getId() + " ");
 		}
+		
+	}
+	
+	public static void testDodatneUslugeRepo() {
+		ExtrasRepository repo = new ExtrasRepository();
+		
+		DodatnaUsluga usluga = Creator.createDodatnaUsluge(null, "wifi", 200D, "RSD");
+		usluga = repo.save(usluga);
+		
+		DodatnaUsluga usluga1 = Creator.createDodatnaUsluge(null, "bazen", 200D, "eur");
+		usluga1 = repo.save(usluga1);
+		
+		DodatnaUsluga usluga3 = Creator.createDodatnaUsluge(null, "room service", 200D, "RSD");
+		usluga3 = repo.save(usluga3);
+
+		
+		DodatnaUsluga usluga4 = Creator.createDodatnaUsluge(null, "budjenje", 100D, "RSD");
+		usluga4 = repo.save(usluga4);
+
+		DodatnaUsluga usluga5 = Creator.createDodatnaUsluge(null, "pranje vesa", 200D, "chf");
+		usluga5 = repo.save(usluga5);
+
 		
 	}
 	
@@ -156,7 +180,7 @@ public class AgentBackendApplication {
 
 		
 		SmestajniObjekat objekat = r.getOneById(1L);
-		objekat.setDodatnaUsluga(lista);
+		//objekat.setDodatnaUsluga(lista); //dodat seter
 		r.save(objekat);
 	}
 
