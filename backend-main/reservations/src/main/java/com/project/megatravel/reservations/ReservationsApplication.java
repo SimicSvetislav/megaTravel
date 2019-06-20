@@ -41,7 +41,7 @@ public class ReservationsApplication {
 		Creator cr = new Creator();
 		
 
-		RezervacijeRepository r = new RezervacijeRepository();
+		/*RezervacijeRepository r = new RezervacijeRepository();
 
 		SjRepository sjr = new SjRepository();
 		SoRepository sjo = new SoRepository();

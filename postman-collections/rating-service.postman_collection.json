@@ -79,7 +79,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"grade\": 4,\n\t\"object\": 11,\n\t\"room\": 231,\n\t\"comment\": \"Good!\",\n\t\"approved\": false\n}"
+					"raw": "{\n\t\"grade\": 4,\n\t\"room\": 1,\n\t\"object\": 1,\n\t\"comment\": \"Good!\",\n\t\"user\": 1,\n\t\"approved\": false\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8010/rating/us-central1/postRating",
@@ -169,6 +169,28 @@
 		},
 		{
 			"name": "get approved comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get ratings by object",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "average grade object",
 			"request": {
 				"method": "GET",
 				"header": [],
