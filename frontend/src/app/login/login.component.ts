@@ -4,9 +4,9 @@ import { Token } from './../Token';
 import { AuthLoginInfo } from './../forms/loginForm';
 import { Router } from '@angular/router';
 import { User } from './../user';
-import { TestService } from './../services/test.service';
 import { Component, OnInit } from '@angular/core';
-
+import { HostListener } from '@angular/core';
+import { EventBrokerService } from '../services/event-broker/event-broker.service';
 
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
 
 
   user: User = new User();
-  constructor(private router: Router,private testing: TestService,private authService: AuthService,private tokenStorage: TokenStorageService) { }
+  constructor(private tokenService: TokenStorageService, private eventBroker: EventBrokerService, private router: Router,private authService: AuthService,private tokenStorage: TokenStorageService) { }
   str: String="";
 
   private loginInfo : AuthLoginInfo;
@@ -29,9 +29,15 @@ export class LoginComponent implements OnInit {
   token: Token = new Token();
 
   ngOnInit() {
+    var user = this.tokenService.getUser();
+
+    if (user!=null) {
+      this.router.navigate(['/home']);
+    }
   }
 
   home() {
+    this.eventBroker.myEmit("refresh");
     this.router.navigate(['/home']);
   }
 
@@ -51,6 +57,8 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveUser(data.user_id);
         this.tokenStorage.saveReserved(0);
+
+        this.tokenStorage.saveRefresh(true);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;
@@ -74,6 +82,11 @@ export class LoginComponent implements OnInit {
       this.str = JSON.stringify(data);
       alert("Vratio se sime: " + this.str);
     })*/
+  }
+
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    this.eventBroker.myEmit("refresh");
   }
 
 }

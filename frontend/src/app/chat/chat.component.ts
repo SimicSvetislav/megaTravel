@@ -3,7 +3,8 @@ import { ChatService } from '../services/chat/chat.service';
 import { User } from './../user';
 import { Message } from './../message';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TokenStorageService } from '../services/auth/token-storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -16,7 +17,7 @@ export class ChatComponent implements OnInit {
   user: User = new User();
   chatArea = '';
 
-  constructor(private chatService: ChatService, private route: ActivatedRoute, private agetnService: AgentService) {
+  constructor(private router: Router, private token: TokenStorageService, private chatService: ChatService, private route: ActivatedRoute, private agetnService: AgentService) {
     chatService.messages.subscribe(msg => {
       if (msg.text.startsWith('[INFO]')) {
         // INFO message
@@ -29,6 +30,12 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    var user = this.token.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/home']);
+    }
 
     // Cita se id rezervacije
     const id = this.route.snapshot.params['id'];

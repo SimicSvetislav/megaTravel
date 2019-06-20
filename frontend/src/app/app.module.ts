@@ -1,3 +1,4 @@
+import { EventBrokerService } from './services/event-broker/event-broker.service';
 import { SocketService } from './services/chat/socket.service';
 import { ChatService } from './services/chat/chat.service';
 
@@ -62,7 +63,7 @@ const appRoutes: Routes = [
       positionClass: 'toast-top-right',
     }),
   ],
-  providers: [DatePipe, ChatService, ToastrService, SocketService],
+  providers: [DatePipe, ChatService, ToastrService, SocketService, EventBrokerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

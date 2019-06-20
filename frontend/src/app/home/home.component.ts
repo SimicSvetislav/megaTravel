@@ -1,8 +1,10 @@
 import { User } from './../user';
 import { TokenStorageService } from './../services/auth/token-storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { EventEmitter } from 'events';
+import { EventBrokerService } from '../services/event-broker/event-broker.service';
 
 
 
@@ -14,6 +16,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  @Output() refresh = new EventEmitter();
+
   fromDate: NgbDate;
   toDate: NgbDate;
   hoveredDate: NgbDate;
@@ -23,9 +27,14 @@ export class HomeComponent implements OnInit {
   boolLogIn: boolean = false;
   boolLogOff: boolean = false;
 
-  constructor(private router: Router,private token: TokenStorageService) { }
+  constructor(private eventBroker: EventBrokerService, private router: Router,private token: TokenStorageService) { }
 
   ngOnInit() {
+
+    if (this.token.getRefresh()==='true') {
+      this.token.saveRefresh(false);
+      this.eventBroker.myEmit("refresh");
+    }
 
     this.id = this.token.getUser();
 
@@ -35,7 +44,6 @@ export class HomeComponent implements OnInit {
     } else {
       this.boolLogIn = true;
       this.boolLogOff = false;
-      
     }
 
 
@@ -67,6 +75,7 @@ export class HomeComponent implements OnInit {
   }
 
   signOut() {
+    this.eventBroker.myEmit("refresh");
     this.token.signOut();
     this.router.navigate(['/login']);
   }

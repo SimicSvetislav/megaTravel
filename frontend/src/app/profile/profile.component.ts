@@ -40,6 +40,12 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
 
+    var user = this.tokenService.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/home']);
+    }
+
     this.id = this.tokenService.getUser();
 
     if (this.id == null) {
@@ -48,7 +54,6 @@ export class ProfileComponent implements OnInit {
     } else {
       this.boolLogIn = true;
       this.boolLogOff = false;
-
     }
 
     if (this.id == null) {

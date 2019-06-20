@@ -27,7 +27,7 @@ export class AuthService {
   }
 
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {
-    alert("LDAFKJDSLKFJ");
+    //alert("LDAFKJDSLKFJ");
     return this.http.post<JwtResponse>(this.loginUrl + 'user', credentials, httpOptions);
   }
 
