@@ -14,9 +14,6 @@ export class AgentAddComponent implements OnInit {
 
   agent: Agent = new Agent();
 
-  title = 'Angular Form Validation Tutorial';
-  angForm: FormGroup;
-
   constructor(private service: AgentsService, private toastr: ToastrService, private router: Router, ) {
   }
 

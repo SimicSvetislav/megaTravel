@@ -11,7 +11,7 @@ exports.postRating = function postRating(req, res) {
 	client.connect(err => {
 
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}
 
@@ -67,7 +67,7 @@ exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
 	client.connect(err => {
 		
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
@@ -98,7 +98,7 @@ exports.getRatingsByUser = function getRatingsByUser(req, res) {
 	client.connect(err => {
 		
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
@@ -123,7 +123,7 @@ exports.getRatings = function getRatings(req, res) {
 	client.connect(err => {
 		
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
@@ -134,8 +134,8 @@ exports.getRatings = function getRatings(req, res) {
 			
 			if (err) throw err
 
-			res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
-			//res.status(200).send(JSON.stringify(result))
+			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result))
 		})
 		
 	})
@@ -160,7 +160,7 @@ exports.getApprovedCommentsForRoom = function getApprovedCommentsForRoom(req, re
 	client.connect(err => {
 		
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
@@ -191,7 +191,7 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 	client.connect(err => {
 		
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}
 
@@ -227,7 +227,7 @@ exports.averageGrade = function averageGrade(req, res) {
 	client.connect(err => {
 		
 		if (err) {
-			client.close
+			client.close()
 			res.status(500).send(err)
 		}
 

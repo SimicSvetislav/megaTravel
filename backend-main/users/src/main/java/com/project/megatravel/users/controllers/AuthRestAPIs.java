@@ -115,7 +115,6 @@ public class AuthRestAPIs {
          //   Optional<AbstractUser> user = userRepository.findByEmail(loginRequest.getEmail());
             
             
-            
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities(), retVal.getId()));
 
     	

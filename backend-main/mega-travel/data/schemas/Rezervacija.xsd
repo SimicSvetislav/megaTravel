@@ -93,6 +93,11 @@
                     <xs:sequence>
                         <xs:element name="cenaSmestaja">
                             <xs:simpleType>
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
+                                    </xs:appinfo>
+                                </xs:annotation>
                                 <xs:restriction base="xs:double"> </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
@@ -119,6 +124,7 @@
                                 </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
+                        <xs:element default="false" name="ocenjeno" type="xs:boolean"/>
                     </xs:sequence>
                     <xs:attribute name="datumRezervacije">
                         <xs:simpleType>

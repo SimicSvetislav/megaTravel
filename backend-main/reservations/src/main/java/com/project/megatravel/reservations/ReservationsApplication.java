@@ -55,10 +55,14 @@ public class ReservationsApplication {
 		RezervacijaKorisnika rk = cr.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj,kk);
 		
 		
-		
 		sjo.save(so);
 		sjr.save(sj);
 		r.save(rk);*/
+
+		//sjo.save(so);
+		//sjr.save(sj);
+		//r.save(rk);
+
 		
 	}
 
