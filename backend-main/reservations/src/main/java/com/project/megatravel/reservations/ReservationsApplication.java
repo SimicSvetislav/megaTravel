@@ -43,7 +43,7 @@ public class ReservationsApplication {
 		
 		Creator cr = new Creator();
 		
-		ReservationsRepository r = new ReservationsRepository();
+	/*	ReservationsRepository r = new ReservationsRepository();
 		SjRepository sjr = new SjRepository();
 		SoRepository sjo = new SoRepository();
 		KorisnikRepository kr = new KorisnikRepository();
@@ -58,7 +58,7 @@ public class ReservationsApplication {
 		
 		sjo.save(so);
 		sjr.save(sj);
-		r.save(rk);
+		r.save(rk);*/
 		
 	}
 
