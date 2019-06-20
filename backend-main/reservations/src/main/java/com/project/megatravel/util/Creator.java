@@ -23,7 +23,7 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
@@ -60,11 +60,12 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
+        //rez.setSmestaj(sj.getId());
+        rez.setSmestajnaJedinica(sj.getId());
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -82,11 +83,12 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
-        rez.setOcena(ocena);
+        //rez.setSmestaj(sj.getId());
+        rez.setSmestajnaJedinica(sj.getId());
+        //rez.setOcena(ocena);
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -105,12 +107,13 @@ public final class Creator {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         RezervacijaKorisnika rez = new RezervacijaKorisnika();
-        rez.setProcenatOtkazivanje(-1.0);
+        //rez.setProcenatOtkazivanje(-1.0);
         rez.setCenaSmestaja(cena);
         rez.setStanje(stanje);
-        rez.setSmestaj(sj);
-        rez.setOcena(ocena);
-        rez.setKorisnik(kk);
+        //rez.setSmestaj(sj);
+        rez.setSmestajnaJedinica(sj.getId());
+        //rez.setOcena(ocena);
+        rez.setKorisnik(kk.getId());
         
         try {
 			rez.setDatumPocetka(sdf.parse(datumP));
@@ -160,7 +163,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         
         return o;
 
@@ -172,7 +175,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         o.setLokacija(lokacija);
         
         return o;
@@ -194,7 +197,7 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
 		
 		Lokacija l = new Lokacija();
 		
-		l.setId(id);
+		//l.setId(id);
 		l.setNaziv(naziv);
 		
 		return l;
@@ -216,8 +219,8 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
 		
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
-		j.setBrojKreveta(brkr);
-        j.setSObjekat(so);
+		//j.setBrojKreveta(brkr);
+        j.setSObjekat(so.getId());
         
         return j;
 
@@ -228,8 +231,8 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
 		SmestajnaJedinica j = new SmestajnaJedinica();
         
         j.setId(id);
-        j.setSObjekat(so);
-        j.setRejting(r);
+        j.setSObjekat(so.getId());
+        //j.setRejting(r);
         
         return j;
 
