@@ -1,5 +1,5 @@
 import { AuthService } from './services/auth/auth.service';
-import { UserService } from './services/user/user.service';
+import { UserService } from './services/users/user.service';
 import { User } from './user';
 import { TokenStorageService } from './services/auth/token-storage.service';
 import { Component, OnInit } from '@angular/core';

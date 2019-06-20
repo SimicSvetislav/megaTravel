@@ -14,6 +14,15 @@ const uri = 'mongodb://localhost:27017/'
 const dbName = 'megatravel';
 const colName = 'messages';
 
+class Message {
+  timestamp: Date = new Date();
+  sender: number = -1;
+  receiver: number = -1;
+  text: string = '[INFO]';
+  payload: any = null;
+  reservation: number = -1;
+}
+
 wss.on('connection', (ws: WebSocket) => {
 
   ws.on('message', (message: string) => {
@@ -26,10 +35,12 @@ wss.on('connection', (ws: WebSocket) => {
         client.send(JSON.stringify(msg));
       }
     });
-
   });
 
-  ws.send('WebSocket server is ready');
+  let greeting: Message = new Message();
+  greeting.text += 'WebSocket server is ready';
+
+  ws.send(JSON.stringify(greeting));
 });
 
 app.get('/messages/:res', function(req, res) {
