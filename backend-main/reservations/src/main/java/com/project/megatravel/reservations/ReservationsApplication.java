@@ -1,6 +1,5 @@
 package com.project.megatravel.reservations;
 
-import java.math.BigInteger;
 import java.util.logging.Logger;
 
 import org.springframework.boot.SpringApplication;
@@ -39,10 +38,12 @@ public class ReservationsApplication {
 		
 		logger.info("Reservations microservice successfully started");
 		
+
 		/*Creator cr = new Creator();
+
 		
 
-		RezervacijeRepository r = new RezervacijeRepository();
+		/*RezervacijeRepository r = new RezervacijeRepository();
 
 		SjRepository sjr = new SjRepository();
 		SoRepository sjo = new SoRepository();
