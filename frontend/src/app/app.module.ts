@@ -29,7 +29,7 @@ const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile/:id', component: ProfileComponent},
   {path: 'chat/:id', component: ChatComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

@@ -359,4 +359,9 @@ public class SmestajniObjekat {
         this.zvezdice = value;
     }
 
+	public List<SmestajnaJedinica> getSmestajnaJedinica() {
+		// TODO Auto-generated method stub
+		return smestajneJedinice;
+	}
+
 }
