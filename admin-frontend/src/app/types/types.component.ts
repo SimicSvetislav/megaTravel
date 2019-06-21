@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { TokenStorageService } from './../services/auth/token-storage.service';
 import { TypesService } from './../services/types.service';
 import { Component, OnInit } from '@angular/core';
 import { Type } from '../types';
@@ -10,12 +12,20 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class TypesComponent implements OnInit {
 
-  constructor(private service: TypesService, private toastr: ToastrService) { }
+  constructor(private service: TypesService, private toastr: ToastrService,
+              private tokenService: TokenStorageService, private router: Router) { }
 
   types: Type[] = new Array<Type>();
   newType: Type = new Type();
 
   ngOnInit() {
+
+    var user = this.tokenService.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/login']);
+    }
+
     this.service.getAll().subscribe(data => {
       this.types = data;
     }, error => console.log(error)); 

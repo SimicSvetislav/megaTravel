@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AgentsService } from '../services/agents.service';
+import { TokenStorageService } from '../services/auth/token-storage.service';
 
 @Component({
   selector: 'app-agents',
@@ -13,9 +14,18 @@ export class AgentsComponent implements OnInit {
 
   agents: any;
 
-  constructor(private agentService: AgentsService, private router: Router, private toastr: ToastrService) { }
+  constructor(private tokenService: TokenStorageService, 
+              private agentService: AgentsService, private router: Router, 
+              private toastr: ToastrService) { }
 
   ngOnInit() {
+
+    var user = this.tokenService.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/login']);
+    }
+
     this.agentService.getAgents().subscribe(data => {
       this.agents = data;
     }, error => console.log(error));

@@ -35,3 +35,15 @@ export class Message {
     payload: any;
     reservation: number;
 }
+
+export class Admin {
+    id: number;
+    datumRegistracije: Date;
+    korisnickoIme: string;
+    sifra: string;
+    email: string;
+    adresa = '';
+    telefon = '';
+    ime = '';
+    prezime = '';
+}
