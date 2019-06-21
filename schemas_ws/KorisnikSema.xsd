@@ -235,4 +235,20 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
+    <xs:element name="AgentKredencijali">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="username">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="password">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

@@ -45,16 +45,15 @@ public class AgentBackendApplication {
 		
 		SpringApplication.run(AgentBackendApplication.class, args);
 		
-//		testSoRepo();
-//		
-//		testSjRepo(1L);
-//		setDodatneUsluge(1L);
-//		
-//		testSjRepo(2L);
-//		setDodatneUsluge(2L);
+		testSoRepo();
+		
+		testSjRepo(1L);
+		setDodatneUsluge(1L);
+		
+		testSjRepo(2L);
+		setDodatneUsluge(2L);
 		
 		//testRezervacijaRepo();
-		
 		// testDodatneUslugeRepo();
 		//testKategorijeRepo();
 		// testTipSmestajaRepo();
@@ -72,7 +71,8 @@ public class AgentBackendApplication {
 		SoRepository repo = new SoRepository();
 		
 		SmestajniObjekat so = new SmestajniObjekat();
-		//so.setNaziv("Talija");
+		so.setNaziv("Talija");
+		so.setOpis("Mali udoban porodicni smestaj za bilo koje doba godine. Nasi gosti cine ljudi koji nam se vracaju svake godine iznova i iznova");
 		so.setKategorijaSm(Creator.createKategorijaSm(1l, 0));
 		so.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
 		so.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
@@ -86,8 +86,9 @@ public class AgentBackendApplication {
 		
 		so = repo.save(so);
 		
-		//so.setNaziv("Negresku");
 		SmestajniObjekat so1 = new SmestajniObjekat();
+		so1.setNaziv("Negresku");
+		so1.setOpis("Spektakularni smestaj najveci u Jugoistocnoj Evropi. Kompleks cine pet hotela 3 otvorena i 2 zatvorena bazena, spa centar, sportksi centar");
 		so1.setKategorijaSm(Creator.createKategorijaSm(2l, 5));
 		so1.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
 		so1.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
@@ -103,8 +104,9 @@ public class AgentBackendApplication {
 		so1 = repo.save(so1);
 
 		
-		//so.setNaziv("La Fiesta");
 		SmestajniObjekat so2 = new SmestajniObjekat();
+		so2.setNaziv("La fiesta");
+		so2.setOpis("Vila La fiesta predstavlja idealni smestaj za konferencijski turizam, razne seminare i sajmove");
 		so2.setKategorijaSm(Creator.createKategorijaSm(1l, 0));
 		so2.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
 		so2.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
@@ -139,7 +141,8 @@ public class AgentBackendApplication {
 		SmestajnaJedinica sj = new SmestajnaJedinica();
 		sj.setBalkon(true);
 		sj.setBrojKreveta(1);
-		//sj.setOpis("Kratak opis");
+		sj.setOpis("Soba namenjena za one koji zele da uzivaju u miru, a ipak imaju dovoljno prostora samo za sebe");
+		sj.setOznaka("K1");
 		sj.setOtkazivanje(Creator.createOtkazivanje(new BigInteger("20"), true));
 		sj.setSObjekat(objectId);
 		
@@ -149,7 +152,8 @@ public class AgentBackendApplication {
 		SmestajnaJedinica sj2 = new SmestajnaJedinica();
 		sj2.setBalkon(false);
 		sj2.setBrojKreveta(3);
-		//sj.setOpis("Kratak opis");
+		sj2.setOpis("Idealna za bracne parove sa decom, bracni krevet dovoljno velik i za malo dete");
+		sj2.setOznaka("K2");
 		sj2.setOtkazivanje(Creator.createOtkazivanje(new BigInteger("0"), false));
 		sj2.setSObjekat(objectId);
 		sj2.setId(null);
@@ -159,8 +163,9 @@ public class AgentBackendApplication {
 		
 		SmestajnaJedinica sj3 = new SmestajnaJedinica();
 		sj3.setBalkon(true);
-		sj3.setBrojKreveta(1);
-		//sj.setOpis("Kratak opis");
+		sj3.setBrojKreveta(5);
+		sj3.setOpis("Apartman koji poseduje dve sobe sa krevetima");
+		sj3.setOznaka("K3");
 		sj3.setOtkazivanje(Creator.createOtkazivanje(new BigInteger("5"), true));
 		sj3.setSObjekat(objectId);
 		sj3.setId(null);
