@@ -11,7 +11,7 @@ import com.project.megatravel.model.users.Agent;
 public class AgentRepository implements ExistRepository {
 
 	private static final String collectionName = "/agenti";
-	private static Long currentId = ExistDB.determineId(collectionName);
+	private static Long currentId = ExistDB.determineIdUser();
 	private static final String jaxbContext = Agent.class.getPackage().toString().substring(8);
 	private static final String schemaLocation = "https://www.model.megatravel.project.com/users schemas/KorisnikSema.xsd";
 	

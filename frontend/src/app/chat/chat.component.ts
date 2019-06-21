@@ -26,14 +26,18 @@ export class ChatComponent implements OnInit {
         console.log(msg.text.substring(6));
       } else {
         // Proveriti da li je poruka namenjena njemu
-        this.chatArea += 'Agent: ' + msg.text + '\n';
+        if (msg.reservation === this.message.reservation && msg.receiver === this.message.sender) {
+          this.chatArea += 'Agent: ' + msg.text + '\n';
+        } else if (msg.reservation === this.message.reservation && msg.sender === this.message.sender) {
+          this.chatArea += 'You: ' + msg.text + '\n';
+        }
       }
     });
   }
 
   ngOnInit() {
 
-    let user = this.token.getUser();
+    var user = this.token.getUser();
 
     if (user==null) {
       this.router.navigate(['/home']);

@@ -13,7 +13,7 @@ import com.project.megatravel.reservations.ExistDB;
 public class AdminRepository implements ExistRepository {
 
 	private static final String collectionName = "/admini";
-	private static Long currentId = ExistDB.determineId(collectionName);
+	private static Long currentId = ExistDB.determineIdUser();
 	private static final String jaxbContext = Administrator.class.getPackage().toString().substring(8);
 	private static final String schemaLocation = "https://www.model.megatravel.project.com/users schemas/KorisnikSema.xsd";
 	
