@@ -53,6 +53,30 @@ public class AgentRepository implements ExistRepository {
 		return ag;
 		
 	}
+	
+	public Agent getByEmail(String email) {
+		
+		Collection<Agent> all = getAll();
+		
+		Agent user =  all.stream()
+				.filter(u -> u.getEmail().equals(email))
+				.findFirst()
+				.orElse(null);
+		
+		return user;
+	}
+	
+	public Agent getByUsername(String username) {
+		
+		Collection<Agent> all = getAll();
+		
+		Agent user =  all.stream()
+				.filter(u -> u.getKorisnickoIme().equals(username))
+				.findFirst()
+				.orElse(null);
+		
+		return user;
+	}
 
 	public static Long getCurrentId() {
 		return currentId;

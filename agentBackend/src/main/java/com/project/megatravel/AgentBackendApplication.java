@@ -3,7 +3,6 @@ package com.project.megatravel;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.boot.SpringApplication;
@@ -11,21 +10,25 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.KategorijaSm;
-import com.project.megatravel.model.accomodation.Otkazivanje;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.repository.AgentRepository;
 import com.project.megatravel.repository.CategoriesRepository;
 import com.project.megatravel.repository.ExtrasRepository;
 import com.project.megatravel.repository.RezervacijeRepository;
 import com.project.megatravel.repository.SjRepository;
 import com.project.megatravel.repository.SoRepository;
 import com.project.megatravel.repository.TypesRepository;
+import com.project.megatravel.service.UserService;
 import com.project.megatravel.util.Creator;
 
 @SpringBootApplication
 public class AgentBackendApplication {
+	
+	
 
 	//private final static Logger logger = Logger.getLogger(AgentBackendApplication.class.getName());
 	
@@ -55,7 +58,13 @@ public class AgentBackendApplication {
 		// testDodatneUslugeRepo();
 		//testKategorijeRepo();
 		// testTipSmestajaRepo();
+		
 
+		
+//		Agent agent = Creator.createAgent("Luka", "Jovanovic", "lukajvnv@gmail.com", "lukajvnv@gmail.com", "Drage Spasic7", "064/449-86-28", 1556l,
+//				"$2a$10$n1JcNevkDMmKCW2OVE5e4uDSqHNu9U4jeWBqclSvbbdMj72pr2WLm");
+//		AgentRepository agentRepo = new AgentRepository(); 
+//		agentRepo.save(agent);
 	}
 	
 	public static void testSoRepo() {

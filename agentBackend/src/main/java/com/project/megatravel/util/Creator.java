@@ -3,13 +3,15 @@ package com.project.megatravel.util;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.project.megatravel.model.accomodation.Cenovnik;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
@@ -23,9 +25,15 @@ import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.chat.Poruka;
 import com.project.megatravel.model.reservations.Komentar;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
+
+
 public final class Creator {
+	
+	
+
 	
 	private Creator() {
 		
@@ -310,6 +318,22 @@ public final class Creator {
 			// TODO Auto-generated catch block
 			return null;
 		}
+	}
+	
+	public static Agent createAgent(String ime, String prezime, String email, String username, String adresa, String telefon, long pib, String pass) {
+		Agent agent = new Agent();
+		
+		agent.setAdresa(adresa);
+		agent.setEmail(email);
+		agent.setIme(ime);
+		agent.setKorisnickoIme(username);
+		agent.setPoslovniMaticniBroj(pib);
+		agent.setPrezime(prezime);
+		agent.setTelefon(telefon);
+				
+		agent.setSifra(pass);
+		
+		return agent;
 	}
 
 	/*public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {
