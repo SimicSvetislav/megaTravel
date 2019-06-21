@@ -1,3 +1,4 @@
+import { CommentMessageService } from './../../service/comment-message.service';
 import { Component, OnInit } from '@angular/core';
 import { Poruka } from 'src/app/model/rezervacija/poruka.model';
 
@@ -13,7 +14,7 @@ export class ViewAllMessagesComponent implements OnInit {
 
   selectedMessage: Poruka;
 
-  constructor() { }
+  constructor(private commentMessageService: CommentMessageService) { }
 
   ngOnInit() {
     this.activeTab = 'inbox';
@@ -39,6 +40,7 @@ export class ViewAllMessagesComponent implements OnInit {
   }
 
   replyFromView() {
+
     this.displayDirection = 'answer';
   }
 
@@ -49,6 +51,7 @@ export class ViewAllMessagesComponent implements OnInit {
   replyFromAnswer() {
     // this.displayDirection = 'answer';
     this.displayDirection = 'receive';
+    this.commentMessageService.answerMessage(this.selectedMessage).subscribe();
     this.selectedMessage = undefined;
   }
 

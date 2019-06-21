@@ -7,10 +7,11 @@ tr.selectedRow {
     cursor: pointer;
 }
 
-table {
+table.table {
     cursor: pointer;
     height: 40vh;
     overflow-y:scroll;
+    width: 100%;
     /* height:300px; */
     display:block;
 }

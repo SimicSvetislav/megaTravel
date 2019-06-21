@@ -10,18 +10,17 @@
     </button>
   </div>
   <div class="col-lg-9">
-    <form>
+    <!-- <form>
       <div class="form-group form-inline">
           Filter po objektu: 
-            <!-- <input class="form-control ml-2" type="text" [formControl]="filter"/> -->
             <select  name="objectType" id="objectType" class="custom-select d-block" [formControl] = "filter">
                 <option [ngValue]="undefined"> </option>
                 <option *ngFor="let obj of objects;" [ngValue]="obj">{{obj.naziv}}</option>
           </select>
         </div>
-    </form>
+    </form> -->
       
-      <table class="table table-striped">
+      <table class="table table-bordered">
         <thead>
         <tr>
           <th scope="col">#Id</th>
@@ -34,22 +33,24 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let booking of filteredBookings | async; index as i">
+        <!-- <tr *ngFor="let booking of filteredBookings | async; index as i"> -->
+        <tr *ngFor="let booking of filteredBookings">
           <th scope="row">{{ booking.id }}</th>
           <td>
             <!-- <ngb-highlight [result]="booking.name" [term]="filter.value"></ngb-highlight> -->
-            {{booking.datumPocetka | date}}
+            {{booking.datumPocetka | dateFilter}}
           </td>
           <td>
             <!-- <ngb-highlight [result]="booking.area | number" [term]="filter.value"></ngb-highlight> -->
-            {{booking.datumZavrsetka | date}}
+            {{booking.datumZavrsetka | dateFilter}}
           </td>
           <td>
             <!-- <ngb-highlight [result]="booking.population | number" [term]="filter.value"></ngb-highlight> -->
-            {{booking.datumRezervacije | date}}
+            {{booking.datumRezervacije | dateFilter}}
           </td>
           <td>
-              <ngb-highlight [result]="booking.smestaj.sObjekat.naziv" [term]="filter.value"></ngb-highlight>
+              <!-- <ngb-highlight [result]="booking.smestaj" [term]="filter.value"></ngb-highlight> -->
+              {{booking.smestajnaJedinica}}
           </td>
           <td>
             {{booking.cenaSmestaja}}
@@ -64,7 +65,7 @@
       </table>
 
       <div *ngIf="selectedReservation">
-        <app-view-booking [selectedBooking]="selectedReservation">{{selectedReservation.id}}</app-view-booking>
+        <app-view-booking [selectedBooking]="selectedReservation" (confirm)="confirmBook()">{{selectedReservation.id}}</app-view-booking>
       </div>
 
   </div>

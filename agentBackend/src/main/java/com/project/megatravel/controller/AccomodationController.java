@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
+import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.service.AccomodationService;
 
 @RestController
@@ -148,17 +150,25 @@ public class AccomodationController {
 	}
 	
 	@RequestMapping(value="/object/types", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SmestajniObjekat>> getAllAccomodationTypes() {
-		
-		
-		return new ResponseEntity<>(new ArrayList<SmestajniObjekat>(), HttpStatus.OK);
+	public ResponseEntity<Collection<TipSmestaja>> getAllAccomodationTypes() {
+		try {
+			Collection<TipSmestaja> tipovi = accomodationService.getAllAccomodationTypes();
+			return new ResponseEntity<>(tipovi, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
 	
 	@RequestMapping(value="/object/categories", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<SmestajniObjekat>> getAllAccomodationCategories() {
-		
-		
-		return new ResponseEntity<>(new ArrayList<SmestajniObjekat>(), HttpStatus.OK);
+	public ResponseEntity<Collection<KategorijaSm>> getAllAccomodationCategories() {
+		try {
+			Collection<KategorijaSm> kategorije = accomodationService.getAllAccomodationCategories();
+			return new ResponseEntity<>(kategorije, HttpStatus.OK);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		}
 	}
 	
 }

@@ -1,3 +1,4 @@
+import { CommentMessageService } from './../../service/comment-message.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { Poruka } from 'src/app/model/rezervacija/poruka.model';
 
@@ -22,54 +23,42 @@ export class ViewAllMessagesTableComponent implements OnInit, OnChanges {
 
   selectedRows: boolean[];
 
-  constructor() { }
+  constructor(private commentMessageService: CommentMessageService) { }
 
   ngOnInit() {
+    this.commentMessageService.getAllReceivedMessages().subscribe(data => {
+      this.poruke = data;
 
-    this.genData();
+      this.selectedRows = new Array(this.poruke.length);
+
+    });
+
+    // this.genData();
   }
 
   genData() {
-    this.poruke = [ {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba1',
-  prezime: 'osobnic1',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'lukajvnv@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
-  {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba2',
-  prezime: 'osobnic2',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'marko@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
-  {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba3',
-  prezime: 'osobnic3',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'marinko@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
-  {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba3',
-  prezime: 'osobnic3',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'marinko@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
-  {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba3',
-  prezime: 'osobnic3',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'marinko@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
-  {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba3',
-  prezime: 'osobnic3',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'marinko@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
-  {id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-    sadrzaj: '', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba3',
-  prezime: 'osobnic3',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'marinko@gmail.com', telefon: '',
-  uloga: '', stanje : ''},  primalac: undefined },
+    this.poruke = [ {id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+    payload: '', reservation: undefined, sender: 2,  receiver: undefined },
+  { id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+  payload: '', reservation: undefined, sender: 2, receiver: 3},
+  {id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+  payload: '', reservation: undefined, sender: 2,  receiver: undefined },
+  {id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+  payload: '', reservation: undefined, sender: 2, receiver: 3},
+  {id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+  payload: '', reservation: undefined, sender: 2, receiver: 4},
+  {id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+  payload: '', reservation: undefined, sender: 3,  receiver: undefined },
+  {id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+  payload: '', reservation: undefined, sender: 4,  receiver: undefined },
   ];
 
     if ( this.messagesType === 'inbox') {
-      this.poruke.push({id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-      sadrzaj: 'INBOX', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba1',
-    prezime: 'osobnic1',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'inbox@gmail.com', telefon: '',
-    uloga: '', stanje : ''},  primalac: undefined });
+      this.poruke.push({id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+      payload: 'INBOX', reservation: undefined, sender: 2,  receiver: undefined });
     } else if (this.messagesType === 'sent') {
-      this.poruke.push({id: 1, timestamp: new Date(), tekst: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
-      sadrzaj: 'SENT', rezervacija: undefined, posiljalac: {id: '1', datumRegistracije: new Date(), ime: 'osoba1',
-    prezime: 'osobnic1',  korisnickoIme: 'fla', sifra: 'flak', adresa: 'adresa', email: 'sent@gmail.com', telefon: '',
-    uloga: '', stanje : ''},  primalac: undefined });
+      this.poruke.push({id: 1, timestamp: new Date(), text: 'lorem ipsum lfadjlfjalfjaldfjalkkjlfadjlkf',
+      payload: 'SENT', reservation: undefined, sender: 4,  receiver: undefined });
     } else {
       console.log('error');
     }

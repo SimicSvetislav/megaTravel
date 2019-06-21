@@ -8,28 +8,28 @@
     <xs:element name="addObjectRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="addObjectResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="addUnitRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="addUnitResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -43,21 +43,21 @@
     <xs:element name="getObjectsResponse">
         <xs:complexType>
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getObjectRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getObjectResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -71,21 +71,21 @@
     <xs:element name="getUnitsResponse">
         <xs:complexType>
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getUnitRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getUnitResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -12,7 +12,7 @@
 
           </div>
           <div class="col-lg-5">     
-            <p class="text-center">Pošiljalac: {{message?.posiljalac?.email}}</p>
+            <p class="text-center">Pošiljalac: {{message?.sender}}</p>
           </div>
         </div>
         <div class="row">
@@ -39,7 +39,7 @@
       </div>
     <div class="card-body">
       <div class=" bg-primary mb-3">
-          Prilog: {{message?.sadrzaj ? 'Ima' : 'Nema'}}
+          Prilog: {{message?.payload ? 'Ima' : 'Nema'}}
         </div>
       <p class="card-text">      
         <textarea name="text" id="text" class="form-control" rows="6">

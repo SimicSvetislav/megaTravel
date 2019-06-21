@@ -32,7 +32,7 @@ export class AccomodationService {
     return this.http.get(this.getObjectCategoriesUrl);
   }
 
-  getObjectType(): Observable<any> {
+  getObjectTypes(): Observable<any> {
     return this.http.get(this.getObjectTypesUrl);
   }
 

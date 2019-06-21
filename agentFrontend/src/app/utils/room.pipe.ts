@@ -7,7 +7,7 @@ import { RezervacijaKorisnika } from '../model/rezervacija/rezervacija-korisnika
   export class RoomBookPipe implements PipeTransform {
     transform(value: RezervacijaKorisnika) {
       if (value) {
-        const roomId = value.smestaj.id;
+        const roomId = value.smestajnaJedinica;
         // const objectName = value.smestaj.sObjekat.naziv;
         const objectName = 'XXXXX';
 

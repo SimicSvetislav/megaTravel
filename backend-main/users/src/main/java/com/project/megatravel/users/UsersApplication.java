@@ -2,6 +2,9 @@ package com.project.megatravel.users;
 
 import java.util.logging.Logger;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -43,13 +46,13 @@ public class UsersApplication {
 		
 		
 		Creator cr = new Creator();
-	//	JAXBContext context = JAXBContext.newInstance(jaxbContext);
-	///	Marshaller marshaller = context.createMarshaller();
-	//	KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","pera@gmail.com","pera","pera","pera","pera");
-	//	r.save(kk);
+//		JAXBContext context = JAXBContext.newInstance(jaxbContext);
+//		Marshaller marshaller = context.createMarshaller();
+		KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","pera@gmail.com","pera","pera","pera","pera");
+		r.save(kk);
 	//	r.sa
 		
-	/*	Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
+		Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
 		a.save(aa);
 		
 		
@@ -58,7 +61,7 @@ public class UsersApplication {
 
 		
 		KrajnjiKorisnik pom = r.getByEmail("pera@gmail.com");
-		System.out.println(pom.getEmail() + " " +pom.getSifra());*/
+		System.out.println(pom.getEmail() + " " +pom.getSifra());
 	}
 
 }

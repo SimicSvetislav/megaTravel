@@ -5,11 +5,11 @@ export interface Poruka {
     timestamp: Date;
     id: number;
 
-    posiljalac: Korisnik;
-    primalac: Korisnik;
-    tekst: string;
-    sadrzaj: any;
+    sender: number;
+    receiver: number;
+    text: string;
+    payload: any;
 
-    rezervacija: RezervacijaKorisnika;
+    reservation: number;
 
 }
