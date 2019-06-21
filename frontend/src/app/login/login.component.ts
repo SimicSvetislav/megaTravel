@@ -18,7 +18,10 @@ export class LoginComponent implements OnInit {
 
 
   user: User = new User();
-  constructor(private tokenService: TokenStorageService, private eventBroker: EventBrokerService, private router: Router,private authService: AuthService,private tokenStorage: TokenStorageService) { }
+  constructor(private tokenService: TokenStorageService, 
+              private eventBroker: EventBrokerService, 
+              private router: Router,private authService: AuthService,
+              private tokenStorage: TokenStorageService) { }
   str: String="";
 
   private loginInfo : AuthLoginInfo;
