@@ -158,6 +158,7 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="otkazivanje" type="TOtkazivanje"/>
+                <xs:element name="oznaka" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="id">
                 <xs:simpleType>
@@ -210,6 +211,8 @@
                 <xs:element ref="kategorijaSm"/>
                 <xs:element maxOccurs="unbounded" name="cenovnici" type="TCenovnik"/>
                 <xs:element name="podrazumevaniCenovnik" type="TCenovnik"/>
+                <xs:element name="opis" type="xs:string"/>
+                <xs:element name="naziv" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="id">
                 <xs:simpleType>
