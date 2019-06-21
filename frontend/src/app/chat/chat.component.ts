@@ -1,3 +1,4 @@
+import { MessagesService } from './../services/chat/messages.service';
 import { UserService } from './../services/users/user.service';
 import { AgentService } from './../services/users/agent.service';
 import { ChatService } from '../services/chat/chat.service';
@@ -15,11 +16,13 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
 export class ChatComponent implements OnInit {
 
   message: Message = new Message();
+  messages: Array<Message> = new Array<Message>();
   chatArea = '';
+  agentId: number;
 
   constructor(private router: Router, private token: TokenStorageService,
     private chatService: ChatService, private route: ActivatedRoute,
-    private agentService: AgentService) {
+    private agentService: AgentService, private messagesService: MessagesService) {
     chatService.messages.subscribe(msg => {
       if (msg.text.startsWith('[INFO]')) {
         // INFO message
@@ -29,6 +32,7 @@ export class ChatComponent implements OnInit {
         if (msg.reservation === this.message.reservation && msg.receiver === this.message.sender) {
           this.chatArea += 'Agent: ' + msg.text + '\n';
         } else if (msg.reservation === this.message.reservation && msg.sender === this.message.sender) {
+          // Ako klijent ima vise prozora otvorenih na istom cetu
           this.chatArea += 'You: ' + msg.text + '\n';
         }
       }
@@ -44,10 +48,25 @@ export class ChatComponent implements OnInit {
     }
 
     // Cita se id rezervacije
-    const id = this.route.snapshot.params['id'];
+    const id = +this.route.snapshot.params['id'];
 
     this.agentService.getByReservation(id).subscribe( data => {
+      this.agentId = data.id;
       this.message.receiver = data.id;
+    }, error => console.log(error));
+
+    this.messagesService.getByReservation(id).subscribe( data => {
+
+      this.messages = data;
+
+      data.forEach(element => {
+        if (element.sender == user) {
+          this.chatArea += 'You: ' + element.text + '\n';
+        } else {
+          this.chatArea += 'Agent: ' + element.text + '\n';
+        }
+      });
+
     }, error => console.log(error));
 
     // this.message.receiver = 1; // id primaoca
