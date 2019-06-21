@@ -1,17 +1,22 @@
 require('@google/cloud-debug')
 
+const mongo = require('mongodb');
+const objectID = require('mongodb').ObjectID;
 const MongoClient = require('mongodb').MongoClient
 const uri = 'mongodb+srv://admin:admin@megatravel-kszv1.gcp.mongodb.net/test?retryWrites=true&w=majority'
 const dbName = 'megatravel'
 const colName = 'ratings'
+const client = new MongoClient(uri, { useNewUrlParser: true })
 
 exports.postRating = function postRating(req, res) {
 	
-	const client = new MongoClient(uri, { useNewUrlParser: true })
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET, POST');
+	
 	client.connect(err => {
 
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 			return;
 		}
@@ -19,7 +24,7 @@ exports.postRating = function postRating(req, res) {
 		const collection = client.db(dbName).collection(colName)
 			
 		if (!req.body.grade || !req.body.room || !req.body.user || !req.body.object) {
-			client.close()
+			//client.close()
 			res.status(400).send('Grade, room, object and user must be specified in request body!')
 			return;
 		}
@@ -31,7 +36,7 @@ exports.postRating = function postRating(req, res) {
 		
 		collection.insertOne({grade: req.body.grade, object: req.body.object, room: req.body.room, comment: req.body.comment, user: req.body.user, approved: (req.body.approved!==null)?req.body.approved:false}, (err, result) => {
 			
-			client.close()
+			//client.close()
 		
 			if (err) {
 				res.status(500).send('Error')
@@ -46,18 +51,65 @@ exports.postRating = function postRating(req, res) {
 }
 
 exports.putRating = function putRating(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET, PUT');
   
-  res.status(200).send('OK')
+	res.status(200).send('OK')
+  
+}
+
+exports.approve = function approve(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', '*');
+	res.set('Access-Control-Allow-Headers', '*');
+	res.set('Access-Control-Allow-Methods', 'GET, PUT');
+  
+	let id = req.body.id;
+	
+	/*if (!id) {
+		id = +req.query.id;
+		if (!id) {
+			res.status(400).send('Id must be specified in request body or as query parameter!')
+			return;
+		}
+	}*/
+	
+	client.connect(err => {
+		
+		if (err) {
+			//client.close()
+			res.status(500).send(err)
+		}
+		
+		const collection = client.db(dbName).collection(colName)
+
+		collection.update({_id: new objectID(id) }, {$set:{approved:true}}, function(err, result) {
+			
+			//client.close()
+			
+			if (err) throw err
+
+			res.status(200).send();
+		});
+		
+	})
   
 }
 
 exports.deleteRating = function deleteRating(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET, DELETE');
   
-  res.status(200).send('OK')
+	res.status(200).send('OK')
   
 }
 
 exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
 	// Plus konvertuje string u broj
 	let room = +req.query.room;
@@ -70,18 +122,17 @@ exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
 		}
 	}
 	
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
 
 		collection.find({room: room}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) { 
 				throw err
@@ -96,6 +147,9 @@ exports.getRatingsByRoom = function getRatingsByRoom(req, res) {
 }
 
 exports.getRatingsByObject = function getRatingsByObject(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
 	// Plus konvertuje string u broj
 	let object = +req.query.object;
@@ -108,18 +162,17 @@ exports.getRatingsByObject = function getRatingsByObject(req, res) {
 		}
 	}
 
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
 
 		collection.find({object: object}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) throw err
 
@@ -132,6 +185,9 @@ exports.getRatingsByObject = function getRatingsByObject(req, res) {
 }
 
 exports.getRatingsByUser = function getRatingsByUser(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
 	let user = +req.query.user;
   
@@ -143,11 +199,10 @@ exports.getRatingsByUser = function getRatingsByUser(req, res) {
 		}
 	}
 
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err);
 			return;
 		}			
@@ -155,7 +210,7 @@ exports.getRatingsByUser = function getRatingsByUser(req, res) {
 
 		collection.find({user: user}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) throw err
 
@@ -168,20 +223,79 @@ exports.getRatingsByUser = function getRatingsByUser(req, res) {
 }
 
 exports.getRatings = function getRatings(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
-  	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close();
 			res.status(500).send(err)
 			return;
 		}			
 		const collection = client.db(dbName).collection(colName)
 
-		collection.find({}, { projection: { _id: 0 } }).toArray(function(err, result) {
+		collection.find({}/*, { projection: { _id: 0 } }*/).toArray(function(err, result) {
 			
-			client.close()
+			//client.close();
+			
+			if (err) throw err
+
+			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result))
+			return;
+		})
+		
+	})
+  
+}
+
+exports.getRatingsApproved = function getRatingsApproved(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
+  
+	client.connect(err => {
+		
+		if (err) {
+			//client.close()
+			res.status(500).send(err)
+			return;
+		}			
+		const collection = client.db(dbName).collection(colName)
+
+		collection.find({approved: true}/*, { projection: { _id: 0 } }*/).toArray(function(err, result) {
+			
+			//client.close()
+			
+			if (err) throw err
+
+			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result))
+		})
+		
+	})
+  
+}
+
+exports.getRatingsNotApproved = function getRatingsNotApproved(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
+  
+	client.connect(err => {
+		
+		if (err) {
+			//client.close()
+			res.status(500).send(err)
+			return;
+		}			
+		const collection = client.db(dbName).collection(colName)
+
+		collection.find({approved: false}/*, { projection: { _id: 0 } }*/).toArray(function(err, result) {
+			
+			//client.close()
 			
 			if (err) throw err
 
@@ -194,12 +308,18 @@ exports.getRatings = function getRatings(req, res) {
 }
 
 exports.getComment = function getComment(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
   res.status(200).send('OK')
   
 }
 
 exports.getApprovedCommentsForRoom = function getApprovedCommentsForRoom(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
 	let room = +req.query.room;
   
@@ -211,18 +331,17 @@ exports.getApprovedCommentsForRoom = function getApprovedCommentsForRoom(req, re
 		}
 	}
 
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 		}			
 		const collection = client.db(dbName).collection(colName)
 
 		collection.find({room: room, approved: true}, { projection: { comment: 1, _id: 0} }).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) throw err
 
@@ -235,6 +354,9 @@ exports.getApprovedCommentsForRoom = function getApprovedCommentsForRoom(req, re
 }
 
 exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
   
 	let grade = +req.query.grade;
   
@@ -246,11 +368,10 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 		}
 	}
 	
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 		}
 
@@ -258,7 +379,7 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 
 		collection.find({grade: grade}).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) throw err
 			
@@ -280,6 +401,9 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 }
 
 exports.averageGrade = function averageGrade(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET, POST');
   
 	let room = +req.query.room;
   
@@ -291,11 +415,10 @@ exports.averageGrade = function averageGrade(req, res) {
 		}
 	}
 
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 		}
 
@@ -303,7 +426,7 @@ exports.averageGrade = function averageGrade(req, res) {
 
 		collection.find({room: room}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) throw err
 			
@@ -337,6 +460,9 @@ exports.averageGrade = function averageGrade(req, res) {
 }
 
 exports.averageGradeObject = function averageGradeObject(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET, POST');
   
 	let object = +req.query.object;
   
@@ -348,11 +474,10 @@ exports.averageGradeObject = function averageGradeObject(req, res) {
 		}
 	}
 
-	const client = new MongoClient(uri, { useNewUrlParser: true })
 	client.connect(err => {
 		
 		if (err) {
-			client.close()
+			//client.close()
 			res.status(500).send(err)
 		}
 
@@ -360,7 +485,7 @@ exports.averageGradeObject = function averageGradeObject(req, res) {
 
 		collection.find({object: object}, { projection: { _id: 0 } }).toArray(function(err, result) {
 			
-			client.close()
+			//client.close()
 			
 			if (err) throw err
 			
