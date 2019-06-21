@@ -6,14 +6,29 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.reservations.repository.AgentRepository;
 import com.project.megatravel.reservations.repository.RezervacijeRepository;
+import com.project.megatravel.reservations.repository.SjRepository;
+import com.project.megatravel.reservations.repository.SoRepository;
 
 @Service
 public class ReservationService {
 	
 	@Autowired
 	private RezervacijeRepository repo;
+	
+	@Autowired
+	private SjRepository sjRepo;
+	
+	@Autowired
+	private SoRepository soRepo;
+	
+	@Autowired
+	private AgentRepository agRepo;
 
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		
@@ -68,6 +83,31 @@ public class ReservationService {
 	public List<RezervacijaKorisnika> getAllByObject(Long id) {
 		
 		return new ArrayList<>();
+	}
+
+	public Agent getAgentByReservation(Long id) {
+		
+		RezervacijaKorisnika rez = repo.getOneById(id);
+		
+		if (rez==null) {
+			return null;
+		}
+		
+		SmestajnaJedinica sj = sjRepo.getOneById(rez.getSmestajnaJedinica());
+		
+		if (sj == null) {
+			return null;
+		}
+		
+		SmestajniObjekat so = soRepo.getOneById(sj.getSObjekat());
+		
+		if (so == null) {
+			return null;
+		}
+		
+		Agent agent = agRepo.getOneById(so.getAgent());
+		
+		return agent;
 	}
 
 }

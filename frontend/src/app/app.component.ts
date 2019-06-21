@@ -1,16 +1,18 @@
 import { AuthService } from './services/auth/auth.service';
-import { UserService } from './services/user/user.service';
+import { UserService } from './services/users/user.service';
 import { User } from './user';
 import { TokenStorageService } from './services/auth/token-storage.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventBrokerService, IEventListener } from './services/event-broker/event-broker.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [EventBrokerService]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'frontend';
 
   user: User = new User();
@@ -21,13 +23,20 @@ export class AppComponent implements OnInit {
   boolLogIn: boolean = false;
   boolLogOff: boolean = false;
 
-  constructor(private router: Router, private token: TokenStorageService, private userSer: UserService,private authSer: AuthService) {}
 
-  ngOnInit() : void {
+  private _myEventListener: IEventListener;
+
+  constructor(private _eventBroker: EventBrokerService, private router: Router, private token: TokenStorageService, private userSer: UserService, private authSer: AuthService) {
+    this._myEventListener = _eventBroker.listen("refresh", () => {
+      this.ngOnInit();
+    });
+  }
+
+  ngOnInit(): void {
 
     this.id = this.token.getUser();
 
-    if(this.id == null) {
+    if (this.id == null) {
       this.boolLogIn = false;
       this.boolLogOff = true;
     } else {
@@ -37,19 +46,18 @@ export class AppComponent implements OnInit {
       this.userSer.getLogged(this.id).subscribe(data => {
         this.user = data;
 
-        this.ispis += this.user.ime + " " + this.user.prezime;
-
+        this.ispis = this.user.ime + " " + this.user.prezime;
       })
-      
     }
-
-
-
   }
 
+  public ngOnDestroy() {
+    this._myEventListener.ignore();
+  }
 
   signOut() {
     this.token.signOut();
+    this.ngOnInit();
     this.router.navigate(['/login']);
   }
 
@@ -60,4 +68,9 @@ export class AppComponent implements OnInit {
   register() {
     this.router.navigate(['/register'])
   }
+
+  refresh(e) {
+    alert(e);
+  }
+
 }

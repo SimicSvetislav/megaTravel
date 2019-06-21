@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.reservations.services.ReservationService;
 
@@ -111,6 +113,16 @@ public class ReservationsController {
 		
 		return new ResponseEntity<?>(HttpStatus.OK);*/
 		return null;
+	}
+	
+	// Nalazi agenta koji iznajmljuje smestaj u okviru rezervacije
+	@RequestMapping(method = RequestMethod.GET, path="/resAgent/{id}", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Agent> getAgentByReservation(@PathVariable("id") Long id) {
+			
+		Agent agent = service.getAgentByReservation(id);
+		
+		return new ResponseEntity<Agent>(agent, HttpStatus.OK);
 	}
 	
 }

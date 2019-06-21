@@ -1,9 +1,9 @@
 import { AuthLoginInfo } from './../../forms/loginForm';
 import { SignUpInfo } from './../../forms/registerForm';
 import { JwtResponse } from './../../jwt-response';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,6 +17,8 @@ export class AuthService {
   private loginUrl = '//localhost:8152/api/auth/signin/';
   private signupUrl = '//localhost:8152/api/auth/signup/';
   private url = '//localhost:8152/api/test/test';
+
+  private loginUrlRes = '//localhost:8122/api/auth/signin/';
   
   constructor(private http: HttpClient) {
   }
@@ -27,8 +29,10 @@ export class AuthService {
   }
 
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {
-    alert("LDAFKJDSLKFJ");
+
+    //alert("LDAFKJDSLKFJ");
     return this.http.post<JwtResponse>(this.loginUrl + 'user', credentials, httpOptions);
+
   }
 
   signUp(info: SignUpInfo): Observable<any> {

@@ -1,3 +1,6 @@
+import { EventBrokerService } from './services/event-broker/event-broker.service';
+import { SocketService } from './services/chat/socket.service';
+import { ChatService } from './services/chat/chat.service';
 
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -20,13 +23,13 @@ import { ChatComponent } from './chat/chat.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
-import { ToastrModule } from 'ngx-toastr';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'profile', component: ProfileComponent},
+  {path: 'profile/:id', component: ProfileComponent},
   {path: 'chat/:id', component: ChatComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
@@ -60,7 +63,7 @@ const appRoutes: Routes = [
       positionClass: 'toast-top-right',
     }),
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, ChatService, ToastrService, SocketService, EventBrokerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

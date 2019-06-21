@@ -36,20 +36,35 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throws UsernameNotFoundException {
 
     	
-        KrajnjiKorisnik user = userRepository.getByEmail(username);
-        Agent agent = agentRepo.getByEmail(username);
-        Administrator admin = adminRepo.getByEmail(username);
+       // KrajnjiKorisnik user = userRepository.getByEmail(username);
+        
+        if(userRepository.getByEmail(username) != null) {
+        	return UserPrinciple.build(userRepository.getByEmail(username));
+        } else if(agentRepo.getByEmail(username) != null){
+        	return UserPrinciple.build(agentRepo.getByEmail(username));
+        } else if(adminRepo.getByEmail(username) != null){
+        	return UserPrinciple.build(adminRepo.getByEmail(username));
+        } else {
+        	return null;
+        }
+        
+       
+        
+     //   Agent agent = agentRepo.getByEmail(username);
+      //  Administrator admin = adminRepo.getByEmail(username);
         
         
-        if(user != null) {
+     /*   if(user != null) {
+        	System.out.println("Nasao usera");
         	 return UserPrinciple.build(user);
         } else if(agent != null) {
         	 return UserPrinciple.build(agent);
         } else if(admin != null) {
         	return UserPrinciple.build(admin);
         } else {
+        	System.out.println("Nista nije nasao?");
         	return null;
-        }
+        }*/
                
 
        

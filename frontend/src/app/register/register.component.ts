@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../services/auth/token-storage.service';
 import { AuthService } from './../services/auth/auth.service';
 import { SignUpInfo } from './../forms/registerForm';
 import { User } from './../user';
@@ -44,7 +45,7 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
 
   constructor(private formBuilder: FormBuilder,private router : Router,
-              private authService: AuthService) { 
+              private authService: AuthService, private tokenService: TokenStorageService) { 
             this.passwordFormGroup = this.formBuilder.group({
             password: ['', Validators.required],
             confirmPassword: ['',Validators.required]
@@ -59,6 +60,11 @@ export class RegisterComponent implements OnInit {
         }
 
   ngOnInit() {
+    var user = this.tokenService.getUser();
+
+    if (user!=null) {
+      this.router.navigate(['/home']);
+    }
   }
 
   home() {

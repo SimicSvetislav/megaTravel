@@ -84,6 +84,7 @@ public class AuthRestAPIs {
     		System.out.println("Ja sam korisnik");
     		korisnik = userRepository.getByEmail(loginRequest.getEmail());
     		if(korisnik == null) {
+    			System.out.println("NULL JE ?");
     			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     		}
     		retVal = korisnik;
@@ -96,12 +97,10 @@ public class AuthRestAPIs {
     		retVal = agent;
     	}
     	
-    	Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginRequest.getEmail(),
-                            loginRequest.getPassword()
-                    )
-            );
+    	UsernamePasswordAuthenticationToken authReq
+    	 = new UsernamePasswordAuthenticationToken( loginRequest.getEmail(), loginRequest.getPassword());
+    	
+    	final Authentication authentication = authenticationManager.authenticate(authReq);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
             System.out.println("Get auth: " + SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());

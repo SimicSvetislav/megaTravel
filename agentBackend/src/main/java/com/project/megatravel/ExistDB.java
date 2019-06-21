@@ -230,6 +230,18 @@ public class ExistDB {
 		
 	}
 	
+	public static Long determineIdUser() {
+		
+		Long korId = determineId("/korisnici");
+		Long agId = determineId("/agenti");
+		Long adId = determineId("/admini");
+		
+		Long max = Collections.max(Arrays.asList(korId,agId,adId));
+		
+		return max;
+		
+	}
+	
 	public static void initDatabase() throws Exception {
 		
 		Properties props = new Properties();

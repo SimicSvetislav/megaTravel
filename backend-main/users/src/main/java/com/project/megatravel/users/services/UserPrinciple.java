@@ -46,10 +46,7 @@ public class UserPrinciple implements UserDetails {
     public static UserPrinciple build(Object obj) {
     	
     	List<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-    	
-    	
-    	
-    	
+    
     	
     	if(obj instanceof KrajnjiKorisnik) {
     		auth.add(new SimpleGrantedAuthority("USER"));

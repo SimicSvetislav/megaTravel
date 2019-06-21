@@ -1,7 +1,12 @@
+import { MessagesService } from './../services/chat/messages.service';
+import { UserService } from './../services/users/user.service';
+import { AgentService } from './../services/users/agent.service';
+import { ChatService } from '../services/chat/chat.service';
 import { User } from './../user';
 import { Message } from './../message';
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TokenStorageService } from '../services/auth/token-storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -10,51 +15,78 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ChatComponent implements OnInit {
 
-  constructor(private toastr: ToastrService) { }
-
-  url = 'ws://localhost:7878/';
-  connection = new WebSocket(this.url);
   message: Message = new Message();
-  user: User = new User();
+  messages: Array<Message> = new Array<Message>();
   chatArea = '';
+  agentId: number;
+
+  constructor(private router: Router, private token: TokenStorageService,
+    private chatService: ChatService, private route: ActivatedRoute,
+    private agentService: AgentService, private messagesService: MessagesService) {
+    chatService.messages.subscribe(msg => {
+      if (msg.text.startsWith('[INFO]')) {
+        // INFO message
+        console.log(msg.text.substring(6));
+      } else {
+        // Proveriti da li je poruka namenjena njemu
+        if (msg.reservation === this.message.reservation && msg.receiver === this.message.sender) {
+          this.chatArea += 'Agent: ' + msg.text + '\n';
+        } else if (msg.reservation === this.message.reservation && msg.sender === this.message.sender) {
+          // Ako klijent ima vise prozora otvorenih na istom cetu
+          this.chatArea += 'You: ' + msg.text + '\n';
+        }
+      }
+    });
+  }
 
   ngOnInit() {
 
-    this.connection.onopen = this.onOpen;
-    this.connection.onerror = this.onError;
-    this.connection.onmessage = this.onMessage;
-  }
+    var user = this.token.getUser();
 
-  onOpen() {
-    console.log("Connection established")
-  }
+    if (user==null) {
+      this.router.navigate(['/home']);
+    }
 
-  onError(error) {
-    console.log(`WebSocket error: ${error}`)
-  }
+    // Cita se id rezervacije
+    const id = +this.route.snapshot.params['id'];
 
-  onMessage(e) {
+    this.agentService.getByReservation(id).subscribe( data => {
+      this.agentId = data.id;
+      this.message.receiver = data.id;
+    }, error => console.log(error));
 
-    console.log(e.data)
-    let msg:Message = JSON.parse(e.data);
+    this.messagesService.getByReservation(id).subscribe( data => {
 
-    alert(msg.text);
+      this.messages = data;
 
+      data.forEach(element => {
+        if (element.sender == user) {
+          this.chatArea += 'You: ' + element.text + '\n';
+        } else {
+          this.chatArea += 'Agent: ' + element.text + '\n';
+        }
+      });
+
+    }, error => console.log(error));
+
+    // this.message.receiver = 1; // id primaoca
+    this.message.sender = +user; // id posiljaoca
+    this.message.reservation = id; // id rezervacije
+    this.message.payload = null;
   }
 
   onSend() {
     if (!this.message.text) {
       return;
     }
-    this.toastr.success("Message sent");
-    this.chatArea += "You: " + this.message.text + '\n';
+
+    this.chatArea += 'You: ' + this.message.text + '\n';
     this.message.timestamp = new Date();
-    this.message.payload = null;
-    this.message.receiver = 1; // id primaoca
-    this.message.sender = this.user.id; // id posoljaoca
-    this.message.reservation = 1; // id rezervacije
-    this.connection.send(JSON.stringify(this.message));
-    this.message = new Message();
+
+    // Sending message
+    this.chatService.messages.next(this.message);
+    
+    this.message.text = '';
   }
 
 }

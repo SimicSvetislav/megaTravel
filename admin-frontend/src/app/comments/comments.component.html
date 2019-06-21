@@ -1,0 +1,24 @@
+<div class="col-md-10 offset-md-1">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Object</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Grade</th>
+        <th scope="col">Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let rating of ratings">
+        <th scope="row">{{rating.object}}</th>
+        <td>{{rating.room}}</td>
+        <td>{{rating.grade}}</td>
+        <td>{{rating.comment}}</td>
+        <td><button class="btn btn-success" (click)="approve(rating._id)">Approve</button></td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="count==0">
+    No comments to be evaluated
+  </div>
+</div>

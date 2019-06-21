@@ -1,3 +1,4 @@
+import { IEventListener, EventBrokerService } from './services/event-broker.service';
 import { TokenStorageService } from './services/auth/token-storage.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,11 +16,16 @@ export class AppComponent implements OnInit {
   activeTab: String = 'Profile';
   id;
 
-  constructor(private router: Router, private token: TokenStorageService) { }
+  private myEventListener: IEventListener;
+
+  constructor(private router: Router, private token: TokenStorageService,
+              private eventBroker: EventBrokerService) { 
+                this.myEventListener = eventBroker.listen("refresh", () => {
+                  this.ngOnInit();
+                });
+              }
 
   ngOnInit(): void {
-    
-    this.router.navigateByUrl('/profile');
     
     this.id = this.token.getUser();
     if(this.id == null) {
@@ -31,6 +37,7 @@ export class AppComponent implements OnInit {
 
   logout() {
     this.token.signOut();
+    this.ngOnInit();
     this.router.navigate(['/login']);
   }
 
@@ -38,9 +45,9 @@ export class AppComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  register() {
+  /*register() {
     this.router.navigate(['/register']);
-  }
+  }*/
 
   navigate(tabName: string, path: string) {
 

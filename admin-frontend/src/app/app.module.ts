@@ -19,6 +19,10 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { CommentsComponent } from './comments/comments.component';
+import { AdminsComponent } from './admins/admins/admins.component';
+import { EventBrokerService } from './services/event-broker.service';
+import { AdminAddComponent } from './admins/admin-add/admin-add.component';
 
 const appRoutes: Routes = [
   { path: 'profile', component: ProfileComponent},
@@ -29,6 +33,9 @@ const appRoutes: Routes = [
   { path: 'extras', component: ExtrasComponent },
   { path: 'categories', component: CategoriesComponent },
   { path: 'types', component: TypesComponent },
+  { path: 'comments', component: CommentsComponent },
+  { path: 'admins', component: AdminsComponent },
+  { path: 'admins/add', component: AdminAddComponent },
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   { path: '**', component: NotFoundComponent }
@@ -48,7 +55,10 @@ const appRoutes: Routes = [
     AgentEditComponent,
     AgentAddComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CommentsComponent,
+    AdminsComponent,
+    AdminAddComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -69,7 +79,7 @@ const appRoutes: Routes = [
       positionClass: 'toast-top-right',
     }),
   ],
-  providers: [],
+  providers: [EventBrokerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

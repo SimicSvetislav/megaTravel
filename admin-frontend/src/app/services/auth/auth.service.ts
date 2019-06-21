@@ -20,13 +20,9 @@ export class AuthService {
   
   constructor(private http: HttpClient) {
   }
-
-  test() {
-    alert("test");
-  }
-
+  
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {
-    alert("LDAFKJDSLKFJ");
+    //alert("LDAFKJDSLKFJ");
     return this.http.post<JwtResponse>(this.loginUrl + this.admin, credentials, httpOptions);
   }
 

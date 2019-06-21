@@ -1,5 +1,6 @@
 package com.project.megatravel.admin.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.TipSmestaja;
+import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
@@ -43,6 +45,8 @@ public class AdminController {
 		
 		String url = USERS_MS + "agent";
 
+		korisnik.setDatumRegistracije(new Date());
+		
 		ResponseEntity<Agent> response = restClient.postForEntity(url, korisnik, Agent.class);
 		
 		return response;
@@ -318,6 +322,74 @@ public class AdminController {
 		c.setId(cat.getId());
 		
 		return new ResponseEntity<KategorijaSm> (c, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, path="/admin", consumes="application/json", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Administrator> updateAdmin(@RequestBody Administrator korisnik) {
+		
+		String url = USERS_MS + "admin";
+		
+		restClient.put(url, korisnik);
+		
+		return new ResponseEntity<Administrator>(korisnik, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/admin", consumes="application/json", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Administrator> addAdmin(@RequestBody Administrator korisnik) {
+		
+		String url = USERS_MS + "admin";
+		
+		korisnik.setDatumRegistracije(new Date());
+		
+		ResponseEntity<Administrator> response = restClient.postForEntity(url, korisnik, Administrator.class);
+		
+		return response;
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.DELETE, path="/admin/{id}")
+	public ResponseEntity<Administrator> deleteAdmin(@PathVariable("id") Long id) {
+		
+		String url = USERS_MS + "admin/" + id;
+		
+		restClient.delete(url);
+		
+		Administrator a = new Administrator();
+		a.setId(id);
+		
+		return new ResponseEntity<>(a, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/admin/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Administrator> getAdmin(@PathVariable("id") Long id) {
+		
+		String url = USERS_MS + "admin/" + id;
+		
+		ResponseEntity<Administrator> response = restClient.getForEntity(url, Administrator.class);
+		
+		return response;
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/admin", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<List<Administrator>> getAdmins() {
+		
+		String url = USERS_MS + "admin";
+		
+		ResponseEntity<List<Administrator>> response = restClient.exchange(
+				  url,
+				  HttpMethod.GET,
+				  null,
+				  new ParameterizedTypeReference<List<Administrator>>(){});
+		
+		return response;
+		
 	}
 	
 }

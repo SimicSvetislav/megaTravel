@@ -18,6 +18,21 @@
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
 	</properties>
+	
+	<repositories>
+    	<repository>
+	      <id>exist-db</id>
+	      <url>http://repo.evolvedbinary.com/content/repositories/exist-db/</url>
+	      <releases><enabled>true</enabled></releases>
+	      <snapshots><enabled>false</enabled></snapshots>
+	    </repository>
+	    <repository>
+	      <id>exist-db-snapshots</id>
+	      <url>http://repo.evolvedbinary.com/content/repositories/exist-db-snapshots/</url>
+	      <releases><enabled>false</enabled></releases>
+	      <snapshots><enabled>true</enabled></snapshots>
+	    </repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
@@ -38,6 +53,31 @@
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-starter-eureka</artifactId>
 		    <version>1.4.7.RELEASE</version>
+		</dependency>
+		<dependency>
+	      <groupId>org.exist-db</groupId>
+	      <artifactId>exist-core</artifactId>
+	      <version>5.0.0-RC6</version>   
+	    </dependency>
+	    <!-- Fix za stackoverflow reference -->
+        <dependency>
+    		<groupId>org.apache.logging.log4j</groupId>
+    		<artifactId>log4j-slf4j-impl</artifactId>
+    		<version>2.11.2</version><!--$NO-MVN-MAN-VER$-->
+  			<exclusions>
+  				<exclusion>
+     				 <groupId>ch.qos.logback</groupId>
+      				 <artifactId>logback-core</artifactId>
+    			</exclusion>
+    			<exclusion>
+      				<groupId>ch.qos.logback</groupId>
+      				<artifactId>logback-core</artifactId>
+    			</exclusion>
+    			<exclusion>
+      				<groupId>ch.qos.logback</groupId>
+      				<artifactId>logback-classic</artifactId>
+    			</exclusion>
+  			</exclusions>
 		</dependency>
 	</dependencies>
 	

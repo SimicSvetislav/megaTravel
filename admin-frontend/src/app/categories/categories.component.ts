@@ -1,8 +1,10 @@
+import { Router } from '@angular/router';
 import { CategorySm } from './../types';
 import { CategoriesService } from './../services/categories.service';
 import { Component, OnInit } from '@angular/core';
 import { Type } from '../types';
 import { ToastrService } from 'ngx-toastr';
+import { TokenStorageService } from '../services/auth/token-storage.service';
 
 @Component({
   selector: 'app-categories',
@@ -11,12 +13,20 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriesComponent implements OnInit {
 
-  constructor(private service: CategoriesService, private toastr: ToastrService) { }
+  constructor(private service: CategoriesService, private toastr: ToastrService,
+              private tokenService: TokenStorageService, private router: Router) { }
 
   cats: CategorySm[] = new Array<CategorySm>();
   newCat: CategorySm = new CategorySm();
 
   ngOnInit() {
+
+    var user = this.tokenService.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/login']);
+    }
+
     this.service.getAll().subscribe(data => {
       this.cats = data;
     }, error => console.log(error)); 
