@@ -29,8 +29,10 @@ export class AuthService {
   }
 
   attemptAuth(credentials: AuthLoginInfo): Observable<JwtResponse> {
-    alert("LDAFKJDSLKFJ");
-    return this.http.post<JwtResponse>(this.loginUrlRes + 'user', credentials, httpOptions);
+
+    //alert("LDAFKJDSLKFJ");
+    return this.http.post<JwtResponse>(this.loginUrl + 'user', credentials, httpOptions);
+
   }
 
   signUp(info: SignUpInfo): Observable<any> {
