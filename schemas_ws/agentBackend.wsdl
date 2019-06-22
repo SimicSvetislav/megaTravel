@@ -49,7 +49,7 @@
     </wsdl:binding>
     <wsdl:service name="AgentBackendPortService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
         <wsdl:port binding="tns:AgentBackendPortSoap11" name="AgentBackendPortSoap11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-            <soap:address location="http://localhost:8836/agent/ws/agent" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <soap:address location="http://localhost:8111/ws/agent" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

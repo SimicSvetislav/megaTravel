@@ -35,8 +35,10 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 
 	private static final Logger log = LoggerFactory.getLogger(AccomodationClient.class);
 	
-	private static final String WEBSERVICE_URL = "http://localhost:8836/agent/ws/accomodation";
+//	private static final String WEBSERVICE_URL = "http://localhost:8836/agent/ws/accomodation";
+	private static final String WEBSERVICE_URL = "http://localhost:8111/ws/accomodation";
 
+	
 	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/accomodation/managment";
 
 

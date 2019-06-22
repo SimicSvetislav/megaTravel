@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/users/managment"
+    xmlns="www.model.megatravel.project.com/users/managment"
+    xmlns:usr="www.model.megatravel.project.com/users">
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:element name="agentAuthentificationRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:AgentKredencijali"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="agentAuthentificationResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:Agent"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -461,7 +461,7 @@
   </wsdl:binding>
   <wsdl:service name="AccomodationPortService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
     <wsdl:port binding="tns:AccomodationPortSoap11" name="AccomodationPortSoap11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-      <soap:address location="http://localhost:8836/agent/ws/accomodation" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <soap:address location="http://localhost:8111/ws/accomodation" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
