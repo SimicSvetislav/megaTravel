@@ -50,39 +50,39 @@ export class NewObjectBasicInfoComponent implements OnInit {
   constructor(private accomodationService: AccomodationService, private router: Router) { }
 
   ngOnInit() {
-    const t: TipSmestaja[] = new Array();
-    const s: TipSmestaja = new TipSmestaja(1, 'hotel');
-    s.id = 1;
-    s.naziv = 'hotel';
+    // const t: TipSmestaja[] = new Array();
+    // const s: TipSmestaja = new TipSmestaja(1, 'hotel');
+    // s.id = 1;
+    // s.naziv = 'hotel';
 
-    const s2: TipSmestaja = new TipSmestaja(2, 'hotel');
-    s2.id = 1;
-    s2.naziv = 'bed and breakfast';
+    // const s2: TipSmestaja = new TipSmestaja(2, 'hotel');
+    // s2.id = 1;
+    // s2.naziv = 'bed and breakfast';
 
-    const s3: TipSmestaja = new TipSmestaja(3, 'hotel');
-    s3.id = 1;
-    s3.naziv = 'apartman';
+    // const s3: TipSmestaja = new TipSmestaja(3, 'hotel');
+    // s3.id = 1;
+    // s3.naziv = 'apartman';
 
-    const s4: TipSmestaja = new TipSmestaja(4, 'hotel');
-    s4.id = 1;
-    s4.naziv = 'aprathotel';
+    // const s4: TipSmestaja = new TipSmestaja(4, 'hotel');
+    // s4.id = 1;
+    // s4.naziv = 'aprathotel';
 
-    t.push(s);
-    t.push(s2);
-    t.push(s3);
-    t.push(s4);
+    // t.push(s);
+    // t.push(s2);
+    // t.push(s3);
+    // t.push(s4);
 
-    this.categories = [{ id: 1, zvezdice: 8}, {id: 1, zvezdice: 8}, {id: 1, zvezdice: 1}];
+    // this.categories = [{ id: 1, zvezdice: 8}, {id: 1, zvezdice: 8}, {id: 1, zvezdice: 1}];
 
-    // this.accomodationService.getObjectCategories().subscribe(data => {
-    //   this.categories = data;
-    // });
+    this.accomodationService.getObjectCategories().subscribe(data => {
+      this.categories = data;
+    });
 
-    // this.accomodationService.getObjectTypes().subscribe(data => {
-    //   this.types = data;
-    // });
+    this.accomodationService.getObjectTypes().subscribe(data => {
+      this.types = data;
+    });
 
-    this.types = t;
+    // this.types = t;
     this.dozvoljenoOtkazivanje = false;
   }
 

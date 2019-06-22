@@ -169,6 +169,7 @@ public class ExistDB {
 			
 			Collection collection = ExistDB.getOrCreateCollection(colRoot + collectionName);
 			
+			
 			JAXBContext context = JAXBContext.newInstance(jaxbContext);
 			
 			Unmarshaller um = context.createUnmarshaller();

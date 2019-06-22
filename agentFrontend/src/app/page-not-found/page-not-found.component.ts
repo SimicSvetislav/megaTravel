@@ -10,10 +10,8 @@ export class PageNotFoundComponent implements OnInit {
 
   constructor() { }
 
-  tekst: string;
 
   ngOnInit() {
-    this.tekst = AppConfigService.settings.backend.serverPort;
 
   }
 

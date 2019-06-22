@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/messages/rating/managment"
+    xmlns="www.model.megatravel.project.com/messages/rating/managment"
+    xmlns:oce="www.model.megatravel.project.com/messages/rating"
+    xmlns:por="www.model.megatravel.project.com/chat"
+    xmlns:usr="www.model.megatravel.project.com/users">
+    <xs:import namespace="www.model.megatravel.project.com/messages/rating"
+        schemaLocation="KomunikacijaBackendRating.xsd"/>
+    <xs:import namespace="www.model.megatravel.project.com/chat"
+        schemaLocation="PorukeKorisnika.xsd"/>
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:element name="getRatingByObjectRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objectId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getRatingByObjectResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="averageGrade">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getRatingByUnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unitId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getRatingByUnitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="averageGrade">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:double"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCommentsByObjectRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objectId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCommentsByObjectResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="oce:Ocenivanje"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCommentsByUnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unitId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getCommentsByUnitResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="oce:Ocenivanje"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMessageRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="messageId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMessageResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="por:TPoruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="answerMessageRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="por:TPoruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="answerMessageResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="message" type="por:TPoruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMessagesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:AgentKredencijali"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getMessagesResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element name="message" type="por:TPoruka"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

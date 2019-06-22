@@ -1,7 +1,8 @@
+import { TokenStorageService } from './auth/toke-storage.service';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
 import { AppConfigService } from './app-config.service';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { SmestajniObjekat } from '../model/smestaj/smestajni-objekat.model';
@@ -24,15 +25,20 @@ export class AccomodationService {
   private getUnitsUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/accomodation/object/(%OBJECTID%)/unit';
   private addUnitUrl = '';
 
+  constructor(private http: HttpClient, private tokeStorageService: TokenStorageService) { }
+
+  private headers = new HttpHeaders({'Content-Type': 'application/json'});
 
 
-  constructor(private http: HttpClient) { }
+  private genHeader(): HttpHeaders {
+    return new HttpHeaders().set('Authorization', this.tokeStorageService.getToken());
+  }
 
   getObjectCategories(): Observable<any> {
     return this.http.get(this.getObjectCategoriesUrl);
   }
 
-  getObjectType(): Observable<any> {
+  getObjectTypes(): Observable<any> {
     return this.http.get(this.getObjectTypesUrl);
   }
 
@@ -45,7 +51,11 @@ export class AccomodationService {
   }
 
   getObjects(): Observable<any> {
-    return this.http.get(this.getObjectsUrl)
+    // const headers: HttpHeaders = this.genHeader();
+    // console.log(headers);
+    const header: HttpHeaders = this.genHeader();
+    console.log(this.headers.getAll);
+    return this.http.get(this.getObjectsUrl, { headers: header})
     .pipe(
       retry(1),
       catchError(this.handlerError));

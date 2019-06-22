@@ -1,11 +1,11 @@
 <div class="text-center">
-    <form class="form-signin">
+    <form class="form-signin" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
         <img class="mb-4" src="../../../assets/hotel-icon.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Prijavite se</h1>
         <label for="inputEmail" class="sr-only">Username</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Username" required autofocus>
+        <input type="email" id="inputEmail" [(ngModel)]="username" name="inputEmail"  #inputEmail="ngModel" class="form-control mb-3" [ngClass]="{ 'is-invalid': f.submitted && inputEmail.invalid }" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Prijava</button>
+        <input type="password" id="inputPassword" [(ngModel)]="password" name="inputPassword"  class="form-control"  #inputPassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && inputPassword.invalid }" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit" >Prijava</button>
       </form>
 </div>

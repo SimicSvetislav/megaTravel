@@ -158,6 +158,7 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="otkazivanje" type="TOtkazivanje"/>
+                <xs:element name="oznaka" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="id">
                 <xs:simpleType>
@@ -199,17 +200,26 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="DodatnaUsluga"/>
                 <xs:element maxOccurs="unbounded" name="slike">
                     <xs:complexType>
-                        <xs:simpleContent>
-                            <xs:extension base="xs:base64Binary">
-                                <xs:attribute name="putanja" type="xs:string"/>
-                            </xs:extension>
-                        </xs:simpleContent>
+                        <xs:sequence>
+                            <xs:element name="value">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="putanja">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element ref="tipSmestaja"/>
                 <xs:element ref="kategorijaSm"/>
                 <xs:element maxOccurs="unbounded" name="cenovnici" type="TCenovnik"/>
                 <xs:element name="podrazumevaniCenovnik" type="TCenovnik"/>
+                <xs:element name="opis" type="xs:string"/>
+                <xs:element name="naziv" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="id">
                 <xs:simpleType>

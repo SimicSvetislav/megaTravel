@@ -2,6 +2,9 @@
 
 import java.util.logging.Logger;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -44,9 +47,9 @@ public class UsersApplication {
 	///	Marshaller marshaller = context.createMarshaller();
 		KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","sveta.simic.96@gmail.com","sveta","sveta","sveta","sveta");
 		r.save(kk);
-	//	r.sa
+	//	r.sa 
 		
-	/*	Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
+		/*Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
 		a.save(aa);
 		
 		

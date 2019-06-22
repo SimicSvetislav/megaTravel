@@ -24,7 +24,7 @@
    
       <ul class="nav navbar-right nav-pills">
         <li class="nav-item active" style="color: white">
-            <button *ngIf="!isUserLogged" routerLink="/profile" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="id-card" size="lg"></fa> 
+            <button *ngIf="isUserLogged" routerLink="/profile"  routerLinkActive="router-link-active"  class="btn btn-secondary my-2 mx-2" type="submit"><fa name="id-card" size="lg"></fa> 
               Profil </button>
         </li>
         <li class="nav-item active">
@@ -36,7 +36,7 @@
         </li>
         <li class="nav-item active">
           <!-- <a class="nav-link" routerLink = "/logout">Odjava </a> -->
-          <button *ngIf="!isUserLogged" routerLink="/logout" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="angle-up" size="lg"></fa>Odjava</button>
+          <button *ngIf="isUserLogged" (click)="signOut()" class="btn btn-secondary my-2 mx-2" type="submit"><fa name="angle-up" size="lg"></fa>Odjava</button>
         </li>        
       </ul>
     </div>
