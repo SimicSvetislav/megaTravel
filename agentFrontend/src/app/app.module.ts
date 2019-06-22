@@ -49,6 +49,8 @@ import { LogoutComponent } from './user/logout/logout.component';
 import { AppConfigService } from './service/app-config.service';
 import { CommentMessageService } from './service/comment-message.service';
 import { TokenStorageService } from './service/auth/toke-storage.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 const routes = [
   {
     path: 'objects', component: ViewAllObjectsComponent,
@@ -141,6 +143,12 @@ const routes = [
     NgbModule,
     NgxBootstrapSliderModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      closeButton: true,
+      positionClass: 'toast-top-right',
+    }),
     RouterModule.forRoot(routes, {enableTracing: true}) // <-- debugging purposes only
   ],
   providers: [BookingService,
@@ -148,6 +156,7 @@ const routes = [
               CommentMessageService,
               UserService,
               TokenStorageService,
+              ToastrService,
               { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfigService], multi: true }
             ],
   bootstrap: [AppComponent]
