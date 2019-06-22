@@ -81,8 +81,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge"
-                type="acc:TDodatnaUsluga"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

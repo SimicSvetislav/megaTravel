@@ -45,13 +45,13 @@ public class AgentBackendApplication {
 		
 		SpringApplication.run(AgentBackendApplication.class, args);
 		
-		testSoRepo();
-		
-		testSjRepo(1L);
-		setDodatneUsluge(1L);
-		
-		testSjRepo(2L);
-		setDodatneUsluge(2L);
+//		testSoRepo();
+//		
+//		testSjRepo(1L);
+//		setDodatneUsluge(1L);
+//		
+//		testSjRepo(2L);
+//		setDodatneUsluge(2L);
 		
 		//testRezervacijaRepo();
 		// testDodatneUslugeRepo();

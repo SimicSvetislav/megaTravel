@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="www.model.megatravel.project.com/reservations/managment"
+    xmlns="www.model.megatravel.project.com/reservations/managment"
+    xmlns:ns1="www.model.megatravel.project.com/chat"
+    xmlns:res="www.model.megatravel.project.com/reservations"
+    xmlns:usr="www.model.megatravel.project.com/users">
+    <xs:import namespace="www.model.megatravel.project.com/reservations"
+        schemaLocation="Rezervacija.xsd"/>
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:element name="getBookingsRequest">
+        <xs:complexType>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element ref="usr:AgentKredencijali"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getBookingsResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="res:RezervacijaKorisnika"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUpcomingBookingsRequest">
+        <xs:complexType>
+            <xs:sequence maxOccurs="1" minOccurs="1">
+                <xs:element ref="usr:AgentKredencijali"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUpcomingBookingsResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="res:RezervacijaKorisnika"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getBookingRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookingId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getBookingResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="res:RezervacijaKorisnika"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="makeBookingRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="res:RezervacijaKorisnika"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="makeBookingResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="res:RezervacijaKorisnika"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="confirmBookingRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="bookingId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="confirmBookingResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="res:RezervacijaKorisnika"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

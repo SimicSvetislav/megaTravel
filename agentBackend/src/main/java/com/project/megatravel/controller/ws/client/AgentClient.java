@@ -5,25 +5,35 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import org.springframework.ws.soap.client.core.SoapActionCallback;
 
-import com.project.megatravel.model.messages.agent.managment.GetBookingsRequest;
-import com.project.megatravel.model.messages.agent.managment.GetBookingsResponse;
+import com.project.megatravel.model.users.AgentKredencijali;
+import com.project.megatravel.model.users.managment.AgentAuthentificationRequest;
+import com.project.megatravel.model.users.managment.AgentAuthentificationResponse;
 
 public class AgentClient extends WebServiceGatewaySupport {
 
-	private static final Logger log = LoggerFactory.getLogger(AccomodationRatingClient.class);
+	private static final Logger log = LoggerFactory.getLogger(AgentClient.class);
+	
+	private static final String WEBSERVICE_URL = "http://localhost:8836/agent/ws/agentBackend";
 
-	public GetBookingsResponse getCountry(String country) {
+	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/users/managment";
 
-		GetBookingsRequest request = new GetBookingsRequest();
+
+	public AgentAuthentificationResponse agentAuthentification(AgentKredencijali kredencijali) {
+
+		
+		AgentAuthentificationRequest request = new AgentAuthentificationRequest();
+		request.setAgentKredencijali(kredencijali);
 		
 
-		log.info("Requesting location for " + country);
+		log.info("Requesting location for " + "agentAuthentification");
 
-		GetBookingsResponse response = (GetBookingsResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8836/agent/ws/agentBackend", request,
+		AgentAuthentificationResponse response = (AgentAuthentificationResponse) getWebServiceTemplate()
+				.marshalSendAndReceive(WEBSERVICE_URL, request,
 						new SoapActionCallback(
-								"www.model.megatravel.project.com/messages/agent/managment"));
+								NAMESPACE_URL));
 		
+		log.info("Requesting location for " + "agentAuthentification ends successfull");
+
 		
         
 		return response;

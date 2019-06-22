@@ -8,9 +8,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.megatravel.controller.ws.client.AccomodationClient;
+import com.project.megatravel.controller.ws.client.AccomodationRatingClient;
+import com.project.megatravel.controller.ws.client.BookingClient;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.repository.RezervacijeRepository;
 import com.project.megatravel.repository.SjRepository;
+import com.project.megatravel.util.Creator;
 
 @Service
 public class BookingService {
@@ -20,6 +26,15 @@ public class BookingService {
 	
 	@Autowired
 	private SjRepository sJRepository;
+	
+	@Autowired
+	private BookingClient bookingWsClient;
+	
+	@Autowired
+	private AccomodationClient accomodationWsClient;
+	
+	@Autowired
+	private AccomodationRatingClient accomodationRatingWsClient;
 
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		rezervacija.setDatumRezervacije(new Date());
@@ -101,6 +116,19 @@ public class BookingService {
 		}
 		
 		return bookingUpcoming;
+	}
+	
+	public void test() {
+		RezervacijaKorisnika rez = Creator.createRezervacija(1554382800000l, 1559826000000l, 1561053091417l, 30.0, 430.0, 1L, "POTVRDJENO", 1L);
+		bookingWsClient.makeBooking(rez);
+		
+		accomodationRatingWsClient.answerMessage(Creator.createPoruka(1, 2, 2, "jflakjdfla", Creator.createXMLCalender(5)));
+		
+		SmestajniObjekat obj = Creator.createSmestajniObjekat(1, "Gold");
+		SmestajnaJedinica jedinica = Creator.createSmestajnaJedinica(1, obj);
+		
+		accomodationWsClient.sendObject(obj, Creator.createKredencijali("lukajvnv@gmail.com", "luka"));
+		accomodationWsClient.sendUnit(jedinica);
 	}
 
 }

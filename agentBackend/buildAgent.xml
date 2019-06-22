@@ -76,7 +76,7 @@
 	</target>
 	
 	<target name="oceneManagment" depends="init">
-			<xjc schema="${data.dir}/OceneManagment.xsd" destdir="${gen.dir}"/>
+			<xjc schema="${data.dir}/RatingManagment.xsd" destdir="${gen.dir}"/>
 	</target>
 	
 	<target name="agentManagment" depends="init">
