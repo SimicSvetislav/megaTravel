@@ -49,7 +49,15 @@ import { LogoutComponent } from './user/logout/logout.component';
 import { AppConfigService } from './service/app-config.service';
 import { CommentMessageService } from './service/comment-message.service';
 import { TokenStorageService } from './service/auth/toke-storage.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from './home/home.component';
+
+
 const routes = [
+  {
+    path: 'home', component: HomeComponent,
+  },
   {
     path: 'objects', component: ViewAllObjectsComponent,
   },
@@ -130,7 +138,8 @@ const routes = [
     AnswerMessageComponent,
     ViewAllMessagesTableComponent,
     ViewAllBookingsComponent,
-    ViewBookingComponent
+    ViewBookingComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -141,7 +150,13 @@ const routes = [
     NgbModule,
     NgxBootstrapSliderModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, {enableTracing: true}) // <-- debugging purposes only
+    RouterModule.forRoot(routes, {enableTracing: true}), // <-- debugging purposes only
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      closeButton: true,
+      positionClass: 'toast-bottom-left',
+    })
   ],
   providers: [BookingService,
               AccomodationService,

@@ -51,8 +51,6 @@ export class AccomodationService {
   }
 
   getObjects(): Observable<any> {
-    // const headers: HttpHeaders = this.genHeader();
-    // console.log(headers);
     const header: HttpHeaders = this.genHeader();
     console.log(this.headers.getAll);
     return this.http.get(this.getObjectsUrl, { headers: header})

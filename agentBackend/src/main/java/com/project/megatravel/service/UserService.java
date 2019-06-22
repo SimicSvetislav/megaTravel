@@ -3,15 +3,13 @@ package com.project.megatravel.service;
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.server.ui.LogoutPageGeneratingWebFilter;
 import org.springframework.stereotype.Service;
 
-import com.mchange.v2.sql.filter.SynchronizedFilterDataSource;
+import com.project.megatravel.controller.ws.client.AgentClient;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.security.service.UserDetailsServiceImpl;
+import com.project.megatravel.util.Creator;
 
 @Service
 public class UserService {
@@ -21,6 +19,9 @@ public class UserService {
 	
 	@Autowired
 	private Properties properties;
+	
+	@Autowired
+	private AgentClient agentWsClient;
 	
 	@Autowired
 	private UserDetailsServiceImpl loggedUserServie;
@@ -41,6 +42,19 @@ public class UserService {
 		}
 		
 		return passwordEncoder.encode(pass);
+	}
+	
+	public void syncData() throws Exception {
+		String username = properties.getProperty("username", "");
+		String pass = properties.getProperty("password", "");
+		
+		// autentifikacija
+		Agent a = agentWsClient.agentAuthentification(Creator.createKredencijali(username, pass)).getAgent();
+		if(a == null) {
+			System.out.println("user service Error");
+			throw new Exception();
+		}
+		
 	}
 	
 	

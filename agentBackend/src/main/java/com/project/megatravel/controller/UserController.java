@@ -22,22 +22,32 @@ public class UserController {
 	@Autowired
 	private UserService userService ;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE})
-	public ResponseEntity<String> login(@RequestBody Agent agent) {
-
-		return new ResponseEntity<>("ulogovan", HttpStatus.OK);
-	}
+//	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE})
+//	public ResponseEntity<String> login(@RequestBody Agent agent) {
+//
+//		return new ResponseEntity<>("ulogovan", HttpStatus.OK);
+//	}
+//	
+//	@RequestMapping(value = "/registration",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<Agent> register(@RequestBody Agent newAgent){
+//		
+//		
+//		return new ResponseEntity<>(new Agent(), HttpStatus.CREATED);
+//	}
 	
-	@RequestMapping(value = "/registration",  method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Agent> register(@RequestBody Agent newAgent){
-		
-		
-		return new ResponseEntity<>(new Agent(), HttpStatus.CREATED);
+	@RequestMapping(value = "/synchronize",  method = RequestMethod.GET)
+	public ResponseEntity<?> syncData(){
+		try {
+			userService.syncData();
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
 	}
+
 	
 	@RequestMapping(value = "/genPass/{pass}",  method = RequestMethod.GET)
 	public ResponseEntity<String> genPass(@PathVariable("pass") String pass){
-		
 		
 		return new ResponseEntity<>(userService.genPassword(pass), HttpStatus.CREATED);
 	}

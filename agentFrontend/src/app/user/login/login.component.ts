@@ -1,3 +1,4 @@
+import { UserService } from './../../service/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth/auth.service';
@@ -5,6 +6,7 @@ import { TokenStorageService } from 'src/app/service/auth/toke-storage.service';
 import { AuthLoginInfo } from 'src/app/model/forms/login-form.model';
 import { Token } from '@angular/compiler';
 import { Agent } from 'src/app/model/korisnik/agent.model';
+import { HttpErrorResponse } from '@angular/common/http/http';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
 
   user: Agent;
   constructor(private router: Router, private authService: AuthService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService, private userService: UserService) { }
   str = '';
 
   private loginInfo: AuthLoginInfo;
@@ -35,9 +37,6 @@ export class LoginComponent implements OnInit {
 
     this.loginInfo = new AuthLoginInfo(this.username, this.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
-
-
-
       if (data.accessToken === undefined) {
         alert('Nesto nije u redu!');
       } else {
@@ -52,17 +51,22 @@ export class LoginComponent implements OnInit {
        /* this.roles = this.tokenStorage.getAuthorities();
         localStorage["sent"] = false;*/
 
-        this.router.navigate(['/home']);
+        // sync
+        this.userService.syncData().subscribe(d => {
+          this.router.navigate(['/home']);
+        }, (error: Response) => {
+          if (error.status === 409) {
+            alert('Greska pri sinhronizaciji podataka');
+          }
+        });
+
 
 
       }
-
-
-
-
-    }, error => {
-      console.log(error);
-
+    }, (error: HttpErrorResponse) => {
+      if (error.status === 401) {
+        alert('Neautorizovan pristup');
+      }
     });
 
   /*  this.testing.test().subscribe(data => {

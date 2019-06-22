@@ -35,7 +35,7 @@ export class TokenStorageService {
   }
 
   public isLogged(): boolean {
-    return this.getToken ? true : false;
+    return this.getToken() ? true : false;
   }
 
   public saveUsername(username: string) {

@@ -29,12 +29,18 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 
 
 public final class Creator {
-	
-	
-
-	
-	private Creator() {
 		
+	public static Agent createAgent(String sifra,
+			String email, String adresa, String telefon) {
+		
+		Agent k = new Agent();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		
+		return k;
 	}
 	
 	public static RezervacijaKorisnika createRezervacija(long datumRez, long datumPoc, long datumZav, double popust, double cena, long korisnik, String stanje, long soba) {

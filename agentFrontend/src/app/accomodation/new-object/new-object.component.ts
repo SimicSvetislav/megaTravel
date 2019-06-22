@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { KategorijaSmestaja } from './../../model/smestaj/kategorija-smestaja.model';
 import { TipSmestaja } from './../../model/smestaj/tip-smestaja.model';
 import { AccomodationService } from './../../service/accomodation.service';
@@ -17,7 +18,7 @@ export class NewObjectComponent implements OnInit {
 
   newObject: SmestajniObjekat;
 
-  constructor(private accomodationService: AccomodationService, private router: Router) { }
+  constructor(private accomodationService: AccomodationService, private router: Router, private toastrService: ToastrService) { }
 
   ngOnInit() {
    this.newObject = new SmestajniObjekat(null, '', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 4),

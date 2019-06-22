@@ -15,11 +15,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-
-
   private loginUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/api/auth/signin';
-  private signupUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/api/auth/signin/';
-
+  private signupUrl = 'http://localhost:' + AppConfigService.settings.backend.serverPort + '/agent/api/auth/signup';
 
   constructor(private http: HttpClient) {
   }
@@ -31,6 +28,6 @@ export class AuthService {
   }
 
   signUp(info: SignUpInfo): Observable<any> {
-    return this.http.post<string>(this.signupUrl + 'user', info, httpOptions);
+    return this.http.post<string>(this.signupUrl, info, httpOptions);
   }
 }
