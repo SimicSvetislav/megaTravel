@@ -22,14 +22,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.megatravel.model.users.Administrator;
-import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.model.users.TKorisnik;
 import com.project.megatravel.users.repository.KorisnikRepository;
 import com.project.megatravel.users.request.LoginForm;
 import com.project.megatravel.users.response.JwtResponse;
 import com.project.megatravel.users.security.jwt.JwtProvider;
+import com.project.megatravel.users.services.EmailService;
 import com.project.megatravel.users.services.UsersService;
 
 @RestController
@@ -51,6 +49,9 @@ public class UsersController {
     
     @Autowired
     AuthenticationManager authenticationManager;
+    
+    @Autowired
+	private EmailService emailService;
 	
 /*	@RequestMapping(method = RequestMethod.GET, path="/test")
 	public ResponseEntity<String> test() {
@@ -106,6 +107,12 @@ public class UsersController {
 		
 		kk = service.save(kk);
 		
+		emailService.sendSimpleMessage(kk.getEmail(), "Block", "Dear user,\n\n"
+				+ "Your account has been blocked.\n"
+				+ "Please contact admin for further steps.\n\n"
+				+ "Sincerely,\n"
+				+ "Megatravel team");
+		
 		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
 		
 	}
@@ -119,6 +126,12 @@ public class UsersController {
 		
 		kk = service.save(kk);
 		
+		emailService.sendSimpleMessage(kk.getEmail(), "Activated", "Dear user,\n\n"
+				+ "Your account is again active.\n"
+				+ "Have fun using our app.\n\n"
+				+ "Sincerely,\n"
+				+ "Megatravel team");
+		
 		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
 		
 	}
@@ -130,9 +143,20 @@ public class UsersController {
 	
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/hello")
+	@RequestMapping(method = RequestMethod.GET, path="/user/email")
 	public String hello() {
-		return "Hello world updated";
+		
+		emailService.sendSimpleMessage("sveta.simic.96@gmail.com", "Test", "Testing simple mail");
+		
+		return "Hello world, email sent";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="user/email/attachment")
+	public String sendMailWithAttachment() {
+		
+		emailService.sendMessageWithAttachment("sveta.simic.96@gmail.com", "Test", "Testing simple mail", "C:\\Users\\Sveta\\Desktop\\ms.pdf");
+		
+		return "Hello world, email sent";
 	}
 	
 	@PostMapping("/signin")
