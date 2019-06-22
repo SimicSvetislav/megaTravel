@@ -28,6 +28,8 @@ public class AdminRepository implements ExistRepository {
 		
 		if (admin.getId()==null) {
 			// Dodeli id
+			AgentRepository.setCurrentId(currentId);
+			KorisnikRepository.setCurrentId(currentId);
 			admin.setId(++currentId);
 		}
 

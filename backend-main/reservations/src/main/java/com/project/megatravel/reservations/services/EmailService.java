@@ -1,4 +1,4 @@
-package com.project.megatravel.users.services;
+package com.project.megatravel.reservations.services;
 
 import java.io.InputStream;
 

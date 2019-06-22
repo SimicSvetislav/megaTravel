@@ -119,6 +119,42 @@ public class ExistDB {
 		return entity;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static String getOneByIdRaw(Long id, String collectionName, String jaxbContext) {
+		
+		XMLResource res = null;
+		
+		try {
+			
+			Collection collection = ExistDB.getOrCreateCollection(colRoot + collectionName);
+		
+			res = (XMLResource)collection.getResource(id + ".xml");
+			
+			if (res == null) {
+				logger.warning("Entity with ID " + id + " doesn't exist in collection " + collection.getName());
+				return null;
+			}
+			
+			logger.info("Fetched raw document '" + id + ".xml' from collection " + collection.getName() + ".");
+			
+		} catch (XMLDBException e) {
+			e.printStackTrace();
+		}
+		
+		Object content = null;
+		try {
+			content = res.getContent();
+		} catch (XMLDBException e) {
+			e.printStackTrace();
+		}
+		
+		// Ukloni problematicne delove
+		String rawXml = content.toString().replaceAll("xmlns=\"www.model.megatravel.project.com/reservations\" xmlns:ns2=\"www.model.megatravel.project.com/users\" xmlns:ns3=\"www.model.megatravel.project.com/accomodation\"", "");
+		
+		return rawXml;
+	}
+	
+	
 	public static <T> java.util.Collection<T> getAll(String collectionName, String jaxbContext) {
 		
 		java.util.Collection<T> entities = new ArrayList<T>();

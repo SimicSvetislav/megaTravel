@@ -1,20 +1,22 @@
-package com.project.megatravel.users.services;
+package com.project.megatravel.reservations.services;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.core.io.InputStreamResource;
 
 @Component
 public class EmailServiceImpl implements EmailService {
@@ -77,9 +79,9 @@ public class EmailServiceImpl implements EmailService {
 		    helper.setSubject(subject);
 		    helper.setText(text);
 			
-		    helper.addAttachment("reservation.html", new InputStreamResource(inputStream));
+		    helper.addAttachment("reservation.html", new ByteArrayResource(IOUtils.toByteArray(inputStream)));
 		    
-		} catch (MessagingException e) {
+		} catch (MessagingException | IOException e) {
 			logger.info("Error occured while composing message");
 			e.printStackTrace();
 		}

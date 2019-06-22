@@ -1,3 +1,4 @@
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { BookingService } from 'src/app/service/booking.service';
 import { KrajnjiKorisnik } from './../../model/korisnik/korisnik-krajnji.model';
 import { Cenovnik } from './../../model/smestaj/cenovnik.model';
@@ -137,11 +138,14 @@ export class ViewAllBookingsComponent implements OnInit {
   // }
 
 
-  constructor(private bookingService: BookingService) {
+  constructor(private bookingService: BookingService, private toastr: ToastrService) {
 
   }
 
   ngOnInit() {
+
+    this.toastr.success("Test");
+
     this.activeTab = 'upcoming';
 
     let j = new SmestajniObjekat(1, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 5), '', new Cenovnik(), [], [], []);

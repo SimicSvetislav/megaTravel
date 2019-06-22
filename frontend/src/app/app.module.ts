@@ -24,12 +24,14 @@ import { ChatComponent } from './chat/chat.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ReservationReportComponent } from './reservation-report/reservation-report.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'profile/:id', component: ProfileComponent},
+  {path: 'reservation/report/:id', component: ReservationReportComponent},
   {path: 'chat/:id', component: ChatComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
@@ -41,7 +43,8 @@ const appRoutes: Routes = [
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    ChatComponent
+    ChatComponent,
+    ReservationReportComponent
   ],
   imports: [
     ReactiveFormsModule,

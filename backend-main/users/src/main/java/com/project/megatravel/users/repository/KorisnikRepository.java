@@ -26,6 +26,8 @@ public class KorisnikRepository implements ExistRepository {
 		
 		if (kor.getId()==null) {
 			// Dodeli id
+			AgentRepository.setCurrentId(currentId);
+			AdminRepository.setCurrentId(currentId);
 			kor.setId(++currentId);
 		}
 
