@@ -87,6 +87,12 @@ public class AuthRestAPIs {
     			System.out.println("NULL JE ?");
     			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     		}
+    		
+    		//provera da li je blokiran
+    		if(korisnik.getStanje().contains("BLOKIRAN")) {
+    			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    		}
+    		
     		retVal = korisnik;
     	} else if(role.contains("agent")) {
     		System.out.println("Ja sam agent");
