@@ -1,3 +1,4 @@
+import { BookingService } from 'src/app/service/booking.service';
 import { KrajnjiKorisnik } from './../../model/korisnik/korisnik-krajnji.model';
 import { Cenovnik } from './../../model/smestaj/cenovnik.model';
 import { KategorijaSmestaja } from './../../model/smestaj/kategorija-smestaja.model';
@@ -113,7 +114,7 @@ export class ViewAllBookingsComponent implements OnInit {
   activeTab: any;
 
 
-  allBookings: RezervacijaKorisnika[] = [];
+  allBookings: RezervacijaKorisnika[];
   filteredBookings: Observable<RezervacijaKorisnika[]>;
   filter = new FormControl('');
 
@@ -121,22 +122,22 @@ export class ViewAllBookingsComponent implements OnInit {
   selectedReservation: Rezervacija;
 
 
-   search(obj: SmestajniObjekat): RezervacijaKorisnika[] {
-    return this.allBookings.filter(booking => {
-      if (obj) {
-        const term = obj.naziv.toLowerCase();
-        const id = obj.id;
-        return booking.smestaj.sObjekat === id;
-        // return booking.smestaj.sObjekat.naziv.toLowerCase().includes(term);
-      } else {
-        return booking;
-      }
+  //  search(obj: SmestajniObjekat): RezervacijaKorisnika[] {
+  //   return this.allBookings.filter(booking => {
+  //     if (obj) {
+  //       const term = obj.naziv.toLowerCase();
+  //       const id = obj.id;
+  //       return booking.smestaj.sObjekat === id;
+  //       // return booking.smestaj.sObjekat.naziv.toLowerCase().includes(term);
+  //     } else {
+  //       return booking;
+  //     }
 
-    });
-  }
+  //   });
+  // }
 
 
-  constructor() {
+  constructor(private bookingService: BookingService) {
 
   }
 
@@ -148,11 +149,23 @@ export class ViewAllBookingsComponent implements OnInit {
     j = new SmestajniObjekat(1, 'Fortuna', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 5), '', new Cenovnik(), [], [], []);
     this.objects.push(j);
 
-    this.allBookings = this.genData();
+    // this.allBookings = this.genData();
 
-    this.filteredBookings = this.filter.valueChanges.pipe( startWith(undefined),
-      map(text => this.search(text))
-    );
+    this.bookingService.getAllBookings().subscribe(data => {
+      this.allBookings = data;
+      console.log('pre sortiranja');
+      console.log(data);
+      console.log('posle sortiranja');
+      data.sort((book2, book1) => book2.id - book1.id);
+      console.log(data);
+
+      this.filteredBookings = data; // temp
+      // this.filteredBookings = this.filter.valueChanges.pipe( startWith(undefined),
+      //   map(text => this.search(text))
+      // );
+    });
+
+
   }
 
   back() {
@@ -161,6 +174,14 @@ export class ViewAllBookingsComponent implements OnInit {
 
   selectedRowChanged(selectedRow: RezervacijaKorisnika) {
     this.selectedReservation = selectedRow;
+  }
+
+  confirmBook() {
+    this.bookingService.confirmBooking(this.selectedReservation.id.toString()).subscribe(data => {
+
+    }, (error: Response) => {
+
+    });
   }
 
   genData(): RezervacijaKorisnika[] {
@@ -177,8 +198,8 @@ export class ViewAllBookingsComponent implements OnInit {
       }
 
 
-      rez = new RezervacijaKorisnika(i, new Date(), new Date(), smestaj, 0.0, new Date(), 400, 'rezervisano',
-       new KrajnjiKorisnik('Luka', 'Jovanovic', 'lukajvnv@gmail.com', '554'));
+      rez = new RezervacijaKorisnika(i, '2019-05-01', '2019-05-01', 1, 0.0, '2019-05-01', 400, 'rezervisano',
+       1);
       n.push(rez);
     }
 

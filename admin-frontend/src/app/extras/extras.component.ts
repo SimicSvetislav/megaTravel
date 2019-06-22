@@ -1,7 +1,9 @@
+import { TokenStorageService } from './../services/auth/token-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ɵɵcontainerRefreshEnd } from '@angular/core';
 import { ExtrasService } from '../services/extras.service';
 import { Extra } from '../types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-extras',
@@ -10,12 +12,20 @@ import { Extra } from '../types';
 })
 export class ExtrasComponent implements OnInit {
 
-  constructor(private service: ExtrasService, private toastr: ToastrService) { }
+  constructor(private tokenService: TokenStorageService, private router: Router,
+              private service: ExtrasService, private toastr: ToastrService) { }
 
   extras: Extra[] = new Array<Extra>();
   newExtra: Extra = new Extra();
 
   ngOnInit() {
+
+    var user = this.tokenService.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/login']);
+    }
+
     this.service.getAll().subscribe(data => {
       /*data.forEach(element => {
         this.extras.set(element.id, element);

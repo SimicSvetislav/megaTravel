@@ -1,23 +1,58 @@
 package com.project.megatravel.util;
 
+import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.project.megatravel.model.accomodation.Cenovnik;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.model.accomodation.Otkazivanje;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
+import com.project.megatravel.model.chat.Poruka;
+import com.project.megatravel.model.reservations.Komentar;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+
+
 
 public final class Creator {
 	
+	
+
+	
 	private Creator() {
 		
+	}
+	
+	public static RezervacijaKorisnika createRezervacija(long datumRez, long datumPoc, long datumZav, double popust, double cena, long korisnik, String stanje, long soba) {
+		
+		RezervacijaKorisnika rez = new RezervacijaKorisnika();
+		rez.setDatumRezervacije(new Date(datumRez));
+		rez.setDatumPocetka(new Date(datumPoc));
+		rez.setDatumZavrsetka(new Date(datumZav));
+		rez.setPopust(popust);
+		rez.setCenaSmestaja(cena);
+		rez.setKorisnik(korisnik);
+		rez.setStanje(stanje);
+		rez.setSmestajnaJedinica(soba);
+        
+        return rez;
+
 	}
 	
 	public static RezervacijaKorisnika createRezervacija(long id, double cena, String datum, String stanje) {
@@ -234,6 +269,71 @@ public final class Creator {
 		rez.setId(id);
 		rez.setZvezdice(value);
 		return rez;
+	}
+	
+	public static Cenovnik createCenovnik(Long pocetak, Long kraj, Long cena, Long smestaj) {
+		Cenovnik rez = new Cenovnik();
+		rez.setPocetak(new Date(pocetak));   
+		rez.setKraj(new Date(kraj));
+		rez.setCena(cena);
+		rez.setSmestaj(smestaj);
+		
+		return rez;
+	}
+	
+	public static Otkazivanje createOtkazivanje(BigInteger brojDana, boolean dozvoljeno) {
+		Otkazivanje otkazivanje = new Otkazivanje();
+		otkazivanje.setBrojDana(brojDana);
+		otkazivanje.setDozvoljeno(dozvoljeno);
+		
+		return otkazivanje;
+	}
+	
+	public static Poruka createPoruka(long id, long sender, long receiver, String text, XMLGregorianCalendar timestamp) {
+		Poruka poruka = new Poruka();
+		poruka.setId(id);
+		poruka.setSender(sender);
+		poruka.setReceiver(receiver);
+		poruka.setText(text);
+		poruka.setTimestamp(timestamp);
+		
+		return poruka;
+	}
+	
+	public static Komentar createKomentar(boolean odobren, String tekst, Object prilog) {
+		Komentar komentar = new Komentar();
+		
+		komentar.setOdobren(odobren);
+		komentar.setTekst(tekst);
+		komentar.setPrilog(prilog);
+		
+		return komentar;
+	}
+	
+	public static XMLGregorianCalendar createXMLCalender(int dayOfMonth) {
+		GregorianCalendar c = new GregorianCalendar(2019, 06, dayOfMonth, 15, 00);
+		try {
+			return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+		} catch (DatatypeConfigurationException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
+	
+	public static Agent createAgent(String ime, String prezime, String email, String username, String adresa, String telefon, long pib, String pass) {
+		Agent agent = new Agent();
+		
+		agent.setAdresa(adresa);
+		agent.setEmail(email);
+		agent.setIme(ime);
+		agent.setKorisnickoIme(username);
+		agent.setPoslovniMaticniBroj(pib);
+		agent.setPrezime(prezime);
+		agent.setTelefon(telefon);
+				
+		agent.setSifra(pass);
+		
+		return agent;
 	}
 
 	/*public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {

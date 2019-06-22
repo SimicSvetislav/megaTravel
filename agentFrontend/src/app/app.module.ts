@@ -47,6 +47,8 @@ import { RoomBookPipe } from './utils/room.pipe';
 import { UserBookPipe } from './utils/user.pipe';
 import { LogoutComponent } from './user/logout/logout.component';
 import { AppConfigService } from './service/app-config.service';
+import { CommentMessageService } from './service/comment-message.service';
+import { TokenStorageService } from './service/auth/toke-storage.service';
 const routes = [
   {
     path: 'objects', component: ViewAllObjectsComponent,
@@ -143,7 +145,9 @@ const routes = [
   ],
   providers: [BookingService,
               AccomodationService,
+              CommentMessageService,
               UserService,
+              TokenStorageService,
               { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfigService], multi: true }
             ],
   bootstrap: [AppComponent]

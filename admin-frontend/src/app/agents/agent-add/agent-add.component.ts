@@ -1,9 +1,11 @@
+import { Route } from '@angular/compiler/src/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Agent } from './../../types';
 import { AgentsService } from 'src/app/services/agents.service';
 import { Component, OnInit } from '@angular/core';
+import { TokenStorageService } from 'src/app/services/auth/token-storage.service';
 
 @Component({
   selector: 'app-agent-add',
@@ -14,10 +16,17 @@ export class AgentAddComponent implements OnInit {
 
   agent: Agent = new Agent();
 
-  constructor(private service: AgentsService, private toastr: ToastrService, private router: Router, ) {
+  constructor(private tokenService: TokenStorageService, private router: Router,
+              private service: AgentsService, private toastr: ToastrService) {
   }
 
   ngOnInit() {
+
+    var user = this.tokenService.getUser();
+
+    if (user==null) {
+      this.router.navigate(['/login']);
+    }
 
   }
 

@@ -1,3 +1,4 @@
+<div>
 <table class="table table-bordered">
     <thead>
       <tr>
@@ -11,20 +12,21 @@
     <tbody>
       <tr *ngFor="let poruka of poruke; index as i" (click)="select(poruka, i)" [ngClass]="{ 'selectedRow': selectedRows[i]}">
         <td>
-          Sprat...
+          NASLOV PORUKE
         </td>
         <td>
-          {{poruka.posiljalac.email}}
+          {{poruka.sender}}
         </td>
         <td>
-          {{poruka.primalac?.email}}
+          {{poruka.receiver}}
         </td>
         <td>
-          {{poruka.timestamp}}
+          {{poruka.timestamp | dateFilter}}
         </td>
         <td>
-          {{poruka.sadrzaj ? 'Ima' : 'Nema'}}
+          {{poruka.payload ? 'Ima' : 'Nema'}}
         </td>
       </tr>
     </tbody>
   </table>
+</div>

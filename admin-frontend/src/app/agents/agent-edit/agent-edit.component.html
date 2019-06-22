@@ -41,11 +41,11 @@
                     </div>
                     <div class="form-group">
                         <label for="address">PMB*</label>
-                        <input type="text" class="form-control" name="pmb" [(ngModel)]="agent.poslovniMaticniBroj" #pmb="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pmb.invalid }" required minlength="10" maxlength="10" pattern="[0-9]*" />
+                        <input type="text" class="form-control" name="pmb" [(ngModel)]="agent.poslovniMaticniBroj" #pmb="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pmb.invalid }" required minlength="9" maxlength="9" pattern="[0-9]*" />
                         <div *ngIf="f.submitted && pmb.invalid" class="invalid-feedback">
                             <div *ngIf="pmb.errors.required">PMB is required</div>
                             <div *ngIf="pmb.errors.pattern">Only digits are allowed</div>
-                            <div *ngIf="pmb.errors.minlength || pmb.errors.maxlength">PMB must be 10 digits long</div>
+                            <div *ngIf="pmb.errors.minlength || pmb.errors.maxlength">PMB must be 9 digits long</div>
                         </div>
                     </div>
                     <div class="form-group">

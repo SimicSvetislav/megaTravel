@@ -5,12 +5,12 @@ import { Korisnik } from '../korisnik/korisnik-abstract.model';
 import { SmestajnaJedinica } from '../smestaj/smestajna-jedinica.model';
 
 export class RezervacijaKorisnika extends Rezervacija {
-    datumRezervacije: Date;
+    datumRezervacije: string;
 
     cenaSmestaja: number;
     stanje: string;
-    korisnik: KrajnjiKorisnik; // trebace da bude number id...
-
+    // korisnik: KrajnjiKorisnik; // trebace da bude number id...
+    korisnik: number;
 
     // ??????????????????
     ocena: number;
@@ -18,8 +18,8 @@ export class RezervacijaKorisnika extends Rezervacija {
     obradjeno: boolean;
     procenatOtkazivanje: number;
 
-    constructor(id: number, pocetak: Date, kraj: Date, smestaj: SmestajnaJedinica, popust: number, datumRezervacija: Date,
-        cena: number, stanje: string, k: KrajnjiKorisnik) {
+    constructor(id: number, pocetak: string, kraj: string, smestaj: number, popust: number, datumRezervacija: string,
+        cena: number, stanje: string, k: number) {
         super(id, pocetak, kraj, smestaj, popust);
         this.datumRezervacije = datumRezervacija;
         this.cenaSmestaja = cena;

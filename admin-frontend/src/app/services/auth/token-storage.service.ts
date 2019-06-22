@@ -6,6 +6,8 @@ const AUTHORITIES_KEY = 'AuthAuthorities';
 const USER_KEY = 'AuthUser;';
 const RESERVED = 'Reserved;';
 
+const REFRESH = "Refresh";
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,6 +70,15 @@ export class TokenStorageService {
 
   public getReserved() : string {
     return sessionStorage.getItem(RESERVED);
+  }
+
+  public saveRefresh(refresh: boolean) {
+    window.sessionStorage.removeItem(REFRESH);
+    window.sessionStorage.setItem(REFRESH, JSON.stringify(refresh));
+  }
+
+  public getRefresh() : string {
+    return sessionStorage.getItem(REFRESH);
   }
 
 }

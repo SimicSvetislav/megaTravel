@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
 
 
   user: User = new User();
-  constructor(private router: Router,private authService: AuthService,private tokenStorage: TokenStorageService) { }
+  constructor(private router: Router,private authService: AuthService,
+              private tokenStorage: TokenStorageService) { }
   str: String="";
 
   private loginInfo : AuthLoginInfo;
@@ -35,8 +36,13 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    alert("Usao!")
+    //alert("Usao!")
 
+    var user = this.tokenStorage.getUser();
+
+    if (user!=null) {
+      this.router.navigate(['/profile']);
+    }
     this.loginInfo = new AuthLoginInfo(this.user.email,this.user.sifra);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
@@ -50,6 +56,8 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveAuthorities(data.authorities);
         this.tokenStorage.saveUser(data.user_id);
         this.tokenStorage.saveReserved(0);
+
+        this.tokenStorage.saveRefresh(true);
 
         this.isLoginFailed = false;
         this.isLoggedIn = true;

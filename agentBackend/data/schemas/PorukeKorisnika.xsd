@@ -16,8 +16,8 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="posiljalac" type="xs:long"/>
-            <xs:element name="primalac">
+            <xs:element name="sender" type="xs:long"/>
+            <xs:element name="receiver">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:appinfo>
@@ -29,15 +29,15 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tekst">
+            <xs:element name="text">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="1024"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="sadrzaj" type="xs:anyType"/>
-            <xs:element name="RezervacijaKorisnika">
+            <xs:element name="payload" type="xs:anyType"/>
+            <xs:element name="reservation">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:appinfo>

@@ -1,3 +1,4 @@
+import { CommentMessageService } from './../../service/comment-message.service';
 import { Komentar } from './../../model/rezervacija/komentar.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
@@ -15,20 +16,24 @@ export class ViewUnitCommentsComponent implements OnInit {
 
   comments: Komentar[];
 
-  constructor() { }
+  constructor(private commentMessageService: CommentMessageService) { }
 
   ngOnInit() {
-    this.comments = [{odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
-    'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
-    {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
-    'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
-    {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
-    'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
-    {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
-    'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
-    {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
-    'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
-  ];
+  //   this.comments = [{odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
+  //   'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
+  //   {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
+  //   'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
+  //   {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
+  //   'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
+  //   {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
+  //   'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
+  //   {odobren: true, prilog: '', tekst: 'Jako uredna soba, na prelepoj lokaciji, ljubazni domacini.' +
+  //   'Jedina zamerka je sto se posteljina nije presvlacila kako je bilo ugovoreno'},
+  // ];
+
+    this.commentMessageService.getCommentsByUnit(this.unit.id.toString()).subscribe(data => {
+      this.comments = data;
+    });
   }
 
 }

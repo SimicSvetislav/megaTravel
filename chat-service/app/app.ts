@@ -4,7 +4,26 @@ var bodyParser = require('body-parser')
 
 const app: express.Application = express();
 // Request parser
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+app.use(function (req, res, next) {
+
+  // Website you wish to allow to connect
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4300');
+
+  // Request methods you wish to allow
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+  // Request headers you wish to allow
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  //res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+  // Pass to next layer of middleware
+  next();
+});
 
 const wss = new WebSocket.Server({ port: 7878 });
 
@@ -30,6 +49,8 @@ wss.on('connection', (ws: WebSocket) => {
 
     let msg = JSON.parse(message);
 
+    saveMessage(msg);
+
     wss.clients.forEach(client => {
       if (client != ws) {
         client.send(JSON.stringify(msg));
@@ -43,7 +64,7 @@ wss.on('connection', (ws: WebSocket) => {
   ws.send(JSON.stringify(greeting));
 });
 
-app.get('/messages/:res', function(req, res) {
+app.get('/messages/res/:res', function(req, res) {
   // Plus convert string to number
   let reservation = +req.params.res;
 
@@ -65,9 +86,9 @@ app.get('/messages/:res', function(req, res) {
         throw err;
       }
 
-      // Sort messages by timestamp
+      // Sort messages by timestamp, from oldest
       result.sort(function(a: { timestamp: string | number | Date; },b: { timestamp: string | number | Date; }){
-        return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
+        return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
       });
 
 			res.status(200).send(JSON.stringify(result))
@@ -116,7 +137,11 @@ app.post('/messages', function (req, res) {
 
     const collection = client.db(dbName).collection(colName)
 
-    console.log(req.body);
+    console.log("Got message: %s", req.body);
+
+    if (!req.body.timestamp) {
+      req.body.timestamp = new Date();
+    }
 
     collection.insertOne({ sender: req.body.sender, receiver: req.body.receiver, timestamp: req.body.timestamp, reservation: req.body.reservation, text: req.body.text }, (err: any, result: { ops: { _id: string; }[]; }) => {
 
@@ -141,3 +166,33 @@ app.get('/', function (req, res) {
 app.listen(7070, function () {
   console.log('Chat app listening on port 7070!');
 });
+
+function saveMessage(message: Message) {
+  const client = new MongoClient(uri, { useNewUrlParser: true })
+  client.connect((err: any) => {
+
+    if (err) {
+      client.close()
+      throw err;
+    }
+
+    const collection = client.db(dbName).collection(colName)
+
+    if (!message.timestamp) {
+      message.timestamp = new Date();
+    }
+
+    collection.insertOne({ sender: message.sender, receiver: message.receiver, timestamp: message.timestamp, reservation: message.reservation, text: message.text }, (err: any, result: { ops: { _id: string; }[]; }) => {
+
+      client.close()
+
+      if (err) {
+        throw err;
+      }
+
+      console.log('Message saved as ' + result.ops[0]._id);  
+
+    })
+
+  })
+}

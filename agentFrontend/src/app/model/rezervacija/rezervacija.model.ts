@@ -1,17 +1,18 @@
 import { SmestajnaJedinica } from '../smestaj/smestajna-jedinica.model';
 export abstract class Rezervacija {
     id: number;
-    datumPocetka: Date;
-    datumZavrsetka: Date;
+    datumPocetka: string;
+    datumZavrsetka: string;
 
-    smestaj: SmestajnaJedinica;
+    // smestaj: SmestajnaJedinica;
+    smestajnaJedinica: number;
     popust: number;
 
-    constructor(id: number, pocetak: Date, kraj: Date, smestaj: SmestajnaJedinica, popust: number) {
+    constructor(id: number, pocetak: string, kraj: string, smestaj: number, popust: number) {
         this.id = id;
         this.datumPocetka = pocetak;
         this.datumZavrsetka = kraj;
-        this.smestaj = smestaj;
+        this.smestajnaJedinica = smestaj;
         this.popust = popust;
     }
 }

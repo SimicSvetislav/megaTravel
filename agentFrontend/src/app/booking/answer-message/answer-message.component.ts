@@ -20,6 +20,10 @@ export class AnswerMessageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    const sender = this.message.receiver;
+    const receiver = this.message.sender;
+    this.message.sender = sender;
+    this.message.receiver = receiver;
   }
 
   backTo() {
@@ -27,7 +31,11 @@ export class AnswerMessageComponent implements OnInit {
   }
 
   replyTo() {
-    this.message = undefined;
+    // this.message = undefined;
+
+    this.message.id = null;
+    this.message.text = 'fjaldjfkalfjka';
+
     this.reply.emit();
   }
 
