@@ -124,7 +124,17 @@
   			</exclusions>
 		</dependency>
 		
+		<!-- Omogucava citanje fajlova iz resources foldera izmedju ostalog -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		</dependency>
 		
+		<!-- Mail sending -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		
 	</dependencies>
 	

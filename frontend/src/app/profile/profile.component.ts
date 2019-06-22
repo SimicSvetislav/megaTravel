@@ -120,4 +120,8 @@ export class ProfileComponent implements OnInit {
     this.userService.setRate(idSobe,ocena,userId);
   }
 
+  html(id: number) {
+    this.router.navigate(['/reservation/report/' + id]);
+  }
+
 }

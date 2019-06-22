@@ -127,7 +127,7 @@ public class UsersController {
 		kk = service.save(kk);
 		
 		emailService.sendSimpleMessage(kk.getEmail(), "Activated", "Dear user,\n\n"
-				+ "Your account is again active.\n"
+				+ "Your account is active.\n"
 				+ "Have fun using our app.\n\n"
 				+ "Sincerely,\n"
 				+ "Megatravel team");
