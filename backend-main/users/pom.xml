@@ -103,7 +103,12 @@
 		    <groupId>org.springframework.security</groupId>
 		    <artifactId>spring-security-config</artifactId>
 		    </dependency>
-		
+		<!-- Za generisanje sifre -->
+		<dependency>
+		    <groupId>org.passay</groupId>
+		    <artifactId>passay</artifactId>
+		    <version>1.5.0</version>
+		</dependency>
 
 		
 	</dependencies>

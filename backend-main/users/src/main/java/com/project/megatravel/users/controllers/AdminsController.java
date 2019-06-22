@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.repository.AdminRepository;
 import com.project.megatravel.users.services.AdminService;
 import com.project.megatravel.users.services.AgentsService;
+import com.project.megatravel.users.services.EmailService;
 
 @RestController
 @CrossOrigin
@@ -26,9 +28,28 @@ public class AdminsController {
 	@Autowired
 	private AdminService service;
 	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+    private PasswordEncoder encoder;
+	
 	@RequestMapping(method = RequestMethod.POST, path="/admin", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Administrator> add(@RequestBody Administrator korisnik) {
+		
+		String generatedPassword = service.generatePassword();
+		System.out.println("Password for admin: " + korisnik.getKorisnickoIme() + " is " + generatedPassword);
+		korisnik.setSifra(encoder.encode(generatedPassword));
+		
+		emailService.sendSimpleMessage(korisnik.getEmail(), "Admin registration", 
+				"Greetings,\n\n"
+				+ "This email address is linked to one of registered admins.\n"
+				+ "Your credentials are the following.\n\n"
+				+ "\tusername: " + korisnik.getKorisnickoIme() + "\n"
+				+ "\tpassword: " + generatedPassword + "\n\n"
+				+ "Sincerely,\n"
+				+ "Megatravel team");
 		
 		Administrator admin = service.save(korisnik);
 		

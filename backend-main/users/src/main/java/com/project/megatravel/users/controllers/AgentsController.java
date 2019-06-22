@@ -1,10 +1,12 @@
 package com.project.megatravel.users.controllers;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,17 +16,40 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.users.UsersApplication;
 import com.project.megatravel.users.services.AgentsService;
+import com.project.megatravel.users.services.EmailService;
 
 @RestController
 @CrossOrigin
 public class AgentsController {
 	
+	private final static Logger logger = Logger.getLogger(AgentsController.class.getName());
+	
 	@Autowired
 	private AgentsService service;
 	
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+    private PasswordEncoder encoder;
+	
 	@RequestMapping(method = RequestMethod.POST, path="/agent", produces="application/json")
 	public ResponseEntity<Agent> registration(@RequestBody Agent korisnik) {
+		
+		String generatedPassword = service.generatePassword();
+		logger.info("Password for agent: " + korisnik.getKorisnickoIme() + " is " + generatedPassword);
+		korisnik.setSifra(encoder.encode(generatedPassword));
+		
+		emailService.sendSimpleMessage(korisnik.getEmail(), "Agent registration", 
+				"Greetings,\n\n"
+				+ "This email address is linked to one of registered agents.\n"
+				+ "Your credentials are the following.\n\n"
+				+ "\tusername: " + korisnik.getKorisnickoIme() + "\n"
+				+ "\tpassword: " + generatedPassword + "\n\n"
+				+ "Sincerely,\n"
+				+ "Megatravel team");
 		
 		Agent agent = service.save(korisnik);
 		
