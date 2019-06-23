@@ -127,6 +127,20 @@ public class AuthRestAPIs {
     public ResponseEntity<TKorisnik> registerUser(@Valid @RequestBody SignUpForm signUpRequest,@PathVariable String role) {
         	
     	
+    //	KrajnjiKorisnik exist = userRepository.getByEmail(signUpRequest.getEmail());
+    	
+    	if(role.contains("user") && userRepository.getByEmail(signUpRequest.getEmail()) == null) {
+    		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
+    	} 
+    	
+    	if(role.contains("agent") && agentRepo.getByEmail(signUpRequest.getEmail()) == null) {
+    		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
+    	} 
+    	
+    	if(role.contains("admin") && adminRepo.getByEmail(signUpRequest.getEmail()) == null) {
+    		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
+    	} 
+    	
     	if(role.contains("admin")) {
     		Administrator kk = Creator.createAdmin(encoder.encode(signUpRequest.getPassword()),
         			signUpRequest.getEmail(),signUpRequest.getAddress(),signUpRequest.getPhoneNumber(),

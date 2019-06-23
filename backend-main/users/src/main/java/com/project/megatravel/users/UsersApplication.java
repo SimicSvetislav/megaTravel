@@ -49,7 +49,7 @@ public class UsersApplication {
 	//	JAXBContext context = JAXBContext.newInstance(jaxbContext);
 	///	Marshaller marshaller = context.createMarshaller();
 
-		KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","pera@gmail.com","pera","pera","Pera","Peric","AKTIVAN");
+	/*	KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","pera@gmail.com","pera","pera","Pera","Peric","AKTIVAN");
 		r.save(kk);
 	//	r.sa
 		
@@ -57,7 +57,7 @@ public class UsersApplication {
 		r.save(kk3);
 		
 		KrajnjiKorisnik kk2 = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","block@gmail.com","pera","pera","Pera","Peric","BLOKIRAN");
-		r.save(kk2);
+		r.save(kk2);*/
 		
 	/*	Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
 

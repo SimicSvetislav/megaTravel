@@ -5,7 +5,7 @@ import { User } from './../user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { ToastrService } from 'ngx-toastr';
 
 
 export class RegistrationValidator {
@@ -45,7 +45,8 @@ export class RegisterComponent implements OnInit {
   errorMessage = '';
 
   constructor(private formBuilder: FormBuilder,private router : Router,
-              private authService: AuthService, private tokenService: TokenStorageService) { 
+              private authService: AuthService, private tokenService: TokenStorageService,
+              private toastrService: ToastrService) { 
             this.passwordFormGroup = this.formBuilder.group({
             password: ['', Validators.required],
             confirmPassword: ['',Validators.required]
@@ -84,11 +85,21 @@ export class RegisterComponent implements OnInit {
 
 
   this.authService.signUp(this.signupInfo).subscribe(data => {
+
+
+
+
     this.temp = data;
     this.isSignedUp = true;
     this.isSignUpFailed = false;
 
     this.router.navigate(['/login'])
+  }, error => {
+    if(error.status == 405) {
+      this.toastrService.error("Korisnik sa ovim e-mailom vec postoji");
+      
+    }
+    console.log(error);
   })
   }
 
