@@ -71,6 +71,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/**").permitAll()
+                .antMatchers("/confirm/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()

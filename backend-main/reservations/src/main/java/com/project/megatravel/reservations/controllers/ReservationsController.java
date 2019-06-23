@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.google.common.net.MediaType;
 import com.netflix.discovery.converters.Auto;
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
@@ -155,5 +156,23 @@ public class ReservationsController {
 		}*/
 		
 		return new ResponseEntity<String>(rawHtml, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/confirm/{bookingId}", produces="application/json")
+	public ResponseEntity<RezervacijaKorisnika> confirmBooking(@PathVariable("Id") Long id) {
+		RezervacijaKorisnika rezervacija = service.getById(id);
+		rezervacija.setStanje("Potvrdjeno"); // potvrdjeno
+		
+		RezervacijaKorisnika azuriranaRezervacija = service.updateReservation(rezervacija);
+		
+		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/agent/makeBooking", produces="application/json", consumes = "application/json")
+	public ResponseEntity<RezervacijaKorisnika> bookingFromAgent(@RequestBody RezervacijaKorisnika rezervacija) {
+		
+		RezervacijaKorisnika azuriranaRezervacija = service.makeReservation(rezervacija);
+		
+		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
 	}
 }

@@ -68,15 +68,18 @@ public class AgentService {
 	}
 	
 	public void syncData() throws AuthentificationException, Exception {
-		String username = properties.getProperty("username", "");
-		String pass = properties.getProperty("password", "");
+//		String username = properties.getProperty("username", "");
+//		String pass = properties.getProperty("password", "");
+//		
+//		// autentifikacija
+//		Agent a = agentWsClient.agentAuthentification(Creator.createKredencijali(username, pass)).getAgent();
+//		if(a == null) {
+//			System.out.println("user service Error");
+//			throw new AuthentificationException();
+//		}
 		
 		// autentifikacija
-		Agent a = agentWsClient.agentAuthentification(Creator.createKredencijali(username, pass)).getAgent();
-		if(a == null) {
-			System.out.println("user service Error");
-			throw new AuthentificationException();
-		}
+		Agent a = agentAuthentification();
 		
 		try {
 			//prikupljanje resursa putem ws
@@ -108,6 +111,17 @@ public class AgentService {
 		
 	}
 	
+	public Agent agentAuthentification() throws AuthentificationException {
+		String username = properties.getProperty("username", "");
+		String pass = properties.getProperty("password", "");
+		
+		Agent a = agentWsClient.agentAuthentification(Creator.createKredencijali(username, pass)).getAgent();
+		if(a == null) {
+			System.out.println("user service Error");
+			throw new AuthentificationException();
+		}
+		return a;
+	}
 	
 	
 	

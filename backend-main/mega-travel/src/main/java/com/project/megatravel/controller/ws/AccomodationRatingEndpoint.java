@@ -3,6 +3,8 @@ package com.project.megatravel.controller.ws;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -33,6 +35,8 @@ public class AccomodationRatingEndpoint {
 
 	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/messages/rating/managment";
 	
+	private static final String RATING_URL = "http://localhost:8010/rating-module/us-central1/"; 
+	
 	@Autowired
 	private RestTemplate restClient;
 	
@@ -41,6 +45,7 @@ public class AccomodationRatingEndpoint {
 	public GetRatingByObjectResponse getRatingByObject(@RequestPayload GetRatingByObjectRequest rating) {
 		
 		log.info("getRatingByObject webservice method invoked");
+		ResponseEntity<String> average = restClient.getForEntity(RATING_URL + "/hello", String.class);
 
 		return new GetRatingByObjectResponse();
 	}
@@ -50,6 +55,16 @@ public class AccomodationRatingEndpoint {
 	public GetRatingByUnitResponse getRatingByUnit(@RequestPayload GetRatingByUnitRequest rating) {
 
 		log.info("getRatingByUnit webservice method invoked");
+	
+		long room = rating.getUnitId();
+		
+		try {
+			ResponseEntity<Double> average = restClient.postForEntity(RATING_URL + "averageGrade", room, Double.class);
+			log.info("Rating za sobu broj" + room + " je" + average);
+		} catch (RestClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return new GetRatingByUnitResponse();
 	}
@@ -78,6 +93,8 @@ public class AccomodationRatingEndpoint {
 
 		log.info("getMessages webservice method invoked");
 
+		/// TODO: dobavljanje poruka
+		
 		return new GetMessagesResponse();
 	}
 	
@@ -86,6 +103,8 @@ public class AccomodationRatingEndpoint {
 	public GetMessageResponse getMessage(@RequestPayload GetMessageRequest rating) {
 
 		log.info("getMessage webservice method invoked");
+		
+		/// TODO: dobavljanje poruke
 
 		return new GetMessageResponse();
 	}
@@ -95,6 +114,8 @@ public class AccomodationRatingEndpoint {
 	public AnswerMessageResponse answerMessage(@RequestPayload AnswerMessageRequest rating) {
 
 		log.info("answerMessage webservice method invoked");
+		
+		/// TODO: odgovor na poruku
 
 		return new AnswerMessageResponse();
 	}
