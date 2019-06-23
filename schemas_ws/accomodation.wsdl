@@ -8,7 +8,6 @@
         <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:element ref="acc:SmestajniObjekat" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
-                <xs:element ref="usr:AgentKredencijali" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -22,7 +21,7 @@
     <xs:element name="getObjectsRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
         <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                <xs:element ref="usr:AgentKredencijali" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                <xs:element ref="usr:Agent" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -65,11 +64,7 @@
     <xs:element name="deleteObjectResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
         <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                <xs:element name="unitId" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                    <xs:simpleType xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                        <xs:restriction base="xs:long" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element ref="acc:SmestajniObjekat" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -137,11 +132,7 @@
     <xs:element name="deleteUnitResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
         <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
             <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                <xs:element name="unitId" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                    <xs:simpleType xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                        <xs:restriction base="xs:long" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element ref="acc:SmestajnaJedinica" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

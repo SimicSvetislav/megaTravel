@@ -7,7 +7,7 @@
             <xs:element name="getBookingsRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
                 <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
                     <xs:sequence maxOccurs="1" minOccurs="1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-                        <xs:element ref="usr:AgentKredencijali" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                        <xs:element ref="usr:Agent" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>

@@ -99,5 +99,12 @@ public class AgentsController {
     		
         return ResponseEntity.ok(agent);
     }
+	
+	@RequestMapping(method = RequestMethod.GET, path="/agent/mail/{mail}", produces="application/json")
+    public ResponseEntity<Agent> agentByEmail(@PathVariable("mail") String mail) {
+    	Agent agent = service.agentByEmail(mail);
+    		
+        return ResponseEntity.ok(agent);
+    }
 
 }

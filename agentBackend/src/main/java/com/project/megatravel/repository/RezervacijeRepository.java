@@ -3,8 +3,10 @@ package com.project.megatravel.repository;
 import java.util.Collection;
 
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.XMLDBException;
 
 import com.project.megatravel.ExistDB;
+import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.messages.agent.Rezervacija;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 
@@ -53,6 +55,18 @@ public class RezervacijeRepository implements ExistRepository {
 		
 		return rez;
 		
+	}
+	
+	public void overrideData(Collection<RezervacijaKorisnika> updatingData) {
+		try {
+			ExistDB.emptyCollection(collectionName);
+			for(RezervacijaKorisnika rezervacija: updatingData) {
+				ExistDB.save(rezervacija, rezervacija.getId(), collectionName, schemaLocation, jaxbContext);
+			}
+		} catch (XMLDBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static Long getCurrentId() {

@@ -58,16 +58,24 @@ public class AccomodationService {
 	
 	public SmestajnaJedinica addNewObjectUnit(SmestajnaJedinica jedinica) {
 		jedinica = sjRepository.save(jedinica); 
-		updateSmestajniObjekat(jedinica);
 		
 		return jedinica;
 	}
 	
-	private void updateSmestajniObjekat(SmestajnaJedinica jedinica) {
-		SmestajniObjekat objekat = soRepository.getOneById(jedinica.getSObjekat());
-		objekat.getSmestajnaJedinica().add(jedinica);
-		soRepository.save(objekat);
+	public void overrideData(Collection<TipSmestaja> tipovi, Collection<KategorijaSm> kategorije, Collection<DodatnaUsluga> usluge,
+			Collection<SmestajniObjekat> objekti, Collection<SmestajnaJedinica> jedinice) {
+		typeRepository.overrideData(tipovi);
+		categoryRepository.overrideData(kategorije);
+		extrasRepository.overrideData(usluge);
+		soRepository.overrideData(objekti);
+		sjRepository.overrideData(jedinice);
 	}
+	
+//	private void updateSmestajniObjekat(SmestajnaJedinica jedinica) {
+//		SmestajniObjekat objekat = soRepository.getOneById(jedinica.getSObjekat());
+//		objekat.getSmestajnaJedinica().add(jedinica);
+//		soRepository.save(objekat);
+//	}
 	
 	public Collection<DodatnaUsluga> getAllAccomodationExtras() {
 		return extrasRepository.getAll(); 

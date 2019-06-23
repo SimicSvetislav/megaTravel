@@ -1,12 +1,18 @@
 package com.project.megatravel.controller.ws;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.managment.DeleteObjectRequest;
 import com.project.megatravel.model.accomodation.managment.DeleteObjectResponse;
 import com.project.megatravel.model.accomodation.managment.DeleteUnitRequest;
@@ -29,6 +35,12 @@ import com.project.megatravel.model.accomodation.managment.SendObjectRequest;
 import com.project.megatravel.model.accomodation.managment.SendObjectResponse;
 import com.project.megatravel.model.accomodation.managment.SendUnitRequest;
 import com.project.megatravel.model.accomodation.managment.SendUnitResponse;
+import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.services.CategoriesService;
+import com.project.megatravel.services.ExtrasService;
+import com.project.megatravel.services.SjService;
+import com.project.megatravel.services.SoService;
+import com.project.megatravel.services.TypesService;
 
 @Endpoint
 public class AccomodationEndpoint {
@@ -36,6 +48,21 @@ public class AccomodationEndpoint {
 	private static final Logger log = LoggerFactory.getLogger(AccomodationEndpoint.class);
 
 	private static final String NAMESPACE_URI = "www.model.megatravel.project.com/accomodation/managment";
+	
+	@Autowired
+	private ExtrasService extrasService;
+	
+	@Autowired
+	private TypesService typesService;
+	
+	@Autowired
+	private CategoriesService categoriesService;
+	
+	@Autowired
+	private SoService sOService;
+	
+	@Autowired
+	private SjService sjService;
 
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "sendObjectRequest")
 	@ResponsePayload
@@ -43,15 +70,24 @@ public class AccomodationEndpoint {
 		
 		log.info("sendObject webservice method invoked");
 		
-		return new  SendObjectResponse();
+		SendObjectResponse response = new SendObjectResponse();
+		SmestajniObjekat objekat = sOService.save(request.getSmestajniObjekat());
+		response.setSmestajniObjekat(objekat);
+		
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getObjectsRequest")
 	@ResponsePayload
 	public GetObjectsResponse getObjects(@RequestPayload GetObjectsRequest request) {
+		Agent a = new Agent();
 		
 		log.info("getObjects webservice method invoked");
-
+		
+		GetObjectsResponse response = new GetObjectsResponse();
+		List<SmestajniObjekat> objects = sOService.getAllAgentObject(request.getAgent().getId());
+		response.getSmestajniObjekat().addAll(objects);
+		
 		return new GetObjectsResponse();
 	}
 	
@@ -60,8 +96,12 @@ public class AccomodationEndpoint {
 	public GetObjectResponse getObject(@RequestPayload GetObjectRequest request) {
 		
 		log.info("getObject webservice method invoked");
+		
+		GetObjectResponse response = new GetObjectResponse();
+		SmestajniObjekat objekat = sOService.getOneById(request.getObjectId());
+		response.setSmestajniObjekat(objekat);
 
-		return new GetObjectResponse();
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteObjectRequest")
@@ -69,8 +109,12 @@ public class AccomodationEndpoint {
 	public DeleteObjectResponse deleteObject(@RequestPayload DeleteObjectRequest request) {
 
 		log.info("deleteObject webservice method invoked");
+		
+		DeleteObjectResponse response = new DeleteObjectResponse();
+		SmestajniObjekat objekat = sOService.deleteById(request.getObjectId());
+		response.setSmestajniObjekat(objekat);
 
-		return new  DeleteObjectResponse();
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "sendUnitRequest")
@@ -78,8 +122,12 @@ public class AccomodationEndpoint {
 	public  SendUnitResponse sendUnit(@RequestPayload  SendUnitRequest request) {
 
 		log.info("sendUnit webservice method invoked");
-
-		return new  SendUnitResponse();
+		
+		SendUnitResponse response = new SendUnitResponse();
+		SmestajnaJedinica jedinica = sjService.save(request.getSmestajnaJedinica());
+		response.setSmestajnaJedinica(jedinica);
+				
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUnitsRequest")
@@ -87,8 +135,12 @@ public class AccomodationEndpoint {
 	public GetUnitsResponse getUnits(@RequestPayload GetUnitsRequest request) {
 
 		log.info("getUnits webservice method invoked");
+		
+		GetUnitsResponse response = new GetUnitsResponse();
+		Collection<SmestajnaJedinica> jedinice = sjService.getObjectUnits(request.getObjectId());
+		response.getSmestajnaJedinica().addAll(jedinice);
 
-		return new GetUnitsResponse();
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUnitRequest")
@@ -97,7 +149,11 @@ public class AccomodationEndpoint {
 
 		log.info("getUnit webservice method invoked");
 		
-		return new GetUnitResponse();
+		GetUnitResponse response = new GetUnitResponse();
+		SmestajnaJedinica jedinica = sjService.getOneById(request.getUnitId());
+		response.setSmestajnaJedinica(jedinica);
+		
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "deleteUnitRequest")
@@ -105,9 +161,12 @@ public class AccomodationEndpoint {
 	public DeleteUnitResponse deletetUnit(@RequestPayload DeleteUnitRequest request) {
 		
 		log.info("deletetUnit webservice method invoked");
-
 		
-		return new DeleteUnitResponse();
+		DeleteUnitResponse response = new DeleteUnitResponse();
+		SmestajnaJedinica jedinica = sjService.deleteById(request.getUnitId());
+		response.setSmestajnaJedinica(jedinica);
+		
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllExtrasRequest")
@@ -115,8 +174,11 @@ public class AccomodationEndpoint {
 	public GetAllExtrasResponse getExtras(@RequestPayload GetAllExtrasRequest request) {
 
 		log.info("getExtras webservice method invoked");
+		
+		GetAllExtrasResponse response = new GetAllExtrasResponse();
+		response.getDodatnaUsluga().addAll(extrasService.getAll());
 
-		return new GetAllExtrasResponse();
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllTypesRequest")
@@ -125,7 +187,10 @@ public class AccomodationEndpoint {
 
 		log.info("getTypes webservice method invoked");
 		
-		return new GetAllTypesResponse();
+		GetAllTypesResponse response = new GetAllTypesResponse();
+		response.getTipSmestaja().addAll(typesService.getAll());
+		
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getAllCategoriesRequest")
@@ -133,8 +198,11 @@ public class AccomodationEndpoint {
 	public GetAllCategoriesResponse getCategories(@RequestPayload GetAllCategoriesRequest request) {
 	
 		log.info("getCategories webservice method invoked");
+		
+		GetAllCategoriesResponse response = new GetAllCategoriesResponse();
+		response.getKategorijaSm().addAll(categoriesService.getAll());
 
-		return new GetAllCategoriesResponse();
+		return response;
 	}
 	
 	

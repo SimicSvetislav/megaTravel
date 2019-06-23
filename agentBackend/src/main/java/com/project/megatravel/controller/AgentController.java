@@ -2,25 +2,23 @@ package com.project.megatravel.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.service.UserService;
+import com.project.megatravel.service.AgentService;
+import com.project.megatravel.util.errors.AuthentificationException;
 
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
-public class UserController {
+public class AgentController {
 	
 	@Autowired
-	private UserService userService ;
+	private AgentService agentService ;
 
 //	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_XML_VALUE})
 //	public ResponseEntity<String> login(@RequestBody Agent agent) {
@@ -38,10 +36,12 @@ public class UserController {
 	@RequestMapping(value = "/synchronize",  method = RequestMethod.GET)
 	public ResponseEntity<?> syncData(){
 		try {
-			userService.syncData();
+			agentService.syncData();
 			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
+		} catch (AuthentificationException aE) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
@@ -49,6 +49,6 @@ public class UserController {
 	@RequestMapping(value = "/genPass/{pass}",  method = RequestMethod.GET)
 	public ResponseEntity<String> genPass(@PathVariable("pass") String pass){
 		
-		return new ResponseEntity<>(userService.genPassword(pass), HttpStatus.CREATED);
+		return new ResponseEntity<>(agentService.genPassword(pass), HttpStatus.CREATED);
 	}
 }

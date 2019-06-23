@@ -135,8 +135,7 @@ public class ReservationsController {
 		
 		return new ResponseEntity<Agent>(agent, HttpStatus.OK);
 	}
-	
-	
+		
 	@RequestMapping(method = RequestMethod.GET, path="/reservation/report/{id}", produces = "text/html;charset=UTF-8")
 	public ResponseEntity<String> getReservationHtml(@PathVariable("id") Long id) {
 		

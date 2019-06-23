@@ -1,6 +1,8 @@
 package com.project.megatravel.services;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +46,16 @@ public class SoService {
 		
 		return so;
 		
+	}
+	
+	public List<SmestajniObjekat> getAllAgentObject(long agentId){
+		Collection<SmestajniObjekat> collection = getAll();
+		
+		List<SmestajniObjekat> objects =  collection.stream().
+										  filter(object -> object.getAgent() == agentId).
+										  collect(Collectors.toList());
+		
+		return objects;
 	}
 	
 }

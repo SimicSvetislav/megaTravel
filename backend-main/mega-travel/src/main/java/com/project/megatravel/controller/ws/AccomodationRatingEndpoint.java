@@ -2,6 +2,8 @@ package com.project.megatravel.controller.ws;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -30,6 +32,9 @@ public class AccomodationRatingEndpoint {
 	private static final Logger log = LoggerFactory.getLogger(AccomodationRatingEndpoint.class);
 
 	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/messages/rating/managment";
+	
+	@Autowired
+	private RestTemplate restClient;
 	
 	@PayloadRoot(namespace = NAMESPACE_URL, localPart = "getRatingByObjectRequest")
 	@ResponsePayload

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.xmldb.api.base.XMLDBException;
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.service.BookingService;
@@ -129,7 +130,7 @@ public class BookingController {
 	}
 	
 	@RequestMapping(value="/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<RezervacijaKorisnika>> test() {
+	public ResponseEntity<Collection<RezervacijaKorisnika>> test() throws XMLDBException {
 		bookingService.test();
 		return new ResponseEntity<>(new ArrayList<RezervacijaKorisnika>(), HttpStatus.OK);
 	}

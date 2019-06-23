@@ -11,7 +11,6 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="acc:SmestajniObjekat"/>
-                <xs:element ref="usr:AgentKredencijali"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -25,7 +24,7 @@
     <xs:element name="getObjectsRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="usr:AgentKredencijali"/>
+                <xs:element ref="usr:Agent"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -68,11 +67,7 @@
     <xs:element name="deleteObjectResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unitId">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:long"/>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -140,11 +135,7 @@
     <xs:element name="deleteUnitResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unitId">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:long"/>
-                    </xs:simpleType>
-                </xs:element>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

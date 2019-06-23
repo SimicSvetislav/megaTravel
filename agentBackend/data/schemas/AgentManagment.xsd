@@ -18,4 +18,40 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="getAgentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAgentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:Agent"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:KrajnjiKorisnik"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

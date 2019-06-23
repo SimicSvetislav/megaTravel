@@ -21,14 +21,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.model.users.TKorisnik;
 import com.project.megatravel.repository.AgentRepository;
-import com.project.megatravel.repository.KorisnikRepository;
 import com.project.megatravel.security.jwt.JwtProvider;
 import com.project.megatravel.security.request.LoginForm;
 import com.project.megatravel.security.request.SignUpForm;
 import com.project.megatravel.security.response.JwtResponse;
-import com.project.megatravel.service.UserService;
 import com.project.megatravel.util.Creator;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,9 +33,6 @@ import com.project.megatravel.util.Creator;
 @RequestMapping("/api/auth")
 public class AuthRestAPIs {
 
-	@Autowired
-	UserService usersService;
-	
     @Autowired
     AuthenticationManager authenticationManager;
 

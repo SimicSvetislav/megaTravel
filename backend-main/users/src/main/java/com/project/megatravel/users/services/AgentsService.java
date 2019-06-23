@@ -71,6 +71,10 @@ public class AgentsService {
     
 	}
 	
+	public Agent agentByEmail(String mail) {
+		return repo.getByEmail(mail);
+	}
+	
 	public String generatePassword() {
 	    PasswordGenerator gen = new PasswordGenerator();
 	    CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;

@@ -11,7 +11,7 @@
     <xs:element name="getBookingsRequest">
         <xs:complexType>
             <xs:sequence maxOccurs="1" minOccurs="1">
-                <xs:element ref="usr:AgentKredencijali"/>
+                <xs:element ref="usr:Agent"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
