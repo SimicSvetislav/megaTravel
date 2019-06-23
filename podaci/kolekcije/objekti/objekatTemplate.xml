@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<acc:SmestajniObjekat xmlns:acc="www.model.megatravel.project.com/accomodation"
+ xmlns:usr="www.model.megatravel.project.com/users"
+ xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:res="www.model.megatravel.project.com/reservations"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/accomodation file:/C:/Users/lukaj/git/megaTravel/schemas_ws/SmestajSema.xsd" id="50" zvezdice="50">
+    <acc:lokacija>
+        <acc:naziv>naziv0</acc:naziv>
+        <acc:geoSirina>
+            <acc:stepeni>90</acc:stepeni>
+            <acc:strana>N</acc:strana>
+        </acc:geoSirina>
+        <acc:geoDuzina>
+            <acc:stepeni>90</acc:stepeni>
+            <acc:strana>N</acc:strana>
+        </acc:geoDuzina>
+    </acc:lokacija>
+    <acc:kategorija>NA</acc:kategorija>
+    <acc:agent>50</acc:agent>
+    <acc:SmestajnaJedinica id="50">
+        <acc:brojKreveta>50</acc:brojKreveta>
+        <acc:balkon>false</acc:balkon>
+        <acc:sObjekat>-1073741773</acc:sObjekat>
+        <acc:opis>opis0</acc:opis>
+        <acc:otkazivanje>
+            <acc:dozvoljeno>false</acc:dozvoljeno>
+            <acc:brojDana>50</acc:brojDana>
+            <acc:faktorOtkazivanja>0.5</acc:faktorOtkazivanja>
+        </acc:otkazivanje>
+        <acc:oznaka>oznaka0</acc:oznaka>
+    </acc:SmestajnaJedinica>
+    <acc:SmestajnaJedinica id="50">
+        <acc:brojKreveta>50</acc:brojKreveta>
+        <acc:balkon>false</acc:balkon>
+        <acc:sObjekat>-1073741773</acc:sObjekat>
+        <acc:opis>opis1</acc:opis>
+        <acc:otkazivanje>
+            <acc:dozvoljeno>false</acc:dozvoljeno>
+            <acc:brojDana>50</acc:brojDana>
+            <acc:faktorOtkazivanja>0.5</acc:faktorOtkazivanja>
+        </acc:otkazivanje>
+        <acc:oznaka>oznaka1</acc:oznaka>
+    </acc:SmestajnaJedinica>
+    <acc:DodatnaUsluga id="50">
+        <acc:cena>50</acc:cena>
+        <acc:ime>ime0</acc:ime>
+        <acc:jedinicaPlacanja>PO_DANU</acc:jedinicaPlacanja>
+    </acc:DodatnaUsluga>
+    <acc:DodatnaUsluga id="50">
+        <acc:cena>50</acc:cena>
+        <acc:ime>ime1</acc:ime>
+        <acc:jedinicaPlacanja>PO_DANU</acc:jedinicaPlacanja>
+    </acc:DodatnaUsluga>
+    <acc:slike>
+        <acc:value>value0</acc:value>
+        <acc:putanja>putanja0</acc:putanja>
+    </acc:slike>
+    <acc:slike>
+        <acc:value>value1</acc:value>
+        <acc:putanja>putanja1</acc:putanja>
+    </acc:slike>
+    <acc:tipSmestaja id="50">
+        <acc:naziv>
+        </acc:naziv>
+    </acc:tipSmestaja>
+    <acc:kategorijaSm id="50">
+        <acc:zvezdice>50</acc:zvezdice>
+    </acc:kategorijaSm>
+    <acc:cenovnici>
+        <acc:pocetak>2006-05-04</acc:pocetak>
+        <acc:kraj>2006-05-04</acc:kraj>
+        <acc:cena>50</acc:cena>
+        <acc:smestaj>50</acc:smestaj>
+    </acc:cenovnici>
+    <acc:cenovnici>
+        <acc:pocetak>2006-05-04</acc:pocetak>
+        <acc:kraj>2006-05-04</acc:kraj>
+        <acc:cena>50</acc:cena>
+        <acc:smestaj>50</acc:smestaj>
+    </acc:cenovnici>
+    <acc:podrazumevaniCenovnik>
+        <acc:pocetak>2006-05-04</acc:pocetak>
+        <acc:kraj>2006-05-04</acc:kraj>
+        <acc:cena>50</acc:cena>
+        <acc:smestaj>50</acc:smestaj>
+    </acc:podrazumevaniCenovnik>
+    <acc:opis>opis2</acc:opis>
+    <acc:naziv>naziv1</acc:naziv>
+</acc:SmestajniObjekat>

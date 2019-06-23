@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<acc:SmestajnaJedinica xmlns:acc="www.model.megatravel.project.com/accomodation"
+ xmlns:usr="www.model.megatravel.project.com/users"
+ xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:res="www.model.megatravel.project.com/reservations"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/accomodation file:/C:/Users/lukaj/git/megaTravel/schemas_ws/SmestajSema.xsd" id="50">
+    <acc:brojKreveta>50</acc:brojKreveta>
+    <acc:balkon>false</acc:balkon>
+    <acc:sObjekat>-1073741773</acc:sObjekat>
+    <acc:opis>opis0</acc:opis>
+    <acc:otkazivanje>
+        <acc:dozvoljeno>false</acc:dozvoljeno>
+        <acc:brojDana>50</acc:brojDana>
+        <acc:faktorOtkazivanja>0.5</acc:faktorOtkazivanja>
+    </acc:otkazivanje>
+    <acc:oznaka>oznaka0</acc:oznaka>
+</acc:SmestajnaJedinica>

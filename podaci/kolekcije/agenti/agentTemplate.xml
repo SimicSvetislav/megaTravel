@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<usr:Agent xmlns:acc="www.model.megatravel.project.com/accomodation"
+ xmlns:res="www.model.megatravel.project.com/reservations"
+ xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:usr="www.model.megatravel.project.com/users"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/users file:/C:/Users/lukaj/git/megaTravel/schemas_ws/KorisnikSema.xsd">
+    <usr:korisnickoIme>korisnickoIme0</usr:korisnickoIme>
+    <usr:sifra>sifra0</usr:sifra>
+    <usr:email>^-@-.AA$</usr:email>
+    <usr:adresa>adresa0</usr:adresa>
+    <usr:telefon>000000000</usr:telefon>
+    <usr:poslovniMaticniBroj>500000000</usr:poslovniMaticniBroj>
+    <usr:ime>ime0</usr:ime>
+    <usr:prezime>prezime0</usr:prezime>
+</usr:Agent>
