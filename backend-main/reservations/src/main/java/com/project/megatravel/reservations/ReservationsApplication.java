@@ -20,8 +20,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.reservations.repository.KorisnikRepository;
 import com.project.megatravel.reservations.repository.RezervacijeRepository;
+import com.project.megatravel.reservations.repository.SjRepository;
+import com.project.megatravel.reservations.repository.SoRepository;
 import com.project.megatravel.util.Creator;
 
 @EnableDiscoveryClient
@@ -86,7 +92,7 @@ public class ReservationsApplication {
 		
 		
 
-		/*Creator cr = new Creator();
+		Creator cr = new Creator();
 
 		
 
@@ -114,7 +120,7 @@ public class ReservationsApplication {
 		RezervacijaKorisnika rk1 = Creator.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj1,kk);
 		rk1 = r.save(rk1);
 
-		
+		/*
 		sjo.save(so1);
 		sjr.save(sj1);
 		r.save(rk1);*/

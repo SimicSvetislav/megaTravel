@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { TokenStorageService } from './../services/auth/token-storage.service';
 import { AuthService } from './../services/auth/auth.service';
 import { Token } from './../Token';
@@ -7,6 +8,7 @@ import { User } from './../user';
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { EventBrokerService } from '../services/event-broker/event-broker.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -18,10 +20,13 @@ export class LoginComponent implements OnInit {
 
 
   user: User = new User();
-  constructor(private tokenService: TokenStorageService, 
-              private eventBroker: EventBrokerService, 
-              private router: Router,private authService: AuthService,
-              private tokenStorage: TokenStorageService) { }
+  constructor(private tokenService: TokenStorageService,
+     private eventBroker: EventBrokerService, 
+     private router: Router,
+     private authService: AuthService,
+     private tokenStorage: TokenStorageService,
+     private http: HttpClient,
+     private toastrService: ToastrService) { }
   str: String="";
 
   private loginInfo : AuthLoginInfo;
@@ -51,6 +56,8 @@ export class LoginComponent implements OnInit {
     alert("LOGIN: " + this.loginInfo.email + " + " + this.loginInfo.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
+      
+
       if(data.accessToken === undefined) {
         alert("Nesto nije u redu!");
       } else {
@@ -67,10 +74,16 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       }
     }, error => {
+     // alert("Alert: " + error.status)
+      if(error.status == 403) {
+        this.toastrService.error('Korisnik je blokiran');
+       // alert("Korisnik je blokiran!");
+      }
       console.log(error);
     });
 
   }
+  
 
   // Callback za klik na back dugme
   /*@HostListener('window:popstate', ['$event'])
