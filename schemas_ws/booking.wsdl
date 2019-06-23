@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="www.model.megatravel.project.com/reservations/managment" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="www.model.megatravel.project.com/reservations/managment" targetNamespace="www.model.megatravel.project.com/reservations/managment">
+    <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="www.model.megatravel.project.com/reservations/managment" xmlns:ns1="www.model.megatravel.project.com/chat" xmlns:res="www.model.megatravel.project.com/reservations" xmlns:usr="www.model.megatravel.project.com/users" elementFormDefault="qualified" targetNamespace="www.model.megatravel.project.com/reservations/managment">
+            <xs:import namespace="www.model.megatravel.project.com/reservations" schemaLocation="Rezervacija.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+            <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+            <xs:element name="getBookingsRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence maxOccurs="1" minOccurs="1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="usr:Agent" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getBookingsResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence maxOccurs="unbounded" minOccurs="0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="res:RezervacijaKorisnika" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUpcomingBookingsRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence maxOccurs="1" minOccurs="1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="usr:AgentKredencijali" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUpcomingBookingsResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence maxOccurs="unbounded" minOccurs="0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="res:RezervacijaKorisnika" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getBookingRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element name="bookingId" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                            <xs:simpleType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                                <xs:restriction base="xs:long" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getBookingResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="res:RezervacijaKorisnika" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="makeBookingRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="res:RezervacijaKorisnika" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="makeBookingResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="res:RezervacijaKorisnika" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="confirmBookingRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element name="bookingId" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                            <xs:simpleType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                                <xs:restriction base="xs:long" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="confirmBookingResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="res:RezervacijaKorisnika" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getBookingResponse" name="getBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="confirmBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:confirmBookingResponse" name="confirmBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUpcomingBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getUpcomingBookingsResponse" name="getUpcomingBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getBookingsRequest" name="getBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="makeBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:makeBookingRequest" name="makeBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="makeBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:makeBookingResponse" name="makeBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUpcomingBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getUpcomingBookingsRequest" name="getUpcomingBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="confirmBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:confirmBookingRequest" name="confirmBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getBookingsResponse" name="getBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getBookingRequest" name="getBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="BookingPort" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:operation name="getBooking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:getBookingRequest" name="getBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:getBookingResponse" name="getBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="confirmBooking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:confirmBookingRequest" name="confirmBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:confirmBookingResponse" name="confirmBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUpcomingBookings" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:getUpcomingBookingsRequest" name="getUpcomingBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:getUpcomingBookingsResponse" name="getUpcomingBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getBookings" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:getBookingsRequest" name="getBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:getBookingsResponse" name="getBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="makeBooking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:makeBookingRequest" name="makeBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:makeBookingResponse" name="makeBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BookingPortSoap11" type="tns:BookingPort" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        <wsdl:operation name="getBooking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="getBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="getBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="confirmBooking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="confirmBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="confirmBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getUpcomingBookings" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="getUpcomingBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="getUpcomingBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getBookings" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="getBookingsRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="getBookingsResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="makeBooking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="makeBookingRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="makeBookingResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BookingPortService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:port binding="tns:BookingPortSoap11" name="BookingPortSoap11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:address location="http://localhost:8111/ws/booking" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

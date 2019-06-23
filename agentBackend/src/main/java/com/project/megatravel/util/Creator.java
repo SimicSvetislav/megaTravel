@@ -10,9 +10,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.project.megatravel.model.accomodation.Cenovnik;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.KategorijaSm;
@@ -26,17 +23,24 @@ import com.project.megatravel.model.chat.Poruka;
 import com.project.megatravel.model.reservations.Komentar;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.model.users.AgentKredencijali;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 
 
 
 public final class Creator {
-	
-	
-
-	
-	private Creator() {
 		
+	public static Agent createAgent(String sifra,
+			String email, String adresa, String telefon) {
+		
+		Agent k = new Agent();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		
+		return k;
 	}
 	
 	public static RezervacijaKorisnika createRezervacija(long datumRez, long datumPoc, long datumZav, double popust, double cena, long korisnik, String stanje, long soba) {
@@ -334,6 +338,14 @@ public final class Creator {
 		agent.setSifra(pass);
 		
 		return agent;
+	}
+	
+	public static AgentKredencijali createKredencijali(String username, String password) {
+		AgentKredencijali agentKredencijali = new AgentKredencijali();
+		agentKredencijali.setUsername(username);
+		agentKredencijali.setPassword(password);
+		
+		return agentKredencijali;
 	}
 
 	/*public static KrajnjiKorisnikDTO createKrajnjiKorisnikDTO(long id, String kat, String datumR) {

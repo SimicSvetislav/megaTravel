@@ -1,7 +1,12 @@
 package com.project.megatravel.reservations.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.transform.TransformerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
@@ -16,10 +21,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.netflix.discovery.converters.Auto;
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.reservations.services.EmailService;
 import com.project.megatravel.reservations.services.ReservationService;
 
 @RestController
@@ -29,6 +37,9 @@ public class ReservationsController {
 
 	@Autowired
 	private ReservationService service;
+	
+	@Autowired
+	private EmailService emailSender;
 	
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija) {
@@ -55,7 +66,7 @@ public class ReservationsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/{id}")
-	public ResponseEntity<RezervacijaKorisnika> getReservation(@PathVariable("id") String id) {
+	public ResponseEntity<RezervacijaKorisnika> getReservation(@PathVariable("id") Long id) {
 		RezervacijaKorisnika rez = service.getById(id);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
@@ -124,5 +135,25 @@ public class ReservationsController {
 		
 		return new ResponseEntity<Agent>(agent, HttpStatus.OK);
 	}
-	
+		
+	@RequestMapping(method = RequestMethod.GET, path="/reservation/report/{id}", produces = "text/html;charset=UTF-8")
+	public ResponseEntity<String> getReservationHtml(@PathVariable("id") Long id) {
+		
+		String rawHtml = service.generateHTML(id);
+		
+		// Ovo pozivati nakon uspesne rezervacije
+		/*InputStream inputStream = service.generateHTMLForMail(id);
+		
+		emailSender.sendMessageWithAttachmentFromInputStream("<e-mail>", "Reservation confirmation", 
+				"You have successfully made reservation!\n\nSincerely,\nMegatravel team", 
+				inputStream);
+		
+		try {
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
+		
+		return new ResponseEntity<String>(rawHtml, HttpStatus.OK);
+	}
 }

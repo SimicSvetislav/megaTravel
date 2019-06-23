@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="www.model.megatravel.project.com/users/managment" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="www.model.megatravel.project.com/users/managment" targetNamespace="www.model.megatravel.project.com/users/managment">
+    <wsdl:types xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="www.model.megatravel.project.com/users/managment" xmlns:usr="www.model.megatravel.project.com/users" elementFormDefault="qualified" targetNamespace="www.model.megatravel.project.com/users/managment">
+            <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+            <xs:element name="agentAuthentificationRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="usr:AgentKredencijali" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="agentAuthentificationResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="usr:Agent" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAgentRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element name="email" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                            <xs:simpleType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                                <xs:restriction base="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getAgentResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="usr:Agent" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUserRequest" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element name="userId" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                            <xs:simpleType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                                <xs:restriction base="xs:long" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="getUserResponse" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                <xs:complexType xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                    <xs:sequence xmlns:xs="http://www.w3.org/2001/XMLSchema">
+                        <xs:element ref="usr:KrajnjiKorisnik" xmlns:xs="http://www.w3.org/2001/XMLSchema"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="getUserRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getUserRequest" name="getUserRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAgentResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getAgentResponse" name="getAgentResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="agentAuthentificationRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:agentAuthentificationRequest" name="agentAuthentificationRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getUserResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getUserResponse" name="getUserResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="getAgentRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:getAgentRequest" name="getAgentRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="agentAuthentificationResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:part element="tns:agentAuthentificationResponse" name="agentAuthentificationResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="AgentBackendPort" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:operation name="getUser" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:getUserRequest" name="getUserRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:getUserResponse" name="getUserResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAgent" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:getAgentRequest" name="getAgentRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:getAgentResponse" name="getAgentResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="agentAuthentification" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <wsdl:input message="tns:agentAuthentificationRequest" name="agentAuthentificationRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:input>
+            <wsdl:output message="tns:agentAuthentificationResponse" name="agentAuthentificationResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AgentBackendPortSoap11" type="tns:AgentBackendPort" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        <wsdl:operation name="getUser" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="getUserRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="getUserResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getAgent" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="getAgentRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="getAgentResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="agentAuthentification" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:operation soapAction="" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            <wsdl:input name="agentAuthentificationRequest" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:input>
+            <wsdl:output name="agentAuthentificationResponse" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+                <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AgentBackendPortService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+        <wsdl:port binding="tns:AgentBackendPortSoap11" name="AgentBackendPortSoap11" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <soap:address location="http://localhost:8111/ws/agent" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

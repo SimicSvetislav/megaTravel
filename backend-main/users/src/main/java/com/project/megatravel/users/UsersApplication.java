@@ -2,15 +2,14 @@
 
 import java.util.logging.Logger;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.repository.AdminRepository;
+import com.project.megatravel.users.repository.AgentRepository;
 import com.project.megatravel.users.repository.KorisnikRepository;
 import com.project.megatravel.util.Creator;
 
@@ -43,6 +42,10 @@ public class UsersApplication {
 		
 		
 		Creator cr = new Creator();
+//		Agent a1 = Creator.createAgent("$2a$10$n1JcNevkDMmKCW2OVE5e4uDSqHNu9U4jeWBqclSvbbdMj72pr2WLm", "lukajvnv@gmail.com", "drage spasic", "fla");
+//		AgentRepository repo = new AgentRepository();
+//		repo.save(a1);
+		
 	//	JAXBContext context = JAXBContext.newInstance(jaxbContext);
 	///	Marshaller marshaller = context.createMarshaller();
 

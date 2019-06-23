@@ -3,6 +3,7 @@ package com.project.megatravel.repository;
 import java.util.Collection;
 
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.XMLDBException;
 
 import com.project.megatravel.ExistDB;
 import com.project.megatravel.model.accomodation.TipSmestaja;
@@ -52,6 +53,18 @@ public class TypesRepository implements ExistRepository {
 		
 		return tip;
 		
+	}
+	
+	public void overrideData(Collection<TipSmestaja> updatingData) {
+		try {
+			ExistDB.emptyCollection(collectionName);
+			for(TipSmestaja tip: updatingData) {
+				ExistDB.save(tip, tip.getId(), collectionName, schemaLocation, jaxbContext);
+			}
+		} catch (XMLDBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static Long getCurrentId() {

@@ -2,90 +2,194 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
     targetNamespace="www.model.megatravel.project.com/accomodation/managment"
     xmlns="www.model.megatravel.project.com/accomodation/managment"
-    xmlns:acc="www.model.megatravel.project.com/accomodation">
+    xmlns:acc="www.model.megatravel.project.com/accomodation"
+    xmlns:usr="www.model.megatravel.project.com/users">
     <xs:import namespace="www.model.megatravel.project.com/accomodation"
         schemaLocation="SmestajSema.xsd"/>
-    <xs:element name="addObjectRequest">
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:element name="sendObjectRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="addObjectResponse">
+    <xs:element name="sendObjectResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="addUnitRequest">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="addUnitResponse">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getObjectsRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="agentId" type="xs:long"/>
+                <xs:element ref="usr:Agent"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getObjectsResponse">
         <xs:complexType>
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getObjectRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element name="objectId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getObjectResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="acc:TSmestajniObjekat"/>
+                <xs:element ref="acc:SmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteObjectRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objectId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteObjectResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="acc:SmestajniObjekat"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sendUnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="acc:SmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="sendUnitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getUnitsRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="objectId" type="xs:long"/>
+                <xs:element name="objectId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getUnitsResponse">
         <xs:complexType>
             <xs:sequence maxOccurs="unbounded" minOccurs="0">
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getUnitRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element name="unitId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:element name="getUnitResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="unit" type="acc:TSmestajnaJedinica"/>
+                <xs:element ref="acc:SmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteUnitRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="unitId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="deleteUnitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="acc:SmestajnaJedinica"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllCategoriesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resourceName">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllCategoriesResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="acc:kategorijaSm"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllTypesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resourceName">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllTypesResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="acc:tipSmestaja"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllExtrasRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="resourceName">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAllExtrasResponse">
+        <xs:complexType>
+            <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                <xs:element ref="acc:DodatnaUsluga"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -53,6 +53,11 @@ public class RezervacijeRepository implements ExistRepository {
 		return rez;
 		
 	}
+	
+	public String getOneByIdStringify(Long id) {
+		
+		return ExistDB.getOneByIdRaw(id, collectionName, jaxbContext);
+	}
 
 	public static Long getCurrentId() {
 		return currentId;

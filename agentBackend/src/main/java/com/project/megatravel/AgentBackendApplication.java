@@ -14,15 +14,12 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
-import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.repository.AgentRepository;
 import com.project.megatravel.repository.CategoriesRepository;
 import com.project.megatravel.repository.ExtrasRepository;
 import com.project.megatravel.repository.RezervacijeRepository;
 import com.project.megatravel.repository.SjRepository;
 import com.project.megatravel.repository.SoRepository;
 import com.project.megatravel.repository.TypesRepository;
-import com.project.megatravel.service.UserService;
 import com.project.megatravel.util.Creator;
 
 @SpringBootApplication
@@ -45,13 +42,13 @@ public class AgentBackendApplication {
 		
 		SpringApplication.run(AgentBackendApplication.class, args);
 		
-		testSoRepo();
-		
-		testSjRepo(1L);
-		setDodatneUsluge(1L);
-		
-		testSjRepo(2L);
-		setDodatneUsluge(2L);
+//		testSoRepo();
+//		
+//		testSjRepo(1L);
+//		setDodatneUsluge(1L);
+//		
+//		testSjRepo(2L);
+//		setDodatneUsluge(2L);
 		
 		//testRezervacijaRepo();
 		// testDodatneUslugeRepo();

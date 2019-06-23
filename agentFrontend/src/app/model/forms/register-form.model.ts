@@ -8,7 +8,7 @@ export class SignUpInfo {
     phoneNumber: string;
 
     constructor(firstName: string, email: string, password: string,
-                lastName:string, address:string, phoneNumber:string) {
+                lastName: string, address: string, phoneNumber: string) {
         this.firstName = firstName;
         this.email = email;
         this.password = password;

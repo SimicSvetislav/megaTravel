@@ -1,21 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="www.model.megatravel.project.com/messages/agent/managment"
-    xmlns="www.model.megatravel.project.com/messages/agent/managment"
-    xmlns:agg="www.model.megatravel.project.com/messages/agent">
-    <xs:import namespace="www.model.megatravel.project.com/messages/agent"
-        schemaLocation="KomunikacijaAgentBackend.xsd"/>
-    <xs:element name="getBookingsRequest">
+    targetNamespace="www.model.megatravel.project.com/users/managment"
+    xmlns="www.model.megatravel.project.com/users/managment"
+    xmlns:usr="www.model.megatravel.project.com/users">
+    <xs:import namespace="www.model.megatravel.project.com/users" schemaLocation="KorisnikSema.xsd"/>
+    <xs:element name="agentAuthentificationRequest">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="agg:Rezervacija"/>
+                <xs:element ref="usr:AgentKredencijali"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="getBookingsResponse">
+    <xs:element name="agentAuthentificationResponse">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="agg:Rezervacija"/>
+                <xs:element ref="usr:Agent"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAgentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getAgentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:Agent"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:long"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="usr:KrajnjiKorisnik"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

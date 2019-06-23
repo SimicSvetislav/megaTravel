@@ -1,19 +1,27 @@
 package com.project.megatravel.reservations;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.StringReader;
 import java.util.logging.Logger;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-import com.project.megatravel.model.accomodation.SmestajnaJedinica;
-import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
-import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.reservations.repository.KorisnikRepository;
 import com.project.megatravel.reservations.repository.RezervacijeRepository;
-import com.project.megatravel.reservations.repository.SjRepository;
-import com.project.megatravel.reservations.repository.SoRepository;
 import com.project.megatravel.util.Creator;
 
 @EnableDiscoveryClient
@@ -37,6 +45,45 @@ public class ReservationsApplication {
 		SpringApplication.run(ReservationsApplication.class, args);
 		
 		logger.info("Reservations microservice successfully started");
+		
+		
+		// Transformacija u html
+		/*RezervacijeRepository repo = new RezervacijeRepository();
+		InputStream is = TypeReference.class.getResourceAsStream("/xsl/reservation.xsl");
+		
+		try {
+			 
+			TransformerFactory tFactory = TransformerFactory.newInstance();
+			 
+			Source xslDoc = new StreamSource(is);
+		    
+		    String raw = repo.getOneByIdStringify(2L);
+		    
+			Source xmlDoc = new StreamSource(new StringReader(raw));
+		    
+		    //InputStream xmlStream = TypeReference.class.getResourceAsStream("/xml/res.xml");
+		    //Source xmlDoc = new StreamSource(xmlStream);
+		    
+			String outputFileName = "C:\\Users\\Sveta\\Desktop\\report3.html";
+			
+			OutputStream htmlFile = new ByteArrayOutputStream();
+		 
+			Transformer trasform = tFactory.newTransformer(xslDoc);
+		 
+			trasform.transform(xmlDoc, new StreamResult(htmlFile));
+			
+			System.out.println("Finished");
+			
+			System.out.println(htmlFile);
+			
+			htmlFile.close();
+			
+		} catch (Exception e) { 
+			e.printStackTrace();
+		} finally {
+			
+		}*/
+		
 		
 
 		/*Creator cr = new Creator();

@@ -70,12 +70,14 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable().
                 authorizeRequests()
+                .antMatchers("/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
                 .antMatchers("/api/test/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/agent/**").permitAll()
                 .antMatchers("/resAgent/*").permitAll()
+                .antMatchers("/reservation/report/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

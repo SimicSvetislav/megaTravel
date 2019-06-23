@@ -179,6 +179,17 @@ public final class Creator {
 
 	}
 	
+	public static SmestajnaJedinica createSmestajnaJedinica(long id, long so) {
+		
+		SmestajnaJedinica j = new SmestajnaJedinica();
+        
+        j.setId(id);
+        j.setSObjekat(so);
+        
+        return j;
+
+	}
+	
 	public static SmestajnaJedinica createSmestajnaJedinica(long id, SmestajniObjekat so, Rejting r) {
 		
 		SmestajnaJedinica j = new SmestajnaJedinica();

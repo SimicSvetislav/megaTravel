@@ -27,6 +27,8 @@ public class AgentRepository implements ExistRepository {
 		
 		if (ag.getId()==null) {
 			// Dodeli id
+			AdminRepository.setCurrentId(currentId);
+			KorisnikRepository.setCurrentId(currentId);
 			ag.setId(++currentId);
 		}
 

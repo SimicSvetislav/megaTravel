@@ -47,6 +47,8 @@ public class MegaTravelApplication {
 		
 		logger.info("Main backend application successfully started");
 		
+		
+		
 		//testSjRepo();
 		//testSoRepo();
 		//testRezervacijaRepo();
