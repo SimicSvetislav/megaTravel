@@ -3,7 +3,6 @@ package com.project.megatravel.util;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -11,6 +10,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.model.accomodation.Polozaj;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
@@ -18,63 +18,11 @@ import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.model.users.Kupon;
-import com.project.megatravel.model.users.KrajnjiKorisnik.Rezervacije;
 
 public final class Creator {
 	
 	public Creator() {
 		
-	}
-	
-	/**
-	 * Na osnovu validnog imena mesta, koje može biti kako na srpskom tako i na nekom drugom jeziku (proban engleski), 
-	 * određuju se geografske koordinate tog mesta.
-	 * @param locationName Naziv lokacije
-	 * @return Niz od dva double broja gde je prvi geografska širina, a drugi geografska dužina. 
-	 */
-	public static Double[] getCoordinates(String locationName) {
-		
-		Double lat = null;
-		Double lng = null;
-		
-		final WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);	
-		// Mora se dozvoliti da bi se dobili rezultati
-		//webClient.getOptions().setJavaScriptEnabled(false);
-
-		try  {
-	
-		    final HtmlPage page = webClient.getPage("https://www.latlong.net/");
-			
-		    //final HtmlForm form = page.getHtmlElementById("frmPlace");
-	
-		    //final HtmlSubmitInput button = page.getHtmlElementById("btnfind");
-		    final HtmlButton button = page.getHtmlElementById("btnfind");
-		    final HtmlTextInput textField = page.getHtmlElementById("place");
-	
-		    textField.setValueAttribute(locationName);
-	
-		    final HtmlPage resultPage = button.click();
-		    
-		    final HtmlTextInput latitudeField = resultPage.getHtmlElementById("lat");
-		    final HtmlTextInput longitudeField = resultPage.getHtmlElementById("lng");
-			
-		    String latStr = latitudeField.getValueAttribute();
-		    String lngStr = longitudeField.getValueAttribute();
-		    
-		    lat = Double.parseDouble(latStr);
-		    lng = Double.parseDouble(lngStr);
-		    
-		    System.out.println("Latitude: " + lat);
-		    System.out.println("Longitude: " + lng);
-	    
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-		    webClient.close();
-		}
-	    
-		return new Double[] {lat, lng};
 	}
 	
 	public static RezervacijaKorisnika createRezervacija(long id, double cena, String datum, String stanje) {
@@ -259,7 +207,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         
         return o;
 
@@ -271,7 +219,7 @@ public final class Creator {
         
         o.setId(id);
         o.setKategorija(kat);
-        o.setRejting(r);
+        //o.setRejting(r);
         o.setLokacija(lokacija);
         
         return o;
@@ -342,5 +290,54 @@ public final class Creator {
         
         return k;
 	}*/
+	
+	/**
+	 * Na osnovu validnog imena mesta, koje može biti kako na srpskom tako i na nekom drugom jeziku (proban engleski), 
+	 * određuju se geografske koordinate tog mesta.
+	 * @param locationName Naziv lokacije
+	 * @return Dva double broja koji predstavljaju geografsku širinu, odnosno geografska dužinu u okviru objekta klase Polozaj. 
+	 */
+	public static Polozaj getCoordinates(String locationName) {
+		
+		Polozaj p = new Polozaj();
+		
+		final WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);	
+		// Mora se dozvoliti da bi se dobili rezultati
+		//webClient.getOptions().setJavaScriptEnabled(false);
+
+		try  {
+	
+		    final HtmlPage page = webClient.getPage("https://www.latlong.net/");
+			
+		    //final HtmlForm form = page.getHtmlElementById("frmPlace");
+	
+		    //final HtmlSubmitInput button = page.getHtmlElementById("btnfind");
+		    final HtmlButton button = page.getHtmlElementById("btnfind");
+		    final HtmlTextInput textField = page.getHtmlElementById("place");
+	
+		    textField.setValueAttribute(locationName);
+	
+		    final HtmlPage resultPage = button.click();
+		    
+		    final HtmlTextInput latitudeField = resultPage.getHtmlElementById("lat");
+		    final HtmlTextInput longitudeField = resultPage.getHtmlElementById("lng");
+			
+		    String latStr = latitudeField.getValueAttribute();
+		    String lngStr = longitudeField.getValueAttribute();
+		    
+		    p.setGeoSirina(Double.parseDouble(latStr));
+		    p.setGeoDuzina(Double.parseDouble(lngStr));
+		    
+		    System.out.println("Latitude: " + p.getGeoSirina());
+		    System.out.println("Longitude: " + p.getGeoDuzina());
+	    
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+		    webClient.close();
+		}
+	    
+		return p;
+	}
 
 }

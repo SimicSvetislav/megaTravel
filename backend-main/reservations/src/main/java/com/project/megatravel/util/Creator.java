@@ -1,11 +1,16 @@
 package com.project.megatravel.util;
 
-import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.model.accomodation.Polozaj;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
@@ -302,6 +307,55 @@ public static SmestajniObjekat createSmestajniObjekat(String kat) {
 			rez.setDatumZavrsetka((d2));
 			
 			return rez;
+	}
+	
+	/**
+	 * Na osnovu validnog imena mesta, koje može biti kako na srpskom tako i na nekom drugom jeziku (proban engleski), 
+	 * određuju se geografske koordinate tog mesta.
+	 * @param locationName Naziv lokacije
+	 * @return Dva double broja koji predstavljaju geografsku širinu, odnosno geografska dužinu u okviru objekta klase Polozaj. 
+	 */
+	public static Polozaj getCoordinates(String locationName) {
+		
+		Polozaj p = new Polozaj();
+		
+		final WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);	
+		// Mora se dozvoliti da bi se dobili rezultati
+		//webClient.getOptions().setJavaScriptEnabled(false);
+
+		try  {
+	
+		    final HtmlPage page = webClient.getPage("https://www.latlong.net/");
+			
+		    //final HtmlForm form = page.getHtmlElementById("frmPlace");
+	
+		    //final HtmlSubmitInput button = page.getHtmlElementById("btnfind");
+		    final HtmlButton button = page.getHtmlElementById("btnfind");
+		    final HtmlTextInput textField = page.getHtmlElementById("place");
+	
+		    textField.setValueAttribute(locationName);
+	
+		    final HtmlPage resultPage = button.click();
+		    
+		    final HtmlTextInput latitudeField = resultPage.getHtmlElementById("lat");
+		    final HtmlTextInput longitudeField = resultPage.getHtmlElementById("lng");
+			
+		    String latStr = latitudeField.getValueAttribute();
+		    String lngStr = longitudeField.getValueAttribute();
+		    
+		    p.setGeoSirina(Double.parseDouble(latStr));
+		    p.setGeoDuzina(Double.parseDouble(lngStr));
+		    
+		    System.out.println("Latitude: " + p.getGeoSirina());
+		    System.out.println("Longitude: " + p.getGeoDuzina());
+	    
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+		    webClient.close();
+		}
+	    
+		return p;
 	}
 
 }

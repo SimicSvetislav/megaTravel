@@ -2,11 +2,9 @@ package com.project.megatravel.users.repository;
 
 import java.util.Collection;
 
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.model.users.Administrator;
-import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.ExistDB;
 
 @Repository

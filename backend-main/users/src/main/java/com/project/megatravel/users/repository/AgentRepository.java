@@ -5,7 +5,6 @@ import java.util.Collection;
 import org.springframework.stereotype.Repository;
 
 import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.ExistDB;
 
 @Repository
