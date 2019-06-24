@@ -34,6 +34,21 @@ public class ErrorResponse {
 		this.error = error;
 	}
 	
-	
+	public String getError2() {
+		return error2;
+	}
+
+	public void setError2(String error2) {
+		this.error2 = error2;
+	}
+
+	public String getError3() {
+		return error3;
+	}
+
+	public void setError3(String error3) {
+		this.error3 = error3;
+	}
+
 
 }

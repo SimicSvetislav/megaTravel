@@ -2,21 +2,19 @@ package com.project.megatravel.users.services;
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.megatravel.model.users.Administrator;
-import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.model.users.TKorisnik;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.megatravel.model.users.Administrator;
+import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
 
 public class UserPrinciple implements UserDetails {
 	private static final long serialVersionUID = 1L;

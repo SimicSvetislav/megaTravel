@@ -3,20 +3,12 @@ package com.project.megatravel.users.controllers;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,15 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Administrator;
-import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.model.users.TKorisnik;
-import com.project.megatravel.users.repository.AdminRepository;
-import com.project.megatravel.users.repository.AgentRepository;
-import com.project.megatravel.users.repository.KorisnikRepository;
-import com.project.megatravel.users.request.LoginForm;
-import com.project.megatravel.users.response.JwtResponse;
-import com.project.megatravel.users.security.jwt.JwtProvider;
 import com.project.megatravel.users.services.AdminService;
 import com.project.megatravel.users.services.EmailService;
 
