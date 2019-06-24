@@ -29,7 +29,7 @@ import com.project.megatravel.model.accomodation.managment.SendObjectRequest;
 import com.project.megatravel.model.accomodation.managment.SendObjectResponse;
 import com.project.megatravel.model.accomodation.managment.SendUnitRequest;
 import com.project.megatravel.model.accomodation.managment.SendUnitResponse;
-import com.project.megatravel.model.users.AgentKredencijali;
+import com.project.megatravel.model.users.Agent;
 
 public class AccomodationClient extends WebServiceGatewaySupport {
 
@@ -42,11 +42,10 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/accomodation/managment";
 
 
-	public SendObjectResponse sendObject(SmestajniObjekat objekat, AgentKredencijali kredencijali) {
+	public SendObjectResponse sendObject(SmestajniObjekat objekat) {
 
 		SendObjectRequest request = new SendObjectRequest();
 		request.setSmestajniObjekat(objekat);
-		request.setAgentKredencijali(kredencijali);
 
 		log.info("Requesting location for sendObject");
 
@@ -61,10 +60,10 @@ public class AccomodationClient extends WebServiceGatewaySupport {
 		return response;
 	}
 	
-	public GetObjectsResponse getObjects(AgentKredencijali agentKredencijali) {
+	public GetObjectsResponse getObjects(Agent agent) {
 
 		GetObjectsRequest request = new GetObjectsRequest();
-		request.setAgentKredencijali(agentKredencijali);
+		request.setAgent(agent);
 
 		log.info("Requesting location for getObjects");
 

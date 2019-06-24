@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.xmldb.api.base.XMLDBException;
 
 import com.project.megatravel.ExistDB;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -86,6 +87,18 @@ public class SjRepository implements ExistRepository {
 		
 		return sj;
 		
+	}
+	
+	public void overrideData(Collection<SmestajnaJedinica> updatingData) {
+		try {
+			ExistDB.emptyCollection(collectionName);
+			for(SmestajnaJedinica jedinica: updatingData) {
+				ExistDB.save(jedinica, jedinica.getId(), collectionName, schemaLocation, jaxbContext);
+			}
+		} catch (XMLDBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public static Long getCurrentId() {

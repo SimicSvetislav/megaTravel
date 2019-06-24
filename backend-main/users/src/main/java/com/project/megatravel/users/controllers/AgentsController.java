@@ -3,6 +3,8 @@ package com.project.megatravel.users.controllers;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.users.request.LoginForm;
 import com.project.megatravel.users.services.AgentsService;
 import com.project.megatravel.users.services.EmailService;
 
@@ -88,5 +91,19 @@ public class AgentsController {
 		return new ResponseEntity<List<Agent>>(service.getAll(), HttpStatus.OK);
 	
 	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/agent/verify", produces="application/json")
+    public ResponseEntity<Agent> authenticateUser(@Valid @RequestBody LoginForm loginRequest) {
+    	Agent agent = service.agentVerify(loginRequest);
+    		
+        return ResponseEntity.ok(agent);
+    }
+	
+	@RequestMapping(method = RequestMethod.GET, path="/agent/mail/{mail}", produces="application/json")
+    public ResponseEntity<Agent> agentByEmail(@PathVariable("mail") String mail) {
+    	Agent agent = service.agentByEmail(mail);
+    		
+        return ResponseEntity.ok(agent);
+    }
 
 }

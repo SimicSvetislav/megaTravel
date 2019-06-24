@@ -13,9 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.xmldb.api.base.XMLDBException;
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.service.AgentService;
 import com.project.megatravel.service.BookingService;
+import com.project.megatravel.util.errors.AuthentificationException;
+import com.project.megatravel.util.errors.UnitIsBookedException;
 
 
 @RestController
@@ -25,6 +30,9 @@ public class BookingController {
 	
 	@Autowired
 	private BookingService bookingService;
+	
+	@Autowired
+	private AgentService agentService;
 
 //	@RequestMapping(value="preview/agentId/{agentId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 //	public ResponseEntity<Collection<RezervacijaKorisnika>> getAllBookingsPreview(@PathVariable("agentId") String agentId) {
@@ -47,7 +55,6 @@ public class BookingController {
 			
 			return new ResponseEntity<>(bookings, HttpStatus.OK);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
@@ -56,11 +63,17 @@ public class BookingController {
 	@RequestMapping(value="/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<RezervacijaKorisnika> makeBooking(@RequestBody RezervacijaKorisnika booking) {
 		try {
+			Agent agent = agentService.agentAuthentification();
+			booking.setKorisnik(agent.getId());
+			
 			RezervacijaKorisnika rez = bookingService.makeReservation(booking);
 			
 			return new ResponseEntity<>(rez, HttpStatus.CREATED);
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
+		} catch (AuthentificationException authException) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		} catch (UnitIsBookedException unitIsBooked) {
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
+		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
@@ -74,10 +87,8 @@ public class BookingController {
 			
 			return new ResponseEntity<>(rez, HttpStatus.OK);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
@@ -95,11 +106,9 @@ public class BookingController {
 			
 			return new ResponseEntity<>(rez, HttpStatus.OK);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 	}
 	
@@ -111,7 +120,6 @@ public class BookingController {
 			
 			return new ResponseEntity<>(bookings, HttpStatus.OK);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -123,13 +131,12 @@ public class BookingController {
 			
 			return new ResponseEntity<>(bookings, HttpStatus.OK);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
 	@RequestMapping(value="/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<RezervacijaKorisnika>> test() {
+	public ResponseEntity<Collection<RezervacijaKorisnika>> test() throws XMLDBException {
 		bookingService.test();
 		return new ResponseEntity<>(new ArrayList<RezervacijaKorisnika>(), HttpStatus.OK);
 	}

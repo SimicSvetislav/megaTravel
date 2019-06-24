@@ -16,6 +16,7 @@ import com.project.megatravel.model.reservations.managment.GetUpcomingBookingsRe
 import com.project.megatravel.model.reservations.managment.GetUpcomingBookingsResponse;
 import com.project.megatravel.model.reservations.managment.MakeBookingRequest;
 import com.project.megatravel.model.reservations.managment.MakeBookingResponse;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.AgentKredencijali;
 
 public class BookingClient extends WebServiceGatewaySupport {
@@ -27,10 +28,10 @@ public class BookingClient extends WebServiceGatewaySupport {
 	
 	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/reservations/managment";
 
-	public GetBookingsResponse getBookings(AgentKredencijali kredencijali) {
+	public GetBookingsResponse getBookings(Agent a) {
 
 		GetBookingsRequest request = new GetBookingsRequest();
-		request.setAgentKredencijali(kredencijali);
+		request.setAgent(a);
 		
 
 		log.info("Requesting location for getBookings");

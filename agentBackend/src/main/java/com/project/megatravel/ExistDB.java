@@ -688,6 +688,53 @@ public class ExistDB {
             return col;
         }
     }
+    
+    public static void emptyCollection(String collectionName) throws XMLDBException {
+    	
+		Collection c;
+		
+		XMLResource resource = null;
+		
+		try {
+			Collection collection = getOrCreateCollection(colRoot + collectionName);
+			
+			logger.info("Empting collection with name" + colRoot + collectionName + "has started");
+			
+			String[] resourceNames = collection.listResources();
+			for(String resourceName : resourceNames) {
+				 resource = (XMLResource) collection.getResource(resourceName);
+				collection.removeResource(resource);
+			}
+			
+			logger.info("Empting collection with name" + colRoot + collectionName + "has sucessfully fineshed");
+
+			
+		} catch (XMLDBException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				((EXistResource)resource).freeResources();
+			} catch (XMLDBException e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	System.out.println("lfjalkj");
+    }
+    
+//    public static <T> void overrideCollection(java.util.Collection<T> entiities, Long id, String collectionName, String schemaLocation, String jaxbContext) {
+//    	try {
+//			
+//			for(T entity : entiities) {
+//				entity.getClass().get
+//				save(entity, id, collectionName, schemaLocation, jaxbContext);
+//			}
+//			
+//		} catch (XMLDBException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    }
 
 	public static String getUser() {
 		return user;

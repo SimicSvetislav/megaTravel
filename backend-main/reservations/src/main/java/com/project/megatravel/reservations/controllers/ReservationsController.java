@@ -1,16 +1,9 @@
 package com.project.megatravel.reservations.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.transform.TransformerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.netflix.discovery.converters.Auto;
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
-import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.reservations.services.EmailService;
 import com.project.megatravel.reservations.services.ReservationService;
 
@@ -135,8 +125,7 @@ public class ReservationsController {
 		
 		return new ResponseEntity<Agent>(agent, HttpStatus.OK);
 	}
-	
-	
+		
 	@RequestMapping(method = RequestMethod.GET, path="/reservation/report/{id}", produces = "text/html;charset=UTF-8")
 	public ResponseEntity<String> getReservationHtml(@PathVariable("id") Long id) {
 		
@@ -156,5 +145,23 @@ public class ReservationsController {
 		}*/
 		
 		return new ResponseEntity<String>(rawHtml, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/confirm/{bookingId}", produces="application/json")
+	public ResponseEntity<RezervacijaKorisnika> confirmBooking(@PathVariable("Id") Long id) {
+		RezervacijaKorisnika rezervacija = service.getById(id);
+		rezervacija.setStanje("Potvrdjeno"); // potvrdjeno
+		
+		RezervacijaKorisnika azuriranaRezervacija = service.updateReservation(rezervacija);
+		
+		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/agent/makeBooking", produces="application/json", consumes = "application/json")
+	public ResponseEntity<RezervacijaKorisnika> bookingFromAgent(@RequestBody RezervacijaKorisnika rezervacija) {
+		
+		RezervacijaKorisnika azuriranaRezervacija = service.makeReservation(rezervacija);
+		
+		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
 	}
 }

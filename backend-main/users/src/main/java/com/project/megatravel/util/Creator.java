@@ -176,6 +176,23 @@ public final class Creator {
 		return k;
 	}
 	
+	public static KrajnjiKorisnik createKrajnjiKorisnik(String sifra,
+			String email, String adresa, String telefon,
+			String ime, String prezime, String stanje) {
+		
+		KrajnjiKorisnik k = new KrajnjiKorisnik();
+		
+		k.setSifra(sifra);
+		k.setEmail(email);
+		k.setAdresa(adresa);
+		k.setTelefon(telefon);
+		k.setIme(ime);
+		k.setPrezime(prezime);
+		k.setStanje(stanje);
+		
+		return k;
+	}
+	
 	public static Administrator createAdmin(String sifra,
 			String email, String adresa, String telefon,
 			String ime, String prezime) {
