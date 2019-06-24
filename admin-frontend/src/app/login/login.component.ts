@@ -46,8 +46,6 @@ export class LoginComponent implements OnInit {
     this.loginInfo = new AuthLoginInfo(this.user.email,this.user.sifra);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
-      
-
       if(data.accessToken === undefined) {
         alert("Nesto nije u redu!");
       } else {

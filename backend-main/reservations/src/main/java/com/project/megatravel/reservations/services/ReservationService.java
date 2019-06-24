@@ -47,11 +47,6 @@ public class ReservationService {
 	@Autowired
 	private AgentRepository agRepo;
 	
-	// XSL sabloni
-	private Source xslDoc = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation.xsl"));
-	private Source xslDocMail = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation_mail.xsl"));
-	
-	
 	// Fabrika za kreiranje transformera formata
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
@@ -135,6 +130,10 @@ public class ReservationService {
 
 	public String generateHTML(Long id) {
 		
+		// XSL sablon
+		Source xslDoc = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation.xsl"));
+		
+		
 		// XML fajl procitan kao string
 		String xmlString = repo.getOneByIdStringify(id);
 		Source xmlDoc = new StreamSource(new StringReader(xmlString));
@@ -178,6 +177,9 @@ public class ReservationService {
 	}
 	
 	public String generateHTMLToFile(Long id) {
+		
+		// XSL sablon
+		Source xslDocMail = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation_mail.xsl"));
 		
 		// XML fajl procitan kao string
 		String xmlString = repo.getOneByIdStringify(id);
@@ -224,6 +226,9 @@ public class ReservationService {
 	}
 	
 	public InputStream generateHTMLForMail(Long id) {
+		
+		// XSL sablon
+		Source xslDocMail = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation_mail.xsl"));
 		
 		// XML fajl procitan kao string
 		String xmlString = repo.getOneByIdStringify(id);

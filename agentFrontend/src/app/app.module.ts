@@ -51,6 +51,7 @@ import { CommentMessageService } from './service/comment-message.service';
 import { TokenStorageService } from './service/auth/toke-storage.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ChatComponent } from './booking/chat/chat.component';
 const routes = [
   {
     path: 'objects', component: ViewAllObjectsComponent,
@@ -132,7 +133,8 @@ const routes = [
     AnswerMessageComponent,
     ViewAllMessagesTableComponent,
     ViewAllBookingsComponent,
-    ViewBookingComponent
+    ViewBookingComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

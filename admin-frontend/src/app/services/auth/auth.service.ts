@@ -1,3 +1,4 @@
+import { API_USER, LOGIN_API } from './../../globals';
 import { AuthLoginInfo } from './../../forms/loginForm';
 import { SignUpInfo } from './../../forms/registerForm';
 import { JwtResponse } from './../../jwt-response';
@@ -14,8 +15,9 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthService {
-  private loginUrl = '//localhost:8152/api/auth/signin/';
-  private signupUrl = '//localhost:8152/api/auth/signup/';
+  //private loginUrl = API_USER + 'api/auth/signin/'; 
+  private loginUrl = API_USER  + 'api/auth/signin/';
+  private signupUrl = API_USER + 'api/auth/signup/';
   private admin = 'admin';
   
   constructor(private http: HttpClient) {

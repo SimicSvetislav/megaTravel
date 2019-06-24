@@ -24,8 +24,8 @@ export class HomeComponent implements OnInit {
   user: User = new User();
 
   id;
-  boolLogIn: boolean = false;
-  boolLogOff: boolean = false;
+  //boolLogIn: boolean = false;
+  //boolLogOff: boolean = false;
 
   constructor(private eventBroker: EventBrokerService, private router: Router,private token: TokenStorageService) { }
 
@@ -38,18 +38,16 @@ export class HomeComponent implements OnInit {
 
     this.id = this.token.getUser();
 
-    if(this.id == null) {
+    /*if(this.id == null) {
       this.boolLogIn = false;
       this.boolLogOff = true;
     } else {
       this.boolLogIn = true;
       this.boolLogOff = false;
-    }
+    }*/
 
 
   }
-
-
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {

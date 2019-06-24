@@ -23,6 +23,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { AdminsComponent } from './admins/admins/admins.component';
 import { EventBrokerService } from './services/event-broker.service';
 import { AdminAddComponent } from './admins/admin-add/admin-add.component';
+import { MatButtonModule, MatCheckboxModule, MatTableModule, MatPaginator, MatSort, MatPaginatorModule, MatSortModule } from '@angular/material';
 
 const appRoutes: Routes = [
   { path: 'profile', component: ProfileComponent},
@@ -78,6 +79,11 @@ const appRoutes: Routes = [
       closeButton: true,
       positionClass: 'toast-top-right',
     }),
+    MatButtonModule,
+    MatCheckboxModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [EventBrokerService],
   bootstrap: [AppComponent]

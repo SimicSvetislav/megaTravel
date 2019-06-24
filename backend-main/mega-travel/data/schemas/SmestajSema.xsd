@@ -24,8 +24,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="geoSirina" type="TPolozaj"/>
-            <xs:element name="geoDuzina" type="TPolozaj"/>
+            <xs:element name="koordinate" type="TPolozaj"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TRejting">
@@ -324,8 +323,13 @@
         </xs:complexType>
     </xs:element>
     <xs:complexType name="TPolozaj">
+        <xs:annotation>
+            <xs:appinfo>
+                <jxb:class name="Polozaj"/>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="stepeni">
+            <xs:element name="geoSirina">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:appinfo>
@@ -333,19 +337,21 @@
                         </xs:appinfo>
                     </xs:annotation>
                     <xs:restriction base="xs:double">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="180"/>
+                        <xs:minInclusive value="-90"/>
+                        <xs:maxInclusive value="90"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="strana">
+            <xs:element name="geoVisina">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="N"/>
-                        <xs:enumeration value="S"/>
-                        <xs:enumeration value="W"/>
-                        <xs:enumeration value="E"/>
-                        <xs:length value="1"/>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:restriction base="xs:double">
+                        <xs:minInclusive value="-180"/>
+                        <xs:maxInclusive value="180"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

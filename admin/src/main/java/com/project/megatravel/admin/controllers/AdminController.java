@@ -29,9 +29,10 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 @RequestMapping("")
 public class AdminController {
 
-	private static final String USERS_MS = "http://users/";
+	//private static final String USERS_MS = "http://host.docker.internal:8762/users/";
+	private static final String USERS_MS = "http://zuul/users/";
 	//private static final String SEARCH_MS = "http://search/";
-	private static final String MAIN_MS = "http://main/";
+	private static final String MAIN_MS = "http://zuul/main/";
 	
 	//@Autowired
 	//private AdminService service;

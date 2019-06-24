@@ -1,0 +1,85 @@
+version: '3'
+services:
+
+    eureka:
+        image: eureka
+        build:
+          context: ./eureka
+          dockerfile: Dockerfile
+        ports:
+          - "8761:8761"
+          
+    zuul:
+        image: zuul
+        build:
+          context: ./zuul
+          dockerfile: Dockerfile
+        ports:
+          - "8762:8762"
+        depends_on:
+          - main
+          - reservations
+          - search
+          - users
+        links:
+          - main:main
+          - reservations:reservations
+          - search:search
+          - users:users
+
+    main:
+        image: main
+        build:
+          context: ./mega-travel
+          dockerfile: Dockerfile
+        ports:
+          - "8111"
+        depends_on:
+          - eureka
+        links:
+          - eureka:eureka
+          
+    reservations:
+        image: reservations
+        build:
+          context: ./reservations
+          dockerfile: Dockerfile
+        ports:
+          - "8122"
+        depends_on:
+          - eureka
+        links:
+          - eureka:eureka
+          
+    search:
+        image: search
+        build:
+          context: ./search
+          dockerfile: Dockerfile
+        ports:
+          - "8123"
+        depends_on:
+          - eureka
+        links:
+          - eureka:eureka
+          
+    users:
+        image: users
+        build:
+          context: ./users
+          dockerfile: Dockerfile
+        ports:
+          - "8152"
+        depends_on:
+          - eureka
+        links:
+          - eureka:eureka
+    
+    chat:
+        image: chat
+        build: 
+            context: ../chat-service
+            dockerfile: Dockerfile
+        ports:
+          - "7878:7878"
+          - "7070:7070"

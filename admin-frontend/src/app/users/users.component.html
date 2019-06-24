@@ -1,4 +1,4 @@
-<div class="col-md-10 offset-md-1">
+<!--<div class="col-md-10 offset-md-1">
   <table class="table table-hover">
     <thead>
       <tr>
@@ -7,7 +7,7 @@
         <th scope="col">Last name</th>
         <th scope="col">Email</th>
         <th scope="col">Category</th>
-        <th scope="col">Adress</th>
+        <th scope="col">Address</th>
         <th scope="col">Telephone</th>
         <th scope="col">Active</th>
         <th scope="col">Change status</th>
@@ -38,4 +38,84 @@
       </tr>
     </tbody>
   </table>
+</div>-->
+
+<div class="example-container mat-elevation-z8">
+
+  <mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Username </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.korisnickoIme}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> First name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.ime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="surname">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Last name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.prezime}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Category </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.kategorija}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="address">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.adresa}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="telephone">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Telephone </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.telefon}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="active">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Aktivan </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span *ngIf="row.stanje=='AKTIVAN';else other_content"> &#x2611; </span>
+        <ng-template #other_content>
+          <span>&#x2612;</span>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <span *ngIf="row.stanje=='AKTIVAN';else other_content"> <button class="btn btn-warning"
+            (click)="block(row.id)">Block</button> </span>
+        <ng-template #other_content>
+          <button class="btn btn-success" (click)="activate(row.id)">Activate</button>
+        </ng-template>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button class="btn btn-danger" (click)="delete(row.id)">Delete</button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>

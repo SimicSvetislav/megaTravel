@@ -29,7 +29,8 @@ const wss = new WebSocket.Server({ port: 7878 });
 
 // MongoDB
 const MongoClient = require('mongodb').MongoClient;
-const uri = 'mongodb://localhost:27017/'
+// const uri = 'mongodb://localhost:27017/';
+const uri = 'mongodb://host.docker.internal:27017/';
 const dbName = 'megatravel';
 const colName = 'messages';
 

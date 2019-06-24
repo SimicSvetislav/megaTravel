@@ -28,9 +28,9 @@ public class AdminRepository implements ExistRepository {
 		
 		if (admin.getId()==null) {
 			// Dodeli id
+			admin.setId(++currentId);
 			AgentRepository.setCurrentId(currentId);
 			KorisnikRepository.setCurrentId(currentId);
-			admin.setId(++currentId);
 		}
 
 		return ExistDB.save(admin, admin.getId(), collectionName, schemaLocation, jaxbContext);		

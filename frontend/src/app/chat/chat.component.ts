@@ -1,8 +1,6 @@
 import { MessagesService } from './../services/chat/messages.service';
-import { UserService } from './../services/users/user.service';
 import { AgentService } from './../services/users/agent.service';
 import { ChatService } from '../services/chat/chat.service';
-import { User } from './../user';
 import { Message } from './../message';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,6 +21,7 @@ export class ChatComponent implements OnInit {
   constructor(private router: Router, private token: TokenStorageService,
     private chatService: ChatService, private route: ActivatedRoute,
     private agentService: AgentService, private messagesService: MessagesService) {
+    
     chatService.messages.subscribe(msg => {
       if (msg.text.startsWith('[INFO]')) {
         // INFO message
@@ -76,7 +75,7 @@ export class ChatComponent implements OnInit {
   }
 
   onSend() {
-    if (!this.message.text) {
+    if (!this.message.text || this.message.text.trim() === '') {
       return;
     }
 

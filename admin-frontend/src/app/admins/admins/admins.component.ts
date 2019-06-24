@@ -12,20 +12,27 @@ import { Router } from '@angular/router';
 })
 export class AdminsComponent implements OnInit {
 
-  admins: Array<Admin>;
+  admins: Array<Admin> = new Array();
 
   constructor(private tokenService: TokenStorageService, private router: Router,
-              private adminsService: AdminsService, private toastr: ToastrService) { }
+    private adminsService: AdminsService, private toastr: ToastrService) { }
+
+  user: string;
 
   ngOnInit() {
-    var user = this.tokenService.getUser();
+    this.user = this.tokenService.getUser();
 
-    if (user==null) {
+    if (this.user == null) {
       this.router.navigate(['/login']);
     }
 
     this.adminsService.getAll().subscribe(data => {
-      this.admins = data;
+      data.forEach(element => {
+        if (element.id != this.user) {
+          this.admins.push(element);
+        }
+      });
+
     }, error => console.log(error));
 
   }
@@ -34,7 +41,12 @@ export class AdminsComponent implements OnInit {
     this.adminsService.remove(id).subscribe(data => {
       this.toastr.success("Deleted admin with id " + data.id);
       this.adminsService.getAll().subscribe(data => {
-        this.admins = data;
+        this.admins = new Array();
+        data.forEach(element => {
+          if (element.id != this.user) {
+            this.admins.push(element);
+          }
+        });
       }, error => console.log(error));
     }, error => console.log(error));
   }

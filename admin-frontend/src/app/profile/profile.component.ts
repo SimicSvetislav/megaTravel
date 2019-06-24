@@ -1,5 +1,6 @@
+import { CloudService } from './../services/cloud.service';
 import { AdminsService } from './../services/admins.service';
-import { Message, Admin } from './../types';
+import { Message, Admin, Rating } from './../types';
 import { TokenStorageService } from './../services/auth/token-storage.service';
 import { UsersService } from './../services/users.service';
 import { User } from './../user';
@@ -20,9 +21,13 @@ export class ProfileComponent implements OnInit {
 
   constructor(private userSer: UsersService, private router: Router, private adminService: AdminsService,
               private tokenService: TokenStorageService, private eventBroker: EventBrokerService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService, private c: CloudService) { }
 
   ngOnInit() {
+
+    /*this.c.postRating(new Rating()).subscribe( data => {
+      alert("Prosao");
+    }, error => console.log(error))*/
 
     if (this.tokenService.getRefresh()==='true') { 
       this.tokenService.saveRefresh(false);

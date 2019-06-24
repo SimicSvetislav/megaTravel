@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Administrator;
@@ -34,7 +36,7 @@ import com.project.megatravel.users.security.jwt.JwtProvider;
 import com.project.megatravel.users.services.UsersService;
 import com.project.megatravel.util.Creator;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthRestAPIs {
@@ -63,8 +65,9 @@ public class AuthRestAPIs {
     
     Creator creator;
 
-    @PostMapping("/signin/{role}")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest, @PathVariable String role) {
+    @RequestMapping(method = RequestMethod.POST, path = "/signin/{role}", produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginForm loginRequest, @PathVariable String role) {
 
     	KrajnjiKorisnik korisnik;
     	Administrator admin;
@@ -80,7 +83,7 @@ public class AuthRestAPIs {
     			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     		}
     		retVal = admin;
-    	} else if(role.contains("user")) {
+    	} else if(role.contains("user")) { 
     		System.out.println("Ja sam korisnik");
     		korisnik = userRepository.getByEmail(loginRequest.getEmail());
     		if(korisnik == null) {
@@ -110,10 +113,8 @@ public class AuthRestAPIs {
          //   Optional<AbstractUser> user = userRepository.findByEmail(loginRequest.getEmail());
             
             
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities(), retVal.getId()));
-
-    	
-        
+        return new ResponseEntity<JwtResponse>(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities(), retVal.getId()), HttpStatus.OK);
+    	      
        
     }
 

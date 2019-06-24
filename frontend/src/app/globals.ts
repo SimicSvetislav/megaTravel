@@ -1,7 +1,12 @@
 // Paths
 export const API='//localhost:8131/';
-export const API_USER='//localhost:8152/';
-export const API_RESERVATION='//localhost:8122/';
+
+// export const API_USER='//localhost:8152/';
+export const API_USER = '//localhost:8762/users/'; // zuul
+
+//export const API_RESERVATION='//localhost:8122/';
+export const API_RESERVATION = '//localhost:8762/reservations/'; // zuul
+
 export const AGENT_API= API + 'agent/';
 export const USER_API= API + 'user/';
 export const EXTRAS_API= API + 'extras/';

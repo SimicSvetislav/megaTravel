@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     //alert("Usao!")
 
     this.loginInfo = new AuthLoginInfo(this.user.email,this.user.sifra);
-    alert("LOGIN: " + this.loginInfo.email + " + " + this.loginInfo.password);
+    //alert("LOGIN: " + this.loginInfo.email + " + " + this.loginInfo.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
 
       if(data.accessToken === undefined) {

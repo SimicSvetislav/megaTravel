@@ -11,7 +11,14 @@ const client = new MongoClient(uri, { useNewUrlParser: true })
 exports.postRating = function postRating(req, res) {
 	
 	res.set('Access-Control-Allow-Origin', "*");
-	res.set('Access-Control-Allow-Methods', 'GET, POST');
+	res.set('Access-Control-Allow-Headers', "*");
+	//res.set('Allow-Headers', "*");
+	//res.set('Content-type', 'application/json');
+	//res.set('Access-Control-Allow-Methods', 'GET, POST');
+	
+	if (req.method === 'OPTIONS') return res.status(200).send();
+	
+	//res.status(200).send(req.body)
 	
 	client.connect(err => {
 
@@ -43,7 +50,8 @@ exports.postRating = function postRating(req, res) {
 				return
 			}
 		
-			res.status(200).send('Rate saved as ' + result.ops[0]._id)
+			//res.status(200).send('Rate saved as ' + result.ops[0]._id)
+			res.status(200).send(JSON.stringify(result.ops[0]._id));
 		})
 	  
 	})
@@ -402,8 +410,9 @@ exports.getCommentsByGrade = function getCommentsByGrade(req, res) {
 
 exports.averageGrade = function averageGrade(req, res) {
 	
-	res.set('Access-Control-Allow-Origin', "*");
-	res.set('Access-Control-Allow-Methods', 'GET, POST');
+	res.set('Access-Control-Allow-Origin', '*');
+	res.set('Access-Control-Allow-Headers', '*');
+	res.set('Access-Control-Allow-Methods', 'GET, PUT');
   
 	let room = +req.query.room;
   
