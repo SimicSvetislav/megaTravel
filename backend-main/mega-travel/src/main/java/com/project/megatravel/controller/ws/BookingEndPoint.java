@@ -2,6 +2,7 @@ package com.project.megatravel.controller.ws;
 
 import java.util.List;
 
+import org.eclipse.jetty.server.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +88,12 @@ public class BookingEndPoint {
 		log.info("makeBooking webservice method invoked");
 
 		/// TODO: PROVERA DA LI JE VEC ZAUZET SMESTAJ ZA TAJ TERMIN
+
+		MakeBookingResponse response = new MakeBookingResponse();
+		ResponseEntity<RezervacijaKorisnika> r = restClient.postForEntity(RESERVATIONS + "agent/makeBooking", request.getRezervacijaKorisnika(), RezervacijaKorisnika.class);
+		response.setRezervacijaKorisnika(r.getBody());
 		
-		return new MakeBookingResponse();
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "confirmBookingRequest")
@@ -98,9 +103,11 @@ public class BookingEndPoint {
 		log.info("confirmBooking webservice method invoked");
 		
 		/// TODO: MENJANJE STATUSA REZERVACIJE
-
-
-		return new ConfirmBookingResponse();
+		ConfirmBookingResponse response = new ConfirmBookingResponse();
+		ResponseEntity<RezervacijaKorisnika> r = restClient.getForEntity(RESERVATIONS + "confirm/" + request.getBookingId(), RezervacijaKorisnika.class); 
+		response.setRezervacijaKorisnika(r.getBody());
+		
+		return response;
 	}
 	
 

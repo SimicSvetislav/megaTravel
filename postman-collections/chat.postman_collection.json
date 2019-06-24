@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"sender\": 1,\n\t\"receiver\": 2,\n\t\"text\": \"Hello\",\n\t\"payload\": null,\n\t\"reservation\": 10,\n\t\"timestamp\": \"2019-06-19T17:28:06.137Z\"\n}"
+					"raw": "{\n\t\"sender\": 1,\n\t\"receiver\": 2,\n\t\"text\": \"How are you?\",\n\t\"payload\": null,\n\t\"reservation\": 2,\n\t\"timestamp\": \"2019-06-22T17:28:06.137Z\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:7070/messages",

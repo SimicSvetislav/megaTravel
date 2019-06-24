@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.transform.Source;
@@ -47,32 +48,27 @@ public class ReservationService {
 	@Autowired
 	private AgentRepository agRepo;
 	
-	// XSL sabloni
-	private Source xslDoc = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation.xsl"));
-	private Source xslDocMail = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation_mail.xsl"));
-	
-	
 	// Fabrika za kreiranje transformera formata
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		
-		return new RezervacijaKorisnika();
+		return repo.save(rezervacija);
 	}
 
 	public RezervacijaKorisnika updateReservation(RezervacijaKorisnika rezervacija) {
 		
-		return new RezervacijaKorisnika();
+		return repo.save(rezervacija);
 	}
 
 	public RezervacijaKorisnika deleteRez(Long id) {
 		
-		return new RezervacijaKorisnika();
+		return repo.deleteById(id);
 	}
 
 	public RezervacijaKorisnika getById(Long id) {
 		
-		return new RezervacijaKorisnika();
+		return repo.getOneById(id);
 	}
 
 	public List<RezervacijaKorisnika> getAll() {
@@ -135,6 +131,10 @@ public class ReservationService {
 
 	public String generateHTML(Long id) {
 		
+		// XSL sablon
+		Source xslDoc = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation.xsl"));
+		
+		
 		// XML fajl procitan kao string
 		String xmlString = repo.getOneByIdStringify(id);
 		Source xmlDoc = new StreamSource(new StringReader(xmlString));
@@ -178,6 +178,9 @@ public class ReservationService {
 	}
 	
 	public String generateHTMLToFile(Long id) {
+		
+		// XSL sablon
+		Source xslDocMail = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation_mail.xsl"));
 		
 		// XML fajl procitan kao string
 		String xmlString = repo.getOneByIdStringify(id);
@@ -225,6 +228,9 @@ public class ReservationService {
 	
 	public InputStream generateHTMLForMail(Long id) {
 		
+		// XSL sablon
+		Source xslDocMail = new StreamSource(TypeReference.class.getResourceAsStream("/xsl/reservation_mail.xsl"));
+		
 		// XML fajl procitan kao string
 		String xmlString = repo.getOneByIdStringify(id);
 		Source xmlDoc = new StreamSource(new StringReader(xmlString));
@@ -266,5 +272,35 @@ public class ReservationService {
 				
 		return stream;
 	}
+	
+	public RezervacijaKorisnika makingReservationFromAgent(RezervacijaKorisnika rezervacija) {
+		RezervacijaKorisnika ret = null;
+		
+		if(isBookingPossible(rezervacija)) {
+			ret = repo.save(rezervacija);
+		}
+		
+		return ret;
+	}
+	
+	private boolean isBookingPossible(RezervacijaKorisnika newBooking) {
+		long newBookingBegin = newBooking.getDatumPocetka().getTime();
+		long newBookingEnd = newBooking.getDatumZavrsetka().getTime();
+		
+		List<RezervacijaKorisnika> rezervacije = getAllByUnit(newBooking.getSmestajnaJedinica());
+	
+		for(RezervacijaKorisnika r : rezervacije) {
+			long begin = r.getDatumPocetka().getTime();
+			long end = r.getDatumZavrsetka().getTime();
+			
+			if( (newBookingBegin >= begin && newBookingEnd <= end) || (begin >= newBookingBegin && begin <= newBookingEnd)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
 
 }

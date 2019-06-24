@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.request.LoginForm;
-import com.project.megatravel.users.UsersApplication;
 import com.project.megatravel.users.services.AgentsService;
 import com.project.megatravel.users.services.EmailService;
 

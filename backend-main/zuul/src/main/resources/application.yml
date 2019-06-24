@@ -1,0 +1,66 @@
+server:
+  port: ${PORT:8762}
+
+spring:
+  application:
+    name: zuul
+
+ribbon:
+  ReadTimeout: 60000
+
+zuul:
+  routes:
+    main:
+      path: /main/**
+      serviceId: main
+    reservations:
+      path: /reservations/**
+      serviceId: reservations
+    search:
+      path: /search/**
+      serviceId: search
+    users:
+      path: /users/**
+      serviceId: users
+  ribbon:
+    eureka:
+      enable: true
+    eager-load:
+      enabled: true
+    isSecure: false
+    readTimeout: 60000
+    connectTimeout: 60000
+  host:
+    socket-timeout-millis: 300000
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      # Docker
+      # defaultZone: http://host.docker.internal:8761/eureka/
+      # Normal
+      defaultZone: http://localhost:8761/eureka/
+  instance: 
+    # Docker
+    # hostname: host.docker.internal
+    # Normal
+    hostname: localhost
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 600000
+    gateway:
+      execution:
+        isolation:
+          strategy: THREAD
+          thread:
+            timeoutInMilliseconds: 600000

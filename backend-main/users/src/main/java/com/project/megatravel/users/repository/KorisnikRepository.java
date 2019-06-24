@@ -26,9 +26,9 @@ public class KorisnikRepository implements ExistRepository {
 		
 		if (kor.getId()==null) {
 			// Dodeli id
+			kor.setId(++currentId);
 			AgentRepository.setCurrentId(currentId);
 			AdminRepository.setCurrentId(currentId);
-			kor.setId(++currentId);
 		}
 
 		return ExistDB.save(kor, kor.getId(), collectionName, schemaLocation, jaxbContext);		

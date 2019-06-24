@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<acc:kategorijaSm xmlns:acc="www.model.megatravel.project.com/accomodation"
+ xmlns:res="www.model.megatravel.project.com/reservations"
+ xmlns:usr="www.model.megatravel.project.com/users"
+ xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/accomodation file:/C:/Users/lukaj/git/megaTravel/schemas_ws/SmestajSema.xsd" id="50">
+    <acc:zvezdice>50</acc:zvezdice>
+</acc:kategorijaSm>

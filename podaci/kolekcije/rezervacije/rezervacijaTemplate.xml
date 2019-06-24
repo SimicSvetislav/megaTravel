@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<res:RezervacijaKorisnika xmlns:acc="www.model.megatravel.project.com/accomodation"
+ xmlns:res="www.model.megatravel.project.com/reservations"
+ xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:usr="www.model.megatravel.project.com/users"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/reservations file:/C:/Users/lukaj/git/megaTravel/schemas_ws/Rezervacija.xsd" datumRezervacije="2006-05-04" id="50">
+    <res:datumPocetka>2006-05-04</res:datumPocetka>
+    <res:datumZavrsetka>2006-05-04</res:datumZavrsetka>
+    <res:popust>0.5</res:popust>
+    <res:smestajnaJedinica>50</res:smestajnaJedinica>
+    <res:cenaSmestaja>0</res:cenaSmestaja>
+    <res:stanje>REZERVISANO</res:stanje>
+    <res:korisnik>50</res:korisnik>
+    <res:ocenjeno>false</res:ocenjeno>
+</res:RezervacijaKorisnika>

@@ -199,6 +199,63 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "get ratings not approved",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get ratings approved",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "approve",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"5d027fac5c2a05227ceb08d9\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8010/rating-module/us-central1/approve",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8010",
+					"path": [
+						"rating-module",
+						"us-central1",
+						"approve"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -34,7 +34,7 @@ import com.project.megatravel.reservations.security.jwt.JwtProvider;
 
 import com.project.megatravel.util.Creator;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthRestAPIs {
@@ -63,7 +63,7 @@ public class AuthRestAPIs {
     Creator creator;
 
     @PostMapping("/signin/{role}")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginForm loginRequest, @PathVariable String role) {
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginForm loginRequest, @PathVariable String role) {
 
     	
     	KrajnjiKorisnik korisnik;
@@ -109,7 +109,7 @@ public class AuthRestAPIs {
          //   Optional<AbstractUser> user = userRepository.findByEmail(loginRequest.getEmail());
             
             
-        return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities(), retVal.getId()));
+        return new ResponseEntity<JwtResponse>(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities(), retVal.getId()), HttpStatus.OK);
 
     	
         

@@ -47,3 +47,12 @@ export class Admin {
     ime = '';
     prezime = '';
 }
+
+export class Rating {
+    room = 333;
+    object = 33;
+    comment = '33333333333333';
+    grade = 5;
+    user = 1;
+    approved = false;
+}

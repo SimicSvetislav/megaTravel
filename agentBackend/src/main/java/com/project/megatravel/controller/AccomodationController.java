@@ -20,7 +20,10 @@ import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.service.AccomodationService;
+import com.project.megatravel.service.AgentService;
+import com.project.megatravel.util.errors.AuthentificationException;
 
 @RestController
 @RequestMapping("/accomodation")
@@ -33,14 +36,15 @@ public class AccomodationController {
 	@Autowired
 	private AccomodationService accomodationService;
 	
+	@Autowired
+	private AgentService agentService;
+	
 	@RequestMapping(value="/object", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Collection<SmestajniObjekat>> getAllAccomodationObjects() {
 			try {
 				Collection<SmestajniObjekat> objects = accomodationService.getAllAccomodationObjects();
 				return new ResponseEntity<>(objects, HttpStatus.OK);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 
@@ -61,10 +65,8 @@ public class AccomodationController {
 			
 			return new ResponseEntity<>(objekat, HttpStatus.OK);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -72,8 +74,13 @@ public class AccomodationController {
 	@RequestMapping(value="/object/new", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SmestajniObjekat> addNewAccomodationObject(@RequestBody SmestajniObjekat newObject) {
 		try {
+			Agent a = agentService.agentAuthentification();
+			newObject.setAgent(a.getId());
+			
 			SmestajniObjekat objekat = accomodationService.addNewObject(newObject);
 			return new ResponseEntity<>(objekat, HttpStatus.CREATED);
+		} catch (AuthentificationException authentificationException) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		} catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
@@ -87,10 +94,8 @@ public class AccomodationController {
 			
 			return new ResponseEntity<>(jedinice, HttpStatus.OK);		
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}	
 	}
@@ -104,10 +109,8 @@ public class AccomodationController {
 			
 			return new ResponseEntity<>(jedinica, HttpStatus.CREATED);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}	
 		
@@ -122,10 +125,8 @@ public class AccomodationController {
 			
 			return new ResponseEntity<>(jedinica, HttpStatus.OK);		
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} catch (Exception e1) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
@@ -144,7 +145,6 @@ public class AccomodationController {
 			Collection<DodatnaUsluga> usluge = accomodationService.getAllAccomodationExtras();
 			return new ResponseEntity<>(usluge, HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 	}
@@ -155,7 +155,6 @@ public class AccomodationController {
 			Collection<TipSmestaja> tipovi = accomodationService.getAllAccomodationTypes();
 			return new ResponseEntity<>(tipovi, HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 	}
@@ -166,7 +165,6 @@ public class AccomodationController {
 			Collection<KategorijaSm> kategorije = accomodationService.getAllAccomodationCategories();
 			return new ResponseEntity<>(kategorije, HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 	}

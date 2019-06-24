@@ -5,6 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -20,6 +25,56 @@ public final class Creator {
 	
 	public Creator() {
 		
+	}
+	
+	/**
+	 * Na osnovu validnog imena mesta, koje može biti kako na srpskom tako i na nekom drugom jeziku (proban engleski), 
+	 * određuju se geografske koordinate tog mesta.
+	 * @param locationName Naziv lokacije
+	 * @return Niz od dva double broja gde je prvi geografska širina, a drugi geografska dužina. 
+	 */
+	public static Double[] getCoordinates(String locationName) {
+		
+		Double lat = null;
+		Double lng = null;
+		
+		final WebClient webClient = new WebClient(BrowserVersion.BEST_SUPPORTED);	
+		// Mora se dozvoliti da bi se dobili rezultati
+		//webClient.getOptions().setJavaScriptEnabled(false);
+
+		try  {
+	
+		    final HtmlPage page = webClient.getPage("https://www.latlong.net/");
+			
+		    //final HtmlForm form = page.getHtmlElementById("frmPlace");
+	
+		    //final HtmlSubmitInput button = page.getHtmlElementById("btnfind");
+		    final HtmlButton button = page.getHtmlElementById("btnfind");
+		    final HtmlTextInput textField = page.getHtmlElementById("place");
+	
+		    textField.setValueAttribute(locationName);
+	
+		    final HtmlPage resultPage = button.click();
+		    
+		    final HtmlTextInput latitudeField = resultPage.getHtmlElementById("lat");
+		    final HtmlTextInput longitudeField = resultPage.getHtmlElementById("lng");
+			
+		    String latStr = latitudeField.getValueAttribute();
+		    String lngStr = longitudeField.getValueAttribute();
+		    
+		    lat = Double.parseDouble(latStr);
+		    lng = Double.parseDouble(lngStr);
+		    
+		    System.out.println("Latitude: " + lat);
+		    System.out.println("Longitude: " + lng);
+	    
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+		    webClient.close();
+		}
+	    
+		return new Double[] {lat, lng};
 	}
 	
 	public static RezervacijaKorisnika createRezervacija(long id, double cena, String datum, String stanje) {

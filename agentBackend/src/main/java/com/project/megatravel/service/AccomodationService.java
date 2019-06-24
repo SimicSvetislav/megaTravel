@@ -6,11 +6,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.megatravel.controller.ws.client.AccomodationClient;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
+import com.project.megatravel.model.accomodation.managment.SendObjectResponse;
+import com.project.megatravel.model.accomodation.managment.SendUnitResponse;
 import com.project.megatravel.repository.CategoriesRepository;
 import com.project.megatravel.repository.ExtrasRepository;
 import com.project.megatravel.repository.SjRepository;
@@ -35,6 +38,9 @@ public class AccomodationService {
 	@Autowired
 	private CategoriesRepository categoryRepository;
 	
+	@Autowired
+	private AccomodationClient accomodationWsClient;
+	
 	public Collection<SmestajniObjekat> getAllAccomodationObjects(){
 		return soRepository.getAll();
 	}
@@ -43,8 +49,10 @@ public class AccomodationService {
 		return soRepository.getOneById(objekatId);
 	}
 	
-	public SmestajniObjekat addNewObject(SmestajniObjekat objekat) {		
-		return soRepository.save(objekat);
+	public SmestajniObjekat addNewObject(SmestajniObjekat objekat) {
+		SendObjectResponse response =  accomodationWsClient.sendObject(objekat);
+	
+		return soRepository.save(response.getSmestajniObjekat());
 	}
 	
 	public List<SmestajnaJedinica> getAllObjectUnits(Long objekatId){
@@ -57,9 +65,9 @@ public class AccomodationService {
 	}
 	
 	public SmestajnaJedinica addNewObjectUnit(SmestajnaJedinica jedinica) {
-		jedinica = sjRepository.save(jedinica); 
+		SendUnitResponse response = accomodationWsClient.sendUnit(jedinica);
 		
-		return jedinica;
+		return sjRepository.save(response.getSmestajnaJedinica());
 	}
 	
 	public void overrideData(Collection<TipSmestaja> tipovi, Collection<KategorijaSm> kategorije, Collection<DodatnaUsluga> usluge,

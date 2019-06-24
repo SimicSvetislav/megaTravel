@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<usr:KrajnjiKorisnik xmlns:acc="www.model.megatravel.project.com/accomodation"
+ xmlns:usr="www.model.megatravel.project.com/users"
+ xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+ xmlns:res="www.model.megatravel.project.com/reservations"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="www.model.megatravel.project.com/users file:/C:/Users/lukaj/git/megaTravel/schemas_ws/KorisnikSema.xsd">
+    <usr:korisnickoIme>korisnickoIme0</usr:korisnickoIme>
+    <usr:sifra>sifra0</usr:sifra>
+    <usr:email>^-@-.AA$</usr:email>
+    <usr:adresa>adresa0</usr:adresa>
+    <usr:telefon>000000000</usr:telefon>
+    <usr:kategorija>NA</usr:kategorija>
+    <usr:ponudjenPopustNakonOtkazivanja>false</usr:ponudjenPopustNakonOtkazivanja>
+    <usr:lokacija>
+        <acc:naziv>naziv0</acc:naziv>
+        <acc:geoSirina>
+            <acc:stepeni>90</acc:stepeni>
+            <acc:strana>N</acc:strana>
+        </acc:geoSirina>
+        <acc:geoDuzina>
+            <acc:stepeni>90</acc:stepeni>
+            <acc:strana>N</acc:strana>
+        </acc:geoDuzina>
+    </usr:lokacija>
+    <usr:ime>ime0</usr:ime>
+    <usr:prezime>prezime0</usr:prezime>
+    <usr:stanje>AKTIVAN</usr:stanje>
+</usr:KrajnjiKorisnik>

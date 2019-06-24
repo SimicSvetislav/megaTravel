@@ -16,10 +16,13 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.model.reservations.managment.ConfirmBookingResponse;
+import com.project.megatravel.model.reservations.managment.MakeBookingResponse;
 import com.project.megatravel.repository.RezervacijeRepository;
 import com.project.megatravel.repository.SjRepository;
 import com.project.megatravel.repository.TypesRepository;
 import com.project.megatravel.util.Creator;
+import com.project.megatravel.util.errors.UnitIsBookedException;
 
 @Service
 public class BookingService {
@@ -42,18 +45,28 @@ public class BookingService {
 	@Autowired
 	private AccomodationRatingClient accomodationRatingWsClient;
 
-	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
+	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) throws UnitIsBookedException {
 		rezervacija.setDatumRezervacije(new Date());
+		
+		MakeBookingResponse response  = bookingWsClient.makeBooking(rezervacija);
+		if(response == null) {
+			throw new UnitIsBookedException();
+		}
+		
 		return bookingRepository.save(rezervacija);
 	}
 
-	public RezervacijaKorisnika updateReservation(RezervacijaKorisnika rezervacija) {
+	public RezervacijaKorisnika updateReservation(RezervacijaKorisnika rezervacija) throws Exception {
 		return bookingRepository.save(rezervacija);
 	}
 	
-	public RezervacijaKorisnika confirmBooking(Long bookingId) {
-		RezervacijaKorisnika booking = getById(bookingId);
-		booking.setStanje("POTVRDJENO");
+	public RezervacijaKorisnika confirmBooking(Long bookingId) throws Exception {
+//		RezervacijaKorisnika booking = getById(bookingId);
+//		booking.setStanje("POTVRDJENO");
+		
+		ConfirmBookingResponse response = bookingWsClient.confirmBooking(bookingId);
+		RezervacijaKorisnika booking = response.getRezervacijaKorisnika();
+		
 		return bookingRepository.save(booking);
 	}
 
@@ -75,6 +88,7 @@ public class BookingService {
 	public Collection<RezervacijaKorisnika> getBookingsHistory(){
 		List<RezervacijaKorisnika> bookingHistory = new ArrayList<RezervacijaKorisnika>();
 		Collection<RezervacijaKorisnika> allBookings = getAll();
+		
 		for(RezervacijaKorisnika rez: allBookings) {
 			if(rez.getStanje().equals("REALIZOVANO")) {
 				bookingHistory.add(rez);
@@ -87,6 +101,7 @@ public class BookingService {
 	public Collection<RezervacijaKorisnika> getBookingsUpcoming() {
 		List<RezervacijaKorisnika> bookingUpcoming= new ArrayList<RezervacijaKorisnika>();
 		Collection<RezervacijaKorisnika> allBookings = getAll();
+		
 		for(RezervacijaKorisnika rez: allBookings) {
 			if(rez.getStanje().equals("REZERVISANO")) {
 				bookingUpcoming.add(rez);
@@ -99,6 +114,7 @@ public class BookingService {
 	public Collection<RezervacijaKorisnika> getAllByUnit(Long id) {
 		List<RezervacijaKorisnika> bookingUnita= new ArrayList<RezervacijaKorisnika>();
 		Collection<RezervacijaKorisnika> allBookings = getAll();
+		
 		for(RezervacijaKorisnika rez: allBookings) {
 			if(rez.getSmestajnaJedinica() == id) {
 				bookingUnita.add(rez);

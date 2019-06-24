@@ -27,9 +27,9 @@ public class AgentRepository implements ExistRepository {
 		
 		if (ag.getId()==null) {
 			// Dodeli id
+			ag.setId(++currentId);
 			AdminRepository.setCurrentId(currentId);
 			KorisnikRepository.setCurrentId(currentId);
-			ag.setId(++currentId);
 		}
 
 		return ExistDB.save(ag, ag.getId(), collectionName, schemaLocation, jaxbContext);		

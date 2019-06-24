@@ -1,0 +1,21 @@
+<div class="image">
+  
+
+  <div class="jumbotron col-md-6 offset-md-3" id="chatJumbo">
+    <div class="container" id="chatSlot">
+      <div class="row" id="chatRow">
+        <textarea class="form-control" readonly [(ngModel)]="chatArea" name="chatBox" id="chatBox"></textarea>
+      </div>
+    </div>
+    <form name="form" (ngSubmit)="onSend()">
+    <div class="input-group" id="ss2">
+        <input type="text" class="form-control" name="text" [(ngModel)]="message.text"
+          placeholder="Type a message..." />
+        <div class="input-group-append">
+          <button (click)="onSend()" class="btn btn-outline-primary" type="button">Send</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
