@@ -18,12 +18,54 @@
                     </div>
                 </ng-template>
               </ngb-carousel>
-           
-      
-          
-            
+            </div>
+          </div>
 
-        </div>
-    </div>
+          <div class="container" *ngIf="existPricelist">
+              <h4 class="section-title h1">Podrazumevani cenovnik</h4><br>
+              <div class="row">
+                <div class="col">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <!-- <td>Indeks</td> -->
+                        <td>Pocetak smene</td>
+                        <td>Kraj termina</td>
+                        <td>Iznos</td>
+                        <td>Valuta</td>
+                        <td></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <!-- <td>
+                          {{i+1}}
+                        </td> -->
+                        <td>
+                          {{podrazumevaniCenovnik.pocetak}}
+                        </td>
+                        <td>
+                          {{podrazumevaniCenovnik.kraj}}
+                        </td>
+                        <td>
+                          {{podrazumevaniCenovnik.cena}}
+                        </td>
+                        <td>
+                          <!-- {{podrazumevaniCenovnik.cena.valuta}} -->
+                          EUR
+                        </td>
+                        <td>
+                          <div *ngIf="logged">
+                              <button class="btn btn-primary btn-sm" (click)="rezervisi()">Rezervisi</button>
+                          </div>
+                            
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              </div>
+
 </section>
 <!-- Team -->
