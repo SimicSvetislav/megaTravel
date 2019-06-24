@@ -25,6 +25,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
  
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ReservationReportComponent } from './reservation-report/reservation-report.component';
+import { PreviewComponent } from './preview/preview.component';
+import { PreviewObjectComponent } from './preview-object/preview-object.component';
 
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -33,6 +35,8 @@ const appRoutes: Routes = [
   {path: 'profile/:id', component: ProfileComponent},
   {path: 'reservation/report/:id', component: ReservationReportComponent},
   {path: 'chat/:id', component: ChatComponent},
+  {path: 'preview', component: PreviewComponent},
+  {path: 'preview/:id', component: PreviewObjectComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
@@ -44,7 +48,9 @@ const appRoutes: Routes = [
     RegisterComponent,
     ProfileComponent,
     ChatComponent,
-    ReservationReportComponent
+    ReservationReportComponent,
+    PreviewComponent,
+    PreviewObjectComponent
   ],
   imports: [
     ReactiveFormsModule,

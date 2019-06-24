@@ -10,6 +10,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true })
 
 exports.postRating = function postRating(req, res) {
 	
+	
 	res.set('Access-Control-Allow-Origin', "*");
 	res.set('Access-Control-Allow-Methods', 'GET, POST');
 	
@@ -404,6 +405,7 @@ exports.averageGrade = function averageGrade(req, res) {
 	
 	res.set('Access-Control-Allow-Origin', "*");
 	res.set('Access-Control-Allow-Methods', 'GET, POST');
+	res.set('Access-Control-Allow-Headers', '*');
   
 	let room = +req.query.room;
   

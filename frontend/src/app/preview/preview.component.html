@@ -1,0 +1,60 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- Team -->
+<section id="team" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">Smestajni objekti</h5>
+        <div class="row"  >
+
+            <!-- Team member -->
+        <div class="col-xs-12 col-sm-6 col-md-4" *ngFor = "let o of objects">
+        
+                        <div class="frontside">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
+                                    <h4 class="card-title">{{o.naziv}}, {{o.lokacija.naziv}}</h4>
+                                    <p class="card-text"></p>
+                                    <a class="btn btn-primary btn-sm" (click)="redirect(o.id)"><i class="fa fa-plus"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                      <!--  <ng-template #kontent>
+                                <div class="card">
+                                        <div class="card-body text-center mt-4">
+                                            <h4 class="card-title">{{o.naziv}}</h4>
+                                            <p class="card-text">{{o.opis}}</p>
+                                            <ul class="list-inline" >
+                                                
+                                                    <li class="list-inline-item" *ngFor = "let p of o.slike">
+                                                        <img class=" img-fluid" src={{p.putanja}} alt="card image" style="width: 100px; height: 100px; " (click)="openModal(content,p.putanja)">
+                                                        <ng-template #content>
+                           
+                                                                <div class="modal-body">
+                                                                    <img class=" img-fluid" src={{p.putanja}} alt="card image" style="width: 2000px; height: 500px; ">
+                                                                </div>
+                                                                
+                                                        </ng-template>
+                                                    </li>
+                                                
+                                            </ul>
+                                        </div>
+                                        <button class="btn btn-primary btn-sm" (click)="openModal(cenovnik)">Cenovnik</button>
+                                        <ng-template #cenovnik>
+                                            
+                                        </ng-template>
+                                    </div>
+                        </ng-template>    -->
+
+            </div> <!-- kraj fora je ovde -->
+            <!-- ./Team member -->
+           
+            
+
+        </div>
+    </div>
+</section>
+<!-- Team -->

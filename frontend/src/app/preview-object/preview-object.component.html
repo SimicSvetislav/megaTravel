@@ -1,0 +1,29 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<!-- Team -->
+<section id="team" class="pb-5">
+    <div class="container">
+        <h5 class="section-title h1">Smestajni objekat: {{objekat.naziv}}</h5>
+        <div class="row"  >
+
+
+            <ngb-carousel [showNavigationIndicators]="showNavigationIndicators">
+                <ng-template ngbSlide *ngFor="let p of objekat.slike">
+                  <img src="{{p.putanja}}" alt="Random first slide">
+                  <div class="carousel-caption">
+                     
+                    </div>
+                </ng-template>
+              </ngb-carousel>
+           
+      
+          
+            
+
+        </div>
+    </div>
+</section>
+<!-- Team -->

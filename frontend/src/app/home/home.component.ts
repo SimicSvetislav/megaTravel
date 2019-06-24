@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { User } from './../user';
 import { TokenStorageService } from './../services/auth/token-storage.service';
 import { Component, OnInit, Output } from '@angular/core';
@@ -27,7 +28,7 @@ export class HomeComponent implements OnInit {
   boolLogIn: boolean = false;
   boolLogOff: boolean = false;
 
-  constructor(private eventBroker: EventBrokerService, private router: Router,private token: TokenStorageService) { }
+  constructor(private eventBroker: EventBrokerService, private router: Router,private token: TokenStorageService, private httpClient: HttpClient) { }
 
   ngOnInit() {
 
@@ -45,7 +46,6 @@ export class HomeComponent implements OnInit {
       this.boolLogIn = true;
       this.boolLogOff = false;
     }
-
 
   }
 
