@@ -10,6 +10,7 @@ export const API_SEARCH = '//localhost:8762/search/';
 export const CHAT_API = 'http://localhost:7070/';
 
 export const CLOUD_API = 'http://localhost:8010/rating/us-central1/';
+export const CLOUD_API2 = 'http://localhost:8010/rating-module/us-central1/';
 
 // Roles
 export const ROLE_USER = "ROLE_USER";
