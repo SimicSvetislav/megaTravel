@@ -414,6 +414,7 @@ exports.averageGrade = function averageGrade(req, res) {
 	res.set('Access-Control-Allow-Origin', '*');
 	res.set('Access-Control-Allow-Headers', '*');
 	res.set('Access-Control-Allow-Methods', 'GET, PUT');
+	res.set('Content-type', 'application/json');
   
 	let room = +req.query.room;
   

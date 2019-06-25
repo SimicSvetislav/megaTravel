@@ -43,6 +43,8 @@ public class SearchService {
 	@Autowired
 	private RestTemplate rest;
 	
+	private static final String GRADE = "http://localhost:8010/rating-module/us-central1/averageGrade?room=";
+	
 	public List<SmestajniObjekat> searchObject(PretragaObjekat po) {
 		
 		//List<SmestajnaJedinica> all = (List<SmestajnaJedinica>)repo.getAll();
@@ -139,6 +141,9 @@ public class SearchService {
 			dto.setOpis(so.getOpis());
 			dto.setKategorija(so.getZvezdice());
 			
+			Double ocenaRac = rest.getForObject(GRADE + f.getId(), Double.class);
+			dto.setOcena(ocenaRac);
+			
 			// TODO: odrediti cenu
 			// dto.setOcena(cena);
 			// TODO pozvati cloud
@@ -193,6 +198,12 @@ public class SearchService {
 	    distance = Math.pow(distance, 2) + Math.pow(height, 2);
 
 	    return Math.sqrt(distance);
+	}
+	
+	public Double getOcena(Long id) {
+		RestTemplate rest2 = new RestTemplate();
+		Double ret = rest2.getForObject(GRADE + id, Double.class);
+		return ret;
 	}
 	
 
