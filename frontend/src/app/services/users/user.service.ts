@@ -1,7 +1,9 @@
+import { CLOUD_API2 } from './../../globals';
 import { API_USER, API_RESERVATION } from '../../globals';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Rating } from 'src/app/rating';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +23,11 @@ export class UserService {
     return this.http.get(API_USER + 'user/' + id);
   }
 
-  setRate(roomId,ocena,userId): Observable<any> {
-    return this.http.get(API_RESERVATION + 'rate/' + roomId + '/' + ocena + '/' + userId);
-    //ovde bi trebalo mozda post metoda jer se ocenjuje rating, medjutim
-    //mora se nesto slati u reqBody
+  setRate(rating: Rating): Observable<any> {
+    //let headers = new HttpHeaders();
+    //headers.set('COntent-type', 'application/json');
+    return this.http.post(CLOUD_API2 + 'postRating', rating);
+
   }
 
   getSmestajnaJedinica(id): Observable<any> {

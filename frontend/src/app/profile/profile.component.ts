@@ -1,3 +1,4 @@
+import { ObjectService } from './../services/object/object.service';
 import { UserService } from '../services/users/user.service';
 import { Component, OnInit } from '@angular/core';
 import { RezervacijaKorisnika } from '../rezervacijaKorisnika';
@@ -5,9 +6,11 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
 import { SmestajniObjekat } from '../smestajniObjekat';
 import { DatePipe } from '@angular/common';
 import * as moment from 'moment';
-import { Route, Router } from '@angular/router';
+import { Route, Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SmestajnaJedinica } from '../smestajnaJedinica';
+import { Rating } from '../rating';
+import { ReservationService } from '../services/reservations/reservation.service';
 
 @Component({
   selector: 'app-profile',
@@ -36,7 +39,10 @@ export class ProfileComponent implements OnInit {
     private tokenService: TokenStorageService,
     private datePipe: DatePipe,
     private router: Router,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private reservService: ReservationService,
+    private objService: ObjectService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -72,6 +78,7 @@ export class ProfileComponent implements OnInit {
         var duration = moment.duration(end.diff(now));
         this.days = duration.asDays();
        // alert("days : " + this.days)
+       //alert("OCenjeno: " + r.ocenjeno);
         if (this.days < 0) {
           this.reservationsOutOfDate.push(r)
         } else {
@@ -112,16 +119,81 @@ export class ProfileComponent implements OnInit {
     this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
   }
 
-  sendKomentar(komentar) {
+  
 
+  idSobe;
+  userId;
+  ocena;
+  idObjekta;
+  idTempRes; //id rezervacije koja se ocenjuje trenutno
+  tempRes: RezervacijaKorisnika = new RezervacijaKorisnika();
+  tempSj: SmestajnaJedinica = new SmestajnaJedinica();
+  r: Rating = new Rating();
+
+  oceni(idSobe,ocena,content,idd) {
+    this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
+    this.idSobe = idSobe;
+    this.userId = this.id;
+    this.ocena = ocena;
+    this.idTempRes = idd;
+    
+    this.objService.getUnitById(this.idSobe).subscribe(data => {
+      this.tempSj = data;
+      this.idObjekta = this.tempSj.sobjekat;
+    })
   }
 
-  oceni(idSobe,ocena,userId) {
-    this.userService.setRate(idSobe,ocena,userId);
+  izmeniRes() {
+    //alert("Usao")
+    this.reservService.getReservation(this.idTempRes).subscribe(data => {
+      this.tempRes = data;
+     // alert("Getovao: " + this.tempRes.id);
+      this.tempRes.ocenjeno = true;
+
+      this.reservService.putReservation(this.tempRes).subscribe(data => {
+      //  alert("Putovao!")
+          window.location.reload();
+      });
+
+    })
+  }
+
+  sendOcena() {
+    this.modalService.dismissAll();
+    /*this.r.grade = this.ocena;
+    this.r.user = this.userId;
+    this.r.room = this.idSobe;
+
+    this.userService.setRate(this.r).subscribe(data => {
+     // alert("ALLLL")
+      console.log(data);
+      this.izmeniRes();
+     
+      
+    });*/
+
+    
+  }
+
+  sendKomentarIocena(komentar) {
+    this.modalService.dismissAll();
+    this.r.grade = this.ocena;
+    this.r.user = this.userId;
+    this.r.room = this.idSobe;
+    this.r.comment = this.komentar;
+    this.r.object = this.idObjekta;
+    
+    this.userService.setRate(this.r).subscribe(data => {
+      console.log(data);
+      this.izmeniRes();
+      
+    });
   }
 
   html(id: number) {
     this.router.navigate(['/reservation/report/' + id]);
   }
 
+
+  
 }

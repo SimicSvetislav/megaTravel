@@ -18,4 +18,8 @@ export class ObjectService {
     return this.http.get(MAIN_API + 'so/' + id);
   }
 
+  getUnitById(id): Observable<any> {
+    return this.http.get(MAIN_API + 'sj/'+id);
+  }
+
 }

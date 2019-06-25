@@ -42,6 +42,7 @@ public class ReservationsController {
 	@RequestMapping(method = RequestMethod.PUT, path="/")
 	public ResponseEntity<RezervacijaKorisnika> updateReservation(@RequestBody RezervacijaKorisnika rezervacija) {
 		
+		System.out.println("not support?");
 		RezervacijaKorisnika rez = service.updateReservation(rezervacija);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
@@ -71,7 +72,7 @@ public class ReservationsController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/user/{id}")
-	public ResponseEntity<List<ReservationDTO>> getReservationsByUser(@PathVariable Long id) {
+	public ResponseEntity<List<RezervacijaKorisnika>> getReservationsByUser(@PathVariable Long id) {
 		List<ReservationDTO> dtoList = new ArrayList<>();
 		List<RezervacijaKorisnika> rez = service.getAllByUser(id);
 		System.out.println("BIO OVDE ???");
@@ -82,7 +83,7 @@ public class ReservationsController {
 			
 		}
 		
-		return new ResponseEntity<List<ReservationDTO>>(dtoList, HttpStatus.OK);
+		return new ResponseEntity<List<RezervacijaKorisnika>>(rez, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path="/object/{id}")

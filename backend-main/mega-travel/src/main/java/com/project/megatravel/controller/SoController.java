@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.repository.SoRepository;
@@ -39,4 +40,6 @@ public class SoController {
 		
 		return new ResponseEntity<SmestajniObjekat>(rez, HttpStatus.OK);
 	}
+	
+
 }

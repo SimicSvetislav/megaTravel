@@ -1,5 +1,7 @@
 package com.project.megatravel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -139,16 +141,22 @@ public class MegaTravelApplication {
 	public static void testSoRepo() {
 		
 		SoRepository repo = new SoRepository();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		
+		String datPoc = "6/6/2019";
+		String datKraj = "10/10/2019";
 		
 		//Cenovnik
 		Cenovnik c = new Cenovnik();
 		c.setCena(25l);
-		Date d = new Date();
-		d.setYear(2019);
-		d.setMonth(6);
-		d.setDate(6);
-		c.setPocetak(d);
-		c.setKraj(d);
+
+		try {
+			c.setKraj(sdf.parse(datKraj));
+			c.setPocetak(sdf.parse(datPoc));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		c.setSmestaj(1l);
 		
 		
