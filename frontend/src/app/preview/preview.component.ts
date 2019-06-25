@@ -1,4 +1,5 @@
-
+import { TypesService } from './../services/search/types.service';
+import { Otkazivanje } from './../otkazivanje';
 import { SearchObject } from './../searchObject';
 import { Slike } from './../slike';
 import { SmestajniObjekat } from './../smestajniObjekat';
@@ -12,7 +13,8 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
 import { SearchService } from '../services/search/search.service';
 import { asElementData } from '@angular/core/src/view';
 import { ExtrasService } from '../services/search/extras.service';
-import { ResultDTO } from '../resultDTO';
+import { ToastrService } from 'ngx-toastr';
+import { CategoriesService } from '../services/search/categories.service';
 
 @Component({
   selector: 'app-preview',
@@ -24,17 +26,21 @@ export class PreviewComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
   hoveredDate: NgbDate;
-  po: SearchObject = new SearchObject();
+  prosli: SearchObject = new SearchObject();
   pr: SearchObject = new SearchObject();
   objects: SmestajniObjekat[] = [];
+  results = new Array();
   pictures: Slike[] = [];
   logged: Boolean = false;
 
   results: ResultDTO[] = [];
 
   userId: number;
+  sorter: string;
 
   extras: Array<any>;
+  types: Array<any>;
+  categories: Array<any>;
 
   dropdownSettings = {};
   selectedItems = [];
@@ -42,7 +48,8 @@ export class PreviewComponent implements OnInit {
   constructor(private eventBroker: EventBrokerService, private token: TokenStorageService,
               private router: Router, private searchService: SearchService,
               private soService: ObjectService, private extrasService: ExtrasService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal, private toastr: ToastrService,
+              private typesService: TypesService, private categoriesService: CategoriesService) { }
 
   ngOnInit() {
 
@@ -52,14 +59,22 @@ export class PreviewComponent implements OnInit {
 
     var stored = this.token.getSearch();
     if (stored) {
-      this.po = JSON.parse(stored);
-      this.searchService.search(this.po, this.userId).subscribe( data => { 
+      this.prosli = JSON.parse(stored);
+      this.searchService.search(this.prosli, this.userId).subscribe( data => { 
         this.objects = data;
       }, error => console.log(error));
     }
 
     this.extrasService.getAll().subscribe(data => {
       this.extras = data;
+    });
+
+    this.typesService.getAll().subscribe(data => {
+      this.types = data;
+    });
+
+    this.categoriesService.getAll().subscribe(data => {
+      this.categories = data;
     });
 
     this.dropdownSettings = {
@@ -88,7 +103,61 @@ export class PreviewComponent implements OnInit {
     })
   }
 
+  sort() {
+    
+    if (this.sorter==="Reccomendation") {
+
+    } else if (this.sorter==="Price") {
+      // Moze na frontu
+    } else if (this.sorter==="Distance") {
+      // ?
+      
+    } else if (this.sorter==="Rating") {
+      // Moze na frontu
+      
+    } else if (this.sorter==="Category") {
+      // Moze na frontu
+
+    }
+
+  }
+
   search() {
+
+    if (!this.pr.lokacija) {
+      this.toastr.warning("Please enter location");
+      return;
+    }
+
+    if (!this.pr.brojOsoba) {
+      this.toastr.warning("Please enter number of persons");
+      return;
+    }
+
+    if (!Number.isInteger(this.pr.brojOsoba) || this.pr.brojOsoba <= 0) {
+      this.toastr.warning("Number of persons must be whole positive number");
+      return;
+    }
+
+    if (!this.fromDate || !this.toDate) {
+      this.toastr.warning("Please select begin and end date");
+      return;
+    }
+
+    if (this.pr.udaljenost !== undefined) {
+      if (this.pr.udaljenost <= 0) { 
+        this.toastr.warning("Distance must be whole number");
+      }
+    }
+
+    if (this.pr.besplatnoOktazivanje === true) {
+      if (this.pr.otkazivanjePre !== undefined) {
+        if (!Number.isInteger(this.pr.otkazivanjePre) || this.pr.otkazivanjePre <= 0) {
+          this.toastr.warning("Number of days for cancellation must be whole positive number");
+          return;
+        }
+      }
+    }
     
     this.pr.dolazak = new Date(this.fromDate.year, this.fromDate.month-1, this.fromDate.day);
     this.pr.odlazak = new Date(this.toDate.year, this.toDate.month-1, this.toDate.day);

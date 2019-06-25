@@ -9,9 +9,11 @@ public class ResultDTO {
 	
 	private SmestajnaJedinica jedinica;
 	private List<Slike> slike;
-	private Double ocena; // TODO
+	private Double ocena;
 	private Integer kategorija;
 	private String opis;
+	private String nazivObj;
+
 	private Double cena; // TODO
 
 	public ResultDTO() {
@@ -65,6 +67,13 @@ public class ResultDTO {
 	public void setSlike(List<Slike> slike) {
 		this.slike = slike;
 	}
+	
+	public String getNazivObj() {
+		return nazivObj;
+	}
 
+	public void setNazivObj(String nazivObj) {
+		this.nazivObj = nazivObj;
+	}
 
 }

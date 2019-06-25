@@ -29,13 +29,14 @@
                             </span>
                         </ng-template>
                         <div class="row">
-                            <div class="col-md-6"> 
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label">Type</span>
                                     <select [(ngModel)]="pr.tipSmestaja" name="tip" class="form-control">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option *ngFor="let type of types" 
+                                            [value]="type.naziv">
+                                          {{type.naziv}}
+                                        </option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
@@ -44,9 +45,11 @@
                                 <div class="form-group">
                                     <span class="form-label">Category</span>
                                     <select class="form-control" [(ngModel)]="pr.kategorijaSmestaja" name="cat">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option value="0">Not categorized</option>
+                                        <option *ngFor="let cat of categories" 
+                                            [value]="cat.zvezdice">
+                                          {{cat.zvezdice}}
+                                        </option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
@@ -68,24 +71,41 @@
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <input class="form-control" type="checkbox" name="cb" id="cb"
-                                        [(ngModel)]="pr.besplatnoOtkazivanje" placeholder="Udaljenost">
+                                    [checked]="pr.besplatnoOktazivanje"
+                                    (change)="pr.besplatnoOktazivanje = !pr.besplatnoOktazivanje" >
                                 </div>
                             </div>
 
                         </div>
-                            <div class="form-group">
-                                <ng-multiselect-dropdown [placeholder]="'Select extras'" [data]="extras"
-                                    [(ngModel)]="selectedItems" [settings]="dropdownSettings"
-                                    (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
-                                    (onDeSelect)="onItemDeselect($event)" (onDeSelectAll)="onDeselectAll($event)">
-                                </ng-multiselect-dropdown>
-                            </div>
-                </form>
+                        <div class="form-group">
+                            <ng-multiselect-dropdown name="multiselect" [placeholder]="'Select extras'" [data]="extras"
+                                [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+                                (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+                                (onDeSelect)="onItemDeselect($event)" (onDeSelectAll)="onDeselectAll($event)">
+                            </ng-multiselect-dropdown>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
 
-        <h5 class="section-title h1">Results</h5>
-        <div class="row">
+            <h5 class="section-title h1">Results</h5>
+            <div class="row" *ngIf="results.length!=0">
+                <div class="col-md-">
+                    <label>Sort by:</label>
+                </div>
+                <div class="col-md-2">
+                    <select [(ngModel)]="sorter" name="sorter">
+                        <option value="Reccomendation">Reccomendation</option>
+                        <option value="Price">Price</option>
+                        <option value="Distance">Distance</option>
+                        <option value="Rating">Rating</option>
+                        <option value="Category">Category</option>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-secondary" (click)="sort()">Sort</button>
+                </div>
+            </div>
 
                 <section id="team" class="pb-5">
                         <div class="container">
@@ -146,7 +166,6 @@
     </div>
 
         </div>
-</div>
-</section>
-<!-- Team -->
+    </section>
+    <!-- Team -->
 </div>
