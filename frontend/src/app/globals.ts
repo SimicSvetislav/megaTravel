@@ -1,22 +1,13 @@
-// Paths
-export const API='//localhost:8131/';
-
 // export const API_USER='//localhost:8152/';
 export const API_USER = '//localhost:8762/users/'; // zuul
-
 //export const API_RESERVATION='//localhost:8122/';
 export const API_RESERVATION = '//localhost:8762/reservations/'; // zuul
-
-export const AGENT_API= API + 'agent/';
-export const USER_API= API + 'user/';
-export const EXTRAS_API= API + 'extras/';
-export const TYPES_API= API + 'types/';
-export const CATEGORIES_API= API + 'cat/';
-
-export const MAIN_API='//localhost:8111/';
+//export const MAIN_API='//localhost:8111/';
+export const API_MAIN = '//localhost:8762/main/';
+export const EXTRAS_API= API_MAIN + 'extras/';
+export const API_SEARCH = '//localhost:8762/search/';
 
 export const CHAT_API = 'http://localhost:7070/';
-export const MESSAGES = CHAT_API + 'messages/';
 
 export const CLOUD_API = 'http://localhost:8010/rating/us-central1/';
 

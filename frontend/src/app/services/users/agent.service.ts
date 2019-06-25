@@ -1,4 +1,4 @@
-import { AGENT_API, MAIN_API, API_RESERVATION } from './../../globals';
+import { API_RESERVATION } from './../../globals';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';

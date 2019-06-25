@@ -28,6 +28,8 @@ import { ReservationReportComponent } from './reservation-report/reservation-rep
 import { PreviewComponent } from './preview/preview.component';
 import { PreviewObjectComponent } from './preview-object/preview-object.component';
 
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 const appRoutes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
@@ -71,6 +73,7 @@ const appRoutes: Routes = [
       closeButton: true,
       positionClass: 'toast-top-right',
     }),
+    NgMultiSelectDropDownModule.forRoot(),
   ],
   providers: [DatePipe, ChatService, ToastrService, SocketService, EventBrokerService],
   bootstrap: [AppComponent]

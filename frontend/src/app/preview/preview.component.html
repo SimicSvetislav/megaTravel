@@ -4,57 +4,108 @@
 <!------ Include the above in your HEAD tag ---------->
 
 <!-- Team -->
-<section id="team" class="pb-5">
-    <div class="container">
-        <h5 class="section-title h1">Smestajni objekti</h5>
-        <div class="row"  >
+<div class="image">
+    <section id="team" class="pb-5">
+        <div class="container">
 
-            <!-- Team member -->
-        <div class="col-xs-12 col-sm-6 col-md-4" *ngFor = "let o of objects">
-        
-                        <div class="frontside">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
-                                    <h4 class="card-title">{{o.naziv}}, {{o.lokacija.naziv}}</h4>
-                                    <p class="card-text"></p>
-                                    <a class="btn btn-primary btn-sm" (click)="redirect(o.id)"><i class="fa fa-plus"></i></a>
+            <div class="collapse col-md-10 offset-md-1" id="collapseExample">
+                <div class="card card-body">
+                    <form #SearchForm="ngForm" (ngSubmit)="search()">
+                        <input type="text" name="loc" id="loc" [(ngModel)]="pr.lokacija" placeholder="Location">
+                        &nbsp;
+                        <input type="number" min='1' [(ngModel)]="pr.brojOsoba" name="brojOsoba"
+                            placeholder="Persons" />
+                        &nbsp;<button class="btn btn-primary" type="submit">Search</button><br />
+                        <ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+                            outsideDays="hidden" style="color: black; background-color: white">
+                        </ngb-datepicker>
+                        <ng-template #t let-date let-focused="focused">
+                            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+                                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                                (mouseleave)="hoveredDate = null">
+                                {{ date.day }}
+                            </span>
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-md-6"> 
+                                <div class="form-group">
+                                    <span class="form-label">Type</span>
+                                    <select [(ngModel)]="pr.tipSmestaja" name="tip" class="form-control">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <span class="form-label">Category</span>
+                                    <select class="form-control" [(ngModel)]="pr.kategorijaSmestaja" name="cat">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                    <span class="select-arrow"></span>
                                 </div>
                             </div>
                         </div>
-                      <!--  <ng-template #kontent>
-                                <div class="card">
-                                        <div class="card-body text-center mt-4">
-                                            <h4 class="card-title">{{o.naziv}}</h4>
-                                            <p class="card-text">{{o.opis}}</p>
-                                            <ul class="list-inline" >
-                                                
-                                                    <li class="list-inline-item" *ngFor = "let p of o.slike">
-                                                        <img class=" img-fluid" src={{p.putanja}} alt="card image" style="width: 100px; height: 100px; " (click)="openModal(content,p.putanja)">
-                                                        <ng-template #content>
-                           
-                                                                <div class="modal-body">
-                                                                    <img class=" img-fluid" src={{p.putanja}} alt="card image" style="width: 2000px; height: 500px; ">
-                                                                </div>
-                                                                
-                                                        </ng-template>
-                                                    </li>
-                                                
-                                            </ul>
-                                        </div>
-                                        <button class="btn btn-primary btn-sm" (click)="openModal(cenovnik)">Cenovnik</button>
-                                        <ng-template #cenovnik>
-                                            
-                                        </ng-template>
-                                    </div>
-                        </ng-template>    -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input class="form-control" type="number" min="0" name="distance" id="distance"
+                                        [(ngModel)]="pr.udaljenost" placeholder="Distance (km)">
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <input class="form-control" type="number" min="0" name="pre" id="pre"
+                                        [(ngModel)]="pr.otkazivanjePre" placeholder="Cancle days before">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <input class="form-control" type="checkbox" name="cb" id="cb"
+                                        [(ngModel)]="pr.besplatnoOtkazivanje" placeholder="Udaljenost">
+                                </div>
+                            </div>
+
+                        </div>
+                            <div class="form-group">
+                                <ng-multiselect-dropdown [placeholder]="'Select extras'" [data]="extras"
+                                    [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+                                    (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+                                    (onDeSelect)="onItemDeselect($event)" (onDeSelectAll)="onDeselectAll($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                </form>
+            </div>
+        </div>
+
+        <h5 class="section-title h1">Results</h5>
+        <div class="row">
+
+            <!-- Team member -->
+            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let o of objects">
+
+                <div class="frontside">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
+                            <h4 class="card-title">{{o.naziv}}, {{o.lokacija.naziv}}</h4>
+                            <p class="card-text"></p>
+                            <a class="btn btn-primary btn-sm" (click)="redirect(o.id)"><i class="fa fa-plus"></i></a>
+                        </div>
+                    </div>
+                </div>
 
             </div> <!-- kraj fora je ovde -->
             <!-- ./Team member -->
-           
-            
+
+
 
         </div>
-    </div>
+</div>
 </section>
 <!-- Team -->
+</div>

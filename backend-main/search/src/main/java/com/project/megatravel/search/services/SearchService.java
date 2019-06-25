@@ -1,26 +1,199 @@
 package com.project.megatravel.search.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.client.RestTemplate;
 
+import com.project.megatravel.model.accomodation.DodatnaUsluga;
+import com.project.megatravel.model.accomodation.Polozaj;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.search.PretragaObjekat;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.search.model.dto.ResultDTO;
+import com.project.megatravel.search.repository.KorisnikRepository;
+import com.project.megatravel.search.repository.RezervacijeRepository;
+import com.project.megatravel.search.repository.SjRepository;
+import com.project.megatravel.search.repository.SoRepository;
 
 @Service
 @CrossOrigin
 public class SearchService {
 
+	@Autowired
+	private SjRepository repo;
+	
+	@Autowired
+	private SoRepository soRepo;
+	
+	@Autowired
+	private RezervacijeRepository resRepo;
+	
+	@Autowired
+	private KorisnikRepository korRepo;
+	
+	@Autowired
+	private RestTemplate rest;
+	
 	public List<SmestajniObjekat> searchObject(PretragaObjekat po) {
+		
+		//List<SmestajnaJedinica> all = (List<SmestajnaJedinica>)repo.getAll();
 		
 		return new ArrayList<>();
 	}
 	
-	public List<SmestajniObjekat> search(PretragaObjekat po) {
+	public List<ResultDTO> search(PretragaObjekat po, Long korId) {
 		
-		return new ArrayList<>();
+		List<SmestajnaJedinica> list = (List<SmestajnaJedinica>)repo.getAll();
+		List<SmestajniObjekat> objekti = (List<SmestajniObjekat>)soRepo.getAll();
+		List<RezervacijaKorisnika> ress = (List<RezervacijaKorisnika>)resRepo.getAll();
+		
+		Map<Long, SmestajniObjekat> mapa = objekti.stream().collect(Collectors.toMap(SmestajniObjekat::getId, so -> so));
+		
+		if (po.getLokacija()!=null && !po.getLokacija().trim().equals("")) {
+			// Filtriranje po imenu
+			list = list.stream().filter(sj -> mapa.get(sj.getSObjekat()).getLokacija().getNaziv().contains(po.getLokacija())).collect(Collectors.toList());
+		}
+		
+		if (po.getBrojOsoba()!=null && po.getBrojOsoba()!=0) {
+			// Filtriranje po broju kreveta
+			list = list.stream().filter(sj -> sj.getBrojKreveta() >= po.getBrojOsoba()).collect(Collectors.toList());
+		}
+		
+		// Tip smestaja
+		if (po.getTipSmestaja()!=null && !po.getTipSmestaja().equals("")) {
+			// Filtriranje tipu smestaja
+			list = list.stream().filter(sj -> mapa.get(sj.getSObjekat()).getTipSmestaja().getNaziv().equals(po.getTipSmestaja())).collect(Collectors.toList());
+		}
+		
+		
+		// Kategorija smestaja, nula nekategorisan
+		if (po.getKategorijaSmestaja()!=null) {
+			// Filtriranje po kategoriji
+			list = list.stream().filter(sj -> mapa.get(sj.getSObjekat()).getZvezdice()==po.getKategorijaSmestaja()).collect(Collectors.toList());
+		}
+		
+		// Besplatno otkazivanje
+		if (po.isBesplatnoOtkazivanje()!=null && po.isBesplatnoOtkazivanje()) {
+			list = list.stream().filter(sj -> sj.getOtkazivanje().isDozvoljeno()).collect(Collectors.toList());
+			if (po.getOtkazivanjePre()!=null && po.getOtkazivanjePre()>0) {
+				list = list.stream().filter(sj -> sj.getOtkazivanje().getBrojDana() >= po.getOtkazivanjePre()).collect(Collectors.toList());
+			}
+		}
+		
+		// Udaljenost
+		if (korId!=null && korId > 0 && po.getUdaljenost()!=null && po.getUdaljenost() > 0) {
+			KrajnjiKorisnik korisnik = korRepo.getOneById(korId);
+			list = list.stream().filter(sj -> checkDistance(mapa.get(sj.getSObjekat()).getLokacija().getKoordinate(), korisnik.getLokacija().getKoordinate(), po.getUdaljenost())).collect(Collectors.toList());
+		}
+		
+		// Dodatne usluge
+		List<SmestajnaJedinica> toRemoveUsluge = new ArrayList<>();
+		for(SmestajnaJedinica s: list) {
+			SmestajniObjekat so = mapa.get(s.getSObjekat());
+			
+			List<DodatnaUsluga> usluge = so.getDodatnaUsluga();
+			List<Long> ids = usluge.stream().map(u -> u.getId()).collect(Collectors.toList());
+			
+			if (!ids.containsAll(po.getDodatneUsluge())) {
+				toRemoveUsluge.add(s);
+			}
+			
+		}
+		
+		list.removeAll(toRemoveUsluge);
+		
+		
+		List<SmestajnaJedinica> toRemove = new ArrayList<>();
+		
+		// Da li slobodna jedinica
+		for(SmestajnaJedinica s : list) {
+			// Rezervacije za neku jedinicu
+			List<RezervacijaKorisnika> resSj = getByJed(s.getId(), ress);
+			
+			for (RezervacijaKorisnika r : resSj) {
+				if (po.getDolazak().before(r.getDatumZavrsetka()) && r.getDatumPocetka().before(po.getOdlazak())) {
+					toRemove.add(s);
+					break;
+				}
+			}
+		}
+		
+		list.removeAll(toRemove);
+		
+		List<ResultDTO> results = new ArrayList<>();
+		for (SmestajnaJedinica f: list) {
+			ResultDTO dto = new ResultDTO();
+			SmestajniObjekat so = mapa.get(f.getId());
+			
+			dto.setJedinica(f);
+			dto.setSlike(so.getSlike());
+			dto.setOpis(so.getOpis());
+			dto.setKategorija(so.getZvezdice());
+			
+			// TODO: odrediti cenu
+			// dto.setOcena(cena);
+			// TODO pozvati cloud
+			//dto.setOcena(ocena);
+			
+			results.add(dto);
+			
+		}
+		
+		
+		return results;
 	}
+	
+	public List<RezervacijaKorisnika> getByJed(Long id, Collection<RezervacijaKorisnika> all) {
+		
+		List<RezervacijaKorisnika> res =  all.stream()
+				.filter(u -> u.getSmestajnaJedinica().equals(id))
+				.collect(Collectors.toList());
+		
+		
+		return res;
+		
+	}
+	
+	public boolean checkDistance(Polozaj coordsSmestaj, Polozaj coordsKorisnik, Double limit) {
+		
+		double meters = distance(coordsSmestaj.getGeoSirina(), coordsKorisnik.getGeoSirina(), coordsSmestaj.getGeoDuzina(), coordsKorisnik.getGeoDuzina(), 0.0, 0.0);
+		
+		double km = meters / 1000;
+		
+		if (km < limit) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public static double distance(double lat1, double lat2, double lon1, double lon2, double el1, double el2) {
+
+	    final int R = 6371;
+
+	    double latDistance = Math.toRadians(lat2 - lat1);
+	    double lonDistance = Math.toRadians(lon2 - lon1);
+	    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+	            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+	            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	    double distance = R * c * 1000; // convert to meters
+
+	    double height = el1 - el2;
+
+	    distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+	    return Math.sqrt(distance);
+	}
+	
 
 }

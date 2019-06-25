@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.reservations.services.EmailService;
 import com.project.megatravel.reservations.services.ReservationService;
 
@@ -147,7 +148,7 @@ public class ReservationsController {
 		return new ResponseEntity<String>(rawHtml, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, path="/confirm/{bookingId}", produces="application/json")
+	@RequestMapping(method = RequestMethod.GET, path="/confirm/{Id}", produces="application/json")
 	public ResponseEntity<RezervacijaKorisnika> confirmBooking(@PathVariable("Id") Long id) {
 		RezervacijaKorisnika rezervacija = service.getById(id);
 		rezervacija.setStanje("Potvrdjeno"); // potvrdjeno
@@ -164,4 +165,14 @@ public class ReservationsController {
 		
 		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
 	}
+	
+	
+	@RequestMapping(method = RequestMethod.GET, path="/userByRes/{id}", produces="application/json")
+	public ResponseEntity<KrajnjiKorisnik> getUserByRes(@PathVariable("id") Long id) {
+		
+		KrajnjiKorisnik kk = service.getUser(id);
+		
+		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
+	}
+	
 }

@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { MESSAGES } from './../../globals';
+import { CHAT_API } from './../../globals';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -11,7 +11,7 @@ export class MessagesService {
   constructor(private http: HttpClient) { }
 
   getByReservation(id: number): Observable<any> {
-    return this.http.get(MESSAGES + 'res/' + id);
+    return this.http.get(CHAT_API + 'messages/res/' + id);
   }
 
 }

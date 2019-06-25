@@ -1,0 +1,70 @@
+package com.project.megatravel.search.model.dto;
+
+import java.util.List;
+
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat.Slike;
+
+public class ResultDTO {
+	
+	private SmestajnaJedinica jedinica;
+	private List<Slike> slike;
+	private Double ocena; // TODO
+	private Integer kategorija;
+	private String opis;
+	private Double cena; // TODO
+
+	public ResultDTO() {
+		
+	}
+
+	public Double getOcena() {
+		return ocena;
+	}
+
+	public void setOcena(Double ocena) {
+		this.ocena = ocena;
+	}
+
+	public Integer getKategorija() {
+		return kategorija;
+	}
+
+	public void setKategorija(Integer kategorija) {
+		this.kategorija = kategorija;
+	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public Double getCena() {
+		return cena;
+	}
+
+	public void setCena(Double cena) {
+		this.cena = cena;
+	}
+
+	public SmestajnaJedinica getJedinica() {
+		return jedinica;
+	}
+
+	public void setJedinica(SmestajnaJedinica jedinica) {
+		this.jedinica = jedinica;
+	}
+
+	public List<Slike> getSlike() {
+		return slike;
+	}
+
+	public void setSlike(List<Slike> slike) {
+		this.slike = slike;
+	}
+
+
+}

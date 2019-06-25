@@ -1,4 +1,4 @@
-import { API_USER, LOGIN_API } from './../../globals';
+import { API_USER } from './../../globals';
 import { AuthLoginInfo } from './../../forms/loginForm';
 import { SignUpInfo } from './../../forms/registerForm';
 import { JwtResponse } from './../../jwt-response';

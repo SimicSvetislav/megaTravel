@@ -1,3 +1,4 @@
+import { SearchObject } from './../../searchObject';
 import { Injectable } from '@angular/core';
 
 const TOKEN_KEY = 'AuthToken';
@@ -7,6 +8,8 @@ const USER_KEY = 'AuthUser;';
 const RESERVED = 'Reserved;';
 
 const REFRESH = "Refresh";
+
+const SEARCH = "Search"
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +82,15 @@ export class TokenStorageService {
 
   public getRefresh() : string {
     return sessionStorage.getItem(REFRESH);
+  }
+
+  public saveSearch(item: SearchObject) {
+    window.sessionStorage.removeItem(SEARCH);
+    window.sessionStorage.setItem(SEARCH, JSON.stringify(item));
+  }
+
+  public getSearch(): string {
+    return sessionStorage.getItem(SEARCH);
   }
 
 }
