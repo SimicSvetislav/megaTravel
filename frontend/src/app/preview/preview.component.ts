@@ -1,3 +1,4 @@
+import { TokenStorageService } from './../services/auth/token-storage.service';
 import { Slike } from './../slike';
 import { SmestajniObjekat } from './../smestajniObjekat';
 import { Component, OnInit } from '@angular/core';
@@ -5,6 +6,7 @@ import { EventBrokerService } from '../services/event-broker/event-broker.servic
 import { Router } from '@angular/router';
 import { ObjectService } from '../services/object/object.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { lookup } from 'dns';
 
 @Component({
   selector: 'app-preview',
@@ -15,11 +17,13 @@ export class PreviewComponent implements OnInit {
 
   objects: SmestajniObjekat[] = [];
   pictures: Slike[] = [];
+  logged: Boolean = false;
 
   constructor(private eventBroker: EventBrokerService, 
               private router: Router,
               private soService: ObjectService,
-              private modalService: NgbModal) { }
+              private modalService: NgbModal,
+              private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
 
@@ -35,6 +39,10 @@ export class PreviewComponent implements OnInit {
 
     })
 
+    if(this.tokenStorage.getUser() != null) {
+      this.logged = true;
+    }
+
 
 
   }
@@ -42,8 +50,8 @@ export class PreviewComponent implements OnInit {
   redirect(id) {
     this.router.navigate(['preview/' +id]);
   }
-  /*openModal(content) {
+  openModal(content) {
     this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
-  }*/
+  }
 
 }

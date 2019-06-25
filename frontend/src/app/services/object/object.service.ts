@@ -22,4 +22,8 @@ export class ObjectService {
     return this.http.get(MAIN_API + 'sj/'+id);
   }
 
+  getUnitsOfObject(id) : Observable<any> {
+    return this.http.get(MAIN_API + 'sj/units/' + id);
+  }
+
 }

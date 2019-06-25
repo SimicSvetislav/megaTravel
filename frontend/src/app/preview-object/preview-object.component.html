@@ -21,7 +21,7 @@
             </div>
           </div>
 
-          <div class="container" *ngIf="existPricelist">
+          <div class="container" *ngIf="existPricelist" >
               <h4 class="section-title h1">Podrazumevani cenovnik</h4><br>
               <div class="row">
                 <div class="col">
@@ -29,38 +29,44 @@
                     <thead>
                       <tr>
                         <!-- <td>Indeks</td> -->
+                        <td> Soba </td>
                         <td>Pocetak smene</td>
                         <td>Kraj termina</td>
                         <td>Iznos</td>
                         <td>Valuta</td>
-                        <td></td>
+                       
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <!-- <td>
-                          {{i+1}}
-                        </td> -->
-                        <td>
-                          {{podrazumevaniCenovnik.pocetak}}
-                        </td>
-                        <td>
-                          {{podrazumevaniCenovnik.kraj}}
-                        </td>
-                        <td>
-                          {{podrazumevaniCenovnik.cena}}
-                        </td>
-                        <td>
-                          <!-- {{podrazumevaniCenovnik.cena.valuta}} -->
-                          EUR
-                        </td>
-                        <td>
-                          <div *ngIf="logged">
-                              <button class="btn btn-primary btn-sm" (click)="rezervisi()">Rezervisi</button>
-                          </div>
+                        <div *ngFor="let s of sj" >
+                          <tr>
+                             
+                              <td>
+                                1/{{s.brojKreveta}},  <div *ngIf="s.balkon"> Balkon </div>
+                              </td>
                             
-                        </td>
-                      </tr>
+                              <td>
+                                {{podrazumevaniCenovnik.pocetak}}
+                              </td>
+                              <td>
+                                {{podrazumevaniCenovnik.kraj}}
+                              </td>
+                              <td>
+                                {{podrazumevaniCenovnik.cena}}
+                              </td>
+                              <td>
+                                <!-- {{podrazumevaniCenovnik.cena.valuta}} -->
+                                EUR
+                              </td>
+                              <div *ngIf="logged">
+                              <td>
+                                    <button class="btn btn-primary btn-sm" (click)="rezervisi()">Rezervisi</button>
+                            </td>
+                            </div>
+                            </tr>
+                          </div>
+
+                      
                     </tbody>
                   </table>
                 </div>

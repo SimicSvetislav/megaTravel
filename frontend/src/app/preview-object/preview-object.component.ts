@@ -1,8 +1,10 @@
+import { CloudService } from './../services/cloud/cloud.service';
 import { TokenStorageService } from './../services/auth/token-storage.service';
 import { SmestajniObjekat, Cenovnik } from './../smestajniObjekat';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ObjectService } from '../services/object/object.service';
+import { SmestajnaJedinica } from '../smestajnaJedinica';
 
 @Component({
   selector: 'app-preview-object',
@@ -20,10 +22,14 @@ export class PreviewObjectComponent implements OnInit {
   id;
   existPricelist: Boolean = false;
 
+  sjtemp: SmestajnaJedinica[] = [];
+  sj: SmestajnaJedinica[] = [];
+
   constructor(private router: Router,
     private route: ActivatedRoute,
     private soService: ObjectService,
-    private tokenStorage: TokenStorageService) { }
+    private tokenStorage: TokenStorageService,
+    private cloudSe: CloudService) { }
 
   ngOnInit() {
 
@@ -44,6 +50,22 @@ export class PreviewObjectComponent implements OnInit {
         this.existPricelist = true;
       }
     })
+
+
+    this.soService.getUnitsOfObject(this.objectId).subscribe(data => {
+        this.sjtemp = data;
+        for(let s of this.sjtemp) {
+          
+          this.cloudSe.averageRoom(s.id).subscribe(data => {
+            s.rejting = data;
+            this.sj.push(s);
+          })
+
+         
+        }
+    })
+
+   
 
   }
 

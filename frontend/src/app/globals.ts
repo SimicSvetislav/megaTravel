@@ -20,6 +20,9 @@ export const MESSAGES = CHAT_API + 'messages/';
 
 export const CLOUD_API = 'http://localhost:8010/rating/us-central1/';
 export const CLOUD_API2 = 'http://localhost:8010/rating-module/us-central1/';
+export const CLOUD_NOT_APPROVED = 'http://localhost:8010/rating-module/us-central1/getRatingsNotApproved/';
+export const CLOUD_APPROVAL = 'http://localhost:8010/rating-module/us-central1/approve/';
+export const CLOUD_AVERAGE = 'http://localhost:8010/rating-module/us-central1/averageGrade/';
 
 // Roles
 export const ROLE_USER = "ROLE_USER";
