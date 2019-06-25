@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+import com.project.megatravel.search.services.SearchService;
+
 @EnableDiscoveryClient
 @SpringBootApplication
 public class SearchApplication {
@@ -26,6 +28,10 @@ public class SearchApplication {
 		SpringApplication.run(SearchApplication.class, args);
 		
 		logger.info("Search microservice successfully started");
+		
+		//SearchService ss = new SearchService();
+		//System.out.println(ss.getOcena(1L));
+		
 	}
 
 }
