@@ -1,3 +1,4 @@
+import { ResultDTO } from './../resultDTO';
 import { TypesService } from './../services/search/types.service';
 import { Otkazivanje } from './../otkazivanje';
 import { SearchObject } from './../searchObject';
@@ -29,7 +30,7 @@ export class PreviewComponent implements OnInit {
   prosli: SearchObject = new SearchObject();
   pr: SearchObject = new SearchObject();
   objects: SmestajniObjekat[] = [];
-  results = new Array();
+  //results = new Array();
   pictures: Slike[] = [];
   logged: Boolean = false;
 

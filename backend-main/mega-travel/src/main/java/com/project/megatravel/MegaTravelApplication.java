@@ -54,7 +54,7 @@ public class MegaTravelApplication {
 		logger.info("Main backend application successfully started");
 		
 		//testDodatneUsluge();
-		//testSoRepo();
+		testSoRepo();
 		testSjRepo();
 		
 		//testRezervacijaRepo();

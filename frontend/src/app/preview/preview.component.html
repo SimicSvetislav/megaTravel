@@ -118,8 +118,8 @@
                                                     <div class="card">
                                                         <div class="card-body text-center">
                                                             <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
-                                                            <h4 class="card-title">Smestajni objekat ID: {{o.jedinica.sobjekat}}, kategorija: {{o.kategorija}}  <span style="color:gold"><i class="fas fa-star"></i></span> </h4>
-                                                            <h3 class="card-title">1/{{o.jedinica.brojKreveta}} <div *ngIf="o.jedinica.balkon">ima balkon</div></h3>
+                                                            <h4 class="card-title">{{o.nazivObj}}, kategorija: {{o.kategorija}}  <span style="color:gold"><i class="fas fa-star"></i></span> </h4>
+                                                            <h3 class="card-title">1/{{o.jedinica.brojKreveta}} <div *ngIf="o.jedinica.balkon">Balkon<i class="fas fa-check"></i></div></h3>
                                                             <span>Ocena: <span style="color:gold"><i class="fas fa-star"></i></span><span class="ml-1">{{o.ocena}}</span></span>
                                                             <p class="card-text"></p>
                                                             <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
@@ -143,28 +143,9 @@
                                                         </div>
                                                     </div>
 
-            <!-- Team member 
-            <div class="col-xs-12 col-sm-6 col-md-4" *ngFor="let o of objects">
-
-                <div class="frontside">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
-                            <h4 class="card-title">{{o.naziv}}, {{o.lokacija.naziv}}</h4>
-                            <p class="card-text"></p>
-                            <a class="btn btn-primary btn-sm" (click)="redirect(o.id)"><i class="fa fa-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                       
-                    </div>
-                </div> <!-- kraj fora je ovde -->
-            <!-- ./Team member -->
-
         </div>
     </div>
-
+</div>
         </div>
     </section>
     <!-- Team -->

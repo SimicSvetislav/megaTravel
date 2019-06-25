@@ -7,4 +7,5 @@ export class ResultDTO {
     kategorija: number;
     opis: string;
     cena: number;
+    nazivObj: string;
 }
