@@ -297,12 +297,45 @@ public class ReservationService {
 			long begin = r.getDatumPocetka().getTime();
 			long end = r.getDatumZavrsetka().getTime();
 			
-			if( (newBookingBegin >= begin && newBookingEnd <= end) || (begin >= newBookingBegin && begin <= newBookingEnd)) {
+			
+//			if( (newBookingBegin >= begin && newBookingEnd <= end) || (begin >= newBookingBegin && begin <= newBookingEnd)) {
+//				return false;
+//			}
+			
+			long numberOfDaysInRange = numberOfDaysThatAreInRange(newBookingBegin, newBookingEnd, begin, end);
+			if(numberOfDaysInRange > 0) {
 				return false;
 			}
+			
 		}
 		
 		return true;
+	}
+	
+	private long  calculuteDaysBetween(long searchObjectBeginDate, long searchObjectEndDate) {
+		long difference = (searchObjectBeginDate - searchObjectEndDate) / 86400000; // millisecond per day
+		return Math.abs(difference);
+	}
+	
+	private long numberOfDaysThatAreInRange(long searchObjectBeginDate, long searchObjectEndDate, long priceBeginDate, long priceEndDate) {
+		if(searchObjectBeginDate < priceBeginDate && searchObjectEndDate > priceEndDate) {  //zeljeni termin obuhvata cak i prevazilazi  termin
+			return calculuteDaysBetween(priceBeginDate, priceEndDate);
+		}
+		
+		if(searchObjectBeginDate >= priceBeginDate && searchObjectBeginDate < priceEndDate) {  //pocetak zeljnog termina upada u ovaj  termin
+			if(searchObjectEndDate <= priceEndDate) {				// zeljeni datumi su u celini u jednom  terminu
+				return calculuteDaysBetween(searchObjectBeginDate, searchObjectEndDate);
+			}else {
+				return calculuteDaysBetween(searchObjectBeginDate, priceEndDate);		// delicmo termin upada u ovaj  termin
+			}
+		}
+		
+		if (searchObjectEndDate > priceBeginDate && searchObjectEndDate <= priceEndDate ){
+			return calculuteDaysBetween(priceBeginDate, searchObjectEndDate);
+		}
+		
+		
+		return 0; // zeljeni datum uopste ne upada u ovaj  termina ;
 	}
 
 	public KrajnjiKorisnik getUser(Long id) {
