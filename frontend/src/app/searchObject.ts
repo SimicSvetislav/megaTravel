@@ -8,7 +8,7 @@ export class SearchObject {
     tipSmestaja: string;
     kategorijaSmestaja: number;
     udaljenost: number;
-    besplatnoOktazivanje: boolean;
+    besplatnoOktazivanje: boolean = false;
     otkazivanjePre: number;
     dodatneUsluge = [];
 }

@@ -141,7 +141,8 @@ public class SearchService {
 			dto.setOpis(so.getOpis());
 			dto.setKategorija(so.getZvezdice());
 			
-			Double ocenaRac = rest.getForObject(GRADE + f.getId(), Double.class);
+			//Double ocenaRac = rest.getForObject(GRADE + f.getId(), Double.class);
+			Double ocenaRac = getOcena(f.getId());
 			dto.setOcena(ocenaRac);
 			
 			// TODO: odrediti cenu

@@ -9,7 +9,7 @@ public class ResultDTO {
 	
 	private SmestajnaJedinica jedinica;
 	private List<Slike> slike;
-	private Double ocena; // TODO
+	private Double ocena;
 	private Integer kategorija;
 	private String opis;
 	private Double cena; // TODO
