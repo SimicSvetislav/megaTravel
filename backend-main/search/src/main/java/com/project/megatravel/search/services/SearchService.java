@@ -2,6 +2,7 @@ package com.project.megatravel.search.services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 
+import com.mchange.v2.sql.filter.SynchronizedFilterDataSource;
+import com.project.megatravel.model.accomodation.Cenovnik;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.Polozaj;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -148,6 +151,8 @@ public class SearchService {
 			
 			// TODO: odrediti cenu
 			// dto.setOcena(cena);
+			double cena = generatePrice(po, so);
+			dto.setCena(cena);
 			// TODO pozvati cloud
 			//dto.setOcena(ocena);
 			
@@ -208,5 +213,61 @@ public class SearchService {
 		return ret;
 	}
 	
+	private double generatePrice(PretragaObjekat po, SmestajniObjekat s) {
+		double cena = 0.0;
+				
+		long searchObjectBeginDate = po.getOdlazak().getTime();
+		long searchObjectEndDate = po.getDolazak().getTime();
+		
+		long numberOfDaysForTrip = calculuteDaysBetween(searchObjectBeginDate, searchObjectEndDate);
+		long numberOfDaysThatHaveAssignedPrice = 0;
+		
+		
+		for(Cenovnik c : s.getCenovnici()) {
+			long priceBeginDate = c.getPocetak().getTime();
+			long priceEndDate = c.getKraj().getTime();
+			
+			long numberOfDaysInRange = numberOfDaysThatAreInRange(searchObjectBeginDate, searchObjectEndDate, priceBeginDate, priceEndDate);
+			
+			numberOfDaysThatHaveAssignedPrice += numberOfDaysInRange;	
+			cena += (numberOfDaysInRange * c.getCena());
+			
+		}
+		
+		if(numberOfDaysThatHaveAssignedPrice <= numberOfDaysForTrip) {
+			cena += ((numberOfDaysForTrip - numberOfDaysThatHaveAssignedPrice) * s.getPodrazumevaniCenovnik().getCena());
+		} else {
+			System.out.println("GRESKA!!!! Prekoracenje pri brojanju dana");
+		}
+		
+		
+		return cena;
+	}
+	
+	private long  calculuteDaysBetween(long searchObjectBeginDate, long searchObjectEndDate) {
+		long difference = (searchObjectBeginDate - searchObjectEndDate) / 86400000; // millisecond per day
+		return Math.abs(difference);
+	}
+	
+	private long numberOfDaysThatAreInRange(long searchObjectBeginDate, long searchObjectEndDate, long priceBeginDate, long priceEndDate) {		
+		if(searchObjectBeginDate < priceBeginDate && searchObjectEndDate > priceEndDate) {  //zeljeni termin obuhvata cak i prevazilazi platni termin
+			return calculuteDaysBetween(priceBeginDate, priceEndDate);
+		}
+		
+		if(searchObjectBeginDate >= priceBeginDate && searchObjectBeginDate < priceEndDate) {  //pocetak zeljnog termina upada u ovaj platni termin
+			if(searchObjectEndDate <= priceEndDate) {				// zeljeni datumi su u celini u jednom platnom terminu
+				return calculuteDaysBetween(searchObjectBeginDate, searchObjectEndDate);
+			}else {
+				return calculuteDaysBetween(searchObjectBeginDate, priceEndDate);		// delicmo termin upada u ovaj platni termin
+			}
+		}
+		
+		if (searchObjectEndDate > priceBeginDate && searchObjectEndDate <= priceEndDate ){
+			return calculuteDaysBetween(priceBeginDate, searchObjectEndDate);
+		}
+		
+		
+		return 0; // zeljeni datum uopste ne upada u ovaj platni termina cena;
+	}
 
 }

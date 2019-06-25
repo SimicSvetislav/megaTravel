@@ -1,3 +1,4 @@
+import { HomeComponent } from './home/home.component';
 import { ChatService } from './service/chat.service';
 import { ProfileComponent } from './user/profile/profile.component';
 import { LocationPipe } from './utils/location.pipe';
@@ -56,6 +57,15 @@ import { ChatComponent } from './booking/chat/chat.component';
 import { SocketService } from './service/socket.service';
 const routes = [
   {
+    path: '', redirectTo: '/home', pathMatch: 'full'
+  },
+  {
+    path: 'home', component: HomeComponent,
+  },
+  {
+    path: 'objects', component: ViewAllObjectsComponent,
+  },
+  {
     path: 'objects', component: ViewAllObjectsComponent,
   },
   {
@@ -104,6 +114,7 @@ const routes = [
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     NavbarTopComponent,
     PageNotFoundComponent,
     LoginComponent,
