@@ -442,7 +442,7 @@ exports.averageGrade = function averageGrade(req, res) {
 			if (err) throw err
 			
 			if (result.length==0) {
-				res.status(200).send(result);
+				res.status(200).send(JSON.stringify(0));
 				return;
 			}
 

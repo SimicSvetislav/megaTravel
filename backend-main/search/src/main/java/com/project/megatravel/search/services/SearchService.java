@@ -134,12 +134,13 @@ public class SearchService {
 		List<ResultDTO> results = new ArrayList<>();
 		for (SmestajnaJedinica f: list) {
 			ResultDTO dto = new ResultDTO();
-			SmestajniObjekat so = mapa.get(f.getId());
+			SmestajniObjekat so = mapa.get(f.getSObjekat());
 			
 			dto.setJedinica(f);
 			dto.setSlike(so.getSlike());
 			dto.setOpis(so.getOpis());
 			dto.setKategorija(so.getZvezdice());
+			dto.setNazivObj(so.getNaziv());
 			
 			//Double ocenaRac = rest.getForObject(GRADE + f.getId(), Double.class);
 			Double ocenaRac = getOcena(f.getId());

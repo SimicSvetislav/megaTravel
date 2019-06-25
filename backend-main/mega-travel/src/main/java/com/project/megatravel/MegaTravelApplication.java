@@ -53,8 +53,8 @@ public class MegaTravelApplication {
 		
 		logger.info("Main backend application successfully started");
 		
-		testDodatneUsluge();
-		testSoRepo();
+		//testDodatneUsluge();
+		//testSoRepo();
 		testSjRepo();
 		
 		//testRezervacijaRepo();
@@ -69,6 +69,57 @@ public class MegaTravelApplication {
 	}
 	
 	public static void testSjRepo() {
+	    
+        SjRepository repo = new SjRepository();
+        
+        SmestajnaJedinica sj = new SmestajnaJedinica();
+        sj.setBalkon(true);
+        sj.setBrojKreveta(1);
+        //sj.setOpis("Kratak opis");
+        sj.setOtkazivanje(new Otkazivanje());
+        //sj.setPodrazumevaniCenovnik(new Cenovnik());
+        //sj.setRejting(Creator.createRejting(7, 30));
+        sj.setSObjekat(1L);
+        
+        SmestajnaJedinica sj1 = new SmestajnaJedinica();
+        sj1.setBalkon(true);
+        sj1.setBrojKreveta(3);
+        //sj.setOpis("Kratak opis");
+        sj1.setOtkazivanje(new Otkazivanje());
+        //sj.setPodrazumevaniCenovnik(new Cenovnik());
+        //sj.setRejting(Creator.createRejting(7, 30));
+        sj1.setSObjekat(1L);
+        
+        sj1 = repo.save(sj1);
+        
+        SmestajnaJedinica sj2 = new SmestajnaJedinica();
+        sj2.setBalkon(false);
+        sj2.setBrojKreveta(4);
+        //sj.setOpis("Kratak opis");
+        sj2.setOtkazivanje(new Otkazivanje());
+        //sj.setPodrazumevaniCenovnik(new Cenovnik());
+        //sj.setRejting(Creator.createRejting(7, 30));
+        sj2.setSObjekat(1L);
+        
+        sj2 = repo.save(sj2);
+        
+        //SmestajnaJedinica sj2 = repo.getOneById(3L);
+        
+        //System.out.println("Fetched: " + sj2.getId());
+        
+        //SmestajnaJedinica sj3 = repo.deleteById(10L);
+        
+        //System.out.println("Deleted: " + sj3.getId());
+        
+        Collection<SmestajnaJedinica> sve = repo.getAll();
+        
+        for (SmestajnaJedinica s : sve) {
+            System.out.print(s.getId() + " ");
+        }
+        
+    }
+	
+	/*public static void testSjRepo() {
 	
 		SjRepository repo = new SjRepository();
 		
@@ -97,7 +148,7 @@ public class MegaTravelApplication {
 			System.out.print(s.getId() + " ");
 		}
 		
-	}
+	}*/
 	
 	public static void testSjModifyTrigger() {
 		
