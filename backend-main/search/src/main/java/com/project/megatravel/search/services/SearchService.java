@@ -141,6 +141,7 @@ public class SearchService {
 			dto.setOpis(so.getOpis());
 			dto.setKategorija(so.getZvezdice());
 			dto.setNazivObj(so.getNaziv());
+			dto.setLokacija(so.getLokacija().getNaziv());
 			
 			//Double ocenaRac = rest.getForObject(GRADE + f.getId(), Double.class);
 			Double ocenaRac = getOcena(f.getId());

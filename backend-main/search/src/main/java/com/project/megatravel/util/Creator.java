@@ -172,6 +172,17 @@ public final class Creator {
 		
 	}
 	
+	public static Lokacija createLokacija(String naziv) {
+		
+		Lokacija l = new Lokacija();
+		
+		l.setNaziv(naziv);
+		l.setKoordinate(getCoordinates(naziv));
+		
+		return l;
+		
+	}
+	
 	public static SmestajnaJedinica createSmestajnaJedinica(long id, SmestajniObjekat so) {
 		
 		SmestajnaJedinica j = new SmestajnaJedinica();

@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -49,7 +48,7 @@ public class MegaTravelApplication {
 			logger.warning("Can't connect to database");
 		}
 		
-		SpringApplication.run(MegaTravelApplication.class, args);
+		//SpringApplication.run(MegaTravelApplication.class, args);
 		
 		logger.info("Main backend application successfully started");
 		
@@ -72,50 +71,47 @@ public class MegaTravelApplication {
 	    
         SjRepository repo = new SjRepository();
         
+        Otkazivanje otk = new Otkazivanje();
+        otk.setDozvoljeno(true);
+        otk.setBrojDana(5);
+        
         SmestajnaJedinica sj = new SmestajnaJedinica();
         sj.setBalkon(true);
-        sj.setBrojKreveta(1);
-        //sj.setOpis("Kratak opis");
-        sj.setOtkazivanje(new Otkazivanje());
-        //sj.setPodrazumevaniCenovnik(new Cenovnik());
-        //sj.setRejting(Creator.createRejting(7, 30));
-        sj.setSObjekat(1L);
+        sj.setBrojKreveta(2);
+        sj.setOtkazivanje(otk);
+        sj.setOpis("Veca soba");
+        sj.setOznaka("102");
+        sj.setSObjekat(5L);
+        
+        sj = repo.save(sj);
         
         SmestajnaJedinica sj1 = new SmestajnaJedinica();
         sj1.setBalkon(true);
-        sj1.setBrojKreveta(3);
-        //sj.setOpis("Kratak opis");
-        sj1.setOtkazivanje(new Otkazivanje());
-        //sj.setPodrazumevaniCenovnik(new Cenovnik());
-        //sj.setRejting(Creator.createRejting(7, 30));
-        sj1.setSObjekat(1L);
+        sj1.setBrojKreveta(4);
+        sj1.setOpis("Kratak opis sobe");
+        sj1.setOtkazivanje(otk);
+        sj1.setOznaka("203");
+        sj1.setSObjekat(5L);
         
         sj1 = repo.save(sj1);
         
+        otk.setBrojDana(10);
+        
         SmestajnaJedinica sj2 = new SmestajnaJedinica();
         sj2.setBalkon(false);
-        sj2.setBrojKreveta(4);
-        //sj.setOpis("Kratak opis");
-        sj2.setOtkazivanje(new Otkazivanje());
-        //sj.setPodrazumevaniCenovnik(new Cenovnik());
-        //sj.setRejting(Creator.createRejting(7, 30));
-        sj2.setSObjekat(1L);
+        sj2.setBrojKreveta(2);
+        sj2.setOpis("Kratak opis");
+        sj2.setOtkazivanje(otk);
+        sj2.setOznaka("302");
+        sj2.setSObjekat(5L);
         
         sj2 = repo.save(sj2);
         
-        //SmestajnaJedinica sj2 = repo.getOneById(3L);
-        
-        //System.out.println("Fetched: " + sj2.getId());
-        
-        //SmestajnaJedinica sj3 = repo.deleteById(10L);
-        
-        //System.out.println("Deleted: " + sj3.getId());
-        
-        Collection<SmestajnaJedinica> sve = repo.getAll();
+        /*Collection<SmestajnaJedinica> sve = repo.getAll();
         
         for (SmestajnaJedinica s : sve) {
             System.out.print(s.getId() + " ");
-        }
+        }*/
         
     }
 	
@@ -232,12 +228,11 @@ public class MegaTravelApplication {
 		
 		
 		SmestajniObjekat so = new SmestajniObjekat();
-		so.setKategorija("GOLD");
-		so.setLokacija(Creator.createLokacija(1L, "Novi Sad"));
-		so.setAgent(1L);
-		//so.setRejting(Creator.createRejting(20, 89));
-		so.setTipSmestaja(Creator.createTipSmestaja(1L, "Apartman"));
-		so.setZvezdice(4);
+		so.setKategorija("BRONZE");
+		so.setLokacija(Creator.createLokacija("Beograd"));
+		so.setAgent(2L);
+		so.setTipSmestaja(Creator.createTipSmestaja(2L, "Hotel"));
+		so.setZvezdice(5);
 		
 		List<SmestajniObjekat.Slike> slike = new ArrayList<>();
 		
@@ -259,7 +254,7 @@ public class MegaTravelApplication {
 		
 		//so.setSlike(slike);
 		so.getSlike().addAll(slike);
-		so.setNaziv("Hotel vila Moskva");
+		so.setNaziv("Hotel Moskva Beograd");
 		so.setOpis(" Komforne sobe i apartmani učiniće Vaš boravak u hotelu Stari krovovi nezaboravnim. Bilo da Vam je potreban dnevni odmor za predah od puta, prenoćište, smeštaj za vikend ili na duži period u vreme održavanja brojnih manifestacija i događaja u Novom Sadu ( sajmova, festivala, itd.), na raspolaganju su Vam apartmani, jednokrevetne, dvokrevetne, kao i sobe sa tri i četiri udobna kreveta.\r\n" + 
 				"		");
 		so.setPodrazumevaniCenovnik(c);
@@ -269,12 +264,12 @@ public class MegaTravelApplication {
 		
 		//drugi objekat
 		SmestajniObjekat so1 = new SmestajniObjekat();
-		so1.setKategorija("SILVER");
+		so1.setKategorija("Gold");
 		so1.setLokacija(Creator.createLokacija(2L, "Hanioti"));
 		so1.setAgent(1L);
 		//so.setRejting(Creator.createRejting(20, 89));
-		so1.setTipSmestaja(Creator.createTipSmestaja(1L, "Hotel"));
-		so1.setZvezdice(4);
+		so1.setTipSmestaja(Creator.createTipSmestaja(1L, "B&B"));
+		so1.setZvezdice(3);
 		
 		List<SmestajniObjekat.Slike> slike2 = new ArrayList<>();
 		
@@ -321,7 +316,7 @@ public class MegaTravelApplication {
 		
 		SmestajniObjekat so2 = new SmestajniObjekat();
 		so2.setKategorija("NULL");
-		so2.setLokacija(Creator.createLokacija(2L, "Jerisos"));
+		so2.setLokacija(Creator.createLokacija(2L, "Novi Sad"));
 		so2.setAgent(1L);
 		//so.setRejting(Creator.createRejting(20, 89));
 		so2.setTipSmestaja(Creator.createTipSmestaja(1L, "Hotel"));
@@ -363,12 +358,12 @@ public class MegaTravelApplication {
 		//cetvrti objekat
 		
 		SmestajniObjekat so3 = new SmestajniObjekat();
-		so3.setKategorija("NULL");
+		so3.setKategorija("BRONZE");
 		so3.setLokacija(Creator.createLokacija(2L, "Jerisos"));
 		so3.setAgent(1L);
 		//so.setRejting(Creator.createRejting(20, 89));
 		so3.setTipSmestaja(Creator.createTipSmestaja(1L, "Hotel"));
-		so3.setZvezdice(4);
+		so3.setZvezdice(2);
 		
 		List<SmestajniObjekat.Slike> slike33 = new ArrayList<>();
 		

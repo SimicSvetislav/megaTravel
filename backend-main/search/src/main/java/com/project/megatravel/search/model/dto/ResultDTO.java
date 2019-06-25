@@ -13,6 +13,16 @@ public class ResultDTO {
 	private Integer kategorija;
 	private String opis;
 	private String nazivObj;
+	private Double udaljenost;
+	private String lokacija;
+
+	public String getLokacija() {
+		return lokacija;
+	}
+
+	public void setLokacija(String lokacija) {
+		this.lokacija = lokacija;
+	}
 
 	private Double cena; // TODO
 
@@ -74,6 +84,14 @@ public class ResultDTO {
 
 	public void setNazivObj(String nazivObj) {
 		this.nazivObj = nazivObj;
+	}
+	
+	public Double getUdaljenost() {
+		return udaljenost;
+	}
+
+	public void setUdaljenost(Double udaljenost) {
+		this.udaljenost = udaljenost;
 	}
 
 }
