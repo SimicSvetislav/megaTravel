@@ -31,9 +31,10 @@
                                 <div class="form-group">
                                     <span class="form-label">Type</span>
                                     <select [(ngModel)]="pr.tipSmestaja" name="tip" class="form-control">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option *ngFor="let type of types" 
+                                            [value]="type.naziv">
+                                          {{type.naziv}}
+                                        </option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
@@ -42,9 +43,11 @@
                                 <div class="form-group">
                                     <span class="form-label">Category</span>
                                     <select class="form-control" [(ngModel)]="pr.kategorijaSmestaja" name="cat">
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
+                                        <option value="0">Not categorized</option>
+                                        <option *ngFor="let cat of categories" 
+                                            [value]="cat.zvezdice">
+                                          {{cat.zvezdice}}
+                                        </option>
                                     </select>
                                     <span class="select-arrow"></span>
                                 </div>
@@ -84,7 +87,7 @@
             </div>
 
             <h5 class="section-title h1">Results</h5>
-            <div class="row" *ngIf="results.length==0">
+            <div class="row" *ngIf="results.length!=0">
                 <div class="col-md-">
                     <label>Sort by:</label>
                 </div>
