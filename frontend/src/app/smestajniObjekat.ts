@@ -16,7 +16,6 @@ export class SmestajniObjekat {
     agent: number;
     podrazumevaniCenovnik: Cenovnik;
 
-
 }
 
 export class KategorijaSm {

@@ -1,4 +1,4 @@
-import { MAIN_API } from './../../globals';
+import { API_MAIN } from './../../globals';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -11,11 +11,11 @@ export class ObjectService {
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<any> {
-    return this.http.get(MAIN_API + 'so/all');
+    return this.http.get(API_MAIN + 'so/all');
   }
 
   getOneById(id): Observable<any> {
-    return this.http.get(MAIN_API + 'so/' + id);
+    return this.http.get(API_MAIN + 'so/' + id);
   }
 
   getUnitById(id): Observable<any> {

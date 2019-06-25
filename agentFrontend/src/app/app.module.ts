@@ -1,3 +1,4 @@
+import { ChatService } from './service/chat.service';
 import { ProfileComponent } from './user/profile/profile.component';
 import { LocationPipe } from './utils/location.pipe';
 import { DatePipe } from './utils/date.pipe';
@@ -52,6 +53,7 @@ import { TokenStorageService } from './service/auth/toke-storage.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ChatComponent } from './booking/chat/chat.component';
+import { SocketService } from './service/socket.service';
 const routes = [
   {
     path: 'objects', component: ViewAllObjectsComponent,
@@ -88,6 +90,9 @@ const routes = [
   },
   {
     path: 'profile', component: ProfileComponent
+  },
+  {
+    path: 'chat/:resId', component: ChatComponent
   },
   {
     path: '**', component: PageNotFoundComponent
@@ -159,6 +164,8 @@ const routes = [
               UserService,
               TokenStorageService,
               ToastrService,
+              SocketService,
+              ChatService,
               { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [AppConfigService], multi: true }
             ],
   bootstrap: [AppComponent]

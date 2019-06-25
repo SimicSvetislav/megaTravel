@@ -206,7 +206,8 @@ public class MegaTravelApplication {
 		sl2.setValue("3");
 		slike.add(sl2);
 		
-		so.setSlike(slike);
+		//so.setSlike(slike);
+		so.getSlike().addAll(slike);
 		so.setNaziv("Hotel vila Moskva");
 		so.setOpis(" Komforne sobe i apartmani učiniće Vaš boravak u hotelu Stari krovovi nezaboravnim. Bilo da Vam je potreban dnevni odmor za predah od puta, prenoćište, smeštaj za vikend ili na duži period u vreme održavanja brojnih manifestacija i događaja u Novom Sadu ( sajmova, festivala, itd.), na raspolaganju su Vam apartmani, jednokrevetne, dvokrevetne, kao i sobe sa tri i četiri udobna kreveta.\r\n" + 
 				"		");
@@ -254,7 +255,7 @@ public class MegaTravelApplication {
 		
 		
 		
-		so1.setSlike(slike2);
+		so1.getSlike().addAll(slike2);
 		so1.setNaziv("Kasandra hoteli");
 		so1.setOpis(" Hotel je renoviran 2007.godine. Glavna hotelska zgrada ima dva krila u kojima su smeštene sobe, dok se suitovi i apartmani nalaze u ostale tri zgrade u okviru hotela.\r\n" + 
 				"\r\n" + 
@@ -302,7 +303,7 @@ public class MegaTravelApplication {
 		
 		
 		
-		so2.setSlike(slike3);
+		so2.getSlike().addAll(slike3);
 		so2.setNaziv("Vila Maria");
 		so2.setOpis("Vila Maria se nalazi na samo 80 metara od plaže, od centralnog dela Jerisosa. Smeštajne jedinice se nalaze na prvom i drugom spratu vile. Posedujemo dvokrevetne i dvokrevetne sa pomoćnim krevetom apartmane, čevorokrevetne apartmane i četvorokrevetne duplekse. Svi su opremljeni kuhinjom (mini električni šporet, frižider, posuđe) koja je izdvojena od spavaćeg dela, klima uređajem koji je uračunat u cenu najma, TV-om, WiFi-jem (slabog protoka), kupatilom. Deo smeštajnih jedinica gleda na dvorište, dok deo gleda na ulicu i svi poseduju terase zaštićene tendama. Vila poseduje peškire. Promena poseteljine i peškira , kao i čišćenje je na dan smene. Gosti sami održavaju higijenu apartmana. U dvorištu vile gosti mogu svakodnevno odmarati i na raspolaganju im je roštilj.");
 		
@@ -338,7 +339,7 @@ public class MegaTravelApplication {
 		
 		
 		
-		so3.setSlike(slike33);
+		so3.getSlike().addAll(slike33);
 		so3.setNaziv("Vila Maria");
 		so3.setOpis("Vila Maria se nalazi na samo 80 metara od plaže, od centralnog dela Jerisosa. Smeštajne jedinice se nalaze na prvom i drugom spratu vile. Posedujemo dvokrevetne i dvokrevetne sa pomoćnim krevetom apartmane, čevorokrevetne apartmane i četvorokrevetne duplekse. Svi su opremljeni kuhinjom (mini električni šporet, frižider, posuđe) koja je izdvojena od spavaćeg dela, klima uređajem koji je uračunat u cenu najma, TV-om, WiFi-jem (slabog protoka), kupatilom. Deo smeštajnih jedinica gleda na dvorište, dok deo gleda na ulicu i svi poseduju terase zaštićene tendama. Vila poseduje peškire. Promena poseteljine i peškira , kao i čišćenje je na dan smene. Gosti sami održavaju higijenu apartmana. U dvorištu vile gosti mogu svakodnevno odmarati i na raspolaganju im je roštilj.");
 		

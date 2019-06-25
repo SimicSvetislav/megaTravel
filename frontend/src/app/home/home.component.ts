@@ -1,3 +1,6 @@
+import { SearchService } from './../services/search/search.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { SearchObject } from './../searchObject';
 import { HttpClient } from '@angular/common/http';
 import { User } from './../user';
 import { TokenStorageService } from './../services/auth/token-storage.service';
@@ -6,6 +9,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { EventEmitter } from 'events';
 import { EventBrokerService } from '../services/event-broker/event-broker.service';
+import { trigger } from '@angular/animations';
 
 
 
@@ -22,13 +26,14 @@ export class HomeComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
   hoveredDate: NgbDate;
-  user: User = new User();
+  po: SearchObject = new SearchObject();
 
   id;
   //boolLogIn: boolean = false;
   //boolLogOff: boolean = false;
 
-  constructor(private eventBroker: EventBrokerService, private router: Router,private token: TokenStorageService, private httpClient: HttpClient) { }
+  constructor(private eventBroker: EventBrokerService, private router: Router,private token: TokenStorageService, 
+              private toastr: ToastrService) { }
 
   ngOnInit() {
 
@@ -39,13 +44,26 @@ export class HomeComponent implements OnInit {
 
     this.id = this.token.getUser();
 
-    /*if(this.id == null) {
-      this.boolLogIn = false;
-      this.boolLogOff = true;
-    } else {
-      this.boolLogIn = true;
-      this.boolLogOff = false;
-    }*/
+  }
+
+  basicSearch() { 
+
+    this.po.dolazak = new Date(this.po.dolazak);
+    this.po.odlazak = new Date(this.po.odlazak);
+
+    if (!this.po.dolazak || !this.po.odlazak || ! this.po.lokacija || !this.po.brojOsoba) {
+      this.toastr.error("All fields must be specified");
+      return;
+    }
+
+    if (this.po.odlazak < this.po.dolazak) {
+      this.toastr.error("Check in date can't be after check out date");
+      return;
+    }
+
+    this.token.saveSearch(this.po);
+
+    this.router.navigate(["/preview"]);
 
   }
 

@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.xml.transform.Source;
@@ -28,7 +27,9 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.reservations.repository.AgentRepository;
+import com.project.megatravel.reservations.repository.KorisnikRepository;
 import com.project.megatravel.reservations.repository.RezervacijeRepository;
 import com.project.megatravel.reservations.repository.SjRepository;
 import com.project.megatravel.reservations.repository.SoRepository;
@@ -47,6 +48,9 @@ public class ReservationService {
 	
 	@Autowired
 	private AgentRepository agRepo;
+	
+	@Autowired
+	private KorisnikRepository userRepo;
 	
 	// Fabrika za kreiranje transformera formata
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -299,6 +303,15 @@ public class ReservationService {
 		}
 		
 		return true;
+	}
+
+	public KrajnjiKorisnik getUser(Long id) {
+		
+		RezervacijaKorisnika rez = repo.getOneById(id);
+		
+		KrajnjiKorisnik user = userRepo.getOneById(rez.getKorisnik());
+		
+		return user;
 	}
 	
 	

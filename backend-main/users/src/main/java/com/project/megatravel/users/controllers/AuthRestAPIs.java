@@ -92,7 +92,7 @@ public class AuthRestAPIs {
     		}
     		
     		//provera da li je blokiran
-    		if(korisnik.getStanje().contains("BLOKIRAN")) {
+    		if(korisnik.getStanje()!=null && korisnik.getStanje().contains("BLOKIRAN")) {
     			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     		}
     		
@@ -130,15 +130,15 @@ public class AuthRestAPIs {
     	
     //	KrajnjiKorisnik exist = userRepository.getByEmail(signUpRequest.getEmail());
     	
-    	if(role.contains("user") && userRepository.getByEmail(signUpRequest.getEmail()) == null) {
+    	if(role.contains("user") && userRepository.getByEmail(signUpRequest.getEmail()) != null) {
     		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
     	} 
     	
-    	if(role.contains("agent") && agentRepo.getByEmail(signUpRequest.getEmail()) == null) {
+    	if(role.contains("agent") && agentRepo.getByEmail(signUpRequest.getEmail()) != null) {
     		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
     	} 
     	
-    	if(role.contains("admin") && adminRepo.getByEmail(signUpRequest.getEmail()) == null) {
+    	if(role.contains("admin") && adminRepo.getByEmail(signUpRequest.getEmail()) != null) {
     		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
     	} 
     	

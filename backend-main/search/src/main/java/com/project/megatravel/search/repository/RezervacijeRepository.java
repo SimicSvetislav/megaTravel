@@ -1,6 +1,8 @@
 package com.project.megatravel.search.repository;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -51,6 +53,19 @@ public class RezervacijeRepository implements ExistRepository {
 		RezervacijaKorisnika rez = ExistDB.deleteById(id, collectionName, jaxbContext);
 		
 		return rez;
+		
+	}
+	
+	public List<RezervacijaKorisnika> getByJed(Long id) {
+		
+		Collection<RezervacijaKorisnika> all = getAll();
+		
+		List<RezervacijaKorisnika> res =  all.stream()
+				.filter(u -> u.getSmestajnaJedinica().equals(id))
+				.collect(Collectors.toList());
+		
+		
+		return res;
 		
 	}
 
