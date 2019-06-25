@@ -19,11 +19,11 @@ export class ObjectService {
   }
 
   getUnitById(id): Observable<any> {
-    return this.http.get(MAIN_API + 'sj/'+id);
+    return this.http.get(API_MAIN + 'sj/'+id);
   }
 
   getUnitsOfObject(id) : Observable<any> {
-    return this.http.get(MAIN_API + 'sj/units/' + id);
+    return this.http.get(API_MAIN + 'sj/units/' + id);
   }
 
 }

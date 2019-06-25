@@ -6,12 +6,13 @@ import { Component, OnInit } from '@angular/core';
 import { EventBrokerService } from '../services/event-broker/event-broker.service';
 import { Router } from '@angular/router';
 import { ObjectService } from '../services/object/object.service';
-import { lookup } from 'dns';
+//import { lookup } from 'dns';
 import { NgbModal, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from '../services/auth/token-storage.service';
 import { SearchService } from '../services/search/search.service';
 import { asElementData } from '@angular/core/src/view';
 import { ExtrasService } from '../services/search/extras.service';
+import { ResultDTO } from '../resultDTO';
 
 @Component({
   selector: 'app-preview',
@@ -29,6 +30,7 @@ export class PreviewComponent implements OnInit {
   pictures: Slike[] = [];
   logged: Boolean = false;
 
+  results: ResultDTO[] = [];
 
   userId: number;
 
@@ -74,7 +76,7 @@ export class PreviewComponent implements OnInit {
       this.logged = true;
     }
 
-    /*this.soService.getAll().subscribe(data => {
+    this.soService.getAll().subscribe(data => {
       this.objects = data;
 
       for(let o of this.objects) {
@@ -83,7 +85,7 @@ export class PreviewComponent implements OnInit {
         
       }
 
-    })*/
+    })
   }
 
   search() {
@@ -93,6 +95,7 @@ export class PreviewComponent implements OnInit {
     this.pr.dodatneUsluge = this.selectedItems.map(item => item.id);
 
     this.searchService.search(this.pr, this.userId).subscribe( data => { 
+      this.results = data;
       this.objects = data;
     }, error => console.log(error));
 
