@@ -1,3 +1,4 @@
+import { TokenStorageService } from 'src/app/service/auth/toke-storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { KategorijaSmestaja } from './../../model/smestaj/kategorija-smestaja.model';
 import { TipSmestaja } from './../../model/smestaj/tip-smestaja.model';
@@ -18,9 +19,15 @@ export class NewObjectComponent implements OnInit {
 
   newObject: SmestajniObjekat;
 
-  constructor(private accomodationService: AccomodationService, private router: Router, private toastrService: ToastrService) { }
+  constructor(private accomodationService: AccomodationService, private router: Router, private toastrService: ToastrService,
+     private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
+    // if (!this.tokenStorage.isLogged()) {
+    //   this.router.navigate(['login']);
+    // }
+
+
    this.newObject = new SmestajniObjekat(null, '', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 4),
     '', undefined, [], [], []);
 
@@ -29,11 +36,24 @@ export class NewObjectComponent implements OnInit {
 
   addNewObject() {
     if (this.newObject.naziv) {   // popunjen je basic info tab
+      if (this.newObject.slike.length === 0) {
+        this.toastrService.warning('Morate dodati barem jednu sliku objekta!');
+        return;
+      }
+
       this.accomodationService.addObject(this.newObject).subscribe(data => {
-
+        this.router.navigate(['home']);
       }, (error: Response) => {
-
+        if (error.status === 401) {
+          this.toastrService.error('Nije potvrdjena autentifikacija');
+        } else if (error.status === 409) {
+          this.toastrService.error('Greska pri dobavljanju relevantnih podataka');
+        } else {
+          this.toastrService.error('Greska na serveru');
+        }
       });
+
+
     }
   }
 

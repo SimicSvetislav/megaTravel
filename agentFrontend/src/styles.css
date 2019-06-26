@@ -4,7 +4,7 @@
 @import "~font-awesome/css/font-awesome.css";
 
 
-body { padding-top: 80px}
+/* body { padding-top: 80px} */  /* Kad je dodali navbar u fixed-top klasu*/
 
 /*.form-control.ng-touched.ng-invalid{
   border: 2px solid red;

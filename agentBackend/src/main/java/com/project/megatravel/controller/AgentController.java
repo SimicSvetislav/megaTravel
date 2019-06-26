@@ -39,9 +39,9 @@ public class AgentController {
 			agentService.syncData();
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (AuthentificationException aE) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
 

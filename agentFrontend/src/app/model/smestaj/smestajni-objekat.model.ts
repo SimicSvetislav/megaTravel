@@ -3,7 +3,6 @@ import { SmestajnaJedinica } from './smestajna-jedinica.model';
 import { KategorijaSmestaja } from './kategorija-smestaja.model';
 import { Lokacija } from './lokacija.model';
 import { TipSmestaja } from './tip-smestaja.model';
-import { Rejting } from './rejting.model';
 import { DodatnaUsluga } from './dodatna-usluga.model';
 import { Otkazivanje } from './otkazivanje.model';
 import { Cenovnik } from './cenovnik.model';
@@ -21,13 +20,10 @@ export class SmestajniObjekat {
      kategorijaSm: KategorijaSmestaja;
    // zvezdice: number;       // ??????????????/
 
-    // PRIVREMENO...
-    // rejting: Rejting;
-
     smestajnaJedinica: SmestajnaJedinica[];
     dodatnaUsluga: DodatnaUsluga[];
 
-  //  agent: Agent;
+  //  agent: number;
 
      // FileSet???
      // slike: File[];

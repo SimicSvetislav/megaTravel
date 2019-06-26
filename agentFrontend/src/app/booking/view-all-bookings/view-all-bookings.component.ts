@@ -90,7 +90,6 @@ import { SmestajniObjekat } from 'src/app/model/smestaj/smestajni-objekat.model'
 
 // }
 import { Component, OnInit, PipeTransform } from '@angular/core';
-import { Country } from 'src/app/model/country.model';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
@@ -101,6 +100,8 @@ import { TipSmestaja } from 'src/app/model/smestaj/tip-smestaja.model';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
 import { Korisnik } from 'src/app/model/korisnik/korisnik-abstract.model';
 import { Otkazivanje } from 'src/app/model/smestaj/otkazivanje.model';
+import { TokenStorageService } from 'src/app/service/auth/toke-storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -138,13 +139,15 @@ export class ViewAllBookingsComponent implements OnInit {
   // }
 
 
-  constructor(private bookingService: BookingService, private toastr: ToastrService) {
+  constructor(private bookingService: BookingService, private tokenStorage: TokenStorageService, private router: Router) {
 
   }
 
   ngOnInit() {
 
-    this.toastr.success("Test");
+    if (!this.tokenStorage.isLogged()) {
+      this.router.navigate(['login']);
+    }
 
     this.activeTab = 'upcoming';
 
@@ -193,7 +196,7 @@ export class ViewAllBookingsComponent implements OnInit {
     let rez;
     let smestaj: SmestajnaJedinica;
     for (let i = 0; i < 6; ++i) {
-      smestaj = {id: i, brojKreveta: i + 2, otkazivanje : new Otkazivanje(), balkon: true, sObjekat : i};
+      smestaj = {id: i, brojKreveta: i + 2, otkazivanje : new Otkazivanje(), balkon: true, sObjekat : i, opis: '', oznaka: ''};
 
       if (i % 3 === 0) {
         smestaj.sObjekat = 1;

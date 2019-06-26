@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { DisplayImageWrapper } from './../../model/display-image-wrapper';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
@@ -28,7 +29,7 @@ export class ChooseImagesComponent implements OnInit {
   selectedImages: DisplayImageWrapper[] = [];
   // reader: FileReader = new FileReader();
 
-  constructor() { }
+  constructor(private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.url = '../../../assets/hotel-icon.png';
@@ -51,6 +52,14 @@ export class ChooseImagesComponent implements OnInit {
     // const imageWrapper: DisplayImageWrapper = new DisplayImageWrapper();
     for (const f of event.target.files) {
       let  file: File;
+
+      // provera tipa na ulazu
+      const type: string = f.type;
+      const contains: boolean = type.includes('image');
+      if (!contains) {
+        this.toastrService.warning('Dozvoljen je unos samo slike');
+        return;
+      }
       const imageWrapper: DisplayImageWrapper = new DisplayImageWrapper();
 
       file = f;

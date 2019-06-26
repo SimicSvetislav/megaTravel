@@ -21,6 +21,9 @@
     </div>
   </ng-template>
 </ngb-carousel> -->
+<div *ngIf="this.selectedImages.length === 0">
+  <h1 class="text-info text-center">Nema slika!</h1>
+</div>
 <div *ngIf="this.selectedImages">
   <ngb-carousel>
     <ng-template ngbSlide *ngFor="let img of this.selectedImages">

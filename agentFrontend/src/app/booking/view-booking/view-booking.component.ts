@@ -1,4 +1,3 @@
-import { Country } from 'src/app/model/country.model';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RezervacijaKorisnika } from 'src/app/model/rezervacija/rezervacija-korisnika.model';
 

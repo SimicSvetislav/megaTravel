@@ -9,11 +9,11 @@ import { stringify } from 'querystring';
     transform(value: Lokacija) {
       if (value) {
         const naziv: string = value.naziv;
-        if (value.geoDuzina) {
-            const ret: string = naziv + '[' + value.geoDuzina.stepeni + value.geoDuzina.strana +
-            ', ' + value.geoSirina.stepeni + value.geoSirina.strana + ']';
-            return ret;
-        }
+        // if (value.geoDuzina) {
+        //     const ret: string = naziv + '[' + value.geoDuzina.stepeni + value.geoDuzina.strana +
+        //     ', ' + value.geoSirina.stepeni + value.geoSirina.strana + ']';
+        //     return ret;
+        // }
         console.log(value);
         return naziv;
       } else {

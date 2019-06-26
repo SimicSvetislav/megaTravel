@@ -7,6 +7,7 @@ import { AuthLoginInfo } from 'src/app/model/forms/login-form.model';
 import { Token } from '@angular/compiler';
 import { Agent } from 'src/app/model/korisnik/agent.model';
 import { HttpErrorResponse } from '@angular/common/http/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
   user: Agent;
   constructor(private router: Router, private authService: AuthService,
-    private tokenStorage: TokenStorageService, private userService: UserService) { }
+    private tokenStorage: TokenStorageService, private userService: UserService, private toastrService: ToastrService) { }
   str = '';
 
   private loginInfo: AuthLoginInfo;
@@ -38,7 +39,7 @@ export class LoginComponent implements OnInit {
     this.loginInfo = new AuthLoginInfo(this.username, this.password);
     this.authService.attemptAuth(this.loginInfo).subscribe(data => {
       if (data.accessToken === undefined) {
-        alert('Nesto nije u redu!');
+        this.toastrService.error('Nesto nije u redu!');
       } else {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUsername(data.username);
@@ -56,7 +57,10 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/home']);
         }, (error: Response) => {
           if (error.status === 409) {
-            alert('Greska pri sinhronizaciji podataka');
+            this.toastrService.error('Greska pri sinhronizaciji podataka');
+          }
+          if (error.status === 401) {
+            this.toastrService.error('Neatorizovan pristup glavnoj aplikaciji');
           }
         });
 
@@ -65,7 +69,7 @@ export class LoginComponent implements OnInit {
       }
     }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
-        alert('Neautorizovan pristup');
+        this.toastrService.error('Neatorizovan pristup');
       }
     });
 

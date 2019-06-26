@@ -83,11 +83,11 @@ public class AgentService {
 		
 		try {
 			//prikupljanje resursa putem ws
-			List<KategorijaSm> kategorije = accomodationWsClient.getCategories().getKategorijaSm();
 			List<TipSmestaja> tipovi = accomodationWsClient.getTypes().getTipSmestaja();
 			List<DodatnaUsluga> usluge = accomodationWsClient.getExtras().getDodatnaUsluga();
 			List<SmestajniObjekat> objekti = accomodationWsClient.getObjects(a).getSmestajniObjekat();
-			
+			List<KategorijaSm> kategorije = accomodationWsClient.getCategories().getKategorijaSm();
+
 			List<SmestajnaJedinica> jedinice = new ArrayList<SmestajnaJedinica>();
 			for(SmestajniObjekat objekat : objekti) {
 				jedinice.addAll(objekat.getSmestajnaJedinica());
@@ -107,6 +107,7 @@ public class AgentService {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new Exception();
 		}
 		
 	}

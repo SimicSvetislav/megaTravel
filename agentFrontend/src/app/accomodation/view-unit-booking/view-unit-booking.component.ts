@@ -21,7 +21,7 @@ export class ViewUnitBookingComponent implements OnInit {
   start: Date;
   end: Date;
 
-  rezervacijeZaSobu: RezervacijaKorisnika[];
+  rezervacijeZaSobu: RezervacijaKorisnika[] = [];
 
   constructor(private bookingService: BookingService) { }
 

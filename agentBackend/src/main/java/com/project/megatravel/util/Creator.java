@@ -285,7 +285,7 @@ public final class Creator {
 		return rez;
 	}
 	
-	public static Otkazivanje createOtkazivanje(BigInteger brojDana, boolean dozvoljeno) {
+	public static Otkazivanje createOtkazivanje(Integer brojDana, boolean dozvoljeno) {
 		Otkazivanje otkazivanje = new Otkazivanje();
 		otkazivanje.setBrojDana(brojDana);
 		otkazivanje.setDozvoljeno(dozvoljeno);

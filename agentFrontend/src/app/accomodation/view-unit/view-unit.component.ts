@@ -3,6 +3,7 @@ import { AccomodationService } from './../../service/accomodation.service';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
 import { Component, OnInit } from '@angular/core';
 import { SmestajniObjekat } from 'src/app/model/smestaj/smestajni-objekat.model';
+import { RatingService } from 'src/app/service/rating/rating.service';
 
 @Component({
   selector: 'app-view-unit',
@@ -16,8 +17,10 @@ export class ViewUnitComponent implements OnInit {
   object: SmestajniObjekat;
   unit: SmestajnaJedinica;
 
+  averageMark: number;
+
   constructor(private accomodationService: AccomodationService, private activatedRoute: ActivatedRoute,
-    private router: Router) { }
+    private router: Router, private ratingService: RatingService) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(data => {
@@ -54,6 +57,15 @@ export class ViewUnitComponent implements OnInit {
   back() {
     const url: string = 'object/' + this.object.id + '/units';
     this.router.navigate([url]);
+  }
+
+  averageGradeUnit() {
+    this.activeTab = 'average';
+
+    this.unit.id = 13;
+    this.ratingService.averageGrade(this.unit.id).subscribe(data => {
+      this.averageMark = data;
+    });
   }
 
 }

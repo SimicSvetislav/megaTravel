@@ -14,7 +14,7 @@ export class ViewAllUnitsComponent implements OnInit {
   @Input()
   object: SmestajniObjekat;
 
-  units: SmestajnaJedinica[];
+  units: SmestajnaJedinica[] = [];
 
   constructor(private accomodationService: AccomodationService, private router: Router) { }
 

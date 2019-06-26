@@ -2,11 +2,14 @@ import { Komentar } from './../rezervacija/komentar.model';
 import { DodatnaUsluga } from './dodatna-usluga.model';
 import { Cenovnik } from './cenovnik.model';
 import { Otkazivanje } from './otkazivanje.model';
-import { Rejting } from './rejting.model';
 import { SmestajniObjekat } from './smestajni-objekat.model';
 
 export class SmestajnaJedinica {
     id: number;
+
+    opis: string;
+    oznaka: string;
+
     brojKreveta: number;
     balkon: boolean;
 
@@ -16,13 +19,9 @@ export class SmestajnaJedinica {
 
     otkazivanje: Otkazivanje;
 
-    // ??????????????????????
-    // komentari: Komentar[];
 
      // id objekta
      sObjekat: number;
-
-    // constructor() { }
 
     constructor(id: number, kreveta: number, balkon: boolean, sObjekat: number, otkazivanje: Otkazivanje) {
         this.id = id;

@@ -20,16 +20,17 @@
         <tr>
           <th>Besplatno otkazivanje</th>
           <!-- <td>{{unit.otkazivanje | quitPipe}}</td> -->
+          <td *ngIf="unit?.otkazivanje?.dozvoljeno">Moguce</td>
+          <td *ngIf="!unit?.otkazivanje?.dozvoljeno">Nije moguce</td>
+        </tr>
+        <tr *ngIf="unit?.otkazivanje?.brojDana">
+          <th>Broj dana otkazivanja</th>
+          <td>{{unit?.otkazivanje?.brojDana}}</td>
         </tr>
       </tbody>
     </table>
-    <!-- <textarea name="objectDesc" class="form-control" id="objectDesc" rows="5" readonly style="background-color: beige">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum arcu vel nisl tincidunt, a consequat ante feugiat. 
-      Phasellus malesuada mauris sed convallis ultricies. Aenean dictum, urna viverra varius convallis, nibh ex pharetra eros, nec 
-      suscipit dui lacus in lectus. Pellentesque efficitur id purus ac laoreet. Donec non imperdiet libero. Sed et justo sapien. 
-      Praesent et felis sit amet risus sollicitudin vulputate. Phasellus eros neque, dapibus at quam vel, egestas suscipit augue. 
-      Aliquam vel ipsum dictum, blandit eros varius, consectetur lacus. Nam sit amet pulvinar eros. Sed vulputate euismod nibh ut pulvinar.
-    </textarea> -->
+    <textarea name="objectDesc" class="form-control" id="objectDesc" rows="5" readonly style="background-color: beige">{{unit?.opis}}
+    </textarea>
   </div>
 
 </div>

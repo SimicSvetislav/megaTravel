@@ -36,6 +36,7 @@
       <a  [class.active]="activeTab === 'basic-info'" (click)="activeTab = 'basic-info'" class="list-group-item list-group-item-action" >Osnovne informacije</a>
       <a  [class.active]="activeTab === 'facilities'" (click)="activeTab = 'facilities'" class="list-group-item list-group-item-action" >Dodatne usluge</a>
       <a  [class.active]="activeTab === 'prices'" (click)="activeTab = 'prices'" class="list-group-item list-group-item-action" >Plan cena</a>
+      <a  [class.active]="activeTab === 'average'" (click)="averageGradeObj()" class="list-group-item list-group-item-action" >Prosecna ocena</a> 
       <a  [class.active]="activeTab === 'images'" (click)="activeTab = 'images'" class="list-group-item list-group-item-action" >Slike</a>
       <a  [class.active]="activeTab === 'units'" (click)="activeTab = 'units'" class="list-group-item list-group-item-action" >Sve sobe</a> 
     </div>
@@ -60,6 +61,10 @@
       <div *ngSwitchCase="'units'">
         <app-view-all-units [object] = "objekat" ></app-view-all-units>
       </div>
+      <div *ngSwitchCase="'average'">
+          <h1 *ngIf="!averageMark" class="text-info text-center">Nema podataka o prosecnoj oceni!</h1>
+          <h1 *ngIf="averageMark" class="text-info text-center">Prosečna ocena: {{averageMark}}</h1>
+        </div>
     </div>
   </div>
 </div>
