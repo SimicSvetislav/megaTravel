@@ -1,12 +1,11 @@
 package com.project.megatravel.rbm;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,19 +16,29 @@ import org.springframework.context.annotation.Bean;
 @EnableDiscoveryClient
 public class RuleBasedModuleApp {
 
-	private static Logger log = LoggerFactory.getLogger(RuleBasedModuleApp.class);
+	private static Logger logger = Logger.getLogger(RuleBasedModuleApp.class.getName());
 
 	public static void main(String[] args) {
+		
+		logger.info("Connecting to database");
+		
+		try {
+			ExistDB.initDatabase();
+			logger.info("Connection with database established");
+		} catch (Exception e) {
+			logger.warning("Can't connect to database");
+		}
+		
 		ApplicationContext ctx = SpringApplication.run(RuleBasedModuleApp.class, args);
 
-		String[] beanNames = ctx.getBeanDefinitionNames();
+		/*String[] beanNames = ctx.getBeanDefinitionNames();
 		Arrays.sort(beanNames);
 
 		StringBuilder sb = new StringBuilder("Application beans:\n");
 		for (String beanName : beanNames) {
 			sb.append(beanName + "\n");
 		}
-		log.info(sb.toString());
+		logger.info(sb.toString());*/
 	}
 
 	@Bean
