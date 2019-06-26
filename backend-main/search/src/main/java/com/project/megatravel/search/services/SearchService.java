@@ -125,6 +125,8 @@ public class SearchService {
 			List<RezervacijaKorisnika> resSj = getByJed(s.getId(), ress);
 			
 			for (RezervacijaKorisnika r : resSj) {
+				System.out.println("PO: " + po.getDolazak() + "    " + po.getOdlazak());
+				System.out.println("R: " + r.getDatumZavrsetka() + "    " + r.getDatumPocetka());
 				if (po.getDolazak().before(r.getDatumZavrsetka()) && r.getDatumPocetka().before(po.getOdlazak())) {
 					toRemove.add(s);
 					break;
@@ -154,6 +156,7 @@ public class SearchService {
 			// dto.setOcena(cena);
 			double cena = generatePrice(po, so);
 			dto.setCena(cena);
+			System.out.println("Cena: " + cena);
 			// TODO pozvati cloud
 			//dto.setOcena(ocena);
 			
