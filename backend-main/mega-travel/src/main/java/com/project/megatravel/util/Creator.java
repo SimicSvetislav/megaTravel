@@ -29,7 +29,7 @@ public final class Creator {
 		
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
-        RezervacijaKorisnika rez = new RezervacijaKorisnika();
+        RezervacijaKorisnika rez = new RezervacijaKorisnika(); 
         //rez.setProcenatOtkazivanje(-1.0);
         rez.setId(id);
         rez.setCenaSmestaja(cena);
@@ -169,6 +169,17 @@ public final class Creator {
 		
 		//l.setId(id);
 		l.setNaziv(naziv);
+		
+		return l;
+		
+	}
+	
+	public static Lokacija createLokacija(String naziv) {
+		
+		Lokacija l = new Lokacija();
+		
+		l.setNaziv(naziv);
+		l.setKoordinate(getCoordinates(naziv));
 		
 		return l;
 		

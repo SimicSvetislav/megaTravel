@@ -66,7 +66,7 @@ wss.on('connection', (ws: WebSocket) => {
 });
 
 app.get('/messages/res/:res', function(req, res) {
-  // Plus convert string to number
+  // Plus converts string to number
   let reservation = +req.params.res;
 
   const client = new MongoClient(uri, { useNewUrlParser: true })

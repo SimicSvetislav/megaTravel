@@ -76,19 +76,19 @@ public class SmestajTest {
         SmestajnaJedinica j4 = Creator.createSmestajnaJedinica(4L, s5);
         s5.getSmestajneJedinice().add(j4);
         
-        RezervacijaKorisnika rez7 = Creator.createRezervacija(7, 100, 4, "22/05/2019", "10/10/2018", "05/04/2019", "REALIZOVANO", 
+        RezervacijaKorisnika rez7 = Creator.createRezervacija(7, 100, 4, "22/06/2019", "10/10/2018", "05/04/2019", "REALIZOVANO", 
         		j3);
         
-        RezervacijaKorisnika rez8 = Creator.createRezervacija(8, 100, 4, "22/05/2019", "10/10/2018", "06/04/2019", "REALIZOVANO", 
+        RezervacijaKorisnika rez8 = Creator.createRezervacija(8, 100, 4, "22/06/2019", "10/10/2018", "06/04/2019", "REALIZOVANO", 
         		j3);
         
         RezervacijaKorisnika rez9 = Creator.createRezervacija(9, 100, 5, "01/09/2018", "10/10/2018", "13/04/2019", "REALIZOVANO", 
         		j4);
         
-        RezervacijaKorisnika rez10 = Creator.createRezervacija(10, 500, 4, "22/05/2019", "10/10/2018", "08/04/2019", "REALIZOVANO", 
+        RezervacijaKorisnika rez10 = Creator.createRezervacija(10, 500, 4, "22/06/2019", "10/10/2018", "08/04/2019", "REALIZOVANO", 
         		j4);
         
-        RezervacijaKorisnika rez11 = Creator.createRezervacija(10, 500, 5, "22/05/2019", "10/10/2018", "10/04/2019", "REALIZOVANO", 
+        RezervacijaKorisnika rez11 = Creator.createRezervacija(10, 500, 5, "22/06/2019", "10/10/2018", "10/04/2019", "REALIZOVANO", 
         		j4);
         
         kSession.insert(rez7);

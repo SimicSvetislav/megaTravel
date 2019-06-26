@@ -62,7 +62,8 @@ export class PreviewComponent implements OnInit {
     if (stored) {
       this.prosli = JSON.parse(stored);
       this.searchService.search(this.prosli, this.userId).subscribe( data => { 
-        this.objects = data;
+        this.results = data;
+        //this.token.saveSearch(undefined);
       }, error => console.log(error));
     }
 
@@ -107,18 +108,23 @@ export class PreviewComponent implements OnInit {
   sort() {
     
     if (this.sorter==="Reccomendation") {
+      // Pozivati rule based module
 
     } else if (this.sorter==="Price") {
       // Moze na frontu
+      this.results.sort((a,b) => a.cena < b.cena ? -1 : a.ocena > b.ocena ? 1 : 0);
+
     } else if (this.sorter==="Distance") {
       // ?
       
     } else if (this.sorter==="Rating") {
       // Moze na frontu
+      this.results.sort((a,b) => a.ocena < b.ocena ? 1 : a.ocena > b.ocena ? -1 : 0);
       
     } else if (this.sorter==="Category") {
       // Moze na frontu
-
+      this.results.sort((a,b) => a.kategorija < b.kategorija ? 1 : a.kategorija > b.kategorija ? -1 : 0);
+      
     }
 
   }
@@ -166,7 +172,7 @@ export class PreviewComponent implements OnInit {
 
     this.searchService.search(this.pr, this.userId).subscribe( data => { 
       this.results = data;
-      this.objects = data;
+      this.token.saveSearch(this.pr);
     }, error => console.log(error));
 
   }

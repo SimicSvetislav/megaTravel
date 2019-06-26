@@ -46,14 +46,14 @@ function boolean imaRezervacija(SmestajnaJedinica sj, List rezervacije) {
 
 function boolean vecaCena(List uMestu, List moje) {
 	
-	System.out.println(uMestu.size());
-	System.out.println(moje.size());
+	//System.out.println(uMestu.size());
+	//System.out.println(moje.size());
 	
 	double suma = 0.0;
 	for (Object o : uMestu) {
 		SmestajnaJedinica sj = (SmestajnaJedinica) o;
 		suma += sj.getPodrazumevaniCenovnik().getCena().getIznos();
-		System.out.println(suma);
+		//System.out.println(suma);
 	}
 	
 	double prosek = suma / uMestu.size();
@@ -63,7 +63,7 @@ function boolean vecaCena(List uMestu, List moje) {
 	for (Object o : moje ) {
 		SmestajnaJedinica sj = (SmestajnaJedinica) o;
 		if (sj.getPodrazumevaniCenovnik().getCena().getIznos() > prosek) {
-			System.out.println("Veca cena");
+			//System.out.println("Veca cena");
 			return true;
 		}
 	}
@@ -87,7 +87,7 @@ function boolean spada(Date point, Date pocetak, Date zavrsetak) {
 
 function boolean badText(String t1, String t2) {
 	
-	System.out.println("Tu sam 2");
+	// System.out.println("Tu sam 2");
 	
 	if (t1.contains(t2)) {
 		return true;
@@ -117,7 +117,7 @@ function boolean ponudjenPopust(RezervacijaKorisnika rk) {
 	lDate = lDate.plusYears(1);
 	
 	if (lDate.isAfter(today)) {
-		System.out.println("Vec ponudjen popust");
+		//System.out.println("Vec ponudjen popust");
 		return true;
 	}
 	
@@ -298,10 +298,10 @@ function boolean datumUOpsegu(java.util.Date datum, long opseg) {
 	lDate = lDate.plus(opseg, ChronoUnit.DAYS);
 	
 	if (lDate.isEqual(today) || lDate.isAfter(today)) {
-		System.out.println("U opsegu - " + opseg);
+		//System.out.println("U opsegu - " + opseg);
 		return true;
 	} else {
-		System.out.println("Nije u opsegu - " + opseg);
+		//System.out.println("Nije u opsegu - " + opseg);
 	}
 	
 	return false;

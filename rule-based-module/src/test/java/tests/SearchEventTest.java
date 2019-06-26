@@ -268,7 +268,7 @@ public class SearchEventTest {
         RezervacijaKorisnika r = new RezervacijaKorisnika();
         r.setSmestaj(Creator.createSmestajnaJedinica(1L, Creator.createSmestajniObjekat(1L, "SILVER", null, l)));
         try {
-			r.setDatumRezervacije(sdf.parse("02/06/2019"));
+			r.setDatumRezervacije(sdf.parse("24/06/2019"));
 			r.setDatumPocetka(sdf.parse("20/07/2019"));
 			r.setDatumZavrsetka(sdf.parse("22/07/2019"));
 		} catch (ParseException e) {
