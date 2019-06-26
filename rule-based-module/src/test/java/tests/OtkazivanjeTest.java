@@ -32,13 +32,13 @@ public class OtkazivanjeTest {
         RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "04/04/2019", "04/06/2019", "19/06/2019", "REZERVISANO", j);
         rez.setProcenatOtkazivanje(-1.0);
         
-        RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "14/06/2019", "27/06/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "04/01/2019", "05/07/2019", "17/07/2019", "REZERVISANO", j);
         rez2.setProcenatOtkazivanje(-1.0);
         
-        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2017", "20/07/2019", "25/07/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2017", "20/08/2019", "25/08/2019", "REZERVISANO", j);
         rez3.setProcenatOtkazivanje(-1.0);
         
-        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "22/06/2019", "30/06/2019", "REZERVISANO", j);
+        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "22/07/2019", "30/07/2019", "REZERVISANO", j);
         rez4.setProcenatOtkazivanje(-1.0);    
         
         kSession.insert(rez);

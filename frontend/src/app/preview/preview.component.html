@@ -115,14 +115,17 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
-                                        <h4 class="card-title">{{o.nazivObj}}, kategorija: {{o.kategorija}} <span
+                                        <h4 class="card-title">{{o.nazivObj}}, {{o.lokacija}} kategorija: {{o.kategorija}} <span
                                                 style="color:gold"><i class="fas fa-star"></i></span> </h4>
-                                        <h3 class="card-title">1/{{o.jedinica.brojKreveta}} <div
+                                        <h3 class="card-title">Soba: {{o.jedinica.oznaka}}</h3>
+                                        <h4 class="card-title">1/{{o.jedinica.brojKreveta}} <div
                                                 *ngIf="o.jedinica.balkon">Balkon<i class="fas fa-check"></i></div>
-                                        </h3>
+                                        </h4>
                                         <span>Ocena: <span style="color:gold"><i class="fas fa-star"></i></span><span
                                                 class="ml-1">{{o.ocena}}</span></span>
                                         <p class="card-text"></p>
+                                        <h4 class="card-title">{{o.cena}} € </h4>
+                                        <p>{{o.cena}} €</p>
                                         <p>[DEBUG]: {{o.jedinica.id}} </p>
                                         <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
                                         <p class="card-text">{{o.opis}}</p>

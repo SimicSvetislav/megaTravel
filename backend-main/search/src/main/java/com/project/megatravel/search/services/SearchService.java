@@ -230,7 +230,7 @@ public class SearchService {
 			
 			long numberOfDaysInRange = numberOfDaysThatAreInRange(searchObjectBeginDate, searchObjectEndDate, priceBeginDate, priceEndDate);
 			
-			numberOfDaysThatHaveAssignedPrice += numberOfDaysInRange;	
+			numberOfDaysThatHaveAssignedPrice += numberOfDaysInRange;
 			cena += (numberOfDaysInRange * c.getCena());
 			
 		}

@@ -356,10 +356,10 @@ public class AgentsTest {
 		RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "02/03/2019", "10/03/2019", "15/03/2019", "U TOKU", sj);
 		RezervacijaKorisnika rez11 = Creator.createRezervacija(11, 100, 0, "02/03/2019", "10/07/2019", "15/07/2019", "U TOKU", sj);
 		
-		RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "01/06/2019", "10/08/2019", "20/08/2019", "REZERVISANO", sj2);
-        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "01/06/2019", "12/08/2019", "19/08/2019", "REZERVISANO", sj2);
-        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "01/06/2019", "16/08/2019", "25/08/2019", "REZERVISANO", sj3);
-        RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "01/06/2019", "10/09/2019", "15/09/2019", "REZERVISANO", sj2);
+		RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "01/07/2019", "10/08/2019", "20/08/2019", "REZERVISANO", sj2);
+        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "01/07/2019", "12/08/2019", "19/08/2019", "REZERVISANO", sj2);
+        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "01/07/2019", "16/08/2019", "25/08/2019", "REZERVISANO", sj3);
+        RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "01/07/2019", "10/09/2019", "15/09/2019", "REZERVISANO", sj2);
         
         rez.setKorisnik(Creator.createKrajnjiKorisnik(1L, "SILVER", "01/01/2019"));
         rez2.setKorisnik(Creator.createKrajnjiKorisnik(2L, "SILVER", "01/01/2019"));
@@ -516,10 +516,10 @@ public class AgentsTest {
 		RezervacijaKorisnika rez = Creator.createRezervacija(1, 100, 0, "02/03/2019", "10/03/2019", "15/03/2019", "U TOKU", sj);
 		RezervacijaKorisnika rez11 = Creator.createRezervacija(1, 100, 0, "02/03/2019", "02/04/2019", "15/04/2019", "U TOKU", sj);
       
-		RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "01/06/2019", "10/08/2019", "20/08/2019", "REZERVISANO", sj2);
-        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "01/06/2019", "12/08/2019", "19/08/2019", "REZERVISANO", sj2);
-        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "01/06/2019", "16/08/2019", "25/08/2019", "REZERVISANO", sj3);
-        RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "01/06/2019", "10/09/2019", "15/09/2019", "REZERVISANO", sj2);
+		RezervacijaKorisnika rez2 = Creator.createRezervacija(2, 100, 0, "01/07/2019", "10/08/2019", "20/08/2019", "REZERVISANO", sj2);
+        RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "01/07/2019", "12/08/2019", "19/08/2019", "REZERVISANO", sj2);
+        RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "01/07/2019", "16/08/2019", "25/08/2019", "REZERVISANO", sj3);
+        RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "01/07/2019", "10/09/2019", "15/09/2019", "REZERVISANO", sj2);
         
         rez.setKorisnik(Creator.createKrajnjiKorisnik(1L, "SILVER", "01/01/2019"));
         rez2.setKorisnik(Creator.createKrajnjiKorisnik(2L, "SILVER", "01/01/2019"));

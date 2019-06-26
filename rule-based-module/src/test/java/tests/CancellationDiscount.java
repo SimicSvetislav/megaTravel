@@ -25,7 +25,7 @@ import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.util.Creator;
 
 public class CancellationDiscount {
-
+ 
 	private static SimpleDateFormat sdf;
 	private KieSession kSession;
 	

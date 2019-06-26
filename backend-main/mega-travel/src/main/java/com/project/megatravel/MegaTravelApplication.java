@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
@@ -48,13 +49,13 @@ public class MegaTravelApplication {
 			logger.warning("Can't connect to database");
 		}
 		
-		//SpringApplication.run(MegaTravelApplication.class, args);
+		SpringApplication.run(MegaTravelApplication.class, args);
 		
 		logger.info("Main backend application successfully started");
 		
 		//testDodatneUsluge();
-		testSoRepo();
-		testSjRepo();
+		//testSoRepo();
+		//testSjRepo();
 		
 		//testRezervacijaRepo();
 		
@@ -215,7 +216,7 @@ public class MegaTravelApplication {
 		
 		//Cenovnik
 		Cenovnik c = new Cenovnik();
-		c.setCena(25l);
+		c.setCena(12L);
 
 		try {
 			c.setKraj(sdf.parse(datKraj));
@@ -229,7 +230,7 @@ public class MegaTravelApplication {
 		
 		SmestajniObjekat so = new SmestajniObjekat();
 		so.setKategorija("BRONZE");
-		so.setLokacija(Creator.createLokacija("Beograd"));
+		so.setLokacija(Creator.createLokacija("Novi Sad"));
 		so.setAgent(2L);
 		so.setTipSmestaja(Creator.createTipSmestaja(2L, "Hotel"));
 		so.setZvezdice(5);
@@ -261,6 +262,9 @@ public class MegaTravelApplication {
 		
 		so = repo.save(so);
 		
+		if (c.getCena()<100) {
+			return;
+		}
 		
 		//drugi objekat
 		SmestajniObjekat so1 = new SmestajniObjekat();
