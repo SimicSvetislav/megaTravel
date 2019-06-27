@@ -2,7 +2,6 @@ package com.project.megatravel.search.services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 
-import com.mchange.v2.sql.filter.SynchronizedFilterDataSource;
 import com.project.megatravel.model.accomodation.Cenovnik;
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
 import com.project.megatravel.model.accomodation.Polozaj;
@@ -125,6 +123,8 @@ public class SearchService {
 			List<RezervacijaKorisnika> resSj = getByJed(s.getId(), ress);
 			
 			for (RezervacijaKorisnika r : resSj) {
+				System.out.println("PO: " + po.getDolazak() + "    " + po.getOdlazak());
+				System.out.println("R: " + r.getDatumZavrsetka() + "    " + r.getDatumPocetka());
 				if (po.getDolazak().before(r.getDatumZavrsetka()) && r.getDatumPocetka().before(po.getOdlazak())) {
 					toRemove.add(s);
 					break;
@@ -154,6 +154,7 @@ public class SearchService {
 			// dto.setOcena(cena);
 			double cena = generatePrice(po, so);
 			dto.setCena(cena);
+			System.out.println("Cena: " + cena);
 			// TODO pozvati cloud
 			//dto.setOcena(ocena);
 			

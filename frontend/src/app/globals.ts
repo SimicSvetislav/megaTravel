@@ -1,7 +1,7 @@
-// export const API_USER='//localhost:8152/';
-export const API_USER = '//localhost:8762/users/'; // zuul
-//export const API_RESERVATION='//localhost:8122/';
-export const API_RESERVATION = '//localhost:8762/reservations/'; // zuul
+export const API_USER='//localhost:8152/';
+//export const API_USER = '//localhost:8762/users/'; // zuul
+export const API_RESERVATION='//localhost:8122/';
+//export const API_RESERVATION = '//localhost:8762/reservations/'; // zuul
 //export const MAIN_API='//localhost:8111/';
 export const API_MAIN = '//localhost:8762/main/';
 export const EXTRAS_API= API_MAIN + 'extras/';

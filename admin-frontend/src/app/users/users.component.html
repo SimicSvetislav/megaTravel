@@ -95,7 +95,8 @@
     </ng-container>
 
     <ng-container matColumnDef="action">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> <button class="btn btn-secondary"
+        (click)="categorize()">Categorize</button>  </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <span *ngIf="row.stanje=='AKTIVAN';else other_content"> <button class="btn btn-warning"
             (click)="block(row.id)">Block</button> </span>
@@ -106,7 +107,8 @@
     </ng-container>
 
     <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> <button class="btn btn-secondary"
+        (click)="categorizeUsers()">Categorize users</button>  </mat-header-cell>
       <mat-cell *matCellDef="let row">
         <button class="btn btn-danger" (click)="delete(row.id)">Delete</button>
       </mat-cell>

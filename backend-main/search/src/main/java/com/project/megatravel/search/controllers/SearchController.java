@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.search.PretragaObjekat;
 import com.project.megatravel.search.model.dto.ResultDTO;

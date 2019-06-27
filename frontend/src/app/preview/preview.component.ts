@@ -1,3 +1,5 @@
+import { DatePipe } from '@angular/common';
+import { RezervacijaKorisnika } from './../rezervacijaKorisnika';
 import { ResultDTO } from './../resultDTO';
 import { TypesService } from './../services/search/types.service';
 import { Otkazivanje } from './../otkazivanje';
@@ -16,6 +18,7 @@ import { asElementData } from '@angular/core/src/view';
 import { ExtrasService } from '../services/search/extras.service';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from '../services/search/categories.service';
+import { ReservationService } from '../services/reservations/reservation.service';
 
 @Component({
   selector: 'app-preview',
@@ -50,7 +53,8 @@ export class PreviewComponent implements OnInit {
               private router: Router, private searchService: SearchService,
               private soService: ObjectService, private extrasService: ExtrasService,
               private modalService: NgbModal, private toastr: ToastrService,
-              private typesService: TypesService, private categoriesService: CategoriesService) { }
+              private typesService: TypesService, private categoriesService: CategoriesService,
+              private datePipe: DatePipe, private resService: ReservationService) { }
 
   ngOnInit() {
 
@@ -227,4 +231,31 @@ export class PreviewComponent implements OnInit {
     this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
   }
 
+
+
+rezervacija: RezervacijaKorisnika = new RezervacijaKorisnika();
+pom: string;
+
+ rezervisi(idJedinice,nazivObjekta,dolazak,odlazak,cena) {
+
+   this.rezervacija.smestajnaJedinica = idJedinice;
+  this.rezervacija.datumRezervacije =  this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  this.rezervacija.datumPocetka = dolazak;
+  this.rezervacija.datumZavrsetka = odlazak;
+  this.rezervacija.cenaSmestaja = cena;
+  this.rezervacija.stanje = "AKTIVNA";
+
+   this.pom = this.token.getUser();
+
+   this.rezervacija.korisnik = parseInt(this.pom);
+  this.rezervacija.ocenjeno = false;
+
+   this.resService.makeReservation(this.rezervacija).subscribe(data => {
+    //alert("Ne znam zasto ne radi toster");
+    this.toastr.show("Uspesno ste rezervisali!");
+    this.router.navigate(['/profile/' + this.pom])
+  })
+
+
+ }
 }
