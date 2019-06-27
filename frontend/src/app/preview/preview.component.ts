@@ -233,8 +233,23 @@ export class PreviewComponent implements OnInit {
 
   rezervacija: RezervacijaKorisnika = new RezervacijaKorisnika();
   pom: string;
+  sessionSearch: string;
+  sesObj;
 
   rezervisi(idJedinice,nazivObjekta,dolazak,odlazak,cena) {
+
+  
+
+    if(!dolazak || !odlazak) {
+      this.toastr.warning("Datum ce se vuci iz sesije");
+      this.sessionSearch = this.token.getSearch();
+      this.sesObj = JSON.parse(this.sessionSearch);
+
+      dolazak = this.sesObj.dolazak;
+      odlazak = this.sesObj.odlazak;
+
+     
+    }
 
     this.rezervacija.smestajnaJedinica = idJedinice;
     this.rezervacija.datumRezervacije =  this.datePipe.transform(new Date(), 'yyyy-MM-dd');
