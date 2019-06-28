@@ -1,12 +1,9 @@
-import { Komentar } from './komentar';
-import { SmestajnaJedinica } from './smestajnaJedinica';
-import { User } from './user';
 import { SmestajniObjekat } from './smestajniObjekat';
 export class RezervacijaKorisnika {
     id: number;
     smestajnaJedinica: number;
     popust: number;
-    datumRezervacije: string;
+    datumRezervacije: string; 
     datumPocetka: string;
     datumZavrsetka: string;
     cenaSmestaja: number;
