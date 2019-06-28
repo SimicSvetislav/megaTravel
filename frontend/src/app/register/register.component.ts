@@ -36,6 +36,7 @@ export class RegisterComponent implements OnInit {
 
   registrationFormGroup : FormGroup;
   passwordFormGroup: FormGroup;
+  locationFormGroup: FormGroup;
 
   user: User = new User();
   temp:User = new User();
@@ -58,6 +59,11 @@ export class RegisterComponent implements OnInit {
             email: ['', Validators.required],
             passwordFormGroup: this.passwordFormGroup
           }); 
+
+          this.locationFormGroup = this.formBuilder.group({
+            location: ['', Validators.required],
+            passwordFormGroup: this.passwordFormGroup
+          })
         }
 
   ngOnInit() {
@@ -72,6 +78,11 @@ export class RegisterComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+
+  lokacija;
+  geoSirina;
+  geoDuzina;
+
   register() {
     this.signupInfo = new SignUpInfo(
       this.user.ime,
@@ -80,7 +91,35 @@ export class RegisterComponent implements OnInit {
       this.user.prezime,
       this.user.adresa,
       this.user.telefon,
+      this.lokacija,
+      this.geoDuzina,
+      this.geoSirina
   )
+
+  if (!this.user.ime) {
+    this.toastrService.warning("Please enter name");
+    return;
+  }
+
+  if (!this.user.prezime) {
+    this.toastrService.warning("Please enter surname");
+    return;
+  }
+
+  if (!this.user.email) {
+    this.toastrService.warning("Please enter email");
+    return;
+  }
+
+  if (!this.user.sifra) {
+    this.toastrService.warning("Please enter password");
+    return;
+  }
+
+  if (!this.lokacija) {
+    this.toastrService.warning("Please enter location");
+    return;
+  }
 
 
 

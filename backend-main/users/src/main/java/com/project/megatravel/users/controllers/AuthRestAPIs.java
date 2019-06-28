@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Location;
+import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.model.accomodation.Polozaj;
 import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
@@ -156,8 +159,26 @@ public class AuthRestAPIs {
         			signUpRequest.getEmail(),signUpRequest.getAddress(),signUpRequest.getPhoneNumber(),
         			signUpRequest.getFirstName(),signUpRequest.getLastName());
         	
+    		
+    		Lokacija lokacija = Creator.createLokacija(-1, signUpRequest.getLokacija());
+    		Polozaj polozaj = new Polozaj();
+    		
+    		
+    		if(signUpRequest.getGeoDuzina() != null && signUpRequest.getGeoSirina() != null) {
+    			System.out.println("Nije null");
+    			polozaj.setGeoDuzina(signUpRequest.getGeoDuzina());
+    			polozaj.setGeoSirina(signUpRequest.getGeoSirina());
+    		} else {
+    			System.out.println("Null je");
+    			polozaj = Creator.getCoordinates(signUpRequest.getLokacija());
+    			
+    		}
+    		
+    		
+    		lokacija.setKoordinate(polozaj);
 
-
+    		//dalje ne znam kako to sacuvati al ovo je valjda to
+    		
             userRepository.save(kk);
 
 
