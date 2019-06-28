@@ -34,7 +34,7 @@ public class ReservationsController {
 	
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija) {
-		
+		System.out.println("Rezervisao ????");
 		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);

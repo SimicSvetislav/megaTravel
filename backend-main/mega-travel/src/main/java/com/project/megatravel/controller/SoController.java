@@ -41,5 +41,7 @@ public class SoController {
 		return new ResponseEntity<SmestajniObjekat>(rez, HttpStatus.OK);
 	}
 	
+	
+	
 
 }

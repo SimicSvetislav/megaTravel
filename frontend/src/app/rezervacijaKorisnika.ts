@@ -1,3 +1,4 @@
+import { SmestajniObjekat } from './smestajniObjekat';
 import { Komentar } from './komentar';
 import { SmestajnaJedinica } from './smestajnaJedinica';
 import { User } from './user';
@@ -12,4 +13,5 @@ export class RezervacijaKorisnika {
     stanje: string;
     korisnik: number;
     ocenjeno: Boolean;
+    smestajniObjekat: SmestajniObjekat;
 }

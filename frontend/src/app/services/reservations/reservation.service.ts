@@ -27,4 +27,8 @@ export class ReservationService {
     return this.http.get(API_RESERVATION + id);
   }
 
+  makeReservation(res: RezervacijaKorisnika): Observable<any> {
+    return this.http.post(API_RESERVATION, res);
+  }
+
 }

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { ResultDTO } from './../resultDTO';
 import { TypesService } from './../services/search/types.service';
 import { Otkazivanje } from './../otkazivanje';
@@ -16,6 +17,8 @@ import { asElementData } from '@angular/core/src/view';
 import { ExtrasService } from '../services/search/extras.service';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from '../services/search/categories.service';
+import { RezervacijaKorisnika } from '../rezervacijaKorisnika';
+import { ReservationService } from '../services/reservations/reservation.service';
 
 @Component({
   selector: 'app-preview',
@@ -50,7 +53,8 @@ export class PreviewComponent implements OnInit {
               private router: Router, private searchService: SearchService,
               private soService: ObjectService, private extrasService: ExtrasService,
               private modalService: NgbModal, private toastr: ToastrService,
-              private typesService: TypesService, private categoriesService: CategoriesService) { }
+              private typesService: TypesService, private categoriesService: CategoriesService,
+              private datePipe: DatePipe, private resService: ReservationService) { }
 
   ngOnInit() {
 
@@ -67,17 +71,17 @@ export class PreviewComponent implements OnInit {
       }, error => console.log(error));
     }
 
-    this.extrasService.getAll().subscribe(data => {
+  /*  this.extrasService.getAll().subscribe(data => {
       this.extras = data;
-    });
+    });*/
 
-    this.typesService.getAll().subscribe(data => {
+  /*  this.typesService.getAll().subscribe(data => {
       this.types = data;
-    });
+    });*/
 
-    this.categoriesService.getAll().subscribe(data => {
+  /*  this.categoriesService.getAll().subscribe(data => {
       this.categories = data;
-    });
+    });*/
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -225,6 +229,47 @@ export class PreviewComponent implements OnInit {
   }
   openModal(content) {
     this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
+  }
+
+  rezervacija: RezervacijaKorisnika = new RezervacijaKorisnika();
+  pom: string;
+  sessionSearch: string;
+  sesObj;
+
+  rezervisi(idJedinice,nazivObjekta,dolazak,odlazak,cena) {
+
+  
+
+    if(!dolazak || !odlazak) {
+      this.toastr.warning("Datum ce se vuci iz sesije");
+      this.sessionSearch = this.token.getSearch();
+      this.sesObj = JSON.parse(this.sessionSearch);
+
+      dolazak = this.sesObj.dolazak;
+      odlazak = this.sesObj.odlazak;
+
+     
+    }
+
+    this.rezervacija.smestajnaJedinica = idJedinice;
+    this.rezervacija.datumRezervacije =  this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.rezervacija.datumPocetka = dolazak;
+    this.rezervacija.datumZavrsetka = odlazak;
+    this.rezervacija.cenaSmestaja = cena;
+    this.rezervacija.stanje = "AKTIVNA";
+    
+    this.pom = this.token.getUser();
+    
+    this.rezervacija.korisnik = parseInt(this.pom);
+    this.rezervacija.ocenjeno = false;
+
+    this.resService.makeReservation(this.rezervacija).subscribe(data => {
+      //alert("Ne znam zasto ne radi toster");
+      this.toastr.show("Uspesno ste rezervisali!");
+      this.router.navigate(['/profile/' + this.pom])
+    })
+
+
   }
 
 }
