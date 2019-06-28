@@ -1,0 +1,4 @@
+<kategorijaSm xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="5" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <zvezdice>7</zvezdice>
+</kategorijaSm>
+

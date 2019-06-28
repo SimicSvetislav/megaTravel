@@ -1,0 +1,6 @@
+<DodatnaUsluga xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="3" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <cena>5.0</cena>
+    <ime>Room service</ime>
+    <jedinicaPlacanja>EUR</jedinicaPlacanja>
+</DodatnaUsluga>
+

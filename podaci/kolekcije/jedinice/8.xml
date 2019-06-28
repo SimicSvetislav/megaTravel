@@ -1,0 +1,11 @@
+<SmestajnaJedinica xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="8" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <brojKreveta>3</brojKreveta>
+    <balkon>false</balkon>
+    <sObjekat>4</sObjekat>
+    <otkazivanje>
+        <dozvoljeno>true</dozvoljeno>
+        <brojDana>5</brojDana>
+        <faktorOtkazivanja>0.0</faktorOtkazivanja>
+    </otkazivanje>
+    <oznaka>Soba 102</oznaka>
+</SmestajnaJedinica>

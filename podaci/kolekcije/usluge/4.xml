@@ -1,0 +1,6 @@
+<DodatnaUsluga xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <cena>25.0</cena>
+    <ime>Plazma tv</ime>
+    <jedinicaPlacanja>EUR</jedinicaPlacanja>
+</DodatnaUsluga>
+

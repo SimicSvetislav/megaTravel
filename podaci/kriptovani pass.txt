@@ -1,0 +1,7 @@
+luka: $2a$10$waMsAdTRLZcgzzk.cWUdM.loMdrW1xoM1isKNOVjJ/zy/Nih30O5y
+sveta: $2a$10$npO9y8PAmKP827jIS7xnqezNSAuwWgr5K3.Yh3Ja2ByAfR6bLYRbC
+viktor: $2a$10$I7sBA7SEYwGumXqabiRxx.nJ.nstthfCIq3HuarcWN4ByUzMiDnB2
+pop: $2a$10$7OPzY0hZ199tZIR4WI.jlOq44Za0EEx12cIVLq9/cFBDZTTxDMsTa
+
+agent1: $2a$10$RjNMdbRNuKmec3H1qOOQ7unh.31Wy/2my57Wc.Yv5in7fE0.TOpJa
+agent2: $2a$10$JfDm3Nx7IfiuSwztouT6IehummRr.W3n0nlic7n7Mwkp.6nLvgAN.
