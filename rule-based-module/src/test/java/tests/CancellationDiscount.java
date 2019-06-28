@@ -21,7 +21,9 @@ import org.kie.api.runtime.KieSession;
 import com.project.megatravel.events.CancellationEvent;
 import com.project.megatravel.events.ReservationEvent;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class CancellationDiscount {
@@ -30,7 +32,15 @@ public class CancellationDiscount {
 	private KieSession kSession;
 	
 	@BeforeClass
-	public static void before() {
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
 		sdf = new SimpleDateFormat("dd/MM/yyyy");
 	}
 	
@@ -58,7 +68,7 @@ public class CancellationDiscount {
 	    
     	lDate.minus(7, ChronoUnit.MINUTES);
     	
-	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", null);
+	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", new SmestajnaJedinica());
 	    
 	    rez.setKorisnik(Creator.createKrajnjiKorisnik(1L, "NA", "01/01/2019"));
 	    
@@ -110,7 +120,7 @@ public class CancellationDiscount {
 	    
     	lDate.minus(17, ChronoUnit.MINUTES);
     	
-	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", null);
+	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", new SmestajnaJedinica());
 	    
 	    rez.setKorisnik(Creator.createKrajnjiKorisnik(1L, "NA", "01/01/2019"));
 	    
@@ -161,7 +171,7 @@ public class CancellationDiscount {
 	    
     	lDate.minus(7, ChronoUnit.MINUTES);
     	
-	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", null);
+	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", new SmestajnaJedinica());
 	    
 	    rez.setKorisnik(Creator.createKrajnjiKorisnik(1L, "NA", "01/01/2019"));
 	    
@@ -212,7 +222,7 @@ public class CancellationDiscount {
 	    
     	lDate.minus(7, ChronoUnit.MINUTES);
     	
-	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", null);
+	    RezervacijaKorisnika rez =  Creator.createRezervacija(1L, 100.0, 0, "01/01/2019", "01/01/2019", "01/01/2019", "REZERVISANO", new SmestajnaJedinica());
 	    
 	    rez.setKorisnik(Creator.createKrajnjiKorisnik(1L, "NA", "01/01/2019"));
 	    

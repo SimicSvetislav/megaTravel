@@ -1,3 +1,4 @@
+import { RbmPanelComponent } from './rbm/rbm-panel/rbm-panel.component';
 import { HomeComponent } from './home/home.component';
 import { ChatService } from './service/chat.service';
 import { ProfileComponent } from './user/profile/profile.component';
@@ -105,6 +106,9 @@ const routes = [
     path: 'chat/:resId', component: ChatComponent
   },
   {
+    path: 'rbm', component: RbmPanelComponent
+  },
+  {
     path: '**', component: PageNotFoundComponent
   }];
 
@@ -150,7 +154,8 @@ const routes = [
     ViewAllMessagesTableComponent,
     ViewAllBookingsComponent,
     ViewBookingComponent,
-    ChatComponent
+    ChatComponent,
+    RbmPanelComponent
   ],
   imports: [
     BrowserModule,

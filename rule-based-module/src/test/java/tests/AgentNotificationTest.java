@@ -16,6 +16,7 @@ import org.kie.api.runtime.KieSession;
 
 import com.project.megatravel.events.ReservationEvent;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class AgentNotificationTest {
@@ -24,9 +25,18 @@ public class AgentNotificationTest {
 	private KieSession kSession;
 	
 	@BeforeClass
-	public static void before() {
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+
 		sdf = new SimpleDateFormat("dd/MM/yyyy");
 	}
+	
 	
 	@Test
 	public void testAgentNotification() {

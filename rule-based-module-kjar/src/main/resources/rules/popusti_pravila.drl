@@ -13,6 +13,8 @@ import com.project.megatravel.model.accomodation.Lokacija
 import com.project.megatravel.events.LastMinuteEvent;
 import com.project.megatravel.events.EarlyBirdEvent;
 
+import org.apache.commons.lang.time.DateUtils
+
 global Boolean finalizing;
 global Boolean lmEnabled;
 global Boolean ebEnabled;
@@ -22,7 +24,9 @@ rule "Last-minute"
 	salience 50
 	lock-on-active true
     when	
-        $rez : RezervacijaKorisnika( $datumRezervacije : datumRezervacije, $datumPocetka : datumPocetka, popust == 0.0,  sameDate($datumRezervacije, $datumPocetka), $id : id  )
+        $rez : RezervacijaKorisnika( $datumRezervacije : datumRezervacije, $datumPocetka : datumPocetka, popust == 0.0,  
+        DateUtils.isSameDay($datumRezervacije, $datumPocetka),
+        $id : id  )
     then
     	System.out.println("\nLast-minute\nDodeljen popust 50% za rezervaciju " + $id );
         modify ($rez) { setPopust(50); }
@@ -57,13 +61,15 @@ rule "Popust na neocenjene smestaje u istom mestu u kojem su klijenti boravili b
     when
         $rez : RezervacijaKorisnika( stanje == "REZERVISANO", popust == 0.0, $id : id,  $lokId : smestaj.getSObjekat().getLokacija().getId(), $korisnikId : korisnik.getId()  )
         $rezervacije : List() from collect ( RezervacijaKorisnika( stanje == "REALIZOVANO", smestaj.getSObjekat().getLokacija().getId() == $lokId, korisnik.getId() == $korisnikId ) )
+        eval ( $rezervacije.size() >= 6 )
         $agenti : Set() from accumulate (
 			RezervacijaKorisnika (
 				$idA : smestaj.getSObjekat().getAgent().getId()
 			) from $rezervacije,
 			collectSet($idA)
 		)
-        $so : SmestajniObjekat( lokacija.getId() == $lokId, $rezervacije.size() >= 6, $agenti.size() >= 3, rejting.getBrojOcena() == 0 )
+		eval ($agenti.size() >= 3)
+        $so : SmestajniObjekat( lokacija.getId() == $lokId, rejting.getBrojOcena() == 0 )
     then
         System.out.println("\nDodatni popust (1)\nDodeljen popust 60% za rezervaciju " + $id );
         System.out.println($rezervacije.size());

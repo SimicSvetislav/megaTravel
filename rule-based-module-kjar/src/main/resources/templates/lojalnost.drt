@@ -1,6 +1,8 @@
 template header
 granica
 popust
+aid
+counter
 
 package rules
 
@@ -12,9 +14,9 @@ global Set lojalni;
 
 template "lojalnost"
 
-rule "Lojalnost @{row.rowNumber}"
+rule "Lojalnost @{counter}"
 no-loop true
-agenda-group "lojalnost"
+agenda-group "lojalnost_@{aid}"
 salience @{popust}
 when
     $rez: RezervacijaKorisnika( $k: korisnik, popust==0.0, $agent: smestaj.getSObjekat().getAgent() )

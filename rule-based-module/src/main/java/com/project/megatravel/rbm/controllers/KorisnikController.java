@@ -6,9 +6,12 @@ import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.dto.KrajnjiKorisnikDTO;
@@ -16,6 +19,7 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.rbm.manager.Manager;
 import com.project.megatravel.rbm.services.KorisniciService;
 import com.project.megatravel.util.Creator;
 
@@ -29,11 +33,11 @@ public class KorisnikController {
 
 	@Autowired
 	public KorisnikController(KieContainer kieContainer, KorisniciService service) {
-		log.info("Initialising a new example session.");
+		//log.info("Initialising a new example session.");
 		this.kieContainer = kieContainer;
 		this.service = service;
 	}
-	
+
 	@RequestMapping(value = "/client/classify", method=RequestMethod.PUT, consumes="application/json")
 	public String classifyClient(@RequestBody KrajnjiKorisnikDTO kk) {
 		
@@ -42,16 +46,17 @@ public class KorisnikController {
 		return service.classify(kk);
 	}
 	
-	@RequestMapping(value = "/client", method=RequestMethod.GET)
-	public String classifyClient() {
+	@RequestMapping(value = "/client", method=RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<String> classifyClient() {
 		
 		log.info("Classifying client... (2)");
 		
 		//KieServices ks = KieServices.Factory.get();
         //KieContainer kContainer = ks.getKieClasspathContainer();
-        KieSession kSession =  kieContainer.newKieSession("ksession-rules");
+        KieSession kSession =  Manager.getSession(kieContainer);
         
-        kSession.getAgenda().getAgendaGroup("klijent").setFocus();
+        kSession.getAgenda().getAgendaGroup("klijent").setFocus(); 
 		
 		KrajnjiKorisnik korisnik = Creator.createKrajnjiKorisnik(1L, "NA", "10/10/2018");
 		
@@ -66,7 +71,7 @@ public class KorisnikController {
 		
 		System.out.println("Fired - " + fired );
 		
-		return korisnik.getKategorija();
+		return new ResponseEntity<String>(korisnik.getKategorija(), HttpStatus.OK);
 		
 		//return service.classify(kk);
 	}

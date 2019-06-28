@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.apache.commons.lang.time.DateUtils;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -18,9 +20,21 @@ import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class PopustTest {
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@Test
 	public void testPopust() {
@@ -40,6 +54,7 @@ public class PopustTest {
         
         try {
 			rez.setDatumRezervacije(sdf.parse("24/01/2019"));
+			rez.setDatumPocetka(sdf.parse("18/11/2019"));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

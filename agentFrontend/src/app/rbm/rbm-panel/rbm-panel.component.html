@@ -1,0 +1,25 @@
+<form class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <label for="word" class="sr-only">Bad word</label>
+    <input type="text" name="word" class="form-control" [(ngModel)]="word" id="word" placeholder="Word(s)">
+  </div>
+  <button type="submit" (click)="forbid()" class="btn btn-primary mb-2">Forbid</button>
+</form>
+<form class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <label for="persons" class="sr-only">Percent for more persons</label> 
+    <input type="number" name="pp1" [(ngModel)]="pp2" class="form-control" id="persons" placeholder="Extra for more persons">
+    <!--<label for="Percent" class="sr-only">Percent</label>
+    <input type="number" name="pp2" [(ngModel)]="pp2" class="form-control" id="Percent" placeholder="Percent">-->
+  </div>
+  <button type="submit" (click)="submit()" class="btn btn-primary mb-2">Add</button>
+</form>
+<form class="form-inline">
+  <div class="form-group mx-sm-3 mb-2">
+    <label for="percent" class="sr-only">Percent</label>
+    <input type="number" name="pr1" [(ngModel)]="pr1" class="form-control" id="percent" placeholder="Discount">
+    <label for="ress" class="sr-only">Reservations</label>
+    <input type="number" name="pr2" [(ngModel)]="pr2" class="form-control" id="ress" placeholder="Reservations">
+  </div>
+  <button type="submit" (click)="add()" class="btn btn-primary mb-2">Add</button>
+</form>

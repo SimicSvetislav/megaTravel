@@ -9,6 +9,7 @@ import org.drools.template.DataProvider;
 import org.drools.template.DataProviderCompiler;
 import org.drools.template.objects.ArrayDataProvider;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.builder.Message;
 import org.kie.api.builder.Results;
@@ -17,10 +18,23 @@ import org.kie.api.runtime.KieSession;
 import org.kie.internal.utils.KieHelper;
 
 import com.project.megatravel.model.chat.Poruka;
+import com.project.megatravel.rbm.ExistDB;
 
 public class KPravilaZabranaPorukaTest {
 
 	private KieSession ksession;
+	private Integer counter = 0;
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@Before
     public void prepare(){
@@ -28,10 +42,10 @@ public class KPravilaZabranaPorukaTest {
         InputStream template = KPravilaZabranaPorukaTest.class.getResourceAsStream("/templates/filter.drt");
         
         DataProvider dataProvider = new ArrayDataProvider(new String[][]{
-            new String[]{"bad"},
-            new String[]{"words"},
-            new String[]{"gonna"},
-            new String[]{"hurt"},
+            new String[]{"bad", "1", (counter++).toString()},
+            new String[]{"words", "1", (counter++).toString()},
+            new String[]{"gonna", "1", (counter++).toString()},
+            new String[]{"hurt", "1", (counter++).toString()},
         });
         
         DataProviderCompiler converter = new DataProviderCompiler();
@@ -41,7 +55,7 @@ public class KPravilaZabranaPorukaTest {
         
         ksession = createKieSessionFromDRL(drl);
         
-        ksession.getAgenda().getAgendaGroup("filter").setFocus();
+        ksession.getAgenda().getAgendaGroup("filter_1").setFocus();
         
     }
     
@@ -64,7 +78,7 @@ public class KPravilaZabranaPorukaTest {
         
 		Poruka poruka = new Poruka();
 		poruka.setTekst("This text contains one bad word");
-	
+		
 		ksession.insert(poruka);
 		
         int fired = ksession.fireAllRules();

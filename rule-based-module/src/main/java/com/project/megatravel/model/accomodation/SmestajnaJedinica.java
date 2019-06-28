@@ -15,9 +15,12 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 import com.project.megatravel.model.reservations.Komentar;
+import com.project.megatravel.rbm.repository.SoRepository;
 
 
 /**
@@ -83,7 +86,6 @@ import com.project.megatravel.model.reservations.Komentar;
     "balkon",
     "slike",
     "rejting",
-    "sObjekat",
     "komentari",
     "cenovnici",
     "podrazumevaniCenovnik",
@@ -92,6 +94,7 @@ import com.project.megatravel.model.reservations.Komentar;
     "otkazivanje",
     "povecanjeVeciBrojOsoba"
 })
+@XmlRootElement(name="SmestajnaJedinica")
 public class SmestajnaJedinica {
 
     @XmlElement(required = true)
@@ -102,7 +105,7 @@ public class SmestajnaJedinica {
     protected List<SmestajnaJedinica.Slike> slike;
     @XmlElement(required = true)
     protected Rejting rejting;
-    @XmlElement(required = true)
+    @XmlTransient
     protected SmestajniObjekat sObjekat;
     protected List<Komentar> komentari;
     @XmlElement(required = true)
@@ -117,6 +120,63 @@ public class SmestajnaJedinica {
     protected double povecanjeVeciBrojOsoba;
     @XmlAttribute(name = "id")
     protected Long id;
+    
+    @XmlAttribute(name = "sObjekat")
+    protected Long sObjekatE;
+    
+    @XmlTransient
+    protected SoRepository repo = new SoRepository();
+    
+    public SmestajniObjekat getsObjekat() {
+    	if (sObjekat==null) {
+    		sObjekat=repo.getOneById(sObjekatE);
+    	}
+		return sObjekat;
+	}
+
+	public void setsObjekat(SmestajniObjekat sObjekat) {
+		this.sObjekat = sObjekat;
+	}
+
+	public Long getsObjekatE() {
+		return sObjekatE;
+	}
+
+	public void setsObjekatE(Long sObjekatE) {
+		this.sObjekatE = sObjekatE;
+	}
+
+	public void setSlike(List<SmestajnaJedinica.Slike> slike) {
+		this.slike = slike;
+	}
+
+	public void setKomentari(List<Komentar> komentari) {
+		this.komentari = komentari;
+	}
+
+	public void setCenovnici(List<Cenovnik> cenovnici) {
+		this.cenovnici = cenovnici;
+	}
+
+	public void setDodatneUsluge(List<DodatnaUsluga> dodatneUsluge) {
+		this.dodatneUsluge = dodatneUsluge;
+	}
+    
+    /*public SmestajnaJedinica(SmestajnaJedinicaEntity sj) {
+    	brojKreveta = sj.getBrojKreveta();
+    	balkon = sj.isBalkon();
+    	slike = sj.getSlike();
+    	rejting = sj.getRejting();
+    	// TODO: Popuni u repou objekat
+    	komentari = sj.getKomentari();
+    	cenovnici = sj.getCenovnici();
+    	podrazumevaniCenovnik = sj.getPodrazumevaniCenovnik();
+    	opis = sj.getOpis();
+    	dodatneUsluge = sj.getDodatneUsluge();
+    	otkazivanje = sj.getOtkazivanje();
+    	povecanjeVeciBrojOsoba = sj.getPovecanjeVeciBrojOsoba();
+    	id = sj.getId();
+    }*/
 
     /**
      * Gets the value of the brojKreveta property.
@@ -232,6 +292,9 @@ public class SmestajnaJedinica {
      *     
      */
     public void setSObjekat(SmestajniObjekat value) {
+    	if (value != null) {
+    		sObjekatE = value.getId();
+    	}
         this.sObjekat = value;
     }
 

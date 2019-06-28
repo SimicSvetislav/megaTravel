@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.drools.core.command.runtime.rule.FireAllRulesCommand;
 import org.drools.core.time.SessionPseudoClock;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -16,12 +17,24 @@ import org.kie.api.runtime.KieSession;
 import com.project.megatravel.events.SearchEvent;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class SearchEventTest {
 	
 	private KieSession kSession;
 	private SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@Test
 	public void searchEventTest() {
@@ -268,7 +281,7 @@ public class SearchEventTest {
         RezervacijaKorisnika r = new RezervacijaKorisnika();
         r.setSmestaj(Creator.createSmestajnaJedinica(1L, Creator.createSmestajniObjekat(1L, "SILVER", null, l)));
         try {
-			r.setDatumRezervacije(sdf.parse("24/06/2019"));
+			r.setDatumRezervacije(sdf.parse("25/06/2019"));
 			r.setDatumPocetka(sdf.parse("20/07/2019"));
 			r.setDatumZavrsetka(sdf.parse("22/07/2019"));
 		} catch (ParseException e) {

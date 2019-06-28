@@ -71,6 +71,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (resource!=null)
 				((EXistResource)resource).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();
@@ -110,6 +111,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (res!=null)
 				((EXistResource)res).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();
@@ -185,6 +187,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (res!=null)
 				((EXistResource)res).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();
@@ -226,6 +229,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (res!=null)
 				((EXistResource)res).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();

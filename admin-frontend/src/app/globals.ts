@@ -2,8 +2,10 @@
 // Admin app
 export const API='//localhost:8131/';
 
-// export const API_USER='//localhost:8152/';
-export const API_USER = '//localhost:8762/users/'; // zuul
+export const API_USER='//localhost:8152/';
+// export const API_USER = '//localhost:8762/users/'; // zuul
+
+export const RBM_API='//localhost:8020/';
 
 export const AGENT_API= API + 'agent/';
 export const USER_API= API + 'user/';

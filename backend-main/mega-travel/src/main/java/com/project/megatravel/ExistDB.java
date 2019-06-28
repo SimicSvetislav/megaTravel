@@ -149,6 +149,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if(res!=null)
 				((EXistResource)res).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();

@@ -2,8 +2,10 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -12,11 +14,23 @@ import org.kie.api.time.SessionPseudoClock;
 
 import com.project.megatravel.events.EarlyBirdEvent;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class EarlyBirdEventTest {
 
 	KieSession kSession;
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@Test
 	public void testEarlyBird() {

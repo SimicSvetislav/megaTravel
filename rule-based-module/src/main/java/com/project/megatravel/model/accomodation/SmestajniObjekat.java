@@ -14,8 +14,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.rbm.repository.AgentRepository;
 
 
 /**
@@ -81,34 +84,49 @@ import com.project.megatravel.model.users.Agent;
 @XmlType(name = "TSmestajniObjekat", propOrder = {
     "tipSmestaja",
     "lokacija",
-    "smestajneJedinice",
-    "dodatneUsluge",
-    "otkazivanje",
     "kategorija",
     "rejting",
-    "agent"
+    "agentE",
+    "smestajneJedinice",
+    "dodatneUsluge"
 })
+@XmlRootElement(name="SmestajniObjekat")
 public class SmestajniObjekat {
 
     @XmlElement(required = true)
     protected String tipSmestaja;
     @XmlElement(required = true)
     protected Lokacija lokacija;
+    @XmlElement(name = "SmestajnaJedinica")
     protected List<SmestajnaJedinica> smestajneJedinice;
+    @XmlElement(name = "DodatnaUsluga")
     protected List<DodatnaUsluga> dodatneUsluge;
-    @XmlElement(required = true)
-    protected Otkazivanje otkazivanje;
+
+	//@XmlElement(required = true)
+    //protected Otkazivanje otkazivanje;
     @XmlElement(required = true, defaultValue = "NA")
     protected String kategorija;
     @XmlElement(required = true)
     protected Rejting rejting;
-    @XmlElement(required = true)
+    //@XmlElement(required = true)
+    @XmlTransient
     protected Agent agent;
     @XmlAttribute(name = "id")
     protected Long id;
     @XmlAttribute(name = "zvezdice")
     protected Integer zvezdice;
+    
+    @XmlElement(name = "agent")
+    protected Long agentE;
+    
+    public Long getAgentE() {
+		return agentE;
+	}
 
+	public void setAgentE(Long agentE) {
+		this.agentE = agentE;
+	}
+    
     /**
      * Gets the value of the tipSmestaja property.
      * 
@@ -223,9 +241,9 @@ public class SmestajniObjekat {
      *     {@link Otkazivanje }
      *     
      */
-    public Otkazivanje getOtkazivanje() {
+    /*public Otkazivanje getOtkazivanje() {
         return otkazivanje;
-    }
+    }/*
 
     /**
      * Sets the value of the otkazivanje property.
@@ -235,9 +253,9 @@ public class SmestajniObjekat {
      *     {@link Otkazivanje }
      *     
      */
-    public void setOtkazivanje(Otkazivanje value) {
+    /*public void setOtkazivanje(Otkazivanje value) {
         this.otkazivanje = value;
-    }
+    }*/
 
     /**
      * Gets the value of the kategorija property.
@@ -295,7 +313,12 @@ public class SmestajniObjekat {
      *     {@link Agent }
      *     
      */
+    @XmlTransient
+    AgentRepository repo = new AgentRepository();
     public Agent getAgent() {
+    	if (agent == null) {
+    		agent = repo.getOneById(agentE);
+    	}
         return agent;
     }
 
@@ -308,6 +331,9 @@ public class SmestajniObjekat {
      *     
      */
     public void setAgent(Agent value) {
+    	if (value != null) {
+    		agentE = value.getId();
+    	}
         this.agent = value;
     }
 

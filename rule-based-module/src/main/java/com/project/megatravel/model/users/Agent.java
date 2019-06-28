@@ -14,6 +14,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.Rezervacija;
@@ -59,12 +60,13 @@ import com.project.megatravel.model.reservations.Rezervacija;
     "rezervacije",
     "filteriPoruka"
 })
+@XmlRootElement(name="Agent")
 public class Agent
     extends Korisnik
 {
 
     @XmlElement(required = true)
-    protected BigInteger poslovniMaticniBroj;
+    protected Long poslovniMaticniBroj;
     protected List<SmestajniObjekat> smestajniObjekti;
     protected List<Rezervacija> rezervacije;
     protected List<String> filteriPoruka;
@@ -77,7 +79,7 @@ public class Agent
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getPoslovniMaticniBroj() {
+    public Long getPoslovniMaticniBroj() {
         return poslovniMaticniBroj;
     }
 
@@ -89,7 +91,7 @@ public class Agent
      *     {@link BigInteger }
      *     
      */
-    public void setPoslovniMaticniBroj(BigInteger value) {
+    public void setPoslovniMaticniBroj(Long value) {
         this.poslovniMaticniBroj = value;
     }
 

@@ -8,6 +8,11 @@ import { RezervacijaKorisnika } from 'src/app/rezervacijaKorisnika';
   providedIn: 'root'
 })
 export class ReservationService {
+  
+  cancel(id: number) {
+    //return this.http.get('http://localhost:8020/client', { responseType: 'text' });
+    return this.http.get(API_RESERVATION + 'cancel/' + id, { responseType: 'text' });
+  }
 
   constructor(private http: HttpClient) { }
 
@@ -25,6 +30,14 @@ export class ReservationService {
 
   getReservation(id: number): Observable<any> {
     return this.http.get(API_RESERVATION + id);
+  }
+
+  makeReservation(res: RezervacijaKorisnika): Observable<any> {
+    return this.http.post(API_RESERVATION, res);
+  }
+
+  makeReservation2(rezervacija: RezervacijaKorisnika, more: Boolean) {
+    return this.http.post(API_RESERVATION + more, rezervacija);
   }
 
 }

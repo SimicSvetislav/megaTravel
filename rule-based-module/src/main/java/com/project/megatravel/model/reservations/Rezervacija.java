@@ -14,9 +14,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.rbm.repository.SjRepository;
 
 
 /**
@@ -71,7 +73,7 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 @XmlType(name = "TRezervacija", propOrder = {
     "datumPocetka",
     "datumZavrsetka",
-    "smestaj",
+    "smestajE",
     "popust"
 })
 @XmlSeeAlso({
@@ -85,13 +87,23 @@ public class Rezervacija {
     @XmlElement(required = true, type = String.class)
     @XmlJavaTypeAdapter(Adapter2 .class)
     protected Date datumZavrsetka;
-    @XmlElement(required = true)
+    @XmlTransient
     protected SmestajnaJedinica smestaj;
     protected double popust;
     @XmlAttribute(name = "id")
     protected Long id;
+    @XmlElement(name = "smestajnaJedinica")
+    protected Long smestajE;
 
-    /**
+    public Long getSmestajE() {
+		return smestajE;
+	}
+
+	public void setSmestajE(Long smestajE) {
+		this.smestajE = smestajE;
+	}
+
+	/**
      * Gets the value of the datumPocetka property.
      * 
      * @return
@@ -147,7 +159,13 @@ public class Rezervacija {
      *     {@link SmestajnaJedinica }
      *     
      */
+    @XmlTransient
+    SjRepository repo = new SjRepository();
     public SmestajnaJedinica getSmestaj() {
+    	if (smestaj == null) {
+    		smestaj = repo.getOneById(smestajE);
+    	}
+    	
         return smestaj;
     }
 
@@ -160,6 +178,10 @@ public class Rezervacija {
      *     
      */
     public void setSmestaj(SmestajnaJedinica value) {
+    	
+    	if (value != null) {
+    		smestajE = value.getId();
+    	}
         this.smestaj = value;
     }
 

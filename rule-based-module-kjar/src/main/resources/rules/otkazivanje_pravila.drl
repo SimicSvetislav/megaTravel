@@ -7,6 +7,7 @@ import java.lang.Math
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika
 import com.project.megatravel.model.accomodation.SmestajnaJedinica
+import org.apache.commons.lang.time.DateUtils
 
 //declare any global variables here
 
@@ -15,7 +16,10 @@ rule "Otkazivanje 30 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 0
     when
-        $rez : RezervacijaKorisnika( $datum : datumPocetka, stanje == "REZERVISANO", razmak($datum, 30), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( $datum : datumPocetka, stanje == "OTKAZIVANJE",
+        $pomeren: DateUtils.addDays(new Date(), 30),
+        eval($pomeren.before(datumPocetka)),
+        procenatOtkazivanje == -1, $id : id )
     then
         System.out.println("Otkazivanje rezervacije " + $id + " je besplatno");
         modify($rez){ setProcenatOtkazivanje(0); }
@@ -27,7 +31,7 @@ rule "Odreðivanje cene za doplatu na osnovu uspešnih godina poslovanja"
 	lock-on-active true
 	salience Math.min($godineSet.size()*25, 100)
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", procenatOtkazivanje == -1, $jedinice : smestaj.getSObjekat().getSmestajneJedinice(), $id : id )
+        $rez : RezervacijaKorisnika( stanje == "OTKAZIVANJE", procenatOtkazivanje == -1, $jedinice : smestaj.getSObjekat().getSmestajneJedinice(), $id : id )
         $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj memberOf $jedinice ) )
         $godineSet : Set() from accumulate (
 			RezervacijaKorisnika (
@@ -48,7 +52,8 @@ rule "Otkazivanje krace od 3 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 100
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, !razmak($datum, 3), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( stanje == "OTKAZIVANJE", procenatOtkazivanje == -1, $id : id,
+        $pomeren: DateUtils.addDays(new Date(), 3), eval($pomeren.after(datumPocetka)))
     then
         System.out.println("Naplati 100% cene za otkazivanje rezervacije " + $id);
         modify($rez){ setProcenatOtkazivanje(100); }
@@ -60,7 +65,8 @@ rule "Otkazivanje od 15 do 3 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 50
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, !razmak($datum, 15), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( stanje == "OTKAZIVANJE", $datum : datumPocetka, procenatOtkazivanje == -1, $id : id,
+        $pomeren: DateUtils.addDays(new Date(), 15), eval($pomeren.after(datumPocetka)))
     then
         System.out.println("Naplati 50% cene za otkazivanje rezervacije " + $id);
         modify($rez){ setProcenatOtkazivanje(50); }
@@ -72,24 +78,41 @@ rule "Otkazivanje od 30 do 15 dana pre pocetka rezervacije"
 	lock-on-active true
 	salience 30
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", $datum : datumPocetka, !razmak($datum, 30), procenatOtkazivanje == -1, $id : id )
+        $rez : RezervacijaKorisnika( stanje == "OTKAZIVANJE", procenatOtkazivanje == -1, $id : id,
+        $pomeren: DateUtils.addDays(new Date(), 30), eval($pomeren.after(datumPocetka)) )
     then
         System.out.println("Naplati 30% cene za otkazivanje rezervacije " + $id);
         modify($rez){ setProcenatOtkazivanje(30); }
 
 end
 
+/*rule "Otkazivanje 15 dana pre pocetka rezervacije i postoje nadovezane druge rezervacije"
+	agenda-group "otkazivanje"
+	lock-on-active true
+	salience 55
+    when
+        $rez : RezervacijaKorisnika( stanje == "OTKAZIVANJE", procenatOtkazivanje == -1, $jedinica : smestaj, $id : id )
+        $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj == $jedinica ) )
+        RezervacijaKorisnika ( id == $id, ugnjezdenaRezervacija($rezervacije, $rez) )
+    then
+        System.out.println("Naplati 55% cene za otkazivanje rezervacije (ugnjezdena rezervacija) " + $id);
+        modify($rez){ setProcenatOtkazivanje(55); } 
+
+end*/
+
 rule "Otkazivanje 15 dana pre pocetka rezervacije i postoje nadovezane druge rezervacije"
 	agenda-group "otkazivanje"
 	lock-on-active true
 	salience 55
     when
-        $rez : RezervacijaKorisnika( stanje == "REZERVISANO", procenatOtkazivanje == -1, $jedinica : smestaj, $id : id )
-        $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj == $jedinica ) )
-        RezervacijaKorisnika ( id == $id, ugnjezdenaRezervacija($rezervacije, $rez) )
+        $rez : RezervacijaKorisnika( stanje == "OTKAZIVANJE", procenatOtkazivanje == -1, $jedinica : smestaj, $id : id,
+        $lb: DateUtils.truncate(DateUtils.addDays(datumPocetka, -1), Calendar.DAY_OF_MONTH), 
+        $ub: DateUtils.truncate(DateUtils.addDays(datumZavrsetka, 1), Calendar.DAY_OF_MONTH) )
+        exists(RezervacijaKorisnika(smestaj==$jedinica, DateUtils.truncate(datumPocetka, Calendar.DAY_OF_MONTH) == $ub))
+        exists(RezervacijaKorisnika(smestaj==$jedinica, DateUtils.truncate(datumZavrsetka, Calendar.DAY_OF_MONTH) == $lb))
     then
         System.out.println("Naplati 55% cene za otkazivanje rezervacije (ugnjezdena rezervacija) " + $id);
-        modify($rez){ setProcenatOtkazivanje(55); }
+        modify($rez){ setProcenatOtkazivanje(55); } 
 
 end
 

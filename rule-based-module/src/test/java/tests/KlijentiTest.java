@@ -2,6 +2,7 @@ package tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +15,23 @@ import org.kie.api.runtime.KieSession;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.model.users.Kupon;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class KlijentiTest {
 
 	public static KieSession kSession;
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -207,6 +220,13 @@ public class KlijentiTest {
         assertEquals(12, fired);
         assertEquals(2, kuponi.size());
         
+        assertEquals(true, kuponi.stream().anyMatch(kupon -> kupon.getTip().equals("PLATINUM")));
+
+        assertEquals(true, kuponi.stream().anyMatch(kupon -> kupon.getTip().equals("GOLD")));
+        
+        assertEquals(1, k7.getKuponi().size());
+
+        assertEquals(1, k11.getKuponi().size());
 	}
 
 }

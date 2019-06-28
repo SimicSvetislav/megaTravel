@@ -1,3 +1,5 @@
+import { DatePipe } from '@angular/common';
+import { RezervacijaKorisnika, RezervacijaKorisnika2 } from './../rezervacijaKorisnika';
 import { ResultDTO } from './../resultDTO';
 import { TypesService } from './../services/search/types.service';
 import { Otkazivanje } from './../otkazivanje';
@@ -16,6 +18,8 @@ import { asElementData } from '@angular/core/src/view';
 import { ExtrasService } from '../services/search/extras.service';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from '../services/search/categories.service';
+import { ReservationService } from '../services/reservations/reservation.service';
+import { RbmService } from '../services/rbm/rbm.service';
 
 @Component({
   selector: 'app-preview',
@@ -33,6 +37,7 @@ export class PreviewComponent implements OnInit {
   //results = new Array();
   pictures: Slike[] = [];
   logged: Boolean = false;
+  viseOsoba: Boolean = false;
 
   results: ResultDTO[] = [];
 
@@ -50,7 +55,9 @@ export class PreviewComponent implements OnInit {
               private router: Router, private searchService: SearchService,
               private soService: ObjectService, private extrasService: ExtrasService,
               private modalService: NgbModal, private toastr: ToastrService,
-              private typesService: TypesService, private categoriesService: CategoriesService) { }
+              private typesService: TypesService, private categoriesService: CategoriesService,
+              private datePipe: DatePipe, private resService: ReservationService,
+              private rbm: RbmService) { }
 
   ngOnInit() {
 
@@ -109,6 +116,9 @@ export class PreviewComponent implements OnInit {
     
     if (this.sorter==="Reccomendation") {
       // Pozivati rule based module
+      this.rbm.reccomend(this.userId).subscribe(data => {
+        alert(data)
+      }, error => console.log(error))
 
     } else if (this.sorter==="Price") {
       // Moze na frontu
@@ -131,7 +141,7 @@ export class PreviewComponent implements OnInit {
 
   search() {
 
-    if (!this.pr.lokacija) {
+    /*if (!this.pr.lokacija) {
       this.toastr.warning("Please enter location");
       return;
     }
@@ -164,7 +174,7 @@ export class PreviewComponent implements OnInit {
           return;
         }
       }
-    }
+    }*/
     
     this.pr.dolazak = new Date(this.fromDate.year, this.fromDate.month-1, this.fromDate.day);
     this.pr.odlazak = new Date(this.toDate.year, this.toDate.month-1, this.toDate.day);
@@ -227,4 +237,83 @@ export class PreviewComponent implements OnInit {
     this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
   }
 
+
+
+rezervacija: RezervacijaKorisnika = new RezervacijaKorisnika();
+pom: string;
+
+ rezervisi(idJedinice,nazivObjekta,dolazak,odlazak,cena) {
+
+   this.rezervacija.smestajnaJedinica = idJedinice;
+  this.rezervacija.datumRezervacije =  this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  this.rezervacija.datumPocetka = dolazak;
+  this.rezervacija.datumZavrsetka = odlazak;
+  this.rezervacija.cenaSmestaja = cena;
+  this.rezervacija.stanje = "AKTIVNA";
+
+   this.pom = this.token.getUser();
+
+   this.rezervacija.korisnik = parseInt(this.pom);
+    this.rezervacija.ocenjeno = false;
+
+
+    var rez2 = new RezervacijaKorisnika2();
+    rez2.smestajE = this.rezervacija.smestajnaJedinica;
+    rez2.datumPocetka = this.rezervacija.datumPocetka;
+    rez2.datumRezervacije = this.rezervacija.datumRezervacije;
+    rez2.datumZavrsetka = this.rezervacija.datumZavrsetka;
+    rez2.cenaSmestaja = this.rezervacija.cenaSmestaja;
+    rez2.stanje = this.rezervacija.stanje;
+    rez2.korisnikE = this.rezervacija.korisnik;
+
+    if (this.viseOsoba) {
+      
+      
+      this.rbm.viseOsoba(rez2, this.rezervacija.smestajnaJedinica).subscribe(data => {
+        alert(data)
+        this.resService.makeReservation(this.rezervacija).subscribe(data => {
+          //alert("Ne znam zasto ne radi toster");
+          this.toastr.show("Uspesno ste rezervisali!");
+          this.router.navigate(['/profile/' + this.pom])
+        })
+      })
+    } else {
+      this.rbm.checkDiscount(rez2, this.rezervacija.smestajnaJedinica).subscribe(data => {
+        alert(data)
+        this.resService.makeReservation(this.rezervacija).subscribe(data => {
+          //alert("Ne znam zasto ne radi toster");
+          this.toastr.show("Uspesno ste rezervisali!");
+          this.router.navigate(['/profile/' + this.pom])
+        })
+      })
+    }
+    
+
+   
+
+
+ }
+
+ rezervisi2(idJedinice,nazivObjekta,dolazak,odlazak,cena) {
+
+  this.rezervacija.smestajnaJedinica = idJedinice;
+ this.rezervacija.datumRezervacije =  this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+ this.rezervacija.datumPocetka = dolazak;
+ this.rezervacija.datumZavrsetka = odlazak;
+ this.rezervacija.cenaSmestaja = cena;
+ this.rezervacija.stanje = "AKTIVNA";
+
+  this.pom = this.token.getUser();
+
+  this.rezervacija.korisnik = parseInt(this.pom);
+ this.rezervacija.ocenjeno = false;
+
+  this.resService.makeReservation2(this.rezervacija, this.viseOsoba).subscribe(data => {
+   //alert("Ne znam zasto ne radi toster");
+   this.toastr.show("Uspesno ste rezervisali!");
+   this.router.navigate(['/profile/' + this.pom])
+ })
+
+
+}
 }

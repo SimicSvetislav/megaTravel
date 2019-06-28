@@ -25,6 +25,8 @@ public class SjController {
 	@Autowired
 	private SjRepository repo;
 
+	@Autowired
+	private SoRepository repoSo;
 	
 	@RequestMapping(method = RequestMethod.GET, path="/{id}")
 	public ResponseEntity<SmestajnaJedinica> getReservation(@PathVariable("id") Long id) {
@@ -45,5 +47,26 @@ public class SjController {
 		
 		return new ResponseEntity<Collection<SmestajnaJedinica>>(ret, HttpStatus.OK);
 	}
+	
+	//POKUSAJ DA SE VRATI OBJEKAT NA OSNOVU JEDINICE AL OVO NECE PITI VODE, NEK OSTANE ZA SAD TU
+		@RequestMapping(method = RequestMethod.GET, path="/object/{id}")
+		public ResponseEntity<SmestajniObjekat> getObjectByUnit(@PathVariable("id") Long id) { //u path variable mi je id smestajne jedinice
+
+	 		SmestajniObjekat retVal = new SmestajniObjekat();
+
+
+	 		Collection<SmestajnaJedinica> rez = repo.getAll();
+			for (SmestajnaJedinica s : rez) {
+				if(s.getId().equals(id)) {
+					System.out.println("sdfsdfsadf " + s.getId());
+					retVal = repoSo.getOneById(s.getId());
+					break;
+				}
+			}
+
+
+	 		return new ResponseEntity<SmestajniObjekat>(retVal, HttpStatus.OK);
+
+	 	}
 	
 }

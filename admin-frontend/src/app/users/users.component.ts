@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { TokenStorageService } from '../services/auth/token-storage.service';
 import { Route, Router } from '@angular/router';
 
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource, ErrorStateMatcher} from '@angular/material';
 
 @Component({
   selector: 'app-users',
@@ -85,6 +85,18 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.dataSource.sort = this.sort;
       }, error => console.log(error));
     }, error => console.log(error));
+  }
+
+  categorize() {
+    this.service.categorizeAcc().subscribe(data=>{
+      alert(data);
+    }, error => console.log(error))
+  }
+
+  categorizeUsers() {
+    this.service.categorize().subscribe(data=>{
+      alert(data);
+    }, error => console.log(error))
   }
 
 }

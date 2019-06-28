@@ -15,6 +15,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import com.project.megatravel.model.accomodation.Lokacija;
@@ -58,8 +59,10 @@ import com.project.megatravel.model.reservations.RezervacijaKorisnika;
     "rezervacije",
     "kategorija",
     "ponudjenPopustNakonOtkazivanja",
-    "lokacija"
+    "lokacija",
+    "kuponi"
 })
+@XmlRootElement(name="KrajnjiKorisnik")
 public class KrajnjiKorisnik
     extends Korisnik
 {
@@ -71,8 +74,21 @@ public class KrajnjiKorisnik
     protected Date ponudjenPopustNakonOtkazivanja;
     @XmlElement(required = true)
     protected Lokacija lokacija;
+    @XmlElement
+    protected List<Kupon> kuponi;
 
-    /**
+    public List<Kupon> getKuponi() {
+    	if (kuponi==null) {
+    		kuponi = new ArrayList<>();
+    	}
+		return kuponi;
+	}
+
+	public void setKuponi(List<Kupon> kuponi) {
+		this.kuponi = kuponi;
+	}
+
+	/**
      * Gets the value of the rezervacije property.
      * 
      * <p>

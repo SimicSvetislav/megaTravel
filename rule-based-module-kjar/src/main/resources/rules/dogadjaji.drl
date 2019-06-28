@@ -17,6 +17,7 @@ rule "5 ili vise last-minute rezervacija u jednom mestu u poslednjih 30 minuta"
     agenda-group "dogadjaji lm"
 	salience 10
     when
+    	eval ( lmEnabled  )
         $e1: LastMinuteEvent($lok: lokacija) over window:time(30m)
         Number(intValue >= 4) from accumulate(
             $e2: LastMinuteEvent(
@@ -36,6 +37,7 @@ rule "15 ili vise early-bird rezervacija u jednom mestu u poslednjih 90 sekundi"
     agenda-group "dogadjaji eb"
 	salience 10
     when
+    	eval ( ebEnabled  )
     	$e1: EarlyBirdEvent($lok: lokacija) over window:time(90s)
         Number(intValue >= 14) from accumulate(
             $e2: EarlyBirdEvent(
@@ -59,7 +61,9 @@ rule "U prethodna 3h 20 ili vise smestaja iste lokacije u navedenom periodu"
     		$re2: ReservationEvent(
     			this != $re,
     			lokacija == $lok,
-    			eval(preklapanje($re, $re2))
+    			$re.getRk().getDatumPocetka().getTime() <= rk.getDatumZavrsetka().getTime(),
+    			rk.getDatumPocetka().getTime() <= $re.getRk().getDatumZavrsetka().getTime()
+    			//eval(preklapanje($re, $re2))
     		) over window:time(3h),
     		count($re2)
     	)
@@ -69,17 +73,35 @@ rule "U prethodna 3h 20 ili vise smestaja iste lokacije u navedenom periodu"
         drools.halt();
 end
 
-rule "Otkazivanje 10 minuta nakon zakazivanja"
+rule "Otkazivanje 10 minuta nakon zakazivanja, nikad ponudjen popust"
     agenda-group "dogadjaji otk"
-	salience 10
+	salience 15
     when
-    	$ce: CancellationEvent( $rez: rk, !ponudjenPopust($rez) )
-    	$re: ReservationEvent( $rez == rk, this meets [10m] $ce)
+    	$ce: CancellationEvent( $rez: rk,
+    	rk.getKorisnik().getPonudjenPopustNakonOtkazivanja() == null) 
+    	$re: ReservationEvent( $rez == rk, this meets[10m] $ce)
   	then
         System.out.println( "Ponudi popust nakon otkazivanje od 40%");
         $rez.getKorisnik().setPonudjenPopustNakonOtkazivanja(new Date());
         $rez.setPopust(40);
-        kcontext.getKieRuntime().setGlobal( "cancelDiscount", true );
+        drools.getKieRuntime().setGlobal( "cancelDiscount", true );
+        drools.halt();
+end
+
+rule "Otkazivanje 10 minuta nakon zakazivanja"
+    agenda-group "dogadjaji otk"
+	salience 10
+    when
+    	$ce: CancellationEvent( $rez: rk,
+    	$dat: rk.getKorisnik().getPonudjenPopustNakonOtkazivanja(), $dat != null,
+    	$limit: DateUtils.truncate(DateUtils.addMonths(rk.getKorisnik().getPonudjenPopustNakonOtkazivanja(), 12), Calendar.DAY_OF_MONTH),
+    	eval ( $limit.before(new Date()) ))
+    	$re: ReservationEvent( $rez == rk, this meets[10m] $ce)
+  	then
+        System.out.println( "Ponudi popust nakon otkazivanje od 40%");
+        $rez.getKorisnik().setPonudjenPopustNakonOtkazivanja(new Date());
+        $rez.setPopust(40);
+        drools.getKieRuntime().setGlobal( "cancelDiscount", true );
         drools.halt();
 end
 
@@ -92,16 +114,21 @@ rule "30 ili vise pretraga u 3 minuta i u poslednja 4 dana nije bilo rezervacija
     		$se2: SearchEvent(
     			this != $se,
     			lokacija == $lok,
-    			eval(preklapanje2($se, $se2))
+    			$se.getPocetak().getTime() <= kraj.getTime(),
+    			pocetak.getTime() <= $se.getKraj().getTime()
     		) over window:time(3m),
     		count(1)
     	)
     	Number(intValue == 0) from accumulate (
     		$r: RezervacijaKorisnika( 
     			smestaj.getSObjekat().getLokacija() == $lok,
-    			preklapanje3($pocetak, $kraj, datumPocetka, datumZavrsetka)==false,
-    			// Nema rezervacija u poslednja cetiri dana
-    			datumUOpsegu(datumRezervacije, 4)==true
+    			//preklapanje3($pocetak, $kraj, datumPocetka, datumZavrsetka)==false,
+    			$pocetak.getTime() <= datumZavrsetka.getTime(),
+    			//datumPocetka.getTime() <= $kraj.getTime(),
+    			// Provera da li je bilo rezervacija u prethodna 4 dana
+    			$dt: DateUtils.truncate(DateUtils.addDays(datumRezervacije, 4), Calendar.DAY_OF_MONTH),
+				eval($dt.after(new Date()))
+    			
     		),
     		count(1)
     	)

@@ -2,10 +2,11 @@
 package rules
 
 //list any import classes here.
+import org.apache.commons.lang.time.DateUtils
+
 import com.project.megatravel.model.accomodation.SmestajniObjekat
 import com.project.megatravel.model.accomodation.SmestajnaJedinica
 import com.project.megatravel.model.reservations.RezervacijaKorisnika
-
 
 //declare any global variables here
 
@@ -65,7 +66,8 @@ rule "Ocena smestaja veca od dve zvezdice i u poslednjih 90 dana ima barem 3 rez
         $rezervacije : List() from collect ( RezervacijaKorisnika( smestaj memberOf $jedinice ) )
         Number (intValue >= 3 ) from accumulate (
 			RezervacijaKorisnika (
-				datumUOpsegu(datumRezervacije, 90)
+				$dt: DateUtils.truncate(DateUtils.addDays(datumRezervacije, 90), Calendar.DAY_OF_MONTH),
+				eval($dt.after(new Date()))
 			) from $rezervacije,
 			count(1)
 		)
@@ -90,7 +92,8 @@ rule "Ocena smestaja veca od tri zvezdice, u poslednjih 30 dana ima barem 2 reze
         Number (intValue >= 2 ) from accumulate (
 			RezervacijaKorisnika (
 				stanje == "REALIZOVANO",
-				datumUOpsegu(datumRezervacije, 30),
+				$dt: DateUtils.truncate(DateUtils.addDays(datumRezervacije, 30), Calendar.DAY_OF_MONTH),
+				eval($dt.after(new Date())),
 				ocena >= 4
 			) from $rezervacije,
 			count(1)
@@ -123,7 +126,8 @@ rule "Ocena veca od 3 zvezdice, u poslednjih 90 dana profit od barem 1000 i pret
         Number (doubleValue >= 1000 ) from accumulate (
 			RezervacijaKorisnika (
 				stanje == "REALIZOVANO",
-				datumUOpsegu(datumZavrsetka, 90),
+				$dt: DateUtils.truncate(DateUtils.addDays(datumZavrsetka, 90), Calendar.DAY_OF_MONTH),
+				eval($dt.after(new Date())),
 				$cena : cenaSmestaja 
 			) from $rezervacije,
 			sum($cena)
@@ -132,6 +136,16 @@ rule "Ocena veca od 3 zvezdice, u poslednjih 90 dana profit od barem 1000 i pret
        	System.out.println("Smestaju " + $id + " dodeljena kategorija PLATINUM (rating " 
        	+ ( (double)$obj.getRejting().getSumaOcena() / (double)$obj.getRejting().getBrojOcena() ) + ")");
        	modify ($obj) { setKategorija("PLATINUM"); }
+
+end
+
+rule "Init smestaj"
+	agenda-group "smestajInit"
+	salience 100
+    when $s: SmestajniObjekat(  )
+    then
+    	System.out.println("SET NA");
+    	modify ($s) { setKategorija("NA"); }
 
 end
 

@@ -3,7 +3,11 @@ package tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
@@ -16,11 +20,22 @@ import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class AgentsTest {
 
 	public static KieSession kSession;
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@Before
 	public void setUp() throws Exception {
@@ -42,7 +57,6 @@ public class AgentsTest {
 		SmestajniObjekat so = Creator.createSmestajniObjekat(1L, "SILVER", Creator.createRejting(10, 45), l);
 		SmestajniObjekat so2 = Creator.createSmestajniObjekat(2L, "GOLD", Creator.createRejting(10, 43), l);
 		
-		
 		SmestajnaJedinica sj = Creator.createSmestajnaJedinica(1, so);
 		SmestajnaJedinica sjs = Creator.createSmestajnaJedinica(1, so2);		
 		
@@ -54,6 +68,9 @@ public class AgentsTest {
         RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2017", "12/08/2019", "16/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2018", "10/01/2018", "15/01/2018", "REZERVISANO", sj);
+        
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
         
         kSession.insert(rez);
         kSession.insert(rez2);
@@ -92,6 +109,9 @@ public class AgentsTest {
         RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "10/01/2019", "15/01/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2018", "10/09/2019", "15/09/2019", "REZERVISANO", sj);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -128,6 +148,9 @@ public class AgentsTest {
         RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2017", "12/08/2019", "19/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "15/08/2019", "25/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2018", "10/09/2019", "15/09/2019", "REZERVISANO", sj);
+        
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
         
         kSession.insert(rez);
         kSession.insert(rez2);
@@ -166,6 +189,9 @@ public class AgentsTest {
         RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "15/08/2019", "25/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2018", "10/09/2019", "15/09/2019", "REZERVISANO", sj);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -201,6 +227,9 @@ public class AgentsTest {
         RezervacijaKorisnika rez3 = Creator.createRezervacija(3, 100, 0, "04/01/2017", "12/08/2019", "19/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "15/08/2019", "25/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2018", "10/08/2019", "15/08/2019", "REZERVISANO", sj);
+        
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
         
         kSession.insert(rez);
         kSession.insert(rez2);
@@ -238,6 +267,9 @@ public class AgentsTest {
         RezervacijaKorisnika rez4 = Creator.createRezervacija(4, 100, 0, "04/01/2019", "16/08/2019", "25/08/2019", "REZERVISANO", sj);
         RezervacijaKorisnika rez5 = Creator.createRezervacija(5, 100, 0, "04/01/2018", "10/09/2019", "15/09/2019", "REZERVISANO", sj);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -253,8 +285,6 @@ public class AgentsTest {
 	
 	@Test
 	public void upozorenjeTest() {
-		
-		// Zauzeti smestaji u drugom mestu, slobodni u ciljanom
 
 		kSession.getAgenda().getAgendaGroup("agent").setFocus();
 		
@@ -310,6 +340,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         //kSession.insert(rez11);
         kSession.insert(rez2);
@@ -334,8 +367,6 @@ public class AgentsTest {
 	
 	@Test
 	public void upozorenjeTest2() {
-		
-		// Zauzeti smestaji u drugom mestu, slobodni u ciljanom
 
 		kSession.getAgenda().getAgendaGroup("agent").setFocus();
 		
@@ -391,6 +422,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         kSession.insert(rez11);
         kSession.insert(rez2);
@@ -415,8 +449,6 @@ public class AgentsTest {
 	
 	@Test
 	public void upozorenjeTest3() {
-		
-		// Zauzeti smestaji u drugom mestu, slobodni u ciljanom
 
 		kSession.getAgenda().getAgendaGroup("agent").setFocus();
 		
@@ -471,6 +503,9 @@ public class AgentsTest {
         c3.setCena(cena3);
         
         sj3.setPodrazumevaniCenovnik(c3);
+        
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
         
         kSession.insert(rez);
         kSession.insert(rez11);
@@ -551,6 +586,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -568,7 +606,7 @@ public class AgentsTest {
 		
 		// Nema rezervacija, ali je cena vec dovoljno atraktivna
 		// HALT + preporuka za popust
-		assertEquals(2, fired);
+		assertEquals(1, fired);
 		
 	}
 	
@@ -629,6 +667,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+        
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -643,6 +684,11 @@ public class AgentsTest {
         kSession.insert(sj3);
         
 		int fired = kSession.fireAllRules();
+		
+		@SuppressWarnings("rawtypes")
+		List lista = (List)kSession.getGlobal("lista");
+        
+        assertEquals(2, lista.size());
 		
 		// Nema rezervacija i cena je veca
 		// HALT + preporuka za popust + upozorenje
@@ -707,6 +753,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+		
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -785,6 +834,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+		
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -863,6 +915,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+		
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -941,6 +996,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+		
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);
@@ -1019,6 +1077,9 @@ public class AgentsTest {
         
         sj3.setPodrazumevaniCenovnik(c3);
         
+		kSession.setGlobal("lista", new ArrayList<>());
+		kSession.setGlobal("lista2", new ArrayList<>());
+		
         kSession.insert(rez);
         kSession.insert(rez2);
         kSession.insert(rez3);

@@ -57,7 +57,7 @@ public class Otkazivanje {
     @XmlElement(defaultValue = "false")
     protected boolean dozvoljeno;
     @XmlElement(required = true)
-    protected BigInteger brojDana;
+    protected Integer brojDana;
     protected double faktorOtkazivanja;
 
     /**
@@ -84,7 +84,7 @@ public class Otkazivanje {
      *     {@link BigInteger }
      *     
      */
-    public BigInteger getBrojDana() {
+    public Integer getBrojDana() {
         return brojDana;
     }
 
@@ -96,7 +96,7 @@ public class Otkazivanje {
      *     {@link BigInteger }
      *     
      */
-    public void setBrojDana(BigInteger value) {
+    public void setBrojDana(Integer value) {
         this.brojDana = value;
     }
 

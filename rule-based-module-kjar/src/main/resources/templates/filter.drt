@@ -1,5 +1,7 @@
 template header
 text
+aid
+counter
 
 package rules
 
@@ -7,11 +9,11 @@ import com.project.megatravel.model.chat.Poruka
 
 template "filter"
 
-rule "Filter messages_@{row.rowNumber}"
+rule "Filter messages_@{counter}"
 no-loop true
-agenda-group "filter"
+agenda-group "filter_@{aid}"
 when
-    $msg: Poruka( $tekst: tekst, badText($tekst, "@{text}") == true )
+    $msg: Poruka( $tekst: tekst, $tekst contains "@{text}" )
 then
     System.out.println("Odbi klijenta " + $msg.getPosiljalac());
 end

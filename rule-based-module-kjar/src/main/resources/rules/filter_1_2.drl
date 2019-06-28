@@ -1,0 +1,13 @@
+package rules
+import com.project.megatravel.model.chat.Poruka
+
+rule "Filter messages_2"
+no-loop true
+agenda-group "filter_1"
+when
+    $msg: Poruka( $tekst: tekst, $tekst contains "aaa" )
+then
+    System.out.println("Odbi klijenta " + $msg.getPosiljalac());
+end
+
+

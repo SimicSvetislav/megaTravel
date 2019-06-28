@@ -10,6 +10,7 @@ import org.drools.template.DataProvider;
 import org.drools.template.DataProviderCompiler;
 import org.drools.template.objects.ArrayDataProvider;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.builder.Message;
 import org.kie.api.builder.Results;
@@ -20,10 +21,23 @@ import org.kie.internal.utils.KieHelper;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.chat.Poruka;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
+import com.project.megatravel.rbm.ExistDB;
 
 public class KPravilaViseOsobaTest {
 	
 	private KieSession ksession;
+	private Integer counter = 0;
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@Before
     public void prepare(){
@@ -31,9 +45,9 @@ public class KPravilaViseOsobaTest {
         InputStream template = KPravilaZabranaPorukaTest.class.getResourceAsStream("/templates/vise_osoba.drt");
         
         DataProvider dataProvider = new ArrayDataProvider(new String[][]{
-            new String[]{"1", "5"},
-            new String[]{"2", "10"},
-            new String[]{"4", "50"}
+            new String[]{"1", "5", "1", (counter++).toString()},
+            new String[]{"2", "10", "1", (counter++).toString()},
+            new String[]{"4", "50", "1", (counter++).toString()}
         });
         
         DataProviderCompiler converter = new DataProviderCompiler();
@@ -50,7 +64,7 @@ public class KPravilaViseOsobaTest {
         
 		// Nema viska
 		
-		ksession.getAgenda().getAgendaGroup("negativni popust").setFocus();
+		ksession.getAgenda().getAgendaGroup("negativni popust 1").setFocus();
 		
 		RezervacijaKorisnika rez = new RezervacijaKorisnika();
 		rez.setBrojOsoba(4);
@@ -74,7 +88,7 @@ public class KPravilaViseOsobaTest {
         
 		// Jedna osoba viska
 		
-		ksession.getAgenda().getAgendaGroup("negativni popust").setFocus();
+		ksession.getAgenda().getAgendaGroup("negativni popust 1").setFocus();
 		
 		RezervacijaKorisnika rez = new RezervacijaKorisnika();
 		rez.setBrojOsoba(5);
@@ -98,7 +112,7 @@ public class KPravilaViseOsobaTest {
         
 		// Dve osobe viska
 		
-		ksession.getAgenda().getAgendaGroup("negativni popust").setFocus();
+		ksession.getAgenda().getAgendaGroup("negativni popust 1").setFocus();
 		
 		RezervacijaKorisnika rez = new RezervacijaKorisnika();
 		rez.setBrojOsoba(5);
@@ -122,7 +136,7 @@ public class KPravilaViseOsobaTest {
         
 		// Tri osobe viska
 		
-		ksession.getAgenda().getAgendaGroup("negativni popust").setFocus();
+		ksession.getAgenda().getAgendaGroup("negativni popust 1").setFocus();
 		
 		RezervacijaKorisnika rez = new RezervacijaKorisnika();
 		rez.setBrojOsoba(7);
@@ -146,7 +160,7 @@ public class KPravilaViseOsobaTest {
         
 		// Cetiri osobe viska
 		
-		ksession.getAgenda().getAgendaGroup("negativni popust").setFocus();
+		ksession.getAgenda().getAgendaGroup("negativni popust 1").setFocus();
 		
 		RezervacijaKorisnika rez = new RezervacijaKorisnika();
 		rez.setBrojOsoba(8);
@@ -170,7 +184,7 @@ public class KPravilaViseOsobaTest {
         
 		// Jedna osoba manje od kapaciteta
 		
-		ksession.getAgenda().getAgendaGroup("negativni popust").setFocus();
+		ksession.getAgenda().getAgendaGroup("negativni popust 1").setFocus();
 		
 		RezervacijaKorisnika rez = new RezervacijaKorisnika();
 		rez.setBrojOsoba(3);

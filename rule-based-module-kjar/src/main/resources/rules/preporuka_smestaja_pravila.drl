@@ -8,17 +8,190 @@ import java.util.List
 import com.project.megatravel.model.users.Korisnik
 import com.project.megatravel.model.users.KrajnjiKorisnik
 import com.project.megatravel.model.accomodation.SmestajniObjekat
+import com.project.megatravel.model.reservations.RezervacijaKorisnika
+import com.project.megatravel.util.Creator
 
 //declare any global variables here
 
 global List lista;
+global Long klijent;
+global List listaUdaljenost
+global List listaDU
 
 rule "Kategorija smestaja ista ili veca od kategorije klijenta"
+	salience 10
+	agenda-group "preporuka"
     when
         $korisnik : KrajnjiKorisnik( $katKorisnik : kategorija )
-        $list : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, poredjenjeKategorija($katSmestaj, $katKorisnik ) ) )
+        $list : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="PLATINUM" ))
+        $list2 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="GOLD", $katKorisnik!="PLATINUM" ) )
+        $list3 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="SILVER", $katKorisnik=="SILVER" ) )
+        $list4 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="SILVER", $katKorisnik=="BRONZE" ) )
+        $list5 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="SILVER", $katKorisnik=="NA" ) )
+        $list6 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="BRONZE", $katKorisnik=="BRONZE" ) )
+        $list7 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="BRONZE", $katKorisnik=="NA" ) )
+        $list8 : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="NA", $katKorisnik=="NA" ) )
     then
+    	$list.addAll(lista);
+    	$list.addAll($list2);
+    	$list.addAll($list3);
+    	$list.addAll($list4);
+    	$list.addAll($list5);
+    	$list.addAll($list6);
+    	$list.addAll($list7);
+    	$list.addAll($list8);
     	drools.getKnowledgeRuntime().setGlobal("lista", $list);
         System.out.println("Smestaja za preporuku : " + $list.size());
 end
 
+rule "Preporuka na osnovu udaljenosti"
+	salience 10
+	agenda-group "preporuka"
+    when
+		$kor: KrajnjiKorisnik( id==klijent, $id: id,  $lok: lokacija )
+		// Realizovane rezervacije korisnika
+		$rezs: List() from collect ( RezervacijaKorisnika ( 
+			korisnik.getId() == $id, stanje == "REALIZOVANO" ) )
+		// Objekti
+		$smestaji : Set() from accumulate (
+			RezervacijaKorisnika (
+				$id2 : smestaj.getSObjekat()
+			) from $rezs,
+			collectSet($id2)
+		)
+		// Prosecna udaljenost do smestaja u kojima je boravio
+		Number ($avg: doubleValue) from accumulate (
+			SmestajniObjekat(
+				$id3: getId(),
+				$lok2: lokacija
+			) from $smestaji,
+			average(distanceLok($lok, $lok2))
+		)
+		$sos : List() from collect ( SmestajniObjekat( distanceLok($lok, lokacija) < $avg ) )
+		
+	then
+		//System.out.println("Korisnik: " + $kor.getId());
+		//System.out.println("Rezervacije: " + $rezs.size());
+		System.out.println("Objekti: " + $sos.size());
+		System.out.println("Avg: " + $avg);
+		$sos.addAll(listaUdaljenost);
+    	drools.getKnowledgeRuntime().setGlobal("listaUdaljenost", $sos);
+end
+
+rule "Preporuka na osnovu dodatnih usluga"
+	salience 10
+	agenda-group "preporuka"
+    when
+    	$kor: KrajnjiKorisnik ( id == klijent)
+		// Sve dodatne usluge
+		$sveDU: List() from collect ( DodatnaUsluga() )
+		$rezs: List() from collect ( RezervacijaKorisnika ( 
+			korisnik.getId() == $kor.getId(), stanje == "REALIZOVANO" ) )
+		// Objekti u kojima je korisnik boravio
+		$smestaji : Set() from accumulate (
+			RezervacijaKorisnika (
+				$sm : smestaj.getSObjekat()
+			) from $rezs,
+			collectSet($sm)
+		)
+		$sviSO: List() from collect ( SmestajniObjekat() )
+	then
+		System.out.println("Korisnik: " + $kor.getId());
+		System.out.println("Rezervacije: " + $rezs.size());
+		System.out.println("Smestaja: " + $smestaji.size());
+		System.out.println("Ukupno dodatnih usluga: " + $sveDU.size());
+		System.out.println("Ciljani objekti: " + $sviSO.size());
+		
+		for (Object o: $smestaji) {
+			SmestajniObjekat so = (SmestajniObjekat) o;
+			$sveDU.retainAll(so.getDodatneUsluge());
+		}
+		
+		System.out.println("Presek dodatnih usluga: " + $sveDU.size());
+		
+		for (Object o: $sviSO) {
+			SmestajniObjekat so = (SmestajniObjekat) o;
+			if (so.getDodatneUsluge().containsAll($sveDU)) {
+				listaDU.add(so);
+			}
+		}
+		
+	
+end
+
+/*rule "Kategorija smestaja (GOLD) ista ili veca od kategorije klijenta"
+	salience 10
+	agenda-group "preporuka"
+    when
+        $korisnik : KrajnjiKorisnik( $katKorisnik : kategorija )
+        $list : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="GOLD", $katKorisnik!="PLATINUM" ) )
+        //() or
+        //($katSmestaj=="SILVER", ($katKorisnik!="PLATINUM"or $katKorisnik!="GOLD")) or
+        //($katSmestaj=="BRONZE", ($katKorisnik=="NA" or $katKorisnik!="BRONZE")) or
+        //($katSmestaj=="BRONZE", $katKorisnik=="NA") ) )
+        //poredjenjeKategorija($katSmestaj, $katKorisnik ) ) )
+    then
+    	$list.addAll(lista);
+    	drools.getKnowledgeRuntime().setGlobal("lista", $list);
+        System.out.println("Smestaja za preporuku : " + $list.size());
+end*/
+
+/*rule "Kategorija smestaja (SILVER) ista ili veca od kategorije klijenta"
+	salience 10
+	agenda-group "preporuka"
+    when
+        $korisnik : KrajnjiKorisnik( $katKorisnik : kategorija )
+        $list : List() from collect ( SmestajniObjekat( $katSmestaj : kategorija, 
+        $katSmestaj=="SILVER", ($katKorisnik!="PLATINUM" or $katKorisnik!="GOLD" ) )
+        //() or
+        //($katSmestaj=="SILVER", ($katKorisnik!="PLATINUM"or $katKorisnik!="GOLD")) or
+        //($katSmestaj=="BRONZE", ($katKorisnik=="NA" or $katKorisnik!="BRONZE")) or
+        //($katSmestaj=="BRONZE", $katKorisnik=="NA") ) )
+        //poredjenjeKategorija($katSmestaj, $katKorisnik ) ) )
+    then
+    	$list.addAll(lista);
+    	drools.getKnowledgeRuntime().setGlobal("lista", $list);
+        System.out.println("Smestaja za preporuku : " + $list.size());
+end*/
+
+rule "Halt preporuka"
+	agenda-group "preporuka"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "preporuka"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end
+
+rule "Halt preporuka udaljenost"
+	agenda-group "preporuka_udaljenost"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "preporuka_udaljenost"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end
+
+rule "Halt preporuka dodatne usluge"
+	agenda-group "preporuka_dodatnUsluge"
+	salience -100
+    when
+        // Izvrsava se bezuslovno posle svih pravila koja pripadaju grupi "preporuka_dodatnUsluge"
+    then
+    	System.out.println("HALT");
+        drools.halt();
+
+end

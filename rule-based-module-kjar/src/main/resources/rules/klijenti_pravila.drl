@@ -6,9 +6,11 @@ import com.project.megatravel.model.users.KrajnjiKorisnik
 import com.project.megatravel.model.reservations.RezervacijaKorisnika
 import com.project.megatravel.model.users.Kupon
 
+import org.apache.commons.lang.time.DateUtils
+
 
 //declare any global variables here
-global List kuponi;
+global List<Kupon> kuponi;
 
 // BRONZE
 rule "Klijenti bez kategorije"
@@ -29,7 +31,9 @@ rule "Klijent registrovan vise od 6 meseci i ukupna cena rezervacija prelazi 300
     lock-on-active true
     salience 20
     when
-        $klijent : KrajnjiKorisnik ( $registracija : datumRegistracije, kategorija != "GOLD", kategorija != "PLATINUM", !datumUOpsegu($registracija, 180), 
+        $klijent : KrajnjiKorisnik ( $registracija : datumRegistracije, kategorija != "GOLD", kategorija != "PLATINUM", 
+        $dt: DateUtils.truncate(DateUtils.addMonths(datumRegistracije, 6), Calendar.DAY_OF_MONTH),
+		$dt.before(new Date()),
         $rezervacije : rezervacije, $id : id )
         Number (doubleValue >= 300 ) from accumulate (
 			RezervacijaKorisnika (
@@ -104,9 +108,12 @@ rule "Klijent ima deset ili vise uspesno realizovanih rezervacija i klijent je b
        
         Kupon k = new Kupon();
         k.setTip("GOLD");
-        k.setKorisnik($klijent);
-        kuponi.add(new Kupon());
+        //k.setKorisnik($klijent);
+        kuponi.add(k);
         
+        drools.getKnowledgeRuntime().setGlobal("kuponi", kuponi);
+        
+        modify ($klijent) { getKuponi().add(k) }
         modify ($klijent) { setKategorija("GOLD"); }
 
 end
@@ -122,7 +129,8 @@ rule "Klijent ima rezervacije u poslednjih 12 meseci cija je ukupna cena veca od
 			RezervacijaKorisnika (
 				stanje == "REALIZOVANO",
 				$datumKraja : datumZavrsetka,
-				datumUOpsegu ($datumKraja, 365),
+				$dt: DateUtils.truncate(DateUtils.addMonths(datumZavrsetka, 12), Calendar.DAY_OF_MONTH),
+				eval($dt.after(new Date())),
 				$cena : cenaSmestaja
 			) from $rezervacije,
 			sum($cena)
@@ -132,9 +140,12 @@ rule "Klijent ima rezervacije u poslednjih 12 meseci cija je ukupna cena veca od
         
         Kupon k = new Kupon();
         k.setTip("PLATINUM");
-        k.setKorisnik($klijent);
-        kuponi.add(new Kupon());
+        //k.setKorisnik($klijent);
+        kuponi.add(k);
         
+        drools.getKnowledgeRuntime().setGlobal("kuponi", kuponi);
+        
+        modify ($klijent) { getKuponi().add(k) }
         modify ($klijent) { setKategorija("PLATINUM"); }
 
 end

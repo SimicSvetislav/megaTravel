@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -54,7 +55,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlType(name = "TCenovnik", propOrder = {
     "pocetak",
     "kraj",
-    "cena",
+    "cenaE",
     "smestaj"
 })
 public class Cenovnik {
@@ -65,10 +66,22 @@ public class Cenovnik {
     @XmlElement(required = true, type = String.class)
     @XmlJavaTypeAdapter(Adapter2 .class)
     protected Date kraj;
-    @XmlElement(required = true)
+
+	@XmlTransient
     protected Cena cena;
     @XmlElement(required = true)
     protected SmestajnaJedinica smestaj;
+    
+    @XmlElement(name="cena")
+    protected Double cenaE;
+    
+    public Double getCenaE() {
+		return cenaE;
+	}
+
+	public void setCenaE(Double cenaE) {
+		this.cenaE = cenaE;
+	}
 
     /**
      * Gets the value of the pocetak property.
@@ -127,6 +140,10 @@ public class Cenovnik {
      *     
      */
     public Cena getCena() {
+    	if (cena==null) {
+    		cena = new Cena();
+    		cena.setIznos(cenaE);
+    	}
         return cena;
     }
 

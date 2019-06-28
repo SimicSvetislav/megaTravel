@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.transform.Source;
@@ -19,8 +20,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -55,6 +58,8 @@ public class ReservationService {
 	// Fabrika za kreiranje transformera formata
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
+	private String RBM = "http://localhost:8020/";
+	
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		
 		return repo.save(rezervacija);
@@ -345,6 +350,28 @@ public class ReservationService {
 		KrajnjiKorisnik user = userRepo.getOneById(rez.getKorisnik());
 		
 		return user;
+	}
+
+	public String cancel(Long id) {
+		
+		RezervacijaKorisnika rez = repo.getOneById(id);
+		
+		String response = "Ne treba nista platiti";
+		
+		SmestajnaJedinica sj = sjRepo.getOneById(rez.getSmestajnaJedinica());
+		
+		if (sj.getOtkazivanje().isDozvoljeno()) {
+			Integer dana = sj.getOtkazivanje().getBrojDana();
+			Date d = DateUtils.addDays(new Date(), dana);
+			
+			if (d.before(rez.getDatumPocetka())) {
+				RestTemplate rest = new RestTemplate();
+				String url = RBM + "cancel/" + id;
+				response = rest.getForObject(url, String.class);
+			}
+		}
+		
+		return response;
 	}
 	
 	

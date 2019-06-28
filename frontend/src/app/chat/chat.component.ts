@@ -5,6 +5,7 @@ import { Message } from './../message';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TokenStorageService } from '../services/auth/token-storage.service';
+import { RbmService } from '../services/rbm/rbm.service';
 
 @Component({
   selector: 'app-chat',
@@ -20,7 +21,8 @@ export class ChatComponent implements OnInit {
 
   constructor(private router: Router, private token: TokenStorageService,
     private chatService: ChatService, private route: ActivatedRoute,
-    private agentService: AgentService, private messagesService: MessagesService) {
+    private agentService: AgentService, private messagesService: MessagesService,
+    private rbm: RbmService) {
     
     chatService.messages.subscribe(msg => {
       if (msg.text.startsWith('[INFO]')) {
@@ -50,7 +52,8 @@ export class ChatComponent implements OnInit {
     const id = +this.route.snapshot.params['id'];
 
     this.agentService.getByReservation(id).subscribe( data => {
-      this.agentId = data.id;
+      //this.agentId = data.id;
+      this.agentId = 1
       this.message.receiver = data.id;
     }, error => console.log(error));
 
@@ -78,14 +81,26 @@ export class ChatComponent implements OnInit {
     if (!this.message.text || this.message.text.trim() === '') {
       return;
     }
-
-    this.chatArea += 'You: ' + this.message.text + '\n';
+  
     this.message.timestamp = new Date();
 
-    // Sending message
-    this.chatService.messages.next(this.message);
+    this.rbm.filter(this.token.getUser(), {tekst: this.message.text}).subscribe( data => {
+      if (data.includes("rejected")) {
+        alert("Message rejected")
+        return;
+      }
+
+      this.chatArea += 'You: ' + this.message.text + '\n';
+     
+
+      // Sending message
+      this.chatService.messages.next(this.message);
+      
+      this.message.text = '';
+
+    })
+
     
-    this.message.text = '';
   }
 
 }

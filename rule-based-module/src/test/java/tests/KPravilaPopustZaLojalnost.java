@@ -11,6 +11,7 @@ import org.drools.template.DataProvider;
 import org.drools.template.DataProviderCompiler;
 import org.drools.template.objects.ArrayDataProvider;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.kie.api.builder.Message;
 import org.kie.api.builder.Results;
@@ -23,11 +24,24 @@ import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class KPravilaPopustZaLojalnost {
 
 	private KieSession kSession;
+	private Integer counter = 0;
+	
+	@BeforeClass
+	public static void initDatabase() throws Exception {
+		
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 	@Before
     public void prepare(){
@@ -35,8 +49,8 @@ public class KPravilaPopustZaLojalnost {
         InputStream template = KPravilaZabranaPorukaTest.class.getResourceAsStream("/templates/lojalnost.drt");
         
         DataProvider dataProvider = new ArrayDataProvider(new String[][]{
-            new String[]{"3", "10"},
-            new String[]{"5", "25"}
+            new String[]{"3", "10", "1", (counter++).toString()},
+            new String[]{"5", "25", "1", (counter++).toString()}
         });
         
         DataProviderCompiler converter = new DataProviderCompiler();
@@ -51,7 +65,7 @@ public class KPravilaPopustZaLojalnost {
 	    kSession =  kContainer.newKieSession("ksession-rules");
 	   
 		*/
-	    kSession.getAgenda().getAgendaGroup("lojalnost").setFocus();
+	    kSession.getAgenda().getAgendaGroup("lojalnost_1" ).setFocus();
 	    
 	    kSession.setGlobal("lojalni", new HashSet<>());
         

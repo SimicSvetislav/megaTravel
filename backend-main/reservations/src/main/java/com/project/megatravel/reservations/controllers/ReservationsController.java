@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
@@ -32,10 +33,31 @@ public class ReservationsController {
 	@Autowired
 	private EmailService emailSender;
 	
+	@Autowired
+	private RestTemplate rest;
+	
+	private final String RBM = "http://localhost:8020/";
+	
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija) {
 		
 		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
+		
+		//String uri = RBM + "makeRes/";
+		
+		//String res = rest.postForObject(uri, rezervacija, String.class);
+		
+		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.POST, path="/{more}")
+	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija, @PathVariable("more") Boolean more) {
+		
+		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
+		
+		String uri = RBM + "makeRes/" + more;
+		
+		String res = rest.postForObject(uri, rezervacija, String.class);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
 	}
@@ -174,6 +196,15 @@ public class ReservationsController {
 		KrajnjiKorisnik kk = service.getUser(id);
 		
 		return new ResponseEntity<KrajnjiKorisnik>(kk, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/cancel/{id}", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<String> cancel(@PathVariable("id") Long id) {
+		
+		String r = service.cancel(id);
+		
+		return new ResponseEntity<String>(r, HttpStatus.OK);
 	}
 	
 }

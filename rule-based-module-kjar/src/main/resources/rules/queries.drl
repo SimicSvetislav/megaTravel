@@ -4,6 +4,8 @@ package rules
 //list any import classes here.
 
 import com.project.megatravel.model.reservations.RezervacijaKorisnika
+import com.project.megatravel.model.users.KrajnjiKorisnik
+import com.project.megatravel.model.accomodation.DodatnaUsluga
 
 //declare any global variables here
 
@@ -18,3 +20,50 @@ query "Zauzeti_smestaji" (RezervacijaKorisnika $rez)
 		$rez.getSmestaj().getSObjekat().getLokacija()==this.getSmestaj().getSObjekat().getLokacija(), 
 		spada($rez.getDatumZavrsetka(), datumPocetka, datumZavrsetka) )
 end
+
+query "getAcc"
+    $result: SmestajniObjekat()
+end
+
+query "getUser"
+    $result: KrajnjiKorisnik()
+end
+
+query "preporukaUdaljenost" (KrajnjiKorisnik $kor)
+	// Realizovane rezervacije korisnika
+	$rezs: List() from collect ( RezervacijaKorisnika ( 
+		korisnik.getId() == $kor.getId(), stanje == "REALIZOVANO" ) )
+	// Objekti
+	$smestaji : Set() from accumulate (
+		RezervacijaKorisnika (
+			$id2 : smestaj.getSObjekat()
+		) from $rezs,
+		collectSet($id2)
+	)
+	// Prosecna udaljenost do smestaja u kojima je boravio
+	Number ($avg: doubleValue) from accumulate (
+		SmestajniObjekat(
+			$id3: getId(),
+			$lok2: lokacija
+		) from $smestaji,
+		average(distanceLok($kor.getLokacija(), $lok2))
+	)
+	$result :  SmestajniObjekat( distanceLok($kor.getLokacija(), lokacija) < $avg )
+end
+
+query "preporukaDodatneUsluge" (KrajnjiKorisnik $kor)
+	// Sve dodatne usluge
+	$sveDU: List() from collect ( DodatnaUsluga() )
+	$rezs: List() from collect ( RezervacijaKorisnika ( 
+		korisnik.getId() == $kor.getId(), stanje == "REALIZOVANO" ) )
+	// Objekti u kojima je korisnik boravio
+	$smestaji : Set() from accumulate (
+		RezervacijaKorisnika (
+			$sm : smestaj
+		) from $rezs,
+		collectSet($sm)
+	)
+	//$du: intersect($smestaji, $sveDU)
+	
+end
+

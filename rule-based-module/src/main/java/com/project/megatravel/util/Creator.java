@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.project.megatravel.model.accomodation.GeoDuzina;
+import com.project.megatravel.model.accomodation.GeoSirina;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Rejting;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
@@ -207,5 +209,79 @@ public final class Creator {
 			
 			return rez;
 	}
+	
+	public static Lokacija createLokacija(Long id, String naziv, double sirina, double duzina) {
+		
+		Lokacija lok = Creator.createLokacija(id, naziv);
+        
+        GeoSirina gsirina = new GeoSirina();
+        gsirina.setStepeni(sirina);
+        
+        GeoDuzina gduzina = new GeoDuzina();
+        gduzina.setStepeni(duzina);
+        
+        lok.setGeoSirina(gsirina);
+        lok.setGeoDuzina(gduzina);
+		
+        return lok;
+        
+	}
+	
+	public static double distance2(Lokacija l1, Lokacija l2) {
 
+		return distance(l1.getGeoSirina().getStepeni(), l2.getGeoSirina().getStepeni(),
+				l1.getGeoDuzina().getStepeni(), l2.getGeoDuzina().getStepeni(), 0.0, 0.0);
+	    
+	}
+	
+	public static double distance(double lat1, double lat2, double lon1, double lon2, double el1, double el2) {
+
+	    final int R = 6371;
+
+	    double latDistance = Math.toRadians(lat2 - lat1);
+	    double lonDistance = Math.toRadians(lon2 - lon1);
+	    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+	            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+	            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	    double distance = R * c * 1000; // convert to meters
+
+	    double height = el1 - el2;
+
+	    distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+	    return Math.sqrt(distance);
+	}
+
+	public static double test() {
+		return 1;
+	}
+	
+	public static double distance3(Lokacija l1, Lokacija l2) {
+
+		double lat1 = l1.getGeoSirina().getStepeni();
+		double lat2 = l2.getGeoSirina().getStepeni();
+		double lon1 = l1.getGeoDuzina().getStepeni();
+		double lon2 = l2.getGeoDuzina().getStepeni();
+		double el1 = 0.0;
+		double el2 = 0.0;
+		
+		final int R = 6371;
+
+	    double latDistance = Math.toRadians(lat2 - lat1);
+	    double lonDistance = Math.toRadians(lon2 - lon1);
+	    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+	            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+	            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	    double distance = R * c * 1000; // convert to meters
+
+	    double height = el1 - el2;
+
+	    distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+	    return Math.sqrt(distance);
+	    
+	}
+	
 }

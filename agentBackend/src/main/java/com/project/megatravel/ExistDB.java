@@ -71,6 +71,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if (resource!=null)
 				((EXistResource)resource).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();
@@ -149,6 +150,7 @@ public class ExistDB {
 			e.printStackTrace();
 		} finally {
 			try {
+				if(res!=null)
 				((EXistResource)res).freeResources();
 			} catch (XMLDBException e) {
 				e.printStackTrace();
@@ -237,7 +239,12 @@ public class ExistDB {
 		Long agId = determineId("/agenti");
 		Long adId = determineId("/admini");
 		
-		Long max = Collections.max(Arrays.asList(korId,agId,adId));
+		Long max = 1L;
+		try {
+			max = Collections.max(Arrays.asList(korId,agId,adId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return max;
 		

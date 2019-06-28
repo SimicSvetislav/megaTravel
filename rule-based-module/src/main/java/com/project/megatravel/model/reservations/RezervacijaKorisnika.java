@@ -13,10 +13,13 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import com.project.megatravel.model.users.Korisnik;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.rbm.repository.KorisnikRepository;
 
 
 /**
@@ -77,12 +80,14 @@ import com.project.megatravel.model.users.KrajnjiKorisnik;
 @XmlType(name = "TRezervacijaKorisnika", propOrder = {
     "cenaSmestaja",
     "stanje",
-    "korisnik",
+    "korisnikE",
     "ocena",
     "komentar",
     "obradjeno",
-    "procenatOtkazivanje"
+    "procenatOtkazivanje",
+    "brojOsoba"
 })
+@XmlRootElement(name = "RezervacijaKorisnika")
 public class RezervacijaKorisnika
     extends Rezervacija
 {
@@ -90,7 +95,7 @@ public class RezervacijaKorisnika
     protected double cenaSmestaja;
     @XmlElement(required = true)
     protected String stanje;
-    @XmlElement(required = true)
+    @XmlTransient
     protected KrajnjiKorisnik korisnik;
     protected int ocena;
     @XmlElement(required = true)
@@ -105,6 +110,20 @@ public class RezervacijaKorisnika
     
     protected int brojOsoba;
 
+    @XmlElement(name = "korisnik")
+    protected Long korisnikE;
+    
+    public Long getKorisnikE() {
+		return korisnikE;
+	}
+
+	public void setKorisnikE(Long korisnikE) {
+		this.korisnikE = korisnikE;
+	}
+
+	@XmlTransient
+    private KorisnikRepository repo = new KorisnikRepository();
+    
     public int getBrojOsoba() {
 		return brojOsoba;
 	}
@@ -162,7 +181,10 @@ public class RezervacijaKorisnika
      *     
      */
     public KrajnjiKorisnik getKorisnik() {
-        return korisnik;
+        if (korisnik==null) {
+        	korisnik = repo.getOneById(korisnikE);
+        }
+    	return korisnik;
     }
 
     /**

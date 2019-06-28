@@ -3,6 +3,8 @@ package rules
 
 //list any import classes here.
 
+import org.apache.commons.lang.time.DateUtils
+
 import com.project.megatravel.model.reservations.RezervacijaKorisnika
 import com.project.megatravel.model.accomodation.SmestajniObjekat
 import com.project.megatravel.model.accomodation.SmestajnaJedinica
@@ -12,14 +14,21 @@ import com.project.megatravel.model.accomodation.SmestajnaJedinica
 //global Set lojalni;
 
 global Double predlog;
+// Lista za preporuke za popust
+global List lista;
+// Lista za preporuke za upozorenja
+global List lista2;
 
 rule "Nema rezervacija u poslednjih 15 dana i cena veca od prosecne"
 	agenda-group "agent"
+	lock-on-active
 	salience 10
     when
         // rezervacije od poslednjih 15 dana
-        $rez15: List() from collect ( RezervacijaKorisnika( datumUOpsegu(datumRezervacije,15)==true ) )
-    	
+        $rez15: List() from collect ( RezervacijaKorisnika( 
+    	$dt: DateUtils.truncate(DateUtils.addDays(datumRezervacije, 15), Calendar.DAY_OF_MONTH),
+		eval($dt.after(new Date()))))
+		// Objekti sa rezervacijama
     	$smestaji : Set() from accumulate (
 			RezervacijaKorisnika (
 				$id : smestaj.getSObjekat().getId()
@@ -28,10 +37,29 @@ rule "Nema rezervacija u poslednjih 15 dana i cena veca od prosecne"
 		)
 		// Objekti koji nemaju rezervacije u prethodnih 15 dana
 		$so : SmestajniObjekat( id not memberOf $smestaji, $lok: lokacija )
-		$jediniceUMestu: List() from collect ( SmestajnaJedinica( sObjekat!=$so, sObjekat.getLokacija()==$lok ) )
 		$mojeJedinice: List() from collect ( SmestajnaJedinica( sObjekat==$so ) )
-		eval ( vecaCena($jediniceUMestu, $mojeJedinice) )
+		$jediniceUMestu: List() from collect ( SmestajnaJedinica( 
+		sObjekat!=$so, sObjekat.getLokacija()==$lok ) )
+		
+		Number ($avg: doubleValue) from accumulate (
+    		SmestajnaJedinica(
+    			$price: podrazumevaniCenovnik.getCena().getIznos()
+    		) from $jediniceUMestu,
+    		average($price)
+    	)
+    	
+    	Number ($avgMoje: doubleValue) from accumulate (
+    		SmestajnaJedinica(
+    			$price2: podrazumevaniCenovnik.getCena().getIznos()
+    		) from $mojeJedinice,
+    		average($price2)
+    	)
+    	
+    	eval($avgMoje > $avg)
+		
     then
+    	lista2.add($so.getAgent());
+    	drools.getKnowledgeRuntime().setGlobal("lista", lista2); 
         System.out.println("Nema rezervacije " + $so.getId());
         System.out.println("Upozoriti agenta");
 
@@ -39,6 +67,7 @@ end
 
 rule "Preporuka za snizenje"
     agenda-group "agent"
+    lock-on-active
     salience 10
     when
         $sj: SmestajnaJedinica(  )
@@ -48,25 +77,33 @@ rule "Preporuka za snizenje"
     		SmestajnaJedinica(
     			this != $sj,
     			$price: podrazumevaniCenovnik.getCena().getIznos(),
+    			// Uzmi u obzir samo one iste kategorije
     			sObjekat.getKategorija()==$sj.getSObjekat().getKategorija(),
     			// Uzmi u obzir samo one sa slicnim ocenama
-    			Math.abs(rejtingCalc($sj.getRejting())-rejtingCalc(rejting))<=0.5
+    			Math.abs(
+    			(double)$sj.getRejting().getSumaOcena()/$sj.getRejting().getBrojOcena()-
+    			(double)rejting.getSumaOcena()/rejting.getBrojOcena() )
+    			<=0.5
     		),
     		average($price)
     	)
+    	// Provera da li je cena vec dovoljno atraktivna
+    	eval ( $sj.getPodrazumevaniCenovnik().getCena().getIznos()/$avg - 1 > 0)
     then
+    	lista.add($sj);
+    	drools.getKnowledgeRuntime().setGlobal("lista", lista);
+    
     	System.out.println("--------");
     	System.out.println($sj.getPodrazumevaniCenovnik().getCena().getIznos());
     	System.out.println($avg);
     	double pr = $sj.getPodrazumevaniCenovnik().getCena().getIznos()/$avg - 1;
     	
         System.out.println("Nema rezervacije u buducnosti - " + $sj.getId());
-        if (pr > 0) {
-        	predlog = pr;
-	    	System.out.println("Predloziti popust " + pr * 100 + "%");
-    	} else {
-    		System.out.println("Cena je vec dovoljno atraktivna");
-    	}
+        //if (pr > 0) {
+	    System.out.println("Predloziti popust " + pr * 100 + "%");
+    	//} else {
+    	//	System.out.println("Cena je vec dovoljno atraktivna");
+    	//}
 end
 
 // Proba za template

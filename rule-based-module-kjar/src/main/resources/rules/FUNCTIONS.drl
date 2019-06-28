@@ -4,6 +4,8 @@ package rules
 //list any import classes here.
 
 import java.util.List
+import java.util.Set
+import java.util.HashSet
 import java.lang.Math
 import java.util.concurrent.TimeUnit
 import java.time.LocalDate
@@ -19,8 +21,49 @@ import com.project.megatravel.model.accomodation.SmestajniObjekat
 import com.project.megatravel.model.accomodation.SmestajnaJedinica
 import com.project.megatravel.model.accomodation.Rejting
 import com.project.megatravel.events.ReservationEvent
+import com.project.megatravel.model.accomodation.Lokacija
 
 //declare any global variables here
+
+function double distanceLok(Lokacija l1, Lokacija l2) {
+
+	return distance(l1.getGeoSirina().getStepeni(), l2.getGeoSirina().getStepeni(),
+			l1.getGeoDuzina().getStepeni(), l2.getGeoDuzina().getStepeni(), 0.0, 0.0);
+	    
+}
+
+function Set intersect (Set smestaji) {
+	
+	Set ret = new HashSet();
+	
+	for (Object o : smestaji) {
+		SmestajniObjekat so = (SmestajniObjekat) o;
+		
+	}
+	
+	return ret;
+	
+}
+
+
+function double distance(double lat1, double lat2, double lon1, double lon2, double el1, double el2) {
+
+    final int R = 6371;
+
+    double latDistance = Math.toRadians(lat2 - lat1);
+    double lonDistance = Math.toRadians(lon2 - lon1);
+    double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+            + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+            * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    double distance = R * c * 1000; // convert to meters
+
+    double height = el1 - el2;
+
+    distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+    return Math.sqrt(distance);
+}
 
 function double rejtingCalc(Rejting r) {
 	
@@ -44,7 +87,7 @@ function boolean imaRezervacija(SmestajnaJedinica sj, List rezervacije) {
 	
 }
 
-function boolean vecaCena(List uMestu, List moje) {
+/*function boolean vecaCena(List uMestu, List moje) {
 	
 	//System.out.println(uMestu.size());
 	//System.out.println(moje.size());
@@ -69,7 +112,7 @@ function boolean vecaCena(List uMestu, List moje) {
 	}
 	
 	return false;
-}
+}*/
 
 function boolean spada(Date point, Date pocetak, Date zavrsetak) {
 
@@ -85,7 +128,7 @@ function boolean spada(Date point, Date pocetak, Date zavrsetak) {
 	return false;
 }
 
-function boolean badText(String t1, String t2) {
+/*function boolean badText(String t1, String t2) {
 	
 	// System.out.println("Tu sam 2");
 	
@@ -95,13 +138,13 @@ function boolean badText(String t1, String t2) {
 	
 	return false;
 	
-}
+}*/
 
 function boolean ponudjenPopust(RezervacijaKorisnika rk) {
 	
 	Date d = rk.getKorisnik().getPonudjenPopustNakonOtkazivanja();
 	
-	if (d == null) return false;
+	// if (d == null) return false;
 	
 	Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Europe/Paris"));
 	
@@ -308,37 +351,6 @@ function boolean datumUOpsegu(java.util.Date datum, long opseg) {
 	
 }
 
-function boolean ugnjezdenaRezervacija(List rezervacije, RezervacijaKorisnika rez) {
-	
-	boolean pre = false;
-	boolean posle = false;
-	
-	for (Object o : rezervacije) {
-		RezervacijaKorisnika r = (RezervacijaKorisnika) o;
-		
-		if (r.equals(rez)) continue;
-		
-		
-		
-		if (!pre) {
-			Date dayAfterLast = new Date(r.getDatumZavrsetka().getTime() + TimeUnit.DAYS.toMillis( 1 ));
-			if (sameDate(dayAfterLast, rez.getDatumPocetka())) {
-				pre = true;
-			}
-		}
-		
-		if (!posle) {
-			Date dayBeforeFirst = new Date(r.getDatumPocetka().getTime() - TimeUnit.DAYS.toMillis( 1 ));
-			if (sameDate(dayBeforeFirst, rez.getDatumZavrsetka())) {
-				posle = true;
-			}
-		}
-	}
-	
-	return pre && posle;
-	
-}
-
 function boolean earlyBird(Date datumRez) {
 
 	if (datumRez == null) return false;
@@ -361,7 +373,7 @@ function boolean earlyBird(Date datumRez) {
 	return false;
 }
 
-function boolean isToday(Date datumRez) {
+/*function boolean isToday(Date datumRez) {
 
 	if (datumRez == null) return false;
 
@@ -372,11 +384,14 @@ function boolean isToday(Date datumRez) {
 	}
 	
 	return false;
-}
+}*/
 
-function boolean poredjenjeKategorija(String smestajKategorija, String korisnikKategorija) {
+/*function boolean poredjenjeKategorija(String smestajKategorija, String korisnikKategorija) {
 	
 	if (smestajKategorija == null || korisnikKategorija == null) return false;
+
+	System.out.println(smestajKategorija);
+	System.out.println(korisnikKategorija);
 
 	if (smestajKategorija.equals("PLATINUM")) {
 		return true;
@@ -403,4 +418,4 @@ function boolean poredjenjeKategorija(String smestajKategorija, String korisnikK
 	}
 	
 	return false;
-}
+}*/

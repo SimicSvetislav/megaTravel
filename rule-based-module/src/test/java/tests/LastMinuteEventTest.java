@@ -14,6 +14,7 @@ import org.kie.api.runtime.KieSession;
 
 import com.project.megatravel.events.LastMinuteEvent;
 import com.project.megatravel.model.accomodation.Lokacija;
+import com.project.megatravel.rbm.ExistDB;
 import com.project.megatravel.util.Creator;
 
 public class LastMinuteEventTest {
@@ -21,9 +22,14 @@ public class LastMinuteEventTest {
 	KieSession kSession;
 	
 	@BeforeClass
-	public static void setUp() throws Exception {
+	public static void initDatabase() throws Exception {
 		
-
+		try {
+			ExistDB.initDatabase();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@Test

@@ -3,6 +3,8 @@ package rules
 
 //list any import classes here.
 
+import org.apache.commons.lang.time.DateUtils
+
 import com.project.megatravel.model.accomodation.Lokacija
 import com.project.megatravel.events.LastMinuteEvent
 
@@ -15,7 +17,8 @@ rule "Last-minute dogadjaj"
 	salience 50
 	lock-on-active true
     when	
-        $rez : RezervacijaKorisnika( $datumRezervacije : datumRezervacije, $datumPocetka : datumPocetka, popust == 0.0,  sameDate($datumRezervacije, $datumPocetka), $id : id  )
+        $rez : RezervacijaKorisnika( $datumRezervacije : datumRezervacije, $datumPocetka : datumPocetka, popust == 0.0,  
+        DateUtils.isSameDay(datumRezervacije, datumPocetka), $id : id  )
     then
     	System.out.println("\nLast-minute\nDodeljen popust 50% za rezervaciju " + $id );
         modify ($rez) { setPopust(50); }

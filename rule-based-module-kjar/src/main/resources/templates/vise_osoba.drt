@@ -1,6 +1,8 @@
 template header
 visak
 procenat
+aid
+counter
 
 package rules
 
@@ -9,9 +11,9 @@ import com.project.megatravel.model.reservations.RezervacijaKorisnika
 
 template "vise_osoba"
 
-rule "Vise osoba @{row.rowNumber}"
+rule "Vise osoba @{counter}"
 no-loop true
-agenda-group "negativni popust"
+agenda-group "negativni popust @{aid}"
 salience @{visak}*10
 when
     $rez: RezervacijaKorisnika( $razlika: (brojOsoba-smestaj.getBrojKreveta()), $razlika > 0, $razlika >= @{visak})
