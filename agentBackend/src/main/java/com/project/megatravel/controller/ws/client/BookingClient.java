@@ -23,8 +23,8 @@ public class BookingClient extends WebServiceGatewaySupport {
 
 	private static final Logger log = LoggerFactory.getLogger(BookingClient.class);
 	
-//	private static final String WEBSERVICE_URL = "http://localhost:8836/agent/ws/booking";
-	private static final String WEBSERVICE_URL = "http://localhost:8111/ws/booking";
+	private static final String WEBSERVICE_URL = "http://localhost:8762/main/ws/booking";
+//	private static final String WEBSERVICE_URL = "http://localhost:8111/ws/booking";
 	
 	private static final String NAMESPACE_URL = "www.model.megatravel.project.com/reservations/managment";
 

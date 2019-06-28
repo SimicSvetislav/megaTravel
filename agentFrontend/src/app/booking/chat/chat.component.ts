@@ -1,3 +1,4 @@
+import { UserService } from './../../service/user.service';
 import { ReservationsService } from './../../service/reservations.service';
 import { MessagesService } from '../../service/chat/messages.service';
 import { ChatService } from '../../service/chat/chat.service';
@@ -20,7 +21,8 @@ export class ChatComponent implements OnInit {
 
   constructor(private tokenService: TokenStorageService, private router: Router,
               private chatService: ChatService, private route: ActivatedRoute,
-              private messagesService: MessagesService, private reservationsService: ReservationsService) {
+              private messagesService: MessagesService, private reservationsService: ReservationsService,
+              private userService: UserService) {
                 chatService.messages.subscribe(msg => {
                   if (msg.text.startsWith('[INFO]')) {
                     // INFO message
@@ -39,7 +41,11 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
 
-    const agent = '22'; // test     //soap poziv da se vrati info a agentu sa pravim id
+    let agent = '22'; // test     //soap poziv da se vrati info a agentu sa pravim id
+    this.userService.getAgent().subscribe( data => {
+      agent = data.id;
+    }
+    );
 
     // Cita se id rezervacije
     const resId = +this.route.snapshot.params['resId'];

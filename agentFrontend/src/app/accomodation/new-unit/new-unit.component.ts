@@ -8,6 +8,7 @@ import { TipSmestaja } from 'src/app/model/smestaj/tip-smestaja.model';
 import { KategorijaSmestaja } from 'src/app/model/smestaj/kategorija-smestaja.model';
 import { Cenovnik } from 'src/app/model/smestaj/cenovnik.model';
 import { Otkazivanje } from 'src/app/model/smestaj/otkazivanje.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-unit',
@@ -17,7 +18,7 @@ import { Otkazivanje } from 'src/app/model/smestaj/otkazivanje.model';
 export class NewUnitComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private accomodationService: AccomodationService,
-    private router: Router) { }
+    private router: Router, private toastrService: ToastrService) { }
 
   activeTab: any;
   newUnit: SmestajnaJedinica;
@@ -30,6 +31,7 @@ export class NewUnitComponent implements OnInit {
       this.accomodationService.getObject(objectId).subscribe(data => {
         this.object = data;
         this.newUnit = new SmestajnaJedinica(null, -1, false, this.object.id, new Otkazivanje());
+        this.newUnit.opis = '';
 
       });
     });
@@ -41,6 +43,7 @@ export class NewUnitComponent implements OnInit {
     // this.activeTab = 'facilities';
     this.accomodationService.addUnit(this.object.id.toString(), this.newUnit).subscribe(data => {
       const url: string = this.backToUnitsUrl();
+      this.toastrService.success('Soba uspesno dodata');
       this.router.navigate([url]);
     }, (error: Response) => {
 

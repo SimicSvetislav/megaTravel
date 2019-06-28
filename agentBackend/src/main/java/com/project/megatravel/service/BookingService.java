@@ -49,7 +49,7 @@ public class BookingService {
 		rezervacija.setDatumRezervacije(new Date());
 		
 		MakeBookingResponse response  = bookingWsClient.makeBooking(rezervacija);
-		if(response == null) {
+		if(response.getRezervacijaKorisnika() == null) {
 			throw new UnitIsBookedException();
 		}
 		

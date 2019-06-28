@@ -92,33 +92,33 @@ public class ReservationsApplication {
 		
 		
 
-		Creator cr = new Creator();
-
-		
-
-		RezervacijeRepository r = new RezervacijeRepository();
-
-		SjRepository sjr = new SjRepository();
-		SoRepository sjo = new SoRepository();
-		KorisnikRepository kr = new KorisnikRepository();
-		
-		
-		KrajnjiKorisnik kk = kr.getByEmail("pera@gmail.com");
-
-		SmestajniObjekat so = cr.createSmestajniObjekat("Apartman");
-		sjo.save(so);
-		SmestajnaJedinica sj = cr.createSmestajnaJedinica(5,so);
-		sjr.save(sj);
-		RezervacijaKorisnika rk = cr.createRezervacija(160, 5, "10/1/2019", "19/5/2019", "28/5/2019", "Stanje?", sj,kk);
-		r.save(rk);
-		
-		kk = kr.save(kk);
-		SmestajniObjekat so1 = Creator.createSmestajniObjekat("Hotel 5*");
-		so1	 = sjo.save(so1);
-		SmestajnaJedinica sj1 = Creator.createSmestajnaJedinica(4,so1);
-		sj1	 = sjr.save(sj1);
-		RezervacijaKorisnika rk1 = Creator.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj1,kk);
-		rk1 = r.save(rk1);
+//		Creator cr = new Creator();
+//
+//		
+//
+//		RezervacijeRepository r = new RezervacijeRepository();
+//
+//		SjRepository sjr = new SjRepository();
+//		SoRepository sjo = new SoRepository();
+//		KorisnikRepository kr = new KorisnikRepository();
+//		
+//		
+//		KrajnjiKorisnik kk = kr.getByEmail("pera@gmail.com");
+//
+//		SmestajniObjekat so = cr.createSmestajniObjekat("Apartman");
+//		sjo.save(so);
+//		SmestajnaJedinica sj = cr.createSmestajnaJedinica(5,so);
+//		sjr.save(sj);
+//		RezervacijaKorisnika rk = cr.createRezervacija(160, 5, "10/1/2019", "19/5/2019", "28/5/2019", "Stanje?", sj,kk);
+//		r.save(rk);
+//		
+//		kk = kr.save(kk);
+//		SmestajniObjekat so1 = Creator.createSmestajniObjekat("Hotel 5*");
+//		so1	 = sjo.save(so1);
+//		SmestajnaJedinica sj1 = Creator.createSmestajnaJedinica(4,so1);
+//		sj1	 = sjr.save(sj1);
+//		RezervacijaKorisnika rk1 = Creator.createRezervacija(250, 5, "19/6/2019", "19/7/2019", "28/7/2019", "Stanje?", sj1,kk);
+//		rk1 = r.save(rk1);
 
 		/*
 		sjo.save(so1);

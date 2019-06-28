@@ -70,10 +70,12 @@ public class ExistDB {
 			logger.warning("Exception occured while savind resource");
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)resource).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (resource != null) {
+				try {
+					((EXistResource) resource).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 	        
@@ -109,10 +111,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)res).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 		
@@ -148,10 +152,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)res).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 		
@@ -189,10 +195,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)res).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 		

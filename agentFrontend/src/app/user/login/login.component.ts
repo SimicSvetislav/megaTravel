@@ -22,10 +22,10 @@ export class LoginComponent implements OnInit {
   str = '';
 
   private loginInfo: AuthLoginInfo;
-  isLoggedIn = false;
-  isLoginFailed = false;
-  errorMessage = '';
-  roles: string[] = [];
+  // isLoggedIn = false;
+  // isLoginFailed = false;
+  // errorMessage = '';
+  // roles: string[] = [];
  // token: Token = new Token();
 
   username: string;
@@ -41,27 +41,36 @@ export class LoginComponent implements OnInit {
       if (data.accessToken === undefined) {
         this.toastrService.error('Nesto nije u redu!');
       } else {
-        this.tokenStorage.saveToken(data.accessToken);
-        this.tokenStorage.saveUsername(data.username);
-        this.tokenStorage.saveAuthorities(data.authorities);
-        this.tokenStorage.saveUser(data.user_id);
-        this.tokenStorage.saveReserved(0);
+        // this.tokenStorage.saveToken(data.accessToken);
+        // this.tokenStorage.saveUsername(data.username);
+        // this.tokenStorage.saveAuthorities(data.authorities);
+        // this.tokenStorage.saveUser(data.user_id);
+        // this.tokenStorage.saveReserved(0);
 
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
+        // this.isLoginFailed = false;
+        // this.isLoggedIn = true;
        /* this.roles = this.tokenStorage.getAuthorities();
         localStorage["sent"] = false;*/
 
         // sync
         this.userService.syncData().subscribe(d => {
+          this.tokenStorage.saveToken(data.accessToken);
+          this.tokenStorage.saveUsername(data.username);
+          this.tokenStorage.saveAuthorities(data.authorities);
+          this.tokenStorage.saveUser(data.user_id);
+          this.tokenStorage.saveReserved(0);
+
           this.router.navigate(['/home']);
         }, (error: Response) => {
           if (error.status === 409) {
             this.toastrService.error('Greska pri sinhronizaciji podataka');
+            return;
           }
           if (error.status === 401) {
             this.toastrService.error('Neatorizovan pristup glavnoj aplikaciji');
+            return;
           }
+          this.toastrService.error('Greska');
         });
 
 
@@ -69,8 +78,11 @@ export class LoginComponent implements OnInit {
       }
     }, (error: HttpErrorResponse) => {
       if (error.status === 401) {
-        this.toastrService.error('Neatorizovan pristup');
+        this.toastrService.error('Neautorizovan pristup');
+        return;
       }
+      this.toastrService.error('Greska');
+
     });
 
   /*  this.testing.test().subscribe(data => {

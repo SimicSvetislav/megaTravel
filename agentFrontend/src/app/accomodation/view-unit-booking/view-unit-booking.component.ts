@@ -1,9 +1,11 @@
+import { ToastrService } from 'ngx-toastr';
 import { BookingService } from 'src/app/service/booking.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
 import { NgForm } from '@angular/forms';
 import { Rezervacija } from 'src/app/model/rezervacija/rezervacija.model';
 import { RezervacijaKorisnika } from 'src/app/model/rezervacija/rezervacija-korisnika.model';
+import { HttpResponse } from '@angular/common/http/http';
 
 @Component({
   selector: 'app-view-unit-booking',
@@ -23,12 +25,13 @@ export class ViewUnitBookingComponent implements OnInit {
 
   rezervacijeZaSobu: RezervacijaKorisnika[] = [];
 
-  constructor(private bookingService: BookingService) { }
+  constructor(private bookingService: BookingService, private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.isCollapsed = true;
     this.bookingService.getAllBookingsByUnit(this.unit.id.toString()).subscribe(data => {
       this.rezervacijeZaSobu = data;
+      this.rezervacijeZaSobu.sort((r2, r1) =>  r2.id - r1.id );
     });
 
 
@@ -42,7 +45,7 @@ export class ViewUnitBookingComponent implements OnInit {
 
   bookUnit(f: NgForm) {
     if (!f.form.valid) {
-      alert('Unesite potrebne datume');
+      this.toastrService.warning('Unesite potrebne datume');
       return;
     }
 
@@ -53,8 +56,11 @@ export class ViewUnitBookingComponent implements OnInit {
       this.isCollapsed = !this.isCollapsed;
       this.start = undefined;
       this.end = undefined;
+      this.ngOnInit();
     }, (error: Response) => {
-
+      if (error.status === 409) {
+        this.toastrService.error('Soba je zauzeta za uneti termin! Molimo pokusajte sa nekim drugim terminom');
+      }
     });
 
   }

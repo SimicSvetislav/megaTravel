@@ -15,6 +15,8 @@ export class RezervacijaKorisnika extends Rezervacija {
 
     dodatneUsluge: number[];
 
+    smestajnaJedinicaDTO: SmestajnaJedinica;
+
     constructor(id: number, pocetak: string, kraj: string, smestaj: number, popust: number, datumRezervacija: string,
         cena: number, stanje: string, k: number) {
         super(id, pocetak, kraj, smestaj, popust);

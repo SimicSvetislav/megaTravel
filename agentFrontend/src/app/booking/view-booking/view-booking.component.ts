@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RezervacijaKorisnika } from 'src/app/model/rezervacija/rezervacija-korisnika.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-booking',
@@ -11,19 +12,26 @@ export class ViewBookingComponent implements OnInit {
   @Input()
   selectedBooking: RezervacijaKorisnika;
 
+  @Input()
+  bookingType: any;
+
   @Output()
   back = new EventEmitter();
 
   @Output()
   confirm = new EventEmitter();
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   confirmBook() {
     this.confirm.emit();
+  }
+
+  startChat() {
+    this.router.navigate(['chat/' + this.selectedBooking.id]);
   }
 
 }

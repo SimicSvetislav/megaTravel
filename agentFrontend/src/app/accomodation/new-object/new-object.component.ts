@@ -42,6 +42,7 @@ export class NewObjectComponent implements OnInit {
       }
 
       this.accomodationService.addObject(this.newObject).subscribe(data => {
+        this.toastrService.success('Objekat uspesno dodat');
         this.router.navigate(['home']);
       }, (error: Response) => {
         if (error.status === 401) {

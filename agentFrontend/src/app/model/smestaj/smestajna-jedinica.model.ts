@@ -23,6 +23,8 @@ export class SmestajnaJedinica {
      // id objekta
      sObjekat: number;
 
+    sObjekatDTO: SmestajniObjekat;
+
     constructor(id: number, kreveta: number, balkon: boolean, sObjekat: number, otkazivanje: Otkazivanje) {
         this.id = id;
         this.brojKreveta = kreveta;
