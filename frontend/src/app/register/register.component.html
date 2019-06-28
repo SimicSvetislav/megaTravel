@@ -36,6 +36,20 @@
           <div class="form-group">
             <input name="phoneNumber" [(ngModel)]="user.telefon" type="text" id="phoneNumber" class="form-control input-underline input-lg"  placeholder= "+381" required>
 					</div>
+
+
+					<div [formGroup]="locationFormGroup">
+						<div class="form-group">
+							<input name="location" [(ngModel)]="lokacija" type="text" id="location" class="form-control input-underline input-lg"  placeholder= "Location" required formControlName="location">
+						</div>
+						<p class="bg-danger" *ngIf="locationFormGroup.controls.location.errors?.required && locationFormGroup.controls.location.touched">Location is required</p>
+					</div>
+					<div class="form-group">
+            <input name="geoSirina" [(ngModel)]="geoSirina" type="text" id="geoSirina" class="form-control input-underline input-lg"  placeholder= "-90 do 90" required>
+					</div>
+					<div class="form-group">
+            <input name="geoDuzina" [(ngModel)]="geoDuzina" type="text" id="geoDuzina" class="form-control input-underline input-lg"  placeholder= "-180 do 180" required>
+					</div>
 				</div>
         <button class="btn rounded-btn btn-block"> Register </button>
 			</form><br>

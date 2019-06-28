@@ -7,4 +7,5 @@ export class User {
     adresa: string;
     telefon: string;
     role: number;
+
 }

@@ -22,20 +22,48 @@ public class SignUpForm {
     
 	private String phoneNumber;
 	
-	
-	
+
 	private String address;
 	
-    
-	
-    
     @NotBlank
     @Size(min = 3, max = 40)
     private String password;
 
     
+    private String lokacija;
+    
+    private Double geoSirina;
+    
+    private Double geoDuzina;
+    
 
-    public String getFirstName() {
+    
+    
+    public String getLokacija() {
+		return lokacija;
+	}
+
+	public void setLokacija(String lokacija) {
+		this.lokacija = lokacija;
+	}
+
+	public Double getGeoSirina() {
+		return geoSirina;
+	}
+
+	public void setGeoSirina(Double geoSirina) {
+		this.geoSirina = geoSirina;
+	}
+
+	public Double getGeoDuzina() {
+		return geoDuzina;
+	}
+
+	public void setGeoDuzina(Double geoDuzina) {
+		this.geoDuzina = geoDuzina;
+	}
+
+	public String getFirstName() {
 		return firstName;
 	}
 
