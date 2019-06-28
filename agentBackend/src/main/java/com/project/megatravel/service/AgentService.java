@@ -83,30 +83,32 @@ public class AgentService {
 		
 		try {
 			//prikupljanje resursa putem ws
-			List<KategorijaSm> kategorije = accomodationWsClient.getCategories().getKategorijaSm();
 			List<TipSmestaja> tipovi = accomodationWsClient.getTypes().getTipSmestaja();
 			List<DodatnaUsluga> usluge = accomodationWsClient.getExtras().getDodatnaUsluga();
 			List<SmestajniObjekat> objekti = accomodationWsClient.getObjects(a).getSmestajniObjekat();
-			
+			List<KategorijaSm> kategorije = accomodationWsClient.getCategories().getKategorijaSm();
+
 			List<SmestajnaJedinica> jedinice = new ArrayList<SmestajnaJedinica>();
 			for(SmestajniObjekat objekat : objekti) {
 				jedinice.addAll(objekat.getSmestajnaJedinica());
 			}
 			
 			List<RezervacijaKorisnika> rezervacije = bookingWsClient.getBookings(a).getRezervacijaKorisnika();
+			List<RezervacijaKorisnika> rezervacijeZaCuvanje = new ArrayList<RezervacijaKorisnika>();
 			for(RezervacijaKorisnika rez : rezervacije) {
-				SmestajnaJedinica jed = jedinice.stream().filter(jedinica -> jedinica.getId() == rez.getId()).findFirst().orElse(null);
+				SmestajnaJedinica jed = jedinice.stream().filter(jedinica -> jedinica.getId() == rez.getSmestajnaJedinica()).findFirst().orElse(null);
 				if(jed != null) {
-					rezervacije.add(rez);
+					rezervacijeZaCuvanje.add(rez);
 				}
 			}
 			
 			//upisivanje u lokalnu bazu
 			accomodationService.overrideData(tipovi, kategorije, usluge, objekti, jedinice);
-			bookingService.overrideData(rezervacije);
+			bookingService.overrideData(rezervacijeZaCuvanje);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
+			throw new Exception();
 		}
 		
 	}
@@ -123,7 +125,9 @@ public class AgentService {
 		return a;
 	}
 	
-	
+	public Agent agentByMail(String mail) {
+		return agentWsClient.getAgent(mail).getAgent();
+	}
 	
 
 }

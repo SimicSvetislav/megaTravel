@@ -90,7 +90,6 @@ import { SmestajniObjekat } from 'src/app/model/smestaj/smestajni-objekat.model'
 
 // }
 import { Component, OnInit, PipeTransform } from '@angular/core';
-import { Country } from 'src/app/model/country.model';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { DecimalPipe } from '@angular/common';
@@ -101,6 +100,8 @@ import { TipSmestaja } from 'src/app/model/smestaj/tip-smestaja.model';
 import { SmestajnaJedinica } from 'src/app/model/smestaj/smestajna-jedinica.model';
 import { Korisnik } from 'src/app/model/korisnik/korisnik-abstract.model';
 import { Otkazivanje } from 'src/app/model/smestaj/otkazivanje.model';
+import { TokenStorageService } from 'src/app/service/auth/toke-storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -115,11 +116,12 @@ export class ViewAllBookingsComponent implements OnInit {
   activeTab: any;
 
 
-  allBookings: RezervacijaKorisnika[];
+  allBookings: RezervacijaKorisnika[] = [];
+  allBookingsByActiveTab: RezervacijaKorisnika[] = [];
+
   filteredBookings: Observable<RezervacijaKorisnika[]>;
   filter = new FormControl('');
 
-  objects: SmestajniObjekat[] = [];
   selectedReservation: Rezervacija;
 
 
@@ -138,22 +140,19 @@ export class ViewAllBookingsComponent implements OnInit {
   // }
 
 
-  constructor(private bookingService: BookingService, private toastr: ToastrService) {
+  constructor(private bookingService: BookingService, private tokenStorage: TokenStorageService, private router: Router,
+    private toastrService: ToastrService) {
 
   }
 
   ngOnInit() {
 
-    this.toastr.success("Test");
+    if (!this.tokenStorage.isLogged()) {
+      this.router.navigate(['login']);
+    }
 
     this.activeTab = 'upcoming';
 
-    let j = new SmestajniObjekat(1, 'Talija', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 5), '', new Cenovnik(), [], [], []);
-    this.objects.push(j);
-    j = new SmestajniObjekat(1, 'Fortuna', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 5), '', new Cenovnik(), [], [], []);
-    this.objects.push(j);
-
-    // this.allBookings = this.genData();
 
     this.bookingService.getAllBookings().subscribe(data => {
       this.allBookings = data;
@@ -162,6 +161,14 @@ export class ViewAllBookingsComponent implements OnInit {
       console.log('posle sortiranja');
       data.sort((book2, book1) => book2.id - book1.id);
       console.log(data);
+
+      // if (this.activeTab === 'upcoming') {
+      //   this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'REZERVISANO');
+      // } else {
+      //   this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'ODRADJENO');
+      // }
+
+      this.filterList();
 
       this.filteredBookings = data; // temp
       // this.filteredBookings = this.filter.valueChanges.pipe( startWith(undefined),
@@ -172,8 +179,40 @@ export class ViewAllBookingsComponent implements OnInit {
 
   }
 
-  back() {
+  changeSectedTAb(changeTo: string) {
+    this.activeTab = changeTo;
+    this.selectedReservation = undefined;
 
+    this.filterList();
+  }
+
+  filterList() {
+    switch (this.activeTab) {
+      case 'upcoming' : {
+          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'REZERVISANO');
+          break;
+        }
+      case 'confirmed' : {
+          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'Potvrdjeno');
+          break;
+        }
+      case 'history' : {
+          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'ODRADJENO');
+          break;
+          }
+      case 'cancelled' : {
+          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'OTKAZANO');
+          break;
+        }
+      default : {
+        this.toastrService.error('Greska');
+      }
+
+    }
+  }
+
+  back() {
+    this.router.navigate(['home']);
   }
 
   selectedRowChanged(selectedRow: RezervacijaKorisnika) {
@@ -182,32 +221,33 @@ export class ViewAllBookingsComponent implements OnInit {
 
   confirmBook() {
     this.bookingService.confirmBooking(this.selectedReservation.id.toString()).subscribe(data => {
-
+      this.selectedReservation = undefined;
+      this.ngOnInit();
     }, (error: Response) => {
 
     });
   }
 
-  genData(): RezervacijaKorisnika[] {
-    const n: RezervacijaKorisnika[] = [];
-    let rez;
-    let smestaj: SmestajnaJedinica;
-    for (let i = 0; i < 6; ++i) {
-      smestaj = {id: i, brojKreveta: i + 2, otkazivanje : new Otkazivanje(), balkon: true, sObjekat : i};
+  // genData(): RezervacijaKorisnika[] {
+  //   const n: RezervacijaKorisnika[] = [];
+  //   let rez;
+  //   let smestaj: SmestajnaJedinica;
+  //   for (let i = 0; i < 6; ++i) {
+  //     smestaj = {id: i, brojKreveta: i + 2, otkazivanje : new Otkazivanje(), balkon: true, sObjekat : i, opis: '', oznaka: ''};
 
-      if (i % 3 === 0) {
-        smestaj.sObjekat = 1;
-      } else {
-        smestaj.sObjekat = 1;
-      }
+  //     if (i % 3 === 0) {
+  //       smestaj.sObjekat = 1;
+  //     } else {
+  //       smestaj.sObjekat = 1;
+  //     }
 
 
-      rez = new RezervacijaKorisnika(i, '2019-05-01', '2019-05-01', 1, 0.0, '2019-05-01', 400, 'rezervisano',
-       1);
-      n.push(rez);
-    }
+  //     rez = new RezervacijaKorisnika(i, '2019-05-01', '2019-05-01', 1, 0.0, '2019-05-01', 400, 'rezervisano',
+  //      1);
+  //     n.push(rez);
+  //   }
 
-    return n;
-  }
+  //   return n;
+  // }
 
 }

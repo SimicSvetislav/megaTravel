@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.service.AgentService;
 import com.project.megatravel.util.errors.AuthentificationException;
 
@@ -39,9 +40,18 @@ public class AgentController {
 			agentService.syncData();
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (AuthentificationException aE) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
+		}
+	}
+	
+	@RequestMapping(value = "/mail/{mail}",  method = RequestMethod.GET)
+	public ResponseEntity<Agent> syncData(@PathVariable("mail") String mail){
+		try {
+			return new ResponseEntity<>(agentService.agentByMail(mail) ,HttpStatus.OK);
+		}  catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
 

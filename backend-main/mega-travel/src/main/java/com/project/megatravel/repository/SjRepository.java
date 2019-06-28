@@ -27,6 +27,12 @@ public class SjRepository implements ExistRepository {
 		if (sj.getId()==null) {
 			// Dodeli id, prvi put se cuva
 			sj.setId(++currentId);
+			
+			// VAZNO azuriraj obj pri dodavanju sobe!
+			SmestajniObjekat so = soRepo.getOneById(sj.getSObjekat());
+			so.getSmestajnaJedinica().add(sj);
+			soRepo.save(so);
+			
 		} else {
 			// Id postoji, radi se update
 			Long soId = sj.getSObjekat();

@@ -24,9 +24,10 @@ public class SjController {
 	
 	@Autowired
 	private SjRepository repo;
-
+	
 	@Autowired
 	private SoRepository repoSo;
+
 	
 	@RequestMapping(method = RequestMethod.GET, path="/{id}")
 	public ResponseEntity<SmestajnaJedinica> getReservation(@PathVariable("id") Long id) {

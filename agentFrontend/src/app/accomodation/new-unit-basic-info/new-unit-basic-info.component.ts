@@ -37,6 +37,7 @@ export class NewUnitBasicInfoComponent implements OnInit {
   ngOnInit() {
     this.dozvoljenoOtkazivanje = false;
     this.balkon = false;
+    this.naziv = '';
   }
 
   back() {
@@ -60,6 +61,7 @@ export class NewUnitBasicInfoComponent implements OnInit {
 
     console.log(this.dozvoljenoOtkazivanje);
     // this.balkon = this.balkon === undefined ? false : true;
+    this.unit.oznaka = this.naziv;
     this.brojKreveta = +this.brojKreveta;
     // this.unit.id = null;
    // this.unit = new SmestajnaJedinica(null, this.brojKreveta, this.balkon, this.object.id, otkazivanje);

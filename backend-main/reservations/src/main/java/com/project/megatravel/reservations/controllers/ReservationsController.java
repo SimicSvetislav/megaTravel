@@ -40,7 +40,7 @@ public class ReservationsController {
 	
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija) {
-		
+		System.out.println("Rezervisao ????");
 		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
 		
 		//String uri = RBM + "makeRes/";
@@ -181,11 +181,12 @@ public class ReservationsController {
 		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, path="/agent/makeBooking", produces="application/json", consumes = "application/json")
+	@RequestMapping(method = RequestMethod.POST, path="/agent/makeBooking", produces="application/json", consumes = "application/xml")
 	public ResponseEntity<RezervacijaKorisnika> bookingFromAgent(@RequestBody RezervacijaKorisnika rezervacija) {
 		
-		RezervacijaKorisnika azuriranaRezervacija = service.makeReservation(rezervacija);
-		
+		// RezervacijaKorisnika azuriranaRezervacija = service.makeReservation(rezervacija);
+		RezervacijaKorisnika azuriranaRezervacija = service.makingReservationFromAgent(rezervacija);
+
 		return new ResponseEntity<RezervacijaKorisnika>(azuriranaRezervacija, HttpStatus.OK);
 	}
 	

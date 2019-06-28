@@ -4,7 +4,6 @@ export abstract class Rezervacija {
     datumPocetka: string;
     datumZavrsetka: string;
 
-    // smestaj: SmestajnaJedinica;
     smestajnaJedinica: number;
     popust: number;
 

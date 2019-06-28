@@ -2,8 +2,10 @@
 <div class="row">
   <div class="col-lg-3 themed-grid-col">
     <div class="list-group">
-      <a  [class.active]="activeTab === 'upcoming'" (click)="activeTab = 'upcoming'" class="list-group-item list-group-item-action" >Nerealizovane</a>
-      <a  [class.active]="activeTab === 'history'" (click)="activeTab = 'history'" class="list-group-item list-group-item-action" >Realizovane</a>
+      <a  [class.active]="activeTab === 'upcoming'" (click)="changeSectedTAb('upcoming')" class="list-group-item list-group-item-action" >Rezervisane</a>
+      <a  [class.active]="activeTab === 'confirmed'" (click)="changeSectedTAb('confirmed')" class="list-group-item list-group-item-action" >Potvrdjene</a>
+      <a  [class.active]="activeTab === 'history'" (click)="changeSectedTAb('history')" class="list-group-item list-group-item-action" >Realizovane</a>
+      <a  [class.active]="activeTab === 'cancelled'" (click)="changeSectedTAb('cancelled')" class="list-group-item list-group-item-action" >Otkazane</a>
     </div>
     <button type="button" class="btn btn-primary btn-lg btn-block mt-3"  (click)="back()">
       <fa name="angle-left" size="lg"></fa> Povratak
@@ -19,22 +21,22 @@
           </select>
         </div>
     </form> -->
-      
-      <table class="table table-bordered">
+      <h1 *ngIf="allBookingsByActiveTab.length === 0" class="text-center text-info">Ne postoje rezervacije</h1>
+      <table class="table table-bordered" *ngIf="allBookingsByActiveTab.length > 0">
         <thead>
         <tr>
           <th scope="col">#Id</th>
           <th scope="col">Početak</th>
           <th scope="col">Kraj</th>
           <th scope="col">Rezervisano</th>
-          <th scope="col">Smeštaj</th>
+          <th scope="col">Smeštaj(Id smestaja)</th>
           <th scope="col">Cena</th>
           <th scope="col">Info</th>
         </tr>
         </thead>
         <tbody>
         <!-- <tr *ngFor="let booking of filteredBookings | async; index as i"> -->
-        <tr *ngFor="let booking of filteredBookings">
+        <tr *ngFor="let booking of allBookingsByActiveTab">
           <th scope="row">{{ booking.id }}</th>
           <td>
             <!-- <ngb-highlight [result]="booking.name" [term]="filter.value"></ngb-highlight> -->
@@ -65,7 +67,7 @@
       </table>
 
       <div *ngIf="selectedReservation">
-        <app-view-booking [selectedBooking]="selectedReservation" (confirm)="confirmBook()">{{selectedReservation.id}}</app-view-booking>
+        <app-view-booking [selectedBooking]="selectedReservation" (confirm)="confirmBook()" [bookingType]="activeTab">{{selectedReservation.id}}</app-view-booking>
       </div>
 
   </div>

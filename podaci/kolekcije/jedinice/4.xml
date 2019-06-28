@@ -1,0 +1,12 @@
+<SmestajnaJedinica xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="4" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <brojKreveta>3</brojKreveta>
+    <balkon>true</balkon>
+    <sObjekat>3</sObjekat>
+    <opis>Ova prostrana soba dovoljna je za 3 odrasle osobe kao porodice sa malom decom.</opis>
+    <otkazivanje>
+        <dozvoljeno>true</dozvoljeno>
+        <brojDana>5</brojDana>
+        <faktorOtkazivanja>0.0</faktorOtkazivanja>
+    </otkazivanje>
+    <oznaka>K1</oznaka>
+</SmestajnaJedinica>

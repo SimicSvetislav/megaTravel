@@ -1,6 +1,6 @@
 package com.project.megatravel.rbm;
 
-import java.util.Date;
+
 import java.util.logging.Logger;
 
 import org.kie.api.KieServices;
@@ -11,18 +11,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import com.project.megatravel.model.accomodation.Cena;
-import com.project.megatravel.model.accomodation.Cenovnik;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
-import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.rbm.repository.AgentRepository;
 import com.project.megatravel.rbm.repository.KorisnikRepository;
 import com.project.megatravel.rbm.repository.RezervacijeRepository;
-import com.project.megatravel.rbm.repository.SjRepository;
-import com.project.megatravel.rbm.repository.SoRepository;
 import com.project.megatravel.util.Creator;
 
 @SpringBootApplication
@@ -38,11 +32,11 @@ public class RuleBasedModuleApp {
 		try {
 			ExistDB.initDatabase();
 			logger.info("Connection with database established");
-			//pop2();
 		} catch (Exception e) {
 			logger.warning("Can't connect to database");
 		}
 		
+
 		SpringApplication.run(RuleBasedModuleApp.class, args);
 		
 		
@@ -52,6 +46,7 @@ public class RuleBasedModuleApp {
 			e.printStackTrace();
 		}*/
 		
+		//ApplicationContext ctx = SpringApplication.run(RuleBasedModuleApp.class, args);
 		/*String[] beanNames = ctx.getBeanDefinitionNames();
 		Arrays.sort(beanNames);
 
@@ -60,9 +55,8 @@ public class RuleBasedModuleApp {
 			sb.append(beanName + "\n");
 		}
 		logger.info(sb.toString());*/
-		
 		//populate();
-		
+		/*
 		SjRepository sjRepo = new SjRepository();
 		SoRepository soRepo = new SoRepository();
 		AgentRepository aRepo = new AgentRepository();
@@ -90,9 +84,10 @@ public class RuleBasedModuleApp {
 		k.setEmail("pera@gmail.com");
 		//krepo.save(k);
 		
-		k.setKorisnickoIme("steva");
-		k.setId(1L);
+		k.setKorisnickoIme("steva");*/
+		//k.setId(1L);
 		//krepo.save(k);
+		
 		
 		//KrajnjiKorisnik kk = krepo.getOneById(10L);
 		

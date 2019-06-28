@@ -1,14 +1,16 @@
 <div class="border border-primary rounded">
-    <div class="row"> <!-- neki ngIf-->
+    <div class="row" > <!-- neki ngIf-->
       <div class="col">
-
+          <button type="button" class="btn btn-info btn-lg btn-block mt-3"  (click)="startChat()">
+              <fa name="comments" size="lg"></fa> Poruke
+            </button>
       </div>
       <div class="col">
-
+          
       </div>
       <!-- u zavisnosti od statusa uslovni prikaz -->
-      <div class="col">
-          <button type="button" class="btn btn-primary btn-lg btn-block mt-3"  (click)="confirmBook()">
+      <div class="col" *ngIf="bookingType === 'upcoming'">
+          <button type="button" class="btn btn-success btn-lg btn-block mt-3"  (click)="confirmBook()">
               <fa name="check" size="lg"></fa> Potvrdi
             </button>
       </div>
@@ -52,7 +54,7 @@
           </tr>
           <tr>
             <th>Rezervisao</th>
-            <td>{{selectedBooking | bookUser}}</td>
+            <td>{{selectedBooking.korisnik}}</td>
           </tr>
                                                    
         </tbody>

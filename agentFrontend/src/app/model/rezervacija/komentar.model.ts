@@ -1,7 +1,9 @@
 export interface Komentar {
-    tekst: string;
+    approved: boolean;
 
-    // ????
-    prilog: any;
-    odobren: boolean;
+    grade: number;
+    room: number;
+    user: number;
+    object: number;
+    comment: string;
 }

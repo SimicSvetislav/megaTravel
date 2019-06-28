@@ -1,0 +1,89 @@
+<SmestajniObjekat xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="1" zvezdice="4" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <lokacija>
+        <naziv>Novi Sad</naziv>
+    </lokacija>
+    <kategorija>GOLD</kategorija>
+    <agent>1</agent>
+    <SmestajnaJedinica id="1">
+        <brojKreveta>1</brojKreveta>
+        <balkon>true</balkon>
+        <sObjekat>1</sObjekat>
+        <opis>Soba namenjena za one koji zele da uzivaju u miru, a ipak imaju dovoljno prostora samo za sebe</opis>
+        <otkazivanje>
+            <dozvoljeno>true</dozvoljeno>
+            <brojDana>20</brojDana>
+            <faktorOtkazivanja>0.0</faktorOtkazivanja>
+        </otkazivanje>
+        <oznaka>K1</oznaka>
+    </SmestajnaJedinica>
+    <SmestajnaJedinica id="2">
+        <brojKreveta>3</brojKreveta>
+        <balkon>false</balkon>
+        <sObjekat>1</sObjekat>
+        <opis>Idealna za bracne parove sa decom, bracni krevet dovoljno velik i za malo dete</opis>
+        <otkazivanje>
+            <dozvoljeno>false</dozvoljeno>
+            <brojDana>0</brojDana>
+            <faktorOtkazivanja>0.0</faktorOtkazivanja>
+        </otkazivanje>
+        <oznaka>K2</oznaka>
+    </SmestajnaJedinica>
+    <SmestajnaJedinica id="3">
+        <brojKreveta>5</brojKreveta>
+        <balkon>true</balkon>
+        <sObjekat>1</sObjekat>
+        <opis>Apartman koji poseduje dve sobe sa krevetima</opis>
+        <otkazivanje>
+            <dozvoljeno>true</dozvoljeno>
+            <brojDana>5</brojDana>
+            <faktorOtkazivanja>0.0</faktorOtkazivanja>
+        </otkazivanje>
+        <oznaka>K3</oznaka>
+    </SmestajnaJedinica>
+    <DodatnaUsluga id="1">
+        <cena>200.0</cena>
+        <ime>wifi</ime>
+        <jedinicaPlacanja>RSD</jedinicaPlacanja>
+    </DodatnaUsluga>
+    <DodatnaUsluga id="2">
+        <cena>200.0</cena>
+        <ime>bazen</ime>
+        <jedinicaPlacanja>eur</jedinicaPlacanja>
+    </DodatnaUsluga>
+    <DodatnaUsluga id="3">
+        <cena>200.0</cena>
+        <ime>room service</ime>
+        <jedinicaPlacanja>RSD</jedinicaPlacanja>
+    </DodatnaUsluga>
+    <DodatnaUsluga id="4">
+        <cena>100.0</cena>
+        <ime>budjenje</ime>
+        <jedinicaPlacanja>RSD</jedinicaPlacanja>
+    </DodatnaUsluga>
+    <tipSmestaja id="1">
+        <naziv xmlns:xs="http://www.w3.org/2001/XMLSchema" xsi:type="xs:string">hotel</naziv>
+    </tipSmestaja>
+    <kategorijaSm id="1">
+        <zvezdice>0</zvezdice>
+    </kategorijaSm>
+    <cenovnici>
+        <pocetak>2019-04-04</pocetak>
+        <kraj>2019-05-04</kraj>
+        <cena>200</cena>
+        <smestaj>1</smestaj>
+    </cenovnici>
+    <cenovnici>
+        <pocetak>2019-06-06</pocetak>
+        <kraj>2019-07-06</kraj>
+        <cena>200</cena>
+        <smestaj>1</smestaj>
+    </cenovnici>
+    <podrazumevaniCenovnik>
+        <pocetak>2019-04-04</pocetak>
+        <kraj>2019-05-04</kraj>
+        <cena>200</cena>
+        <smestaj>1</smestaj>
+    </podrazumevaniCenovnik>
+    <opis>Mali udoban porodicni smestaj za bilo koje doba godine. Nasi gosti cine ljudi koji nam se vracaju svake godine iznova i iznova</opis>
+    <naziv>Talija</naziv>
+</SmestajniObjekat>

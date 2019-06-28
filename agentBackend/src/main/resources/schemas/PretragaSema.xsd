@@ -13,7 +13,7 @@
             </xs:appinfo>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="lokacija" type="acc:TLokacija"/>
+            <xs:element name="lokacija" type="xs:string"/>
             <xs:element name="dolazak">
                 <xs:simpleType>
                     <xs:annotation>
@@ -40,34 +40,40 @@
             </xs:element>
             <xs:element name="brojOsoba">
                 <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element minOccurs="0" name="tipSmestaja">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="Hotel"/>
-                        <xs:enumeration value="Apartman"/>
-                        <xs:enumeration value="Bed&amp;Breakfast"/>
-                    </xs:restriction>
+                    <xs:restriction base="xs:string"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element minOccurs="0" name="kategorijaSmestaja">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="NA"/>
-                        <xs:enumeration value="1"/>
-                        <xs:enumeration value="2"/>
-                        <xs:enumeration value="3"/>
-                        <xs:enumeration value="4"/>
-                        <xs:enumeration value="5"/>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element minOccurs="0" name="udaljenost">
                 <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Double" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseDouble" printMethod="com.project.megatravel.util.MyDatatypeConverter.printDouble"/>
+                        </xs:appinfo>
+                    </xs:annotation>
                     <xs:restriction base="xs:double">
                         <xs:minInclusive value="0"/>
                     </xs:restriction>
@@ -76,8 +82,25 @@
             <xs:element default="false" minOccurs="0" name="besplatnoOtkazivanje" type="xs:boolean"/>
             <xs:element minOccurs="0" name="otkazivanjePre">
                 <xs:simpleType>
-                    <xs:restriction base="xs:integer">
-                        <xs:minInclusive value="0"/>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Integer" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseInteger" printMethod="com.project.megatravel.util.MyDatatypeConverter.printInteger"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:appinfo>
+                            <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
+                        </xs:appinfo>
+                    </xs:annotation>
+                    <xs:restriction base="xs:long">
+                        <xs:minInclusive value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

@@ -52,41 +52,47 @@
   </form>
 </div>
 
+
 <!-- TODO: Prikaz aktuelnih nadolazecih rezervacija za tu sobu-->
-<table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">#Id</th>
-      <th scope="col">Početak</th>
-      <th scope="col">Kraj</th>
-      <th scope="col">Rezervisano</th>
-      <th scope="col">Smeštaj</th>
-      <th scope="col">Cena</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- <tr *ngFor="let booking of filteredBookings | async; index as i"> -->
-    <tr *ngFor="let booking of rezervacijeZaSobu">
-      <th scope="row">{{ booking.id }}</th>
-      <td>
-        <!-- <ngb-highlight [result]="booking.name" [term]="filter.value"></ngb-highlight> -->
-        {{booking.datumPocetka | dateFilter}}
-      </td>
-      <td>
-        <!-- <ngb-highlight [result]="booking.area | number" [term]="filter.value"></ngb-highlight> -->
-        {{booking.datumZavrsetka | dateFilter}}
-      </td>
-      <td>
-        <!-- <ngb-highlight [result]="booking.population | number" [term]="filter.value"></ngb-highlight> -->
-        {{booking.datumRezervacije | dateFilter}}
-      </td>
-      <td>
-          <!-- <ngb-highlight [result]="booking.smestaj" [term]="filter.value"></ngb-highlight> -->
-          {{booking.smestajnaJedinica}}
-      </td>
-      <td>
-        {{booking.cenaSmestaja}}
-      </td>
-    </tr>
-    </tbody>
+<div *ngIf="rezervacijeZaSobu.length > 0">
+  <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#Id</th>
+        <th scope="col">Početak</th>
+        <th scope="col">Kraj</th>
+        <th scope="col">Rezervisano</th>
+        <th scope="col">Smeštaj(id)</th>
+        <th scope="col">Cena</th>
+      </tr>
+      </thead>
+      <tbody>
+      <!-- <tr *ngFor="let booking of filteredBookings | async; index as i"> -->
+      <tr *ngFor="let booking of rezervacijeZaSobu">
+        <th scope="row">{{ booking.id }}</th>
+        <td>
+          <!-- <ngb-highlight [result]="booking.name" [term]="filter.value"></ngb-highlight> -->
+          {{booking.datumPocetka | dateFilter}}
+        </td>
+        <td>
+          <!-- <ngb-highlight [result]="booking.area | number" [term]="filter.value"></ngb-highlight> -->
+          {{booking.datumZavrsetka | dateFilter}}
+        </td>
+        <td>
+          <!-- <ngb-highlight [result]="booking.population | number" [term]="filter.value"></ngb-highlight> -->
+          {{booking.datumRezervacije | dateFilter}}
+        </td>
+        <td>
+            <!-- <ngb-highlight [result]="booking.smestaj" [term]="filter.value"></ngb-highlight> -->
+            {{booking.smestajnaJedinica}}
+        </td>
+        <td>
+          {{booking.cenaSmestaja}}
+        </td>
+      </tr>
+      </tbody>
   </table>
+</div>
+<div *ngIf="rezervacijeZaSobu.length === 0">
+    <h1 class="text-info text-cener">Ne postoje rezervacije za ovu sobu</h1>
+  </div>

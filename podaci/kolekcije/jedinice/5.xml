@@ -1,0 +1,11 @@
+<SmestajnaJedinica xmlns="www.model.megatravel.project.com/accomodation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="5" xsi:schemaLocation="https://www.model.megatravel.project.com/accomodation schemas/SmestajSema.xsd">
+    <brojKreveta>3</brojKreveta>
+    <balkon>false</balkon>
+    <sObjekat>3</sObjekat>
+    <otkazivanje>
+        <dozvoljeno>false</dozvoljeno>
+        <brojDana>0</brojDana>
+        <faktorOtkazivanja>0.0</faktorOtkazivanja>
+    </otkazivanje>
+    <oznaka>K2</oznaka>
+</SmestajnaJedinica>

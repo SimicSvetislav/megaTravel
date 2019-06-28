@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from '../service/auth/toke-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-top',
@@ -10,7 +11,7 @@ export class NavbarTopComponent implements OnInit {
 
   isUserLogged: boolean;
 
-  constructor(private tokenStorage: TokenStorageService) { }
+  constructor(private tokenStorage: TokenStorageService, private router: Router) { }
 
   ngOnInit() {
     // if (this.tokenStorage.getToken()) {
@@ -26,7 +27,7 @@ export class NavbarTopComponent implements OnInit {
 
   signOut() {
     this.tokenStorage.signOut();
-    // this.router.navigate(['/login']);
+    this.router.navigate(['home']);
   }
 
 }

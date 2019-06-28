@@ -1,3 +1,4 @@
+import { Polozaj } from './../../model/smestaj/polozaj.model';
 import { Lokacija } from './../../model/smestaj/lokacija.model';
 import { Koordinate } from './../../model/smestaj/koordinate.model';
 import { AccomodationService } from './../../service/accomodation.service';
@@ -108,8 +109,11 @@ export class NewObjectBasicInfoComponent implements OnInit {
       duzina.stepeni = +this.duzinaStepeni;
       duzina.strana = this.duzinaOrijentacija;
 
-      lokacija.geoDuzina = duzina;
-      lokacija.geoSirina = sirina;
+      const polozaj: Polozaj = new Polozaj();
+      polozaj.geoDuzina = +this.duzinaStepeni;
+      polozaj.geoSirina = +this.sirinaStepeni;
+
+      lokacija.koordinate = polozaj;
     }
     this.object.lokacija = lokacija;
 

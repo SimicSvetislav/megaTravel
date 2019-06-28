@@ -34,8 +34,7 @@
       <div class="col-md-3 mb-3">
           <label for="objectAddress">Adresa objekta* :</label>
       </div>
-      <div class="col-md-3 mb-3">
-        
+      <div class="col-md-3 mb-3">    
       </div>
        <div class="col-md-3 mb-3">
           <input id="objectAddress" type="text" class="form-control" [(ngModel)]="adresa" name="objectAddress" required>
@@ -48,32 +47,27 @@
     <div class="col-md-2 mb-3">
       <label >Geo. sirina :</label>
     </div>
-    <div class="col-md-1 mb-3">
-        <input [(ngModel)]="duzinaStepeni"  id="objectLatitude" type="text" class="form-control" name="objectLatitude" placeholder="Stepeni" pattern="[0-9]*">
+    <div class="col-md-2 mb-3">
+        <input [(ngModel)]="duzinaStepeni"  id="objectLatitude" type="number" class="form-control" name="objectLatitude" placeholder="Stepeni" pattern="[0-9]*">
     </div>
-    <div class="col-md-1 mb-3">
+    <!-- <div class="col-md-1 mb-3">
       <select [(ngModel)]="duzinaOrijentacija" name="objectLatitudeOrientation" id="objectLatitudeOrientation"  class="form-control">
-          <!-- <select  name="objectLatitudeOrientation" id="objectLatitudeOrientation"> -->
-            <!-- <option [ngValue]="null">Strana sveta</option> -->
             <option>N</option>
             <option>S</option>
-
       </select>
-    </div>
+    </div> -->
     <div class="col-md-2 mb-3">
         <label for="objectLongitude">Geo. duzina :</label>
     </div>
-    <div class="col-md-1 mb-3">
-        <input [(ngModel)]="sirinaStepeni" name="objectLongitude" id="objectLongitude" type="text" class="form-control"   placeholder="Stepeni" pattern="[0-9]*">
+    <div class="col-md-2 mb-3">
+        <input [(ngModel)]="sirinaStepeni" name="objectLongitude" id="objectLongitude" type="number" class="form-control"   placeholder="Stepeni" pattern="[0-9]*">
     </div> 
-    <div class="col-md-1 mb-3">
+    <!-- <div class="col-md-1 mb-3">
       <select [(ngModel)]="sirinaOrijentacija"  name="objectLongitudeOrientation" id="objectLongitudeOrientation" class="form-control">
-          <!-- <select   name="objectLongitudeOrientation" id="objectLongitudeOrientation" class="form-control"> -->
-        <!-- <option [ngValue]="null">Strana sveta</option> -->
         <option >W</option>
         <option>E</option>
       </select>
-    </div>  
+    </div>   -->
   </div>
   <hr/>
   <div class="row">    
@@ -87,7 +81,7 @@
         <label for="objectCancelDaysNum">Broj dana :</label>
       </div>
       <div class="col-md-1 mb-3">
-         <input id="objectCancelDaysNum" type="text" class="form-control" [(ngModel)]="brojDanaOtkazivanja" name="objectCancelDaysNum" >
+         <input id="objectCancelDaysNum" type="number" class="form-control" [(ngModel)]="brojDanaOtkazivanja" name="objectCancelDaysNum" >
       </div>
       <!-- <div class="col-md-2 mb-3">
           <label for="objectCancelFactor">Faktor :</label>

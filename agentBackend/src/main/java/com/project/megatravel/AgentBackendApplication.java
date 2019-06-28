@@ -140,7 +140,7 @@ public class AgentBackendApplication {
 		sj.setBrojKreveta(1);
 		sj.setOpis("Soba namenjena za one koji zele da uzivaju u miru, a ipak imaju dovoljno prostora samo za sebe");
 		sj.setOznaka("K1");
-		sj.setOtkazivanje(Creator.createOtkazivanje(new BigInteger("20"), true));
+		sj.setOtkazivanje(Creator.createOtkazivanje(20, true));
 		sj.setSObjekat(objectId);
 		
 		sj = repo.save(sj);
@@ -151,7 +151,7 @@ public class AgentBackendApplication {
 		sj2.setBrojKreveta(3);
 		sj2.setOpis("Idealna za bracne parove sa decom, bracni krevet dovoljno velik i za malo dete");
 		sj2.setOznaka("K2");
-		sj2.setOtkazivanje(Creator.createOtkazivanje(new BigInteger("0"), false));
+		sj2.setOtkazivanje(Creator.createOtkazivanje(0, false));
 		sj2.setSObjekat(objectId);
 		sj2.setId(null);
 		
@@ -163,7 +163,7 @@ public class AgentBackendApplication {
 		sj3.setBrojKreveta(5);
 		sj3.setOpis("Apartman koji poseduje dve sobe sa krevetima");
 		sj3.setOznaka("K3");
-		sj3.setOtkazivanje(Creator.createOtkazivanje(new BigInteger("5"), true));
+		sj3.setOtkazivanje(Creator.createOtkazivanje(5, true));
 		sj3.setSObjekat(objectId);
 		sj3.setId(null);
 		

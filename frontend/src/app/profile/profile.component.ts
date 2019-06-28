@@ -80,9 +80,13 @@ export class ProfileComponent implements OnInit {
        // alert("days : " + this.days)
        //alert("OCenjeno: " + r.ocenjeno);
         if (this.days < 0) {
-          this.reservationsOutOfDate.push(r)
+          this.reservationsOutOfDate.push(r);
+          
         } else {
           this.reservationsActive.push(r);
+        /*  this.objService.getObjectOfUnit(r.id).subscribe(data => { 
+            r.smestajniObjekat = data;           
+          })*/
         }
 
        /* this.userService.getSmestajnaJedinica(r.smestajnaJedinica).subscribe(data => {

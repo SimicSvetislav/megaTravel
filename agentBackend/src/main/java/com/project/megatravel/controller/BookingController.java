@@ -2,6 +2,7 @@ package com.project.megatravel.controller;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.xmldb.api.base.XMLDBException;
 
+import com.project.megatravel.dto.ReservationDTO;
+import com.project.megatravel.dto.SmestajnaJedinicaDTO;
+import com.project.megatravel.dto.SmestajniObjekatDTO;
+import com.project.megatravel.model.accomodation.SmestajnaJedinica;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.service.AccomodationService;
 import com.project.megatravel.service.AgentService;
 import com.project.megatravel.service.BookingService;
 import com.project.megatravel.util.errors.AuthentificationException;
@@ -30,6 +36,9 @@ public class BookingController {
 	
 	@Autowired
 	private BookingService bookingService;
+	
+	@Autowired
+	private AccomodationService accService;
 	
 	@Autowired
 	private AgentService agentService;
@@ -49,11 +58,18 @@ public class BookingController {
 //	}
 	
 	@RequestMapping(value="/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<RezervacijaKorisnika>> getAllBookingsPreview() {
+	public ResponseEntity<List<ReservationDTO>> getAllBookingsPreview() {
 		try {
 			Collection<RezervacijaKorisnika> bookings = bookingService.getAll();
 			
-			return new ResponseEntity<>(bookings, HttpStatus.OK);
+//			List<ReservationDTO> answer = new ArrayList<ReservationDTO>();
+//			bookings.forEach(book -> {
+//				SmestajnaJedinica jed = accService.getObjectUnit(book.getSmestajnaJedinica());
+//				SmestajniObjekat obj = accService.getAccomodationObject(jed.getSObjekat());
+//				answer.add(new ReservationDTO(book, new SmestajnaJedinicaDTO(jed, new SmestajniObjekatDTO(obj))));
+//			});
+			
+			return new ResponseEntity<>(formatListToDTO(bookings), HttpStatus.OK);
 		} catch (Exception e1) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
@@ -65,6 +81,7 @@ public class BookingController {
 		try {
 			Agent agent = agentService.agentAuthentification();
 			booking.setKorisnik(agent.getId());
+			booking.setKorisnik(null);
 			
 			RezervacijaKorisnika rez = bookingService.makeReservation(booking);
 			
@@ -135,11 +152,22 @@ public class BookingController {
 		}
 	}
 	
-	@RequestMapping(value="/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<RezervacijaKorisnika>> test() throws XMLDBException {
-		bookingService.test();
-		return new ResponseEntity<>(new ArrayList<RezervacijaKorisnika>(), HttpStatus.OK);
+	private List<ReservationDTO> formatListToDTO(Collection<RezervacijaKorisnika> bookings){
+		List<ReservationDTO> answer = new ArrayList<ReservationDTO>();
+		bookings.forEach(book -> {
+			SmestajnaJedinica jed = accService.getObjectUnit(book.getSmestajnaJedinica());
+			SmestajniObjekat obj = accService.getAccomodationObject(jed.getSObjekat());
+			answer.add(new ReservationDTO(book, new SmestajnaJedinicaDTO(jed, new SmestajniObjekatDTO(obj))));
+		});
+		
+		return answer;
 	}
+	
+//	@RequestMapping(value="/test", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<Collection<RezervacijaKorisnika>> test() throws XMLDBException {
+//		bookingService.test();
+//		return new ResponseEntity<>(new ArrayList<RezervacijaKorisnika>(), HttpStatus.OK);
+//	}
 	
 	
 }

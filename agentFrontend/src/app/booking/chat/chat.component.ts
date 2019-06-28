@@ -1,6 +1,7 @@
+import { UserService } from './../../service/user.service';
 import { ReservationsService } from './../../service/reservations.service';
-import { MessagesService } from './../../service/messages.service';
-import { ChatService } from './../../service/chat.service';
+import { MessagesService } from '../../service/chat/messages.service';
+import { ChatService } from '../../service/chat/chat.service';
 import { Message } from './message';
 import { TokenStorageService } from './../../service/auth/toke-storage.service';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +21,8 @@ export class ChatComponent implements OnInit {
 
   constructor(private tokenService: TokenStorageService, private router: Router,
               private chatService: ChatService, private route: ActivatedRoute,
-              private messagesService: MessagesService, private reservationsService: ReservationsService) { 
+              private messagesService: MessagesService, private reservationsService: ReservationsService,
+              private userService: UserService) {
                 chatService.messages.subscribe(msg => {
                   if (msg.text.startsWith('[INFO]')) {
                     // INFO message
@@ -38,13 +40,12 @@ export class ChatComponent implements OnInit {
               }
 
   ngOnInit() {
-    
-    // var agent = this.tokenService.getUser();
-    var agent = '22'; // test
 
-    if (agent==null) {
-      this.router.navigate(['/home']);
+    let agent = '22'; // test     //soap poziv da se vrati info a agentu sa pravim id
+    this.userService.getAgent().subscribe( data => {
+      agent = data.id;
     }
+    );
 
     // Cita se id rezervacije
     const resId = +this.route.snapshot.params['resId'];
@@ -59,7 +60,7 @@ export class ChatComponent implements OnInit {
       this.messages = data;
 
       data.forEach(element => {
-        if (element.sender == agent) {
+        if (element.sender === agent) {
           this.chatArea += 'You: ' + element.text + '\n';
         } else {
           this.chatArea += 'Client: ' + element.text + '\n';
@@ -85,7 +86,7 @@ export class ChatComponent implements OnInit {
 
     // Sending message
     this.chatService.messages.next(this.message);
-    
+
     this.message.text = '';
   }
 

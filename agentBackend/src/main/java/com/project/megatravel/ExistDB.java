@@ -70,11 +70,12 @@ public class ExistDB {
 			logger.warning("Exception occured while savind resource");
 			e.printStackTrace();
 		} finally {
-			try {
-				if (resource!=null)
-				((EXistResource)resource).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (resource != null) {
+				try {
+					((EXistResource) resource).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 	        
@@ -110,10 +111,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)res).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 		
@@ -149,11 +152,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				if(res!=null)
-				((EXistResource)res).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 		
@@ -192,10 +196,12 @@ public class ExistDB {
 		} catch (XMLDBException | JAXBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)res).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (res != null) {
+				try {
+					((EXistResource) res).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
 		
@@ -705,7 +711,7 @@ public class ExistDB {
 		try {
 			Collection collection = getOrCreateCollection(colRoot + collectionName);
 			
-			logger.info("Empting collection with name" + colRoot + collectionName + "has started");
+			logger.info("Empting collection with name" + colRoot + collectionName + " has started");
 			
 			String[] resourceNames = collection.listResources();
 			for(String resourceName : resourceNames) {
@@ -713,20 +719,21 @@ public class ExistDB {
 				collection.removeResource(resource);
 			}
 			
-			logger.info("Empting collection with name" + colRoot + collectionName + "has sucessfully fineshed");
+			logger.info("Empting collection with name" + colRoot + collectionName + " has sucessfully fineshed");
 
 			
 		} catch (XMLDBException e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				((EXistResource)resource).freeResources();
-			} catch (XMLDBException e) {
-				e.printStackTrace();
+			if (resource != null) {
+				try {
+					((EXistResource) resource).freeResources();
+				} catch (XMLDBException e) {
+					e.printStackTrace();
+				} 
 			}
 		}
     	
-    	System.out.println("lfjalkj");
     }
     
 //    public static <T> void overrideCollection(java.util.Collection<T> entiities, Long id, String collectionName, String schemaLocation, String jaxbContext) {

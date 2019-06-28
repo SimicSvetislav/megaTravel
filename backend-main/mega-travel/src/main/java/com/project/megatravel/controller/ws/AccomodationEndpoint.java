@@ -88,7 +88,7 @@ public class AccomodationEndpoint {
 		List<SmestajniObjekat> objects = sOService.getAllAgentObject(request.getAgent().getId());
 		response.getSmestajniObjekat().addAll(objects);
 		
-		return new GetObjectsResponse();
+		return response;
 	}
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "getObjectRequest")

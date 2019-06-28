@@ -2,6 +2,7 @@ import { SmestajniObjekat } from './../../model/smestaj/smestajni-objekat.model'
 import { AccomodationService } from 'src/app/service/accomodation.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RatingService } from 'src/app/service/rating/rating.service';
 
 @Component({
   selector: 'app-view-object',
@@ -13,7 +14,10 @@ export class ViewObjectComponent implements OnInit {
   activeTab: any;
   objekat: SmestajniObjekat;
 
-  constructor(private router: Router, private accomodationService: AccomodationService, private activatedRoute: ActivatedRoute) { }
+  averageMark: number;
+
+  constructor(private router: Router, private accomodationService: AccomodationService, private activatedRoute: ActivatedRoute,
+    private ratingService: RatingService) { }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(data => {
@@ -46,6 +50,14 @@ export class ViewObjectComponent implements OnInit {
 
   back() {
     this.router.navigate(['objects']);
+  }
+
+  averageGradeObj() {
+    this.activeTab = 'average';
+    // this.objekat.id = 13;
+    this.ratingService.averageGradeObject(1).subscribe(data => {
+      this.averageMark = data;
+    });
   }
 
 }

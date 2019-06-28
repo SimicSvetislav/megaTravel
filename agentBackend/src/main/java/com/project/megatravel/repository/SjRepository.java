@@ -25,28 +25,39 @@ public class SjRepository implements ExistRepository {
 		
 		SmestajnaJedinica sj = (SmestajnaJedinica) entity;
 		
-		if (sj.getId()==null) {
-			// Dodeli id, prvi put se cuva
-			sj.setId(++currentId);
-		} else {
-			// Id postoji, radi se update
-			Long soId = sj.getSObjekat();
-			if (soId!=null) {
-				SmestajniObjekat so = soRepo.getOneById(soId);
-				List<SmestajnaJedinica> jedinice = so.getSmestajnaJedinica();
-				for (SmestajnaJedinica s : jedinice) {
-					if (s.getId() == sj.getId()) {
-						so.getSmestajnaJedinica().remove(s);
-						so.getSmestajnaJedinica().add(sj);
-						
-						// Pretpostavka da nema duplikata
-						break;
-					}
-				}
-				
-				so = soRepo.save(so);
-			}
-		}
+//		if (sj.getId()==null) {
+//			// Dodeli id, prvi put se cuva
+//			sj.setId(++currentId);
+//			
+//			// VAZNO azuriraj obj pri dodavanju sobe!
+//			SmestajniObjekat so = soRepo.getOneById(sj.getSObjekat());
+//			so.getSmestajnaJedinica().add(sj);
+//			soRepo.save(so);
+//			
+//		} else {
+//			// Id postoji, radi se update
+//			Long soId = sj.getSObjekat();
+//			if (soId!=null) {
+//				SmestajniObjekat so = soRepo.getOneById(soId);
+//				List<SmestajnaJedinica> jedinice = so.getSmestajnaJedinica();
+//				for (SmestajnaJedinica s : jedinice) {
+//					if (s.getId() == sj.getId()) {
+//						so.getSmestajnaJedinica().remove(s);
+//						so.getSmestajnaJedinica().add(sj);
+//						
+//						// Pretpostavka da nema duplikata
+//						break;
+//					}
+//				}
+//				
+//				so = soRepo.save(so);
+//			}
+//		}
+		
+		// VAZNO azuriraj obj pri dodavanju sobe!
+		SmestajniObjekat so = soRepo.getOneById(sj.getSObjekat());
+		so.getSmestajnaJedinica().add(sj);
+		soRepo.save(so);
 
 		return ExistDB.save(sj, sj.getId(), collectionName, schemaLocation, jaxbContext);		
 	}

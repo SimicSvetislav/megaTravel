@@ -11,6 +11,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -105,7 +106,7 @@ public class ReservationService {
 	
 	public List<RezervacijaKorisnika> getAllByUnit(Long id) {
 		
-		return new ArrayList<>();
+		return getAll().stream().filter(b -> b.getSmestajnaJedinica() == id).collect(Collectors.toList());
 	}
 	
 	public List<RezervacijaKorisnika> getAllByObject(Long id) {

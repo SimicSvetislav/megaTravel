@@ -42,7 +42,7 @@ public class TypesRepository implements ExistRepository {
 	public Collection<TipSmestaja> getAll() {
 		
 		return ExistDB.getAll(collectionName, jaxbContext);
-	
+
 	}
 
 	@Override

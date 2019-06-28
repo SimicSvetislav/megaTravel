@@ -1,8 +1,9 @@
-<h1 class="text-center">Podaci o sobi smeštaja {{object?.naziv}} [soba br. {{unit?.id}}]</h1>
+<h1 class="text-center">Podaci o sobi smeštaja {{object?.naziv}} [soba sa oznakom. {{unit?.oznaka}}]</h1>
 <div class="row">
   <div class="col-lg-3 themed-grid-col">
     <div class="list-group">
       <a  [class.active]="activeTab === 'basic-info'" (click)="activeTab = 'basic-info'" class="list-group-item list-group-item-action" >Osnovne informacije</a>
+      <a  [class.active]="activeTab === 'average'" (click)="averageGradeUnit()" class="list-group-item list-group-item-action" >Prosecna ocena</a> 
       <!-- <a  [class.active]="activeTab === 'prices'" (click)="activeTab = 'prices'" class="list-group-item list-group-item-action" >Plan cena</a> -->
       <a  [class.active]="activeTab === 'comments'" (click)="activeTab = 'comments'" class="list-group-item list-group-item-action" >Komentari</a>
       <a  [class.active]="activeTab === 'booking'" (click)="activeTab = 'booking'" class="list-group-item list-group-item-action" >Rezervacije</a> 
@@ -24,6 +25,10 @@
       </div>
       <div *ngSwitchCase="'booking'">
         <app-view-unit-booking [unit] = "unit"></app-view-unit-booking>
+      </div>
+      <div *ngSwitchCase="'average'">
+          <h1 *ngIf="!averageMark" class="text-info text-center">Nema podataka o prosecnoj oceni!</h1>
+          <h1 *ngIf="averageMark" class="text-info text-center">Prosečna ocena: {{averageMark}}</h1>
       </div>
     </div>
   </div>
