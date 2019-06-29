@@ -226,8 +226,9 @@ public class SearchService {
 		long numberOfDaysForTrip = calculuteDaysBetween(searchObjectBeginDate, searchObjectEndDate);
 		long numberOfDaysThatHaveAssignedPrice = 0;
 		
+		// TODO
 		
-		for(Cenovnik c : s.getCenovnici()) {
+		/*for(Cenovnik c : s.getCenovnici()) {
 			long priceBeginDate = c.getPocetak().getTime();
 			long priceEndDate = c.getKraj().getTime();
 			
@@ -242,7 +243,7 @@ public class SearchService {
 			cena += ((numberOfDaysForTrip - numberOfDaysThatHaveAssignedPrice) * s.getPodrazumevaniCenovnik().getCena());
 		} else {
 			System.out.println("GRESKA!!!! Prekoracenje pri brojanju dana");
-		}
+		}*/
 		
 		
 		return cena;

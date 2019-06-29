@@ -216,7 +216,7 @@ public class MegaTravelApplication {
 		
 		//Cenovnik
 		Cenovnik c = new Cenovnik();
-		c.setCena(12L);
+		c.setCena(12.0);
 
 		try {
 			c.setKraj(sdf.parse(datKraj));
@@ -225,7 +225,7 @@ public class MegaTravelApplication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		c.setSmestaj(1l);
+		//c.setSmestaj(1l);
 		
 		
 		SmestajniObjekat so = new SmestajniObjekat();
@@ -258,7 +258,7 @@ public class MegaTravelApplication {
 		so.setNaziv("Hotel Moskva Beograd");
 		so.setOpis(" Komforne sobe i apartmani učiniće Vaš boravak u hotelu Stari krovovi nezaboravnim. Bilo da Vam je potreban dnevni odmor za predah od puta, prenoćište, smeštaj za vikend ili na duži period u vreme održavanja brojnih manifestacija i događaja u Novom Sadu ( sajmova, festivala, itd.), na raspolaganju su Vam apartmani, jednokrevetne, dvokrevetne, kao i sobe sa tri i četiri udobna kreveta.\r\n" + 
 				"		");
-		so.setPodrazumevaniCenovnik(c);
+		//so.setPodrazumevanaCena(c.getCena());
 		
 		so = repo.save(so);
 		
