@@ -1,40 +1,5 @@
-<h4>Podrazumevani cenovnik</h4>
-<div class="row">
-  <div class="col">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <!-- <td>Indeks</td> -->
-          <td>Pocetak smene</td>
-          <td>Kraj termina</td>
-          <td>Iznos</td>
-          <td>Valuta</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <!-- <td>
-            {{i+1}}
-          </td> -->
-          <td>
-            {{podrazumevaniCenovnik.pocetak | dateFilter }}
-          </td>
-          <td>
-            {{podrazumevaniCenovnik.kraj | dateFilter }}
-          </td>
-          <td>
-            {{podrazumevaniCenovnik.cena}}
-          </td>
-          <td>
-            <!-- {{podrazumevaniCenovnik.cena.valuta}} -->
-            EUR
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<h4>Svi cenovnici</h4>
+<h4 class="text-info">Podrazumevana cena po danu: {{podrazumevanaCena}} EUR</h4>
+<h1>Svi cenovnici</h1>
 <div class="row">
   <div class="col">
       <table class="table table-bordered">

@@ -10,10 +10,10 @@ import { RbmService } from 'src/app/service/rbm.service';
 })
 export class RbmPanelComponent implements OnInit {
 
-  word: string = '';
-  
+  word: any = '';
+
   pp1: number;
-  pp2: number=1;
+  pp2: any = 1 ;
 
   pr1: number;
   pr2: number;
@@ -34,20 +34,20 @@ export class RbmPanelComponent implements OnInit {
 
   forbid() {
     this.rbmService.forbid(this.word, this.id).subscribe( data => {
-      this.toastr.success(data)
-    }, error => console.log(error))
+      this.toastr.success(data);
+    }, error => console.log(error));
   }
 
   submit() {
     this.rbmService.submit(this.pp1, this.pp2, this.id).subscribe( data => {
-      this.toastr.success(data)
-    }, error => console.log(error))
+      this.toastr.success(data);
+    }, error => console.log(error));
   }
 
   add() {
     this.rbmService.add(this.pr1, this.pr2, this.id).subscribe( data => {
-      this.toastr.success(data)
-    }, error => console.log(error))
+      this.toastr.success(data);
+    }, error => console.log(error));
   }
 
 }

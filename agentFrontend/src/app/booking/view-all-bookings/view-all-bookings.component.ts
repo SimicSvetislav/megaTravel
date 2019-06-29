@@ -193,11 +193,11 @@ export class ViewAllBookingsComponent implements OnInit {
           break;
         }
       case 'confirmed' : {
-          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'Potvrdjeno');
+          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'POTVRDJENO');
           break;
         }
       case 'history' : {
-          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'ODRADJENO');
+          this.allBookingsByActiveTab = this.allBookings.filter(book => book.stanje === 'REALIZOVANO');
           break;
           }
       case 'cancelled' : {

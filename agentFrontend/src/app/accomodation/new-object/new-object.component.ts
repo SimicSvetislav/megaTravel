@@ -28,8 +28,8 @@ export class NewObjectComponent implements OnInit {
     // }
 
 
-   this.newObject = new SmestajniObjekat(null, '', new TipSmestaja(1, 'hotel'), new KategorijaSmestaja(1, 4),
-    '', undefined, [], [], []);
+   this.newObject = new SmestajniObjekat(null, '', new TipSmestaja(-1, ''), new KategorijaSmestaja(-1, -1),
+    '',  [], []);
 
     this.activeTab = 'basic-info';
   }
@@ -65,31 +65,31 @@ export class NewObjectComponent implements OnInit {
   }
 
   backBasicInfo() {
-    this.router.navigate([]);
+    this.router.navigate(['home']);
   }
 
   addFacilities() {
-   this.activeTab = 'pricelist';
+   this.activeTab = 'images';
   }
 
   backFacilities() {
     this.activeTab = 'basic-info';
   }
 
-  addPricelist() {
-    this.activeTab = 'images';
-   }
+  // addPricelist() {
+  //   this.activeTab = 'images';
+  //  }
 
-   backPricelist() {
-     this.activeTab = 'facilities';
-   }
+  //  backPricelist() {
+  //    this.activeTab = 'facilities';
+  //  }
 
   addImages() {
     this.addNewObject();
   }
 
   backImages () {
-    this.activeTab = 'pricelist';
+    this.activeTab = 'facilities';
   }
 
 }

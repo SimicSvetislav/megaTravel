@@ -125,18 +125,6 @@
                             </xs:simpleType>
                         </xs:element>
                         <xs:element default="false" name="ocenjeno" type="xs:boolean"/>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" name="dodatneUsluge">
-                            <xs:annotation>
-                                <xs:appinfo>
-                                    <jxb:javaType name="java.lang.Long" parseMethod="com.project.megatravel.util.MyDatatypeConverter.parseLong" printMethod="com.project.megatravel.util.MyDatatypeConverter.printLong"/>
-                                </xs:appinfo>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:long">
-                                    <xs:minInclusive value="1"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
                     </xs:sequence>
                     <xs:attribute name="datumRezervacije">
                         <xs:simpleType>

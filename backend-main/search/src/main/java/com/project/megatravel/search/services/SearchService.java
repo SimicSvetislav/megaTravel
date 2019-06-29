@@ -154,7 +154,7 @@ public class SearchService {
 			
 			// TODO: odrediti cenu
 			// dto.setOcena(cena);
-			double cena = generatePrice(po, so);
+			double cena = generatePrice(po, f);
 			dto.setCena(cena);
 			System.out.println("Cena: " + cena);
 			// TODO pozvati cloud
@@ -217,7 +217,7 @@ public class SearchService {
 		return ret;
 	}
 	
-	private double generatePrice(PretragaObjekat po, SmestajniObjekat s) {
+	private double generatePrice(PretragaObjekat po, SmestajnaJedinica s) {
 		double cena = 0.0;
 				
 		long searchObjectBeginDate = po.getOdlazak().getTime();
@@ -228,7 +228,7 @@ public class SearchService {
 		
 		// TODO
 		
-		/*for(Cenovnik c : s.getCenovnici()) {
+		for(Cenovnik c : s.getCenovnici()) {
 			long priceBeginDate = c.getPocetak().getTime();
 			long priceEndDate = c.getKraj().getTime();
 			
@@ -240,10 +240,10 @@ public class SearchService {
 		}
 		
 		if(numberOfDaysThatHaveAssignedPrice <= numberOfDaysForTrip) {
-			cena += ((numberOfDaysForTrip - numberOfDaysThatHaveAssignedPrice) * s.getPodrazumevaniCenovnik().getCena());
+			cena += ((numberOfDaysForTrip - numberOfDaysThatHaveAssignedPrice) * s.getPodrazumevanaCena());
 		} else {
 			System.out.println("GRESKA!!!! Prekoracenje pri brojanju dana");
-		}*/
+		}
 		
 		
 		return cena;

@@ -32,7 +32,8 @@ export class NewUnitComponent implements OnInit {
         this.object = data;
         this.newUnit = new SmestajnaJedinica(null, -1, false, this.object.id, new Otkazivanje());
         this.newUnit.opis = '';
-
+        this.newUnit.cenovnici = [];
+        this.newUnit.podrazumevanaCena = 0;
       });
     });
 
@@ -40,14 +41,7 @@ export class NewUnitComponent implements OnInit {
   }
 
   addBasicInfo() {
-    // this.activeTab = 'facilities';
-    this.accomodationService.addUnit(this.object.id.toString(), this.newUnit).subscribe(data => {
-      const url: string = this.backToUnitsUrl();
-      this.toastrService.success('Soba uspesno dodata');
-      this.router.navigate([url]);
-    }, (error: Response) => {
-
-    });
+     this.activeTab = 'pricelist';
   }
 
   backBasicInfo() {
@@ -60,32 +54,20 @@ export class NewUnitComponent implements OnInit {
   }
 
   // zavrsna operacija
-  // addImages() {
-  //   const url: string = 'object/' + this.object.id + '/units';
-  //   this.router.navigate([url]);
-  // }
+  addPricelist() {
+    // this.activeTab = 'images';
+    this.accomodationService.addUnit(this.object.id.toString(), this.newUnit).subscribe(data => {
+      const url: string = this.backToUnitsUrl();
+      this.toastrService.success('Soba uspesno dodata');
+      this.router.navigate([url]);
+    }, (error: Response) => {
 
-  // backImages() {
-  //   this.activeTab = 'pricelist';
+    });
+  }
 
-  // }
+  backPricelist() {
+    this.activeTab = 'basic-info';
 
-  // addFacilities() {
-  //   this.activeTab = 'pricelist';
-  // }
-
-  // backFacilities() {
-  //   this.activeTab = 'basic-info';
-
-  // }
-
-  // addPricelist() {
-  //   this.activeTab = 'images';
-  // }
-
-  // backPricelist() {
-  //   this.activeTab = 'facilities';
-
-  // }
+  }
 
 }

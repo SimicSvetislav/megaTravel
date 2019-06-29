@@ -35,7 +35,7 @@
     <div class="list-group">
       <a  [class.active]="activeTab === 'basic-info'" (click)="activeTab = 'basic-info'" class="list-group-item list-group-item-action" >Osnovne informacije</a>
       <a  [class.active]="activeTab === 'facilities'" (click)="activeTab = 'facilities'" class="list-group-item list-group-item-action" >Dodatne usluge</a>
-      <a  [class.active]="activeTab === 'prices'" (click)="activeTab = 'prices'" class="list-group-item list-group-item-action" >Plan cena</a>
+      <!-- <a  [class.active]="activeTab === 'prices'" (click)="activeTab = 'prices'" class="list-group-item list-group-item-action" >Plan cena</a> -->
       <a  [class.active]="activeTab === 'average'" (click)="averageGradeObj()" class="list-group-item list-group-item-action" >Prosecna ocena</a> 
       <a  [class.active]="activeTab === 'images'" (click)="activeTab = 'images'" class="list-group-item list-group-item-action" >Slike</a>
       <a  [class.active]="activeTab === 'units'" (click)="activeTab = 'units'" class="list-group-item list-group-item-action" >Sve sobe</a> 
@@ -52,9 +52,9 @@
       <div *ngSwitchCase="'facilities'">
         <app-view-object-facilities [object] = "objekat" ></app-view-object-facilities>
       </div>
-      <div *ngSwitchCase="'prices'">
+      <!-- <div *ngSwitchCase="'prices'">
         <app-view-unit-prices [object]=  "objekat"></app-view-unit-prices>
-      </div>
+      </div> -->
       <div *ngSwitchCase="'images'">
         <app-view-object-images [object] = "objekat" ></app-view-object-images>
       </div>

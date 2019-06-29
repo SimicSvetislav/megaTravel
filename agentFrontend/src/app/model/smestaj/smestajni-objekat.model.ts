@@ -14,8 +14,8 @@ export class SmestajniObjekat {
     lokacija: Lokacija;
      opis: string;   //
 
-     cenovnici: Cenovnik[];
-     podrazumevaniCenovnik: Cenovnik;
+    //  cenovnici: Cenovnik[];
+    //  podrazumevaniCenovnik: Cenovnik;
 
      kategorijaSm: KategorijaSmestaja;
    // zvezdice: number;       // ??????????????/
@@ -38,16 +38,16 @@ export class SmestajniObjekat {
     //   this.kategorijaSm = kategorija;
     // }
 
-    constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja, opis: string, podrazumevaniCenovnik: Cenovnik
-      , cenovnici: Cenovnik[], dodatneUsluge: DodatnaUsluga[], slike: DisplayImageWrapper[]) {
+    constructor(id: number, naziv: string,  tip: TipSmestaja, kategorija: KategorijaSmestaja, opis: string,
+      dodatneUsluge: DodatnaUsluga[], slike: DisplayImageWrapper[]) {
       this.id = id;
       this.naziv = naziv;
       this.tipSmestaja = tip;
       this.kategorijaSm = kategorija;
 
       this.opis = opis;
-      this.podrazumevaniCenovnik = podrazumevaniCenovnik;
-      this.cenovnici = cenovnici;
+      // this.podrazumevaniCenovnik = podrazumevaniCenovnik;
+      // this.cenovnici = cenovnici;
       this.dodatnaUsluga = dodatneUsluge;
       this.slike = slike;
     }

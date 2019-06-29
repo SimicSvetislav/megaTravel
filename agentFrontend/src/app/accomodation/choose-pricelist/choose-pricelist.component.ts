@@ -25,6 +25,7 @@ export class ChoosePricelistComponent implements OnInit {
 
   dodatiCenovnici: Cenovnik[] = [];
   podrazumevaniCenovnik: Cenovnik;
+  podrazumevanaCena: number;
 
   start: Date;
   end: Date;
@@ -38,18 +39,10 @@ export class ChoosePricelistComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // this.dodatiCenovnici = [
-    //   {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: new SmestajnaJedinica(), pocetakStr: '',
-    //   krajStr: ''},
-    //   {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: new SmestajnaJedinica(), pocetakStr: '',
-    //   krajStr: ''},
-    //   {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: new SmestajnaJedinica(), pocetakStr: '',
-    //   krajStr: ''},
-    //   {pocetak: new Date(), kraj: new Date(), cena : {iznos: 255, valuta: 'RSD'}, smestaj: new SmestajnaJedinica(), pocetakStr: '',
-    //   krajStr: ''},
-    // ];
-    this.dodatiCenovnici = this.object.cenovnici;
-    this.podrazumevaniCenovnik = this.object.podrazumevaniCenovnik;
+    this.dodatiCenovnici = this.unit.cenovnici;
+    // this.podrazumevaniCenovnik = this.object.podrazumevaniCenovnik;
+    // this.podrazumevaniCenovnik = undefined;
+    this.podrazumevanaCena = this.unit.podrazumevanaCena;
   }
 
   back() {
@@ -62,8 +55,10 @@ export class ChoosePricelistComponent implements OnInit {
       return;
     }
 
-    this.object.cenovnici = this.dodatiCenovnici;
-    this.object.podrazumevaniCenovnik = this.podrazumevaniCenovnik;
+    // this.object.cenovnici = this.dodatiCenovnici;
+    // this.object.podrazumevaniCenovnik = this.podrazumevaniCenovnik;
+    this.unit.cenovnici = this.dodatiCenovnici;
+    this.unit.podrazumevanaCena = this.podrazumevaniCenovnik.cena;
     this.addPricelist.emit();
   }
 

@@ -14,8 +14,8 @@ export class SmestajnaJedinica {
     balkon: boolean;
 
     // ova dva digli na ojekat
-    // cenovnici: Cenovnik[];
-    // podrazumevaniCenovnik: Cenovnik;
+    cenovnici: Cenovnik[];
+    podrazumevanaCena: number;
 
     otkazivanje: Otkazivanje;
 
