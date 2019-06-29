@@ -59,7 +59,7 @@ public class ReservationService {
 	// Fabrika za kreiranje transformera formata
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
-	private String RBM = "http://localhost:8020/";
+	//private String RBM = "http://localhost:8020/";
 	
 	public RezervacijaKorisnika makeReservation(RezervacijaKorisnika rezervacija) {
 		
@@ -367,8 +367,11 @@ public class ReservationService {
 			
 			if (d.before(rez.getDatumPocetka())) {
 				RestTemplate rest = new RestTemplate();
-				String url = RBM + "cancel/" + id;
-				response = rest.getForObject(url, String.class);
+				
+				/* SBNZ
+				//String url = RBM + "cancel/" + id;
+				//response = rest.getForObject(url, String.class);
+				*/
 			}
 		}
 		

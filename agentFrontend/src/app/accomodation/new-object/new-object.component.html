@@ -18,9 +18,9 @@
   <li class="nav-item" [class.active]="activeTab === 'facilities'">
     <a class="nav-link" (click)="activeTab = 'facilities'">Dodatne usluge</a>
   </li>
-  <li class="nav-item" [class.active]="activeTab === 'pricelist'">
+  <!-- <li class="nav-item" [class.active]="activeTab === 'pricelist'">
     <a class="nav-link" (click)="activeTab = 'pricelist'">Cenovnik</a>
-  </li>
+  </li> -->
   <li class="nav-item" [class.active]="activeTab === 'images'">
     <a class="nav-link" (click)="activeTab = 'images'">Slike smestaja</a>
 </li>
@@ -32,9 +32,9 @@
   <div *ngSwitchCase="'facilities'">
     <app-choose-facilities [object] = "newObject" (chooseFacilities)="addFacilities()" (backFacilities)="backFacilities()"></app-choose-facilities>
   </div>
-  <div *ngSwitchCase="'pricelist'">
+  <!-- <div *ngSwitchCase="'pricelist'">
     <app-choose-pricelist [object] = "newObject"  (addPricelist) =  "addPricelist()" (pricelistBack)="backPricelist()"></app-choose-pricelist>
-  </div> 
+  </div>  -->
   <div *ngSwitchCase="'images'">
     <app-choose-images [object] = "newObject"  (addImages)="addImages()" (backImages)="backImages()"></app-choose-images>
   </div>

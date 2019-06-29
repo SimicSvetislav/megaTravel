@@ -279,8 +279,8 @@ public final class Creator {
 		Cenovnik rez = new Cenovnik();
 		rez.setPocetak(new Date(pocetak));   
 		rez.setKraj(new Date(kraj));
-		rez.setCena(cena);
-		rez.setSmestaj(smestaj);
+//		rez.setCena(cena);
+//		rez.setSmestaj(smestaj);
 		
 		return rez;
 	}

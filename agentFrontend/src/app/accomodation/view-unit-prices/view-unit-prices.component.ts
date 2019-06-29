@@ -19,23 +19,15 @@ export class ViewUnitPricesComponent implements OnInit {
   cenovnici: Cenovnik[];
   podrazumevaniCenovnik: Cenovnik;
 
+  podrazumevanaCena: number;
+
   constructor() { }
 
   ngOnInit() {
-    // this.cenovnici = [
-    //     {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
-    //     pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-    //     {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
-    //     pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-    //     {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
-    //     pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-    //     {pocetak: new Date(), kraj: new Date(), cena : 155, smestaj: undefined,
-    //     pocetakStr: '2019-06-13', krajStr: '2019-15-08'},
-    // ];
-    // this.podrazumevaniCenovnik = this.cenovnici[0];
-
-    this.cenovnici = this.object.cenovnici;
-    this.podrazumevaniCenovnik = this.object.podrazumevaniCenovnik;
+    // this.cenovnici = this.object.cenovnici;
+    // this.podrazumevaniCenovnik = this.object.podrazumevaniCenovnik;
+    this.cenovnici = this.unit.cenovnici;
+    this.podrazumevanaCena = this.unit.podrazumevanaCena;
   }
 
 }

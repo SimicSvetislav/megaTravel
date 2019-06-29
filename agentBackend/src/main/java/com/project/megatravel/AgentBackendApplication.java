@@ -71,9 +71,9 @@ public class AgentBackendApplication {
 		so.setNaziv("Talija");
 		so.setOpis("Mali udoban porodicni smestaj za bilo koje doba godine. Nasi gosti cine ljudi koji nam se vracaju svake godine iznova i iznova");
 		so.setKategorijaSm(Creator.createKategorijaSm(1l, 0));
-		so.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
-		so.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
-		so.getCenovnici().add(Creator.createCenovnik(1559826000000l, 1562418000000l, 200l, 1L));         //06.06 - 06.06
+//		so.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
+//		so.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
+//		so.getCenovnici().add(Creator.createCenovnik(1559826000000l, 1562418000000l, 200l, 1L));         //06.06 - 06.06
 		so.setKategorija("GOLD");
 		so.setLokacija(Creator.createLokacija(1L, "Novi Sad"));
 		so.setAgent(1L);
@@ -87,9 +87,9 @@ public class AgentBackendApplication {
 		so1.setNaziv("Negresku");
 		so1.setOpis("Spektakularni smestaj najveci u Jugoistocnoj Evropi. Kompleks cine pet hotela 3 otvorena i 2 zatvorena bazena, spa centar, sportksi centar");
 		so1.setKategorijaSm(Creator.createKategorijaSm(2l, 5));
-		so1.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
-		so1.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
-		so1.getCenovnici().add(Creator.createCenovnik(1559826000000l, 1562418000000l, 200l, 1L));         //06.06 - 06.06
+//		so1.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
+//		so1.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
+//		so1.getCenovnici().add(Creator.createCenovnik(1559826000000l, 1562418000000l, 200l, 1L));         //06.06 - 06.06
 		so1.setKategorija("SILVER");
 		so1.setLokacija(Creator.createLokacija(2L, "Beograd"));
 		so1.setAgent(1L);
@@ -105,9 +105,9 @@ public class AgentBackendApplication {
 		so2.setNaziv("La fiesta");
 		so2.setOpis("Vila La fiesta predstavlja idealni smestaj za konferencijski turizam, razne seminare i sajmove");
 		so2.setKategorijaSm(Creator.createKategorijaSm(1l, 0));
-		so2.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
-		so2.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
-		so2.getCenovnici().add(Creator.createCenovnik(1559826000000l, 1562418000000l, 200l, 1L));         //06.06 - 06.06
+//		so2.setPodrazumevaniCenovnik(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));   //04.04 - 04.05
+//		so2.getCenovnici().add(Creator.createCenovnik(1554382800000l, 1556974800000l, 200l, 1L));         //04.04 - 04.05
+//		so2.getCenovnici().add(Creator.createCenovnik(1559826000000l, 1562418000000l, 200l, 1L));         //06.06 - 06.06
 		so2.setKategorija("bronze");
 		so2.setLokacija(Creator.createLokacija(2L, "Nis"));
 		so2.setAgent(1L);

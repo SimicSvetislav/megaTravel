@@ -174,7 +174,7 @@ public class ReservationsController {
 	@RequestMapping(method = RequestMethod.GET, path="/confirm/{Id}", produces="application/json")
 	public ResponseEntity<RezervacijaKorisnika> confirmBooking(@PathVariable("Id") Long id) {
 		RezervacijaKorisnika rezervacija = service.getById(id);
-		rezervacija.setStanje("Potvrdjeno"); // potvrdjeno
+		rezervacija.setStanje("POTVRDJENO"); // potvrdjeno
 		
 		RezervacijaKorisnika azuriranaRezervacija = service.updateReservation(rezervacija);
 		

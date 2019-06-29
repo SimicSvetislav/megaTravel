@@ -80,7 +80,7 @@ public class BookingController {
 	public ResponseEntity<RezervacijaKorisnika> makeBooking(@RequestBody RezervacijaKorisnika booking) {
 		try {
 			Agent agent = agentService.agentAuthentification();
-			booking.setKorisnik(agent.getId());
+			//booking.setKorisnik(agent.getId());
 			booking.setKorisnik(null);
 			
 			RezervacijaKorisnika rez = bookingService.makeReservation(booking);
