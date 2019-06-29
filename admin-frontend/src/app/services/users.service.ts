@@ -1,4 +1,4 @@
-import { USER_API, API_USER, RBM_API } from './../globals';
+import { USER_API, API_USER } from './../globals';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,13 +7,14 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UsersService {
-  categorize() {
+ 
+  /*categorize() {
     return this.http.get(RBM_API + 'catUsr', { responseType: 'text' });
   }
 
   categorizeAcc() {
     return this.http.get(RBM_API + 'catAcc', { responseType: 'text' });
-  }
+  }*/
 
   constructor(private http: HttpClient) { }
 

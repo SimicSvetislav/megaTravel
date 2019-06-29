@@ -33,7 +33,16 @@ export class AgentAddComponent implements OnInit {
   onSubmit() { 
     this.service.post(this.agent).subscribe(data => {
       this.router.navigate(['/agents']);
-    }, error => this.toastr.error(error));
+    }, (error: Response) => {
+      switch(error.status) {
+        case 409:
+          this.toastr.error('Agent with same email already exists');
+          break;
+        default:
+          this.toastr.error('Unknown error occurs');
+          break;
+      }
+    });
   }
 
 }

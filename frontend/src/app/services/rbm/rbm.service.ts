@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class RbmService {
   
   
-  viseOsoba(rezervacija: RezervacijaKorisnika2, id: number) {
+  /*viseOsoba(rezervacija: RezervacijaKorisnika2, id: number) {
     return this.http.post(this.RBM_API + "more/" + id, rezervacija, { responseType: 'text' });
   }
   
@@ -43,6 +43,6 @@ export class RbmService {
 
   checkMsg(poruka: Poruka, id: string) {
     return this.http.post(this.RBM_API + "filter/" + id, poruka, { responseType: 'text' });
-  }
+  }*/
 
 }

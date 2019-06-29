@@ -1,4 +1,4 @@
-import { CLOUD_API2 } from './../../globals';
+import { CLOUD_API } from './../../globals';
 import { API_USER, API_RESERVATION } from '../../globals';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -26,7 +26,7 @@ export class UserService {
   setRate(rating: Rating): Observable<any> {
     //let headers = new HttpHeaders();
     //headers.set('COntent-type', 'application/json');
-    return this.http.post(CLOUD_API2 + 'postRating', rating);
+    return this.http.post(CLOUD_API + 'postRating', rating);
 
   }
 

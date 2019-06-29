@@ -52,8 +52,8 @@ export class ChatComponent implements OnInit {
     const id = +this.route.snapshot.params['id'];
 
     this.agentService.getByReservation(id).subscribe( data => {
-      //this.agentId = data.id;
-      this.agentId = 1
+      this.agentId = data.id;
+      //this.agentId = 1
       this.message.receiver = data.id;
     }, error => console.log(error));
 
@@ -84,11 +84,11 @@ export class ChatComponent implements OnInit {
   
     this.message.timestamp = new Date();
 
-    this.rbm.filter(this.token.getUser(), {tekst: this.message.text}).subscribe( data => {
+    /*this.rbm.filter(this.token.getUser(), {tekst: this.message.text}).subscribe( data => {
       if (data.includes("rejected")) {
         alert("Message rejected")
         return;
-      }
+      }*/
 
       this.chatArea += 'You: ' + this.message.text + '\n';
      
@@ -97,9 +97,6 @@ export class ChatComponent implements OnInit {
       this.chatService.messages.next(this.message);
       
       this.message.text = '';
-
-    })
-
     
   }
 

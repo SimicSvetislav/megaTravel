@@ -39,13 +39,17 @@ export class ChatComponent implements OnInit {
                 });
               }
 
+  agent: any;
+
   ngOnInit() {
 
-    let agent = '22'; // test     //soap poziv da se vrati info a agentu sa pravim id
-    this.userService.getAgent().subscribe( data => {
+    //let agent = '22'; // test     //soap poziv da se vrati info a agentu sa pravim id
+    /*this.userService.getAgent().subscribe( data => {
       agent = data.id;
     }
-    );
+    );*/
+
+    this.agent = this.tokenService.getUser(); 
 
     // Cita se id rezervacije
     const resId = +this.route.snapshot.params['resId'];
@@ -60,7 +64,7 @@ export class ChatComponent implements OnInit {
       this.messages = data;
 
       data.forEach(element => {
-        if (element.sender === agent) {
+        if (element.sender === this.agent) {
           this.chatArea += 'You: ' + element.text + '\n';
         } else {
           this.chatArea += 'Client: ' + element.text + '\n';
@@ -70,7 +74,7 @@ export class ChatComponent implements OnInit {
     }, error => console.log(error));
 
     // this.message.receiver = 1; // id primaoca
-    this.message.sender = +agent; // id posiljaoca
+    this.message.sender = +this.agent; // id posiljaoca
     this.message.reservation = resId; // id rezervacije
     this.message.payload = null;
 

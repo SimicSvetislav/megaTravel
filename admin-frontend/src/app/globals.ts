@@ -1,11 +1,15 @@
 // Paths
+
+// Load balancer
+export const ZUUL = 'http://localhost:8762/';
+
 // Admin app
 export const API='//localhost:8131/';
 
-export const API_USER='//localhost:8152/';
-// export const API_USER = '//localhost:8762/users/'; // zuul
+//export const API_USER='//localhost:8152/';
+export const API_USER = ZUUL + 'users/'; // zuul
 
-export const RBM_API='//localhost:8020/';
+//export const RBM_API='//localhost:8020/';
 
 export const AGENT_API= API + 'agent/';
 export const USER_API= API + 'user/';
@@ -15,7 +19,7 @@ export const TYPES_API= API + 'types/';
 export const CATEGORIES_API= API + 'cat/';
 
 // Cloud - rejting servis
-export const CLOUD_API = 'http://localhost:8010/rating/us-central1/';
+export const CLOUD_API = 'http://localhost:8010/rating-module/us-central1/';
 
 // Roles
 export const ROLE_USER = "ROLE_USER";

@@ -88,15 +88,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   categorize() {
-    this.service.categorizeAcc().subscribe(data=>{
+    /*this.service.categorizeAcc().subscribe(data=>{
       alert(data);
-    }, error => console.log(error))
+    }, error => console.log(error))*/
   }
 
   categorizeUsers() {
-    this.service.categorize().subscribe(data=>{
+    /*this.service.categorize().subscribe(data=>{
       alert(data);
-    }, error => console.log(error))
+    }, error => console.log(error))*/
   }
 
 }

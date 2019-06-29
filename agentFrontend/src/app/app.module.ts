@@ -102,9 +102,9 @@ const routes = [
   {
     path: 'chat/:resId', component: ChatComponent
   },
-  {
+  /*{
     path: 'rbm', component: RbmPanelComponent
-  },
+  },*/
   {
     path: '**', component: PageNotFoundComponent
   }];

@@ -57,8 +57,7 @@ export class PreviewComponent implements OnInit {
               private soService: ObjectService, private extrasService: ExtrasService,
               private modalService: NgbModal, private toastr: ToastrService,
               private typesService: TypesService, private categoriesService: CategoriesService,
-              private datePipe: DatePipe, private resService: ReservationService,
-              private rbm: RbmService) { }
+              private datePipe: DatePipe, private resService: ReservationService) { }
   ngOnInit() {
 
     this.userId = +this.token.getUser();
@@ -116,9 +115,9 @@ export class PreviewComponent implements OnInit {
     
     if (this.sorter==="Reccomendation") {
       // Pozivati rule based module
-      this.rbm.reccomend(this.userId).subscribe(data => {
+      /*this.rbm.reccomend(this.userId).subscribe(data => {
         alert(data)
-      }, error => console.log(error))
+      }, error => console.log(error))*/
 
     } else if (this.sorter==="Price") {
       // Moze na frontu

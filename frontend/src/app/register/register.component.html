@@ -1,59 +1,88 @@
 <div class="register-page animate">
 	<div class="row">
 		<div class="col-lg-4 col-lg-offset-4">
-        	<img src="assets/megatravellogo.jpg" class="user-avatar" />
+			<img src="assets/megatravellogo.jpg" class="user-avatar" />
 			<h1>MegaTravel <small>Free Edition</small></h1>
 			<form role="form" (ngSubmit)="register()">
 				<div class="form-content">
-						<div [formGroup]="registrationFormGroup">
-					<div class="form-group">
-						<input type="email" id="email" required [(ngModel)]="user.email" name="email" class="form-control input-underline input-lg"  placeholder="Email" formControlName="email">
-					</div>
-					<p class="bg-danger" *ngIf="registrationFormGroup.controls.email.errors?.required && registrationFormGroup.controls.email.touched">Email is required</p>
+					<div [formGroup]="registrationFormGroup">
+						<div class="form-group">
+							<input type="email" id="email" required [(ngModel)]="user.email" name="email"
+								class="form-control input-underline input-lg" placeholder="Email"
+								formControlName="email">
 						</div>
-				<div [formGroup]="passwordFormGroup">
-					<div class="form-group">
-						<input name="password" [(ngModel)]="user.sifra" type="password" id="inputPassword" class="form-control input-underline input-lg"  placeholder="Password" required formControlName="password">
+						<p class="bg-danger"
+							*ngIf="registrationFormGroup.controls.email.errors?.required && registrationFormGroup.controls.email.touched">
+							Email is required</p>
 					</div>
-					<p class="bg-danger" *ngIf="passwordFormGroup.controls.password.errors?.required && passwordFormGroup.controls.password.touched">Password is required</p>
+					<div [formGroup]="passwordFormGroup">
+						<div class="form-group">
+							<input name="password" [(ngModel)]="user.sifra" type="password" id="inputPassword"
+								class="form-control input-underline input-lg" placeholder="Password" required
+								formControlName="password">
+						</div>
+						<p class="bg-danger"
+							*ngIf="passwordFormGroup.controls.password.errors?.required && passwordFormGroup.controls.password.touched">
+							Password is required</p>
+
+						<div class="form-group">
+							<input name="confirm_password" type="password" id="confirm_password"
+								class="form-control input-underline input-lg" placeholder="Confirm password" required
+								formControlName="confirmPassword">
+						</div>
+						<p class="bg-danger"
+							*ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">
+							Repeat password is required</p>
+						<p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match
+						</p>
+					</div>
 
 					<div class="form-group">
-            <input name="confirm_password"  type="password" id="confirm_password" class="form-control input-underline input-lg"  placeholder="Confirm password" required formControlName="confirmPassword">
+						<input name="firstName" [(ngModel)]="user.ime" type="text" id="firstName"
+							class="form-control input-underline input-lg" placeholder="First name" required>
 					</div>
-					<p class="bg-danger" *ngIf="passwordFormGroup.controls.confirmPassword.errors?.required && passwordFormGroup.controls.confirmPassword.touched">Repeat password is required</p>
-        	<p class="bg-danger" *ngIf="passwordFormGroup.errors?.doesMatchPassword">Password does not match</p>
-				</div>
-
-          <div class="form-group">
-            <input name="firstName" [(ngModel)]="user.ime" type="text" id="firstName" class="form-control input-underline input-lg"  placeholder="First name" required>
-          </div>
-          <div class="form-group">
-            <input name="lastName" [(ngModel)]="user.prezime" type="text" id="lastName" class="form-control input-underline input-lg"  placeholder="Last name" required>
-          </div>
-          <div class="form-group">
-            <input name="address" [(ngModel)]="user.adresa" type="text" id="address" class="form-control input-underline input-lg"  placeholder="Address" required>
-          </div>
-          <div class="form-group">
-            <input name="phoneNumber" [(ngModel)]="user.telefon" type="text" id="phoneNumber" class="form-control input-underline input-lg"  placeholder= "+381" required>
+					<div class="form-group">
+						<input name="lastName" [(ngModel)]="user.prezime" type="text" id="lastName"
+							class="form-control input-underline input-lg" placeholder="Last name" required>
+					</div>
+					<div class="form-group">
+						<input name="address" [(ngModel)]="user.adresa" type="text" id="address"
+							class="form-control input-underline input-lg" placeholder="Address" required>
+					</div>
+					<div class="form-group">
+						<input name="phoneNumber" [(ngModel)]="user.telefon" type="text" id="phoneNumber"
+							class="form-control input-underline input-lg" placeholder="+381" required>
 					</div>
 
 
 					<div [formGroup]="locationFormGroup">
 						<div class="form-group">
-							<input name="location" [(ngModel)]="lokacija" type="text" id="location" class="form-control input-underline input-lg"  placeholder= "Location" required formControlName="location">
+							<input name="location" [(ngModel)]="lokacija" type="text" id="location"
+								class="form-control input-underline input-lg" placeholder="Location" required
+								formControlName="location">
 						</div>
-						<p class="bg-danger" *ngIf="locationFormGroup.controls.location.errors?.required && locationFormGroup.controls.location.touched">Location is required</p>
+						<p class="bg-danger"
+							*ngIf="locationFormGroup.controls.location.errors?.required && locationFormGroup.controls.location.touched">
+							Location is required</p>
 					</div>
+
 					<div class="form-group">
-            <input name="geoSirina" [(ngModel)]="geoSirina" type="text" id="geoSirina" class="form-control input-underline input-lg"  placeholder= "-90 do 90" required>
+						<input name="gen" [(ngModel)]="generateCoords" type="checkbox" id="gen"
+							class="form-control input-underline input-lg">
+							<label class="form-check-label" for="gen">Generate coordinates</label>
 					</div>
-					<div class="form-group">
-            <input name="geoDuzina" [(ngModel)]="geoDuzina" type="text" id="geoDuzina" class="form-control input-underline input-lg"  placeholder= "-180 do 180" required>
+
+					<div *ngIf="!generateCoords" class="form-group">
+
+						<input name="geoSirina" [(ngModel)]="geoSirina" type="text" id="geoSirina"
+							class="form-control input-underline input-lg" placeholder="Latitude (-90 to 90)" required>
+						<input name="geoDuzina" [(ngModel)]="geoDuzina" type="text" id="geoDuzina"
+							class="form-control input-underline input-lg" placeholder="Longitude (-180 to 180)" required>
 					</div>
 				</div>
-        <button class="btn rounded-btn btn-block"> Register </button>
+				<button class="btn rounded-btn btn-block"> Register </button>
 			</form><br>
 			<button class="btn rounded-btn" (click)="home()"> Back to home </button>
-		</div>	
+		</div>
 	</div>
 </div>

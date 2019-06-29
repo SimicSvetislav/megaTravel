@@ -45,6 +45,8 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
+  generateCoords = false;
+
   constructor(private formBuilder: FormBuilder,private router : Router,
               private authService: AuthService, private tokenService: TokenStorageService,
               private toastrService: ToastrService) { 
@@ -95,6 +97,11 @@ export class RegisterComponent implements OnInit {
       this.geoDuzina,
       this.geoSirina
   )
+
+  if (this.generateCoords) {
+    this.signupInfo.geoDuzina = null;
+    this.signupInfo.geoSirina = null;
+  }
 
   if (!this.user.ime) {
     this.toastrService.warning("Please enter name");

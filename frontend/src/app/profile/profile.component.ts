@@ -228,7 +228,7 @@ export class ProfileComponent implements OnInit {
   cancel(id: number, pocetak: Date) {
 
     this.reservService.cancel(id).subscribe( data => {
-      //this.getall();
+      this.getall();
       alert(data);
     }, error => console.log(error));
 

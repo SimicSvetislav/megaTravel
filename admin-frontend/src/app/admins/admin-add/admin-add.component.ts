@@ -29,7 +29,13 @@ export class AdminAddComponent implements OnInit {
   onSubmit() { 
     this.service.add(this.admin).subscribe(data => {
       this.router.navigate(['/admins']);
-    }, error => this.toastr.error(error));
+    }, (error: Response) => {
+      switch(error.status) {
+        case 409:
+          this.toastr.error('Admin with same email already exists');
+          break;
+      }
+    });
   }
 
 }
