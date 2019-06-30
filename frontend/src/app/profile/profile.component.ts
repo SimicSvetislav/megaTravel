@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
        //alert("OCenjeno: " + r.ocenjeno);
         if (r.stanje == "OTKAZANO") {
           this.cancelled.push(r);
-        } else if (this.days < 0) {
+        } else if (this.days < 0 && r.stanje == "REALIZOVANO") {
           this.reservationsOutOfDate.push(r)
         } else {
           this.reservationsActive.push(r);
