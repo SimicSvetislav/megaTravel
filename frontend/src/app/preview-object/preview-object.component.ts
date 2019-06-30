@@ -1,10 +1,13 @@
+import { AgentService } from './../services/users/agent.service';
 import { CloudService } from './../services/cloud/cloud.service';
 import { TokenStorageService } from './../services/auth/token-storage.service';
-import { SmestajniObjekat, Cenovnik } from './../smestajniObjekat';
+import { SmestajniObjekat, Cenovnik, DodatnaUsluga } from './../smestajniObjekat';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { ObjectService } from '../services/object/object.service';
 import { SmestajnaJedinica } from '../smestajnaJedinica';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ExtrasService } from '../services/search/extras.service';
 
 @Component({
   selector: 'app-preview-object',
@@ -24,12 +27,16 @@ export class PreviewObjectComponent implements OnInit {
 
   sjtemp: SmestajnaJedinica[] = [];
   sj: SmestajnaJedinica[] = [];
+  objRating = 0;
+  finalAddress: string = "";
+  address: string = "";
+  extras: DodatnaUsluga[] = [];
 
-  constructor(private router: Router,
-    private route: ActivatedRoute,
+  constructor(private router: Router, private agService: AgentService,
+    private route: ActivatedRoute, private extrasService: ExtrasService,
     private soService: ObjectService,
     private tokenStorage: TokenStorageService,
-    private cloudSe: CloudService) { }
+    private cloudSe: CloudService, public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
 
@@ -41,6 +48,14 @@ export class PreviewObjectComponent implements OnInit {
 
     this.soService.getOneById(this.objectId).subscribe(data => {
       this.objekat = data;
+      this.extras = data.dodatnaUsluga;
+
+      this.agService.getOneByObject(this.objectId).subscribe( data => {
+        this.address = data.adresa + ', ' + this.objekat.lokacija.naziv;
+        this.finalAddress = "https://maps.google.com/maps?q="+this.address+"&t=&z=13&ie=UTF8&iwloc=&output=embed";
+      }, (error: Response) => {
+
+      })
 
       this.podrazumevaniCenovnik = this.objekat.podrazumevaniCenovnik;
       
@@ -49,6 +64,10 @@ export class PreviewObjectComponent implements OnInit {
       } else {
         this.existPricelist = true;
       }
+    })
+
+    this.cloudSe.averageObject(this.objectId).subscribe(data => {
+      this.objRating = data;
     })
 
 
@@ -64,7 +83,6 @@ export class PreviewObjectComponent implements OnInit {
          
         }
     })
-
    
 
   }

@@ -11,6 +11,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SmestajnaJedinica } from '../smestajnaJedinica';
 import { Rating } from '../rating';
 import { ReservationService } from '../services/reservations/reservation.service';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ export class ProfileComponent implements OnInit {
   reservations: RezervacijaKorisnika[] = [];
   reservationsActive: RezervacijaKorisnika[] = [];
   reservationsOutOfDate: RezervacijaKorisnika[] = [];
+  cancelled: RezervacijaKorisnika[] = [];
   id;
   today: string;
   days;
@@ -35,7 +37,7 @@ export class ProfileComponent implements OnInit {
 
   sj: SmestajnaJedinica = new SmestajnaJedinica();
 
-  constructor(private userService: UserService,
+  constructor(private userService: UserService, private toastr: ToastrService,
     private tokenService: TokenStorageService,
     private datePipe: DatePipe,
     private router: Router,
@@ -79,14 +81,12 @@ export class ProfileComponent implements OnInit {
         this.days = duration.asDays();
        // alert("days : " + this.days)
        //alert("OCenjeno: " + r.ocenjeno);
-        if (this.days < 0) {
-          this.reservationsOutOfDate.push(r);
-          
+        if (r.stanje == "OTKAZANO") {
+          this.cancelled.push(r);
+        } else if (this.days < 0) {
+          this.reservationsOutOfDate.push(r)
         } else {
           this.reservationsActive.push(r);
-        /*  this.objService.getObjectOfUnit(r.id).subscribe(data => { 
-            r.smestajniObjekat = data;           
-          })*/
         }
 
        /* this.userService.getSmestajnaJedinica(r.smestajnaJedinica).subscribe(data => {
@@ -102,6 +102,9 @@ export class ProfileComponent implements OnInit {
   }
 
   getall() {
+    this.cancelled = [];
+    this.reservationsOutOfDate = [];
+    this.reservationsActive = [];
     this.userService.getAllReservationsById(this.id).subscribe(data => {
       this.reservations = data;
       //alert("ALERT ")
@@ -112,7 +115,9 @@ export class ProfileComponent implements OnInit {
         this.days = duration.asDays();
        // alert("days : " + this.days)
        //alert("OCenjeno: " + r.ocenjeno);
-        if (this.days < 0) {
+        if (r.stanje == "OTKAZANO") {
+          this.cancelled.push(r);
+        } else if (this.days < 0) {
           this.reservationsOutOfDate.push(r)
         } else {
           this.reservationsActive.push(r);
@@ -229,8 +234,22 @@ export class ProfileComponent implements OnInit {
 
     this.reservService.cancel(id).subscribe( data => {
       this.getall();
-      alert(data);
-    }, error => console.log(error));
+      this.toastr.success("Reservations cancelled");
+    }, (error: Response) => {
+      
+      console.log(error)
+      switch(error.status) {
+        case 406:
+          this.toastr.error("Cancellation not possible");
+          break;
+        case 500:
+          this.toastr.error("Server error");
+          break;
+        default:
+            this.toastr.error("Unknown error occured");
+          break;
+      }
+    });
 
   }
 

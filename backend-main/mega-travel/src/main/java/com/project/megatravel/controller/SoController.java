@@ -36,8 +36,16 @@ public class SoController {
 	
 	@RequestMapping(method = RequestMethod.GET, path="/{id}")
 	public ResponseEntity<SmestajniObjekat> getReservation(@PathVariable("id") Long id) {
+		
+		
 		SmestajniObjekat rez = repo.getOneById(id);
 		
+		/*DodatnaUsluga du = new DodatnaUsluga();
+		du.setId(1L);
+		du.setIme("Bazen");
+
+		rez.getDodatnaUsluga().add(du);
+		repo.save(rez);*/
 		return new ResponseEntity<SmestajniObjekat>(rez, HttpStatus.OK);
 	}
 	

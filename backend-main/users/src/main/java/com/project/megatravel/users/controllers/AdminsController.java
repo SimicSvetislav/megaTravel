@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.users.Administrator;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.services.AdminService;
 import com.project.megatravel.users.services.EmailService;
+import com.project.megatravel.util.NewPassword;
 
 @RestController
 @CrossOrigin
@@ -38,6 +40,9 @@ public class AdminsController {
 	@ResponseBody
 	public ResponseEntity<Administrator> add(@RequestBody Administrator korisnik) {
 		
+		if (service.getByEmail(korisnik.getEmail())!=null) {
+			return new ResponseEntity<Administrator>(korisnik, HttpStatus.CONFLICT);
+		}
 		
 		String generatedPassword = service.generatePassword();
 		logger.info("Password for admin: " + korisnik.getKorisnickoIme() + " is " + generatedPassword);
@@ -54,7 +59,31 @@ public class AdminsController {
 		
 		Administrator admin = service.save(korisnik);
 		
-		return new ResponseEntity<Administrator>(admin, HttpStatus.OK);
+		return new ResponseEntity<Administrator>(admin, HttpStatus.CREATED);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT, path="/admin/{id}/pass", consumes="application/json", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Administrator> updateAdminPassword(@RequestBody NewPassword pass, @PathVariable("id") Long id) {
+		
+		if (!pass.getNewPass().equals(pass.getConfirm())) {
+			return new ResponseEntity<Administrator>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Administrator a = service.getOneById(id);
+		
+		if (encoder.matches(encoder.encode(pass.getOld()), a.getSifra())) {
+			return new ResponseEntity<Administrator>(HttpStatus.BAD_REQUEST);
+		}
+		
+		String newPass = encoder.encode(pass.getNewPass());
+		
+		a.setSifra(newPass);
+		
+		service.save(a);
+		
+		return new ResponseEntity<Administrator>(HttpStatus.OK);
 		
 	}
 	

@@ -31,6 +31,18 @@ export class CloudService {
     return this.http.get(CLOUD_API + 'averageGrade/?room=' + room );
   }
 
+  averageObject(object: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Content-type', 'application/json'); 
+    return this.http.get(CLOUD_API + 'averageGradeObject/?object=' + object );
+  }
+
+  ratingObject(object: number): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Content-type', 'application/json'); 
+    return this.http.get(CLOUD_API + 'getRatingsByObject/?object=' + object );
+  }
+
   postRating(rating: Rating): Observable<any> {
     //let headers = new HttpHeaders();
     //headers.set('Content-type', 'application/json');

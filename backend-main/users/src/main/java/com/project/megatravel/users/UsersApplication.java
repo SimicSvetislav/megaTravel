@@ -62,24 +62,23 @@ public class UsersApplication {
 		KrajnjiKorisnik kk2 = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","block@gmail.com","pera","pera","Pera","Peric","BLOKIRAN");
 		r.save(kk2);*/
 		
-	/*	Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
+		//Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
 
-		KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","sveta.simic.96@gmail.com","sveta","sveta","sveta","sveta");
-		r.save(kk);
->>>>>>> 044330866927faeff7050791eaf322022c4c9d1b
+		//KrajnjiKorisnik kk = cr.createKrajnjiKorisnik("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra","sveta.simic.96@gmail.com","sveta","sveta","sveta","sveta");
+		//r.save(kk);
 	//	r.sa 
 		
-		/*Administrator aa = cr.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
+		//Administrator aa = Creator.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
 
-		a.save(aa);
+		//a.save(aa);
 		
 		
-		System.out.println(r.getByEmail("ppera@gmail.com"));
-		System.out.println(r.getByEmail("pera@gmail.com"));
+		//System.out.println(r.getByEmail("ppera@gmail.com"));
+		//System.out.println(r.getByEmail("pera@gmail.com"));
 
 		
-		KrajnjiKorisnik pom = r.getByEmail("pera@gmail.com");
-		System.out.println(pom.getEmail() + " " +pom.getSifra());*/
+		//KrajnjiKorisnik pom = r.getByEmail("pera@gmail.com");
+		//System.out.println(pom.getEmail() + " " +pom.getSifra());*/
 		
 		//Administrator aa = Creator.createAdmin("$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra", "admin@gmail.com","Beocin","939422934","Adam","Gudinci");
 		//a.save(aa);

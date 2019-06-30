@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.megatravel.model.users.Administrator;
+import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.repository.AdminRepository;
 
 @Service
@@ -45,6 +46,10 @@ public class AdminService {
 		
 		return all;
 		
+	}
+	
+	public Administrator getByEmail(String mail) {
+		return repo.getByEmail(mail);
 	}
 	
 	public String generatePassword() {

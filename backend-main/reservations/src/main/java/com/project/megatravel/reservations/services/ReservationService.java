@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.ibm.icu.util.Calendar;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
@@ -353,20 +354,27 @@ public class ReservationService {
 		return user;
 	}
 
-	public String cancel(Long id) {
+	public boolean cancel(Long id) {
 		
 		RezervacijaKorisnika rez = repo.getOneById(id);
 		
-		String response = "Ne treba nista platiti";
+		//String response = "Ne treba nista platiti";
 		
 		SmestajnaJedinica sj = sjRepo.getOneById(rez.getSmestajnaJedinica());
 		
 		if (sj.getOtkazivanje().isDozvoljeno()) {
 			Integer dana = sj.getOtkazivanje().getBrojDana();
-			Date d = DateUtils.addDays(new Date(), dana);
+			Date d = DateUtils.truncate(DateUtils.addDays(new Date(), dana), Calendar.DAY_OF_MONTH);
 			
 			if (d.before(rez.getDatumPocetka())) {
-				RestTemplate rest = new RestTemplate();
+				
+				rez.setStanje("OTKAZANO");
+				
+				repo.save(rez);
+				
+				return true;
+				
+				//RestTemplate rest = new RestTemplate();
 				
 				/* SBNZ
 				//String url = RBM + "cancel/" + id;
@@ -375,7 +383,7 @@ public class ReservationService {
 			}
 		}
 		
-		return response;
+		return false;
 	}
 	
 	

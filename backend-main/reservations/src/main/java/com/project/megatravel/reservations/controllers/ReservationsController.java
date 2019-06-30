@@ -1,6 +1,7 @@
 package com.project.megatravel.reservations.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,11 @@ public class ReservationsController {
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija) {
 		System.out.println("Rezervisao ????");
+		
+		rezervacija.setDatumRezervacije(new Date());
+		//rezervacija.sets
+		
 		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
-		
-		//String uri = RBM + "makeRes/";
-		
-		//String res = rest.postForObject(uri, rezervacija, String.class);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
 	}
@@ -201,11 +202,15 @@ public class ReservationsController {
 	
 	@RequestMapping(method = RequestMethod.GET, path="/cancel/{id}", produces="application/json")
 	@ResponseBody
-	public ResponseEntity<String> cancel(@PathVariable("id") Long id) {
+	public ResponseEntity<Boolean> cancel(@PathVariable("id") Long id) {
 		
-		String r = service.cancel(id);
+		boolean  r = service.cancel(id);
 		
-		return new ResponseEntity<String>(r, HttpStatus.OK);
+		if (!r) {
+			return new ResponseEntity<Boolean>(r, HttpStatus.NOT_ACCEPTABLE);
+		}
+		
+		return new ResponseEntity<Boolean>(r, HttpStatus.OK);
 	}
 	
 }

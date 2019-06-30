@@ -1,3 +1,4 @@
+import { Lokacija } from './lokacija';
 export class User {
     id: number;
     email: string;
@@ -7,5 +8,6 @@ export class User {
     adresa: string;
     telefon: string;
     role: number;
+    lokacija: Lokacija;
 
 }

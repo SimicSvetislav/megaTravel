@@ -8,6 +8,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AdminsService {
+  
+  changePass(np: import("../NewPassword").NewPassword, id: string) {
+    return this.http.put(ADMIN_API + id + "/pass", np);
+  }
 
   constructor(private http: HttpClient) { }
 

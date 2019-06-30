@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Location;
 import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.Polozaj;
 import com.project.megatravel.model.users.Administrator;
@@ -133,7 +132,11 @@ public class AuthRestAPIs {
     	
     //	KrajnjiKorisnik exist = userRepository.getByEmail(signUpRequest.getEmail());
     	
-    	if(role.contains("user") && userRepository.getByEmail(signUpRequest.getEmail()) != null) {
+    	if (userRepository.getByEmail(signUpRequest.getEmail()) != null || agentRepo.getByEmail(signUpRequest.getEmail()) != null || adminRepo.getByEmail(signUpRequest.getEmail()) != null) {
+    		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
+    	}
+    	
+    	/*if(role.contains("user") && userRepository.getByEmail(signUpRequest.getEmail()) != null) {
     		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
     	} 
     	
@@ -143,7 +146,7 @@ public class AuthRestAPIs {
     	
     	if(role.contains("admin") && adminRepo.getByEmail(signUpRequest.getEmail()) != null) {
     		return new ResponseEntity<TKorisnik>(HttpStatus.METHOD_NOT_ALLOWED);
-    	} 
+    	}*/
     	
     	if(role.contains("admin")) {
     		Administrator kk = Creator.createAdmin(encoder.encode(signUpRequest.getPassword()),
@@ -159,10 +162,10 @@ public class AuthRestAPIs {
         			signUpRequest.getEmail(),signUpRequest.getAddress(),signUpRequest.getPhoneNumber(),
         			signUpRequest.getFirstName(),signUpRequest.getLastName());
         	
+    		kk.setStanje("AKTIVAN");
     		
     		Lokacija lokacija = Creator.createLokacija(-1, signUpRequest.getLokacija());
-    		Polozaj polozaj = new Polozaj();
-    		
+    		Polozaj polozaj = new Polozaj();	
     		
     		if(signUpRequest.getGeoDuzina() != null && signUpRequest.getGeoSirina() != null) {
     			System.out.println("Nije null");

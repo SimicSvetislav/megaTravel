@@ -5,73 +5,184 @@
 
 <!-- Team -->
 <section id="team" class="pb-5">
+  <div class="image">
     <div class="container">
-        <h5 class="section-title h1">Smestajni objekat: {{objekat.naziv}}</h5>
-        <div class="row"  >
+      <h5 class="section-title h1">Smestajni objekat: {{objekat.tipSmestaja}} {{objekat.naziv}}</h5>
+      <div class="row">
+        <div class="col-md-10 offset-md-1">
 
 
-            <ngb-carousel [showNavigationIndicators]="showNavigationIndicators">
-                <ng-template ngbSlide *ngFor="let p of objekat.slike">
-                  <img src="{{p.putanja}}" alt="Random first slide">
-                  <div class="carousel-caption">
-                     
+          <ngb-carousel [showNavigationIndicators]="showNavigationIndicators">
+            <ng-template ngbSlide *ngFor="let p of objekat.slike">
+              <img src="{{p.putanja}}" alt="Random first slide">
+              <div class="carousel-caption">
+
+              </div>
+            </ng-template>
+          </ngb-carousel>
+        </div>
+      </div>
+
+      <div class="container" *ngIf="existPricelist">
+        <h4 class="section-title h1">Podrazumevani cenovnik</h4><br>
+        <div class="row">
+          <div class="col">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <!-- <td>Indeks</td> -->
+                  <td> Soba </td>
+                  <td>Pocetak smene</td>
+                  <td>Kraj termina</td>
+                  <td>Iznos</td>
+                  <td>Valuta</td>
+
+                </tr>
+              </thead>
+              <tbody>
+                <div *ngFor="let s of sj">
+                  <tr>
+
+                    <td>
+                      1/{{s.brojKreveta}}, <div *ngIf="s.balkon"> Balkon </div>
+                    </td>
+
+                    <td>
+                      {{podrazumevaniCenovnik.pocetak}}
+                    </td>
+                    <td>
+                      {{podrazumevaniCenovnik.kraj}}
+                    </td>
+                    <td>
+                      {{podrazumevanaCena}}
+                    </td>
+                    <td>
+                      <!-- {{podrazumevaniCenovnik.cena.valuta}} -->
+                      EUR
+                    </td>
+                    <div *ngIf="logged">
+                      <td>
+                        <button class="btn btn-primary btn-sm" (click)="rezervisi()">Rezervisi</button>
+                      </td>
                     </div>
-                </ng-template>
-              </ngb-carousel>
+                  </tr>
+                </div>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"><a data-toggle="collapse" href="#collapse2">Details</a></h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse">
+              <p>{{objekat.opis}}</p>
+              <br />
+              <span>Rating: <span style="color:gold"><i class="fas fa-star"></i></span><span
+                  class="ml-1">{{objRating | number: '1.0-2'}}</span></span> <br />
+              <br />
+
+              <span>Category: <span class="ml-1">{{objekat.kategorijaSm.zvezdice}}</span>
+                <span style="color:gold"><i class="fas fa-star"></i></span></span> <br />
+              <br />
+              <span>Address: {{address}}</span>
+              <br />
+              <br />
+              <div class="mapouter">
+                <div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas"
+                    [src]='sanitizer.bypassSecurityTrustResourceUrl(finalAddress)' frameborder="0" scrolling="no"
+                    marginheight="0" marginwidth="0"></iframe><a
+                    href="https://www.pureblack.de/webdesign-bremen/">webdesigner bremen</a></div>
+                <style>
+                  .mapouter {
+                    text-align: right; 
+                    height: 500px;
+                    width: 600px;
+                  }
+
+                  .gmap_canvas {
+                    overflow: hidden;
+                    background: none !important;
+                    height: 500px;
+                    width: 600px;
+                  }
+                </style>
+              </div>
             </div>
           </div>
+          <hr />
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title"> <a data-toggle="collapse" href="#collapse1">Extras</a></h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+              <ul class="list-group" *ngFor="let extra of extras">
+                <li class="list-group-item">{{extra.ime}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <br />
 
-          <div class="container" *ngIf="existPricelist" >
-              <h4 class="section-title h1">Podrazumevani cenovnik</h4><br>
-              <div class="row">
-                <div class="col">
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <!-- <td>Indeks</td> -->
-                        <td> Soba </td>
-                        <td>Pocetak smene</td>
-                        <td>Kraj termina</td>
-                        <td>Iznos</td>
-                        <td>Valuta</td>
-                       
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <div *ngFor="let s of sj" >
-                          <tr>
-                             
-                              <td>
-                                1/{{s.brojKreveta}},  <div *ngIf="s.balkon"> Balkon </div>
-                              </td>
-                            
-                              <td>
-                                {{podrazumevaniCenovnik.pocetak}}
-                              </td>
-                              <td>
-                                {{podrazumevaniCenovnik.kraj}}
-                              </td>
-                              <td>
-                                {{podrazumevaniCenovnik.cena}}
-                              </td>
-                              <td>
-                                <!-- {{podrazumevaniCenovnik.cena.valuta}} -->
-                                EUR
-                              </td>
-                              <div *ngIf="logged">
-                              <td>
-                                    <button class="btn btn-primary btn-sm" (click)="rezervisi()">Rezervisi</button>
-                            </td>
-                            </div>
-                            </tr>
-                          </div>
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+            <div class="theelements" *ngFor="let room of rooms" style="background-blend-mode: inherit">
+              <div class="card mt-2 ml-2 mb-4 " style="width: 18rem;">
+                <img src="assets/room_icon.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{room.number}}&nbsp;&nbsp;&nbsp;</b><span style="color:gold"><i
+                        class="fas fa-star"></i></span><span
+                      class="ml-1">{{room.ratingsSum/room.ratingsCount | number: '1.0-2'}}</span></h5>
+                  <p class="card-text">Floor : {{room.floor}}</p>
+                  <p class="card-text">Beds : {{room.beds}}</p>
+                  <p class="card-text">Total price : {{room.price*days0}}€</p>
+                  <div *ngIf="logged">
 
-                      
-                    </tbody>
-                  </table>
+                    <div *ngIf="!room.booked;else other_content2">
+                      <button [disabled]=!logged (click)="book(room)" class="btn btn-primary mt-4 mb-4">Add</button>
+                    </div>
+
+                    <ng-template #other_content2><button class="btn btn-outline-secondary my-2 my-sm-0"
+                        (click)="cancel(room)">Cancel</button></ng-template>
+                  </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-10 offset-md-1">
+            <div class="theelements" *ngFor="let room of pRooms" style="background-blend-mode: inherit">
+              <div class="card mt-2 ml-2 mb-4 " style="width: 18rem;">
+                <img src="assets/room_icon.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><b>{{room.number}}&nbsp;&nbsp;&nbsp;</b><span style="color:gold"><i
+                        class="fas fa-star"></i></span><span
+                      class="ml-1">{{room.ratingsSum/room.ratingsCount | number: '1.0-2'}}</span></h5>
+                  <p class="card-text">Floor : {{room.floor}}</p>
+                  <p class="card-text">Beds : {{room.beds}}</p>
+                  <p class="card-text">Total price : {{room.price*days0}}€</p>
+                  <p class="card-text">Discount : {{room.discount}}%</p>
+                  <div *ngIf="logged">
+                    <button [disabled]=!logged (click)="book(room)" class="btn btn-primary mt-4 mb-4"
+                      (click)="reservePromo(room.id)">Reserve</button>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
+    </div>
+  </div>
 </section>
 <!-- Team -->

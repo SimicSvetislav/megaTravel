@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.users.Agent;
+import com.project.megatravel.model.users.TKorisnik;
+import com.project.megatravel.users.repository.SoRepository;
 import com.project.megatravel.users.request.LoginForm;
+import com.project.megatravel.users.services.AdminService;
 import com.project.megatravel.users.services.AgentsService;
 import com.project.megatravel.users.services.EmailService;
+import com.project.megatravel.users.services.UsersService;
 
 @RestController
 @CrossOrigin
@@ -32,13 +37,30 @@ public class AgentsController {
 	private AgentsService service;
 	
 	@Autowired
+	private AdminService serviceAdmin;
+	
+	@Autowired
+	private UsersService serviceUser;
+	
+	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private SoRepository soRepo;
 	
 	@Autowired
     private PasswordEncoder encoder;
 	
 	@RequestMapping(method = RequestMethod.POST, path="/agent", produces="application/json")
 	public ResponseEntity<Agent> registration(@RequestBody Agent korisnik) {
+		
+		/*if (service.agentByEmail(korisnik.getEmail())!=null) {
+			return new ResponseEntity<Agent>(korisnik, HttpStatus.CONFLICT);
+		}*/
+		
+		if (serviceUser.getByEmail(korisnik.getEmail()) != null || service.agentByEmail(korisnik.getEmail()) != null || serviceAdmin.getByEmail(korisnik.getEmail()) != null) {
+    		return new ResponseEntity<Agent>(HttpStatus.METHOD_NOT_ALLOWED);
+    	}
 		
 		String generatedPassword = service.generatePassword();
 		logger.info("Password for agent: " + korisnik.getKorisnickoIme() + " is " + generatedPassword);
@@ -81,7 +103,21 @@ public class AgentsController {
 	@ResponseBody
 	public ResponseEntity<Agent> getUser(@PathVariable("id") Long id) {
 		
-		return new ResponseEntity<Agent>(service.getById(id), HttpStatus.OK);
+		Agent a = service.getById(id);
+		
+		return new ResponseEntity<Agent>(a, HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, path="/agent/byObject/{id}", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Agent> getAgentByObject(@PathVariable("id") Long id) {
+		
+		SmestajniObjekat so = soRepo.getOneById(id);
+		
+		Agent a = service.getById(so.getAgent());
+		
+		return new ResponseEntity<Agent>(a, HttpStatus.OK);
 		
 	}
 	

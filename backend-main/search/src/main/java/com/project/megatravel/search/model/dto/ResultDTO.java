@@ -2,6 +2,7 @@ package com.project.megatravel.search.model.dto;
 
 import java.util.List;
 
+import com.project.megatravel.model.accomodation.Lokacija;
 import com.project.megatravel.model.accomodation.SmestajnaJedinica;
 import com.project.megatravel.model.accomodation.SmestajniObjekat.Slike;
 
@@ -14,13 +15,13 @@ public class ResultDTO {
 	private String opis;
 	private String nazivObj;
 	private Double udaljenost;
-	private String lokacija;
+	private Lokacija lokacija;
 
-	public String getLokacija() {
+	public Lokacija getLokacija() {
 		return lokacija;
 	}
 
-	public void setLokacija(String lokacija) {
+	public void setLokacija(Lokacija lokacija) {
 		this.lokacija = lokacija;
 	}
 

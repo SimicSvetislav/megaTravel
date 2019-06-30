@@ -1,3 +1,6 @@
+import { UserService } from './../services/users/user.service';
+import { User } from './../user';
+import { Lokacija } from './../lokacija';
 import { DatePipe } from '@angular/common';
 import { RezervacijaKorisnika, RezervacijaKorisnika2 } from './../rezervacijaKorisnika';
 
@@ -52,38 +55,49 @@ export class PreviewComponent implements OnInit {
   dropdownSettings = {};
   selectedItems = [];
 
+  user: User;
+
   constructor(private eventBroker: EventBrokerService, private token: TokenStorageService,
-              private router: Router, private searchService: SearchService,
-              private soService: ObjectService, private extrasService: ExtrasService,
-              private modalService: NgbModal, private toastr: ToastrService,
-              private typesService: TypesService, private categoriesService: CategoriesService,
-              private datePipe: DatePipe, private resService: ReservationService) { }
+    private router: Router, private searchService: SearchService,
+    private soService: ObjectService, private extrasService: ExtrasService,
+    private modalService: NgbModal, private toastr: ToastrService,
+    private typesService: TypesService, private categoriesService: CategoriesService,
+    private datePipe: DatePipe, private resService: ReservationService,
+    private userService: UserService) { }
   ngOnInit() {
 
     this.userId = +this.token.getUser();
 
     //alert(this.userId)
 
+    if (this.userId) {
+      this.userService.getLogged(this.userId).subscribe( data => {
+
+      }, error => {
+        console.log(error)
+      })
+    }
+
     var stored = this.token.getSearch();
     if (stored) {
       this.prosli = JSON.parse(stored);
-      this.searchService.search(this.prosli, this.userId).subscribe( data => { 
+      this.searchService.search(this.prosli, this.userId).subscribe(data => {
         this.results = data;
         //this.token.saveSearch(undefined);
       }, error => console.log(error));
     }
 
-  /*  this.extrasService.getAll().subscribe(data => {
-      this.extras = data;
-    });*/
+    /*  this.extrasService.getAll().subscribe(data => {
+        this.extras = data;
+      });*/
 
-  /*  this.typesService.getAll().subscribe(data => {
-      this.types = data;
-    });*/
+    /*  this.typesService.getAll().subscribe(data => {
+        this.types = data;
+      });*/
 
-  /*  this.categoriesService.getAll().subscribe(data => {
-      this.categories = data;
-    });*/
+    /*  this.categoriesService.getAll().subscribe(data => {
+        this.categories = data;
+      });*/
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -95,47 +109,80 @@ export class PreviewComponent implements OnInit {
       allowSearchFilter: true
     };
 
-    if(this.token.getUser() != null) {
+    if (this.token.getUser() != null) {
       this.logged = true;
     }
 
     this.soService.getAll().subscribe(data => {
       this.objects = data;
 
-      for(let o of this.objects) {
-      //  alert("sadfklj: " + o.slike[0].putanja)
-      
-        
+      for (let o of this.objects) {
+        //  alert("sadfklj: " + o.slike[0].putanja)
+
+
       }
 
     })
   }
 
   sort() {
-    
-    if (this.sorter==="Reccomendation") {
+
+    if (this.sorter === "Reccomendation") {
       // Pozivati rule based module
       /*this.rbm.reccomend(this.userId).subscribe(data => {
         alert(data)
       }, error => console.log(error))*/
 
-    } else if (this.sorter==="Price") {
+    } else if (this.sorter === "Price") {
       // Moze na frontu
-      this.results.sort((a,b) => a.cena < b.cena ? -1 : a.ocena > b.ocena ? 1 : 0);
+      this.results.sort((a, b) => a.cena < b.cena ? -1 : a.ocena > b.ocena ? 1 : 0);
 
-    } else if (this.sorter==="Distance") {
+    } else if (this.sorter === "Distance") {
       // ?
-      
-    } else if (this.sorter==="Rating") {
+      this.results.sort((a, b) => 
+        this.distanceForLocations(a.lokacija, this.user.lokacija) <= 
+        this.distanceForLocations(b.lokacija, this.user.lokacija) ? -1 : 1);
+
+    } else if (this.sorter === "Rating") {
       // Moze na frontu
-      this.results.sort((a,b) => a.ocena < b.ocena ? 1 : a.ocena > b.ocena ? -1 : 0);
-      
-    } else if (this.sorter==="Category") {
+      this.results.sort((a, b) => a.ocena < b.ocena ? 1 : a.ocena > b.ocena ? -1 : 0);
+
+    } else if (this.sorter === "Category") {
       // Moze na frontu
-      this.results.sort((a,b) => a.kategorija < b.kategorija ? 1 : a.kategorija > b.kategorija ? -1 : 0);
-      
+      this.results.sort((a, b) => a.kategorija < b.kategorija ? 1 : a.kategorija > b.kategorija ? -1 : 0);
+
     }
 
+  }
+
+  distanceForLocations(l1: Lokacija, l2: Lokacija) {
+
+    return this.distance(l1.koordinate.geoSirina, l2.koordinate.geoSirina,
+      l1.koordinate.geoDuzina, l2.koordinate.geoDuzina, 0.0, 0.0);
+
+  }
+
+  toRadians(degrees: number) {
+    return degrees * Math.PI / 180;
+  }
+
+  distance(lat1: number, lat2: number, lon1: number, lon2: number, el1: number, el2: number) {
+
+    const R = 6371;
+
+    const latDistance = this.toRadians(lat2 - lat1);
+    const lonDistance = this.toRadians(lon2 - lon1);
+    const a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+      + Math.cos(this.toRadians(lat1)) * Math.cos(this.toRadians(lat2))
+      * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let distance = R * c * 1000; // convert to meters
+
+    let height = el1 - el2;
+
+    distance = Math.pow(distance, 2) + Math.pow(height, 2);
+
+    return Math.sqrt(distance);
   }
 
   search() {
@@ -174,12 +221,12 @@ export class PreviewComponent implements OnInit {
         }
       }
     }*/
-    
-    this.pr.dolazak = new Date(this.fromDate.year, this.fromDate.month-1, this.fromDate.day);
-    this.pr.odlazak = new Date(this.toDate.year, this.toDate.month-1, this.toDate.day);
+
+    this.pr.dolazak = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day);
+    this.pr.odlazak = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day);
     this.pr.dodatneUsluge = this.selectedItems.map(item => item.id);
 
-    this.searchService.search(this.pr, this.userId).subscribe( data => { 
+    this.searchService.search(this.pr, this.userId).subscribe(data => {
       this.results = data;
       this.token.saveSearch(this.pr);
     }, error => console.log(error));
@@ -215,7 +262,7 @@ export class PreviewComponent implements OnInit {
     }
   }
 
-   
+
 
   isHovered(date: NgbDate) {
     return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
@@ -230,10 +277,10 @@ export class PreviewComponent implements OnInit {
   }
 
   redirect(id) {
-    this.router.navigate(['preview/' +id]);
+    this.router.navigate(['preview/' + id]);
   }
   openModal(content) {
-    this.modalService.open(content, {backdropClass: 'light-blue-backdrop'});
+    this.modalService.open(content, { backdropClass: 'light-blue-backdrop' });
   }
 
   rezervacija: RezervacijaKorisnika = new RezervacijaKorisnika();
@@ -241,11 +288,11 @@ export class PreviewComponent implements OnInit {
   sessionSearch: string;
   sesObj;
 
-  rezervisi(idJedinice,nazivObjekta,dolazak,odlazak,cena) {
+  rezervisi(idJedinice, nazivObjekta, dolazak, odlazak, cena) {
 
-  
 
-    if(!dolazak || !odlazak) {
+
+    if (!dolazak || !odlazak) {
       this.toastr.warning("Datum ce se vuci iz sesije");
       this.sessionSearch = this.token.getSearch();
       this.sesObj = JSON.parse(this.sessionSearch);
@@ -253,18 +300,18 @@ export class PreviewComponent implements OnInit {
       dolazak = this.sesObj.dolazak;
       odlazak = this.sesObj.odlazak;
 
-     
+
     }
 
     this.rezervacija.smestajnaJedinica = idJedinice;
-    this.rezervacija.datumRezervacije =  this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    this.rezervacija.datumRezervacije = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
     this.rezervacija.datumPocetka = dolazak;
     this.rezervacija.datumZavrsetka = odlazak;
     this.rezervacija.cenaSmestaja = cena;
     this.rezervacija.stanje = "AKTIVNA";
-    
+
     this.pom = this.token.getUser();
-    
+
     this.rezervacija.korisnik = parseInt(this.pom);
     this.rezervacija.ocenjeno = false;
 
@@ -275,6 +322,10 @@ export class PreviewComponent implements OnInit {
     })
 
 
+  }
+
+  toProfile(obj: number) {
+    this.router.navigate(['/preview/' + obj]);
   }
 
 }

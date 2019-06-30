@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
@@ -23,6 +24,7 @@ import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.util.NewPassword;
 
 @RestController
 @CrossOrigin
@@ -47,8 +49,15 @@ public class AdminController {
 		String url = USERS_MS + "agent";
 
 		korisnik.setDatumRegistracije(new Date());
-		
-		ResponseEntity<Agent> response = restClient.postForEntity(url, korisnik, Agent.class);
+			
+		ResponseEntity<Agent> response = null;
+		try {
+			response = restClient.postForEntity(url, korisnik, Agent.class);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		return response;
 		
@@ -337,6 +346,18 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping(method = RequestMethod.PUT, path="/admin/{id}/pass", consumes="application/json", produces="application/json")
+	@ResponseBody
+	public ResponseEntity<Administrator> updateAdminPassword(@RequestBody NewPassword pass, @PathVariable("id") Long id) {
+		
+		String url = USERS_MS + "admin/" + id + "/pass";
+		
+		restClient.put(url, pass);
+		
+		return new ResponseEntity<Administrator>(HttpStatus.OK);
+		
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, path="/admin", consumes="application/json", produces="application/json")
 	@ResponseBody
 	public ResponseEntity<Administrator> addAdmin(@RequestBody Administrator korisnik) {
@@ -345,7 +366,18 @@ public class AdminController {
 		
 		korisnik.setDatumRegistracije(new Date());
 		
-		ResponseEntity<Administrator> response = restClient.postForEntity(url, korisnik, Administrator.class);
+		ResponseEntity<Administrator> response = null;
+		try {
+			response = restClient.postForEntity(url, korisnik, Administrator.class);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
+		
+		if (response.getStatusCodeValue()==409) {
+			return new ResponseEntity<>(response.getBody(), HttpStatus.CONFLICT);
+		}
 		
 		return response;
 		

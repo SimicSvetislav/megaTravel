@@ -54,6 +54,14 @@ public class UsersService {
 		
 	}
 	
+	public KrajnjiKorisnik getByEmail(String email) {
+		
+		KrajnjiKorisnik kk = repo.getByEmail(email);
+		
+		return kk;
+		
+	}
+	
 	public Administrator getAdminById(Long id) {
 		
 		Administrator kk = adminRepo.getOneById(id);

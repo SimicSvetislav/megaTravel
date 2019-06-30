@@ -123,6 +123,11 @@ export class RegisterComponent implements OnInit {
     return;
   }
 
+  if (this.user.sifra.length < 3) {
+    this.toastrService.warning("Please enter password at least 3 characters long");
+    return;
+  }
+
   if (!this.lokacija) {
     this.toastrService.warning("Please enter location");
     return;
@@ -131,8 +136,6 @@ export class RegisterComponent implements OnInit {
 
 
   this.authService.signUp(this.signupInfo).subscribe(data => {
-
-
 
 
     this.temp = data;

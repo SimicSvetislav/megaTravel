@@ -1,3 +1,4 @@
+import { Lokacija } from './lokacija';
 import { SmestajnaJedinica } from './smestajnaJedinica';
 import { Slike } from './slike';
 export class ResultDTO {
@@ -8,4 +9,5 @@ export class ResultDTO {
     opis: string;
     cena: number;
     nazivObj: string;
+    lokacija: Lokacija;
 }

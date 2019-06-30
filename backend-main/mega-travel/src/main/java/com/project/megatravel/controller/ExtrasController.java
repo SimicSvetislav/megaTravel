@@ -1,6 +1,7 @@
 package com.project.megatravel.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.megatravel.model.accomodation.DodatnaUsluga;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.users.KrajnjiKorisnik;
+import com.project.megatravel.repository.SoRepository;
 import com.project.megatravel.services.ExtrasService;
 
 @RestController
@@ -22,6 +26,9 @@ public class ExtrasController {
 	
 	@Autowired
 	private ExtrasService service;
+	
+	@Autowired
+	private SoRepository soR;
 	
 	@RequestMapping(method = RequestMethod.GET, path="/extras")
 	public ResponseEntity<List<DodatnaUsluga>> getExtras() {
@@ -55,5 +62,20 @@ public class ExtrasController {
 		
 		return new ResponseEntity<DodatnaUsluga>(HttpStatus.OK);
 	}
+	
+	/*@RequestMapping(method = RequestMethod.GET, path="/extras/object/{id}")
+	public ResponseEntity<List<DodatnaUsluga>> getExtrasByObject(@PathVariable("id") Long id) {
+		
+		List<DodatnaUsluga> all = service.getAll();
+		
+		SmestajniObjekat so = soR.getOneById(id);
+		
+		
+		List<DodatnaUsluga> du =  all.stream()
+				.filter(u -> u.getId()==id).collect(Collectors.toList());
+		
+		return new ResponseEntity<List<DodatnaUsluga>>(du, HttpStatus.OK);
+	
+	}*/
 
 }

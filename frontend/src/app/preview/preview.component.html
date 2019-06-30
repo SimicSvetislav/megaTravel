@@ -97,7 +97,7 @@
                         <option value="Price">Price</option>
                         <option value="Distance">Distance</option>
                         <option value="Rating">Rating</option>
-                        <option value="Category">Category</option>
+                        <!--<option value="Category">Category</option>-->
                     </select>
                 </div>
                 <div class="col-md-1">
@@ -115,7 +115,7 @@
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
-                                        <h4 class="card-title">{{o.nazivObj}}, {{o.lokacija}}, kategorija: {{o.kategorija}} <span
+                                        <h4 class="card-title">{{o.nazivObj}}, {{o.lokacija.naziv}}, kategorija: {{o.kategorija}} <span
                                                 style="color:gold"><i class="fas fa-star"></i></span> </h4>
                                         <h3 class="card-title">Soba: {{o.jedinica.oznaka}}</h3>
                                         <h4 class="card-title">1/{{o.jedinica.brojKreveta}} <div
@@ -127,7 +127,7 @@
                                         <h4 class="card-title">{{o.cena}} € </h4>
                                         <p>{{o.cena}} €</p>
                                         <p>[DEBUG]: {{o.jedinica.id}} </p>
-                                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i></a>
+                                        <a (click)="toProfile(o.jedinica.sobjekat)"><i class="fa fa-plus"></i></a>
                                         <p class="card-text">{{o.opis}}</p>
                                         <ul class="list-inline">
                                             <li class="list-inline-item" *ngFor="let p of o.slike">
@@ -149,10 +149,10 @@
                                             (click)="rezervisi(o.jedinica.id,o.nazivObj,pr.dolazak,pr.odlazak,o.cena)">
                                             <i class="fa fa-plus"></i>
                                                 Rezervisi</a>
-                                                <div>More persons</div>
+                                                <!--<div>More persons</div>
                                                 <input class="form-control" type="checkbox" name="cb2" id="cb2"
                                                     [checked]="viseOsoba"
-                                                    (change)="viseOsoba = !viseOsoba">
+                                                    (change)="viseOsoba = !viseOsoba">-->
                                         </div>
 
                                     </div>

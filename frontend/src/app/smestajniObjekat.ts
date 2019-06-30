@@ -15,6 +15,7 @@ export class SmestajniObjekat {
     smestajnaJedinica: Array<SmestajnaJedinica>;
     agent: number;
     podrazumevaniCenovnik: Cenovnik;
+    adresa: string;
 
 }
 

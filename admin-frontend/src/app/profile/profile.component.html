@@ -62,6 +62,36 @@
             <button class="btn btn-success">Update</button>
           </div>
         </form>
+        <form name="form2" (ngSubmit)="f2.form.valid && changePass()" #f2="ngForm" novalidate>
+          <div class="form-group">
+            <label for="username">Old*</label>
+            <input type="text" class="form-control" name="old" [(ngModel)]="np.old"
+              #old="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && old.invalid }" required />
+            <div *ngIf="f2.submitted && old.invalid" class="invalid-feedback">
+              <div *ngIf="old.errors.required">Old password must be verified</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="username">New password*</label>
+            <input type="text" class="form-control" name="newPass" [(ngModel)]="np.newPass"
+              #newPass="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && newPass.invalid }" required minlength="3" />
+            <div *ngIf="f2.submitted && newPass.invalid" class="invalid-feedback">
+              <div *ngIf="newPass.errors.required">New password is required</div>
+              <div *ngIf="newPass.errors.minlength">Password must be at least 3 characters long</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="username">Confirm password*</label>
+            <input type="text" class="form-control" name="confirm" [(ngModel)]="np.confirm"
+              #confirm="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && confirm.invalid }" required minlength="3" />
+            <div *ngIf="f2.submitted && confirm.invalid" class="invalid-feedback">
+              <div *ngIf="confirm.errors.required">Confirmation is required</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-success">Change</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

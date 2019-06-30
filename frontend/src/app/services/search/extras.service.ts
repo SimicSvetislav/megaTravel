@@ -16,4 +16,8 @@ export class ExtrasService {
     return this.http.get(EXTRAS_API);
   }
 
+  getByObject(id: number): Observable<any> {
+    return this.http.get(EXTRAS_API + 'object/' + id);
+  }
+
 }

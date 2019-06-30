@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventBrokerService } from '../services/event-broker.service';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { NewPassword } from '../NewPassword';
 
 @Component({
   selector: 'app-profile',
@@ -18,6 +19,7 @@ export class ProfileComponent implements OnInit {
 
   user: Admin = new Admin();
   id;
+  np = new NewPassword();
 
   constructor(private userSer: UsersService, private router: Router, private adminService: AdminsService,
               private tokenService: TokenStorageService, private eventBroker: EventBrokerService,
@@ -55,6 +57,15 @@ export class ProfileComponent implements OnInit {
       this.toastr.error("Update failed");
     });
 
+  }
+
+  changePass() {
+    this.adminService.changePass(this.np, this.tokenService.getUser()).subscribe( data => {
+      this.toastr.success("Successfully changed password");
+    }, (error: Response) =>  {
+      console.log(error);
+      this.toastr.error("Password change failed");
+    });
   }
 
 }
