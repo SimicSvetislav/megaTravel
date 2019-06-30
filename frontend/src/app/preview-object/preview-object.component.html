@@ -14,7 +14,7 @@
 
           <ngb-carousel [showNavigationIndicators]="showNavigationIndicators">
             <ng-template ngbSlide *ngFor="let p of objekat.slike">
-              <img src="{{p.putanja}}" alt="Random first slide">
+              <img src="{{p.value.toString()}}" alt="Random first slide">
               <div class="carousel-caption">
 
               </div>

@@ -114,7 +114,7 @@
                             <div class="frontside">
                                 <div class="card">
                                     <div class="card-body text-center">
-                                        <p><img class=" img-fluid" src={{o.slike[0].putanja}} alt="card image"></p>
+                                        <p><img class=" img-fluid" src={{o.slike[0].value.toString()}} alt="card image"></p>
                                         <h4 class="card-title">{{o.nazivObj}}, {{o.lokacija.naziv}}, kategorija: {{o.kategorija}} <span
                                                 style="color:gold"><i class="fas fa-star"></i></span> </h4>
                                         <h3 class="card-title">Soba: {{o.jedinica.oznaka}}</h3>
@@ -131,13 +131,13 @@
                                         <p class="card-text">{{o.opis}}</p>
                                         <ul class="list-inline">
                                             <li class="list-inline-item" *ngFor="let p of o.slike">
-                                                <img class=" img-fluid" src={{p.putanja}} alt="card image"
+                                                <img class=" img-fluid" src={{p.value.toString()}} alt="card image"
                                                     style="width: 100px; height: 100px; "
                                                     (click)="openModal(content,p.putanja)">
                                                 <ng-template #content>
 
                                                     <div class="modal-body">
-                                                        <img class=" img-fluid" src={{p.putanja}} alt="card image"
+                                                        <img class=" img-fluid" src={{p.value.toString()}} alt="card image"
                                                             style="width: 2000px; height: 500px; ">
                                                     </div>
 

@@ -44,12 +44,13 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
 
     //let agent = '22'; // test     //soap poziv da se vrati info a agentu sa pravim id
-    /*this.userService.getAgent().subscribe( data => {
-      agent = data.id;
+    this.userService.getAgent().subscribe( data => {
+      this.agent = data;
+      this.message.sender = this.agent.id;
     }
-    );*/
+    );
 
-    this.agent = this.tokenService.getUser(); 
+    //this.agent = this.tokenService.getUser(); 
 
     // Cita se id rezervacije
     const resId = +this.route.snapshot.params['resId'];
@@ -74,7 +75,7 @@ export class ChatComponent implements OnInit {
     }, error => console.log(error));
 
     // this.message.receiver = 1; // id primaoca
-    this.message.sender = +this.agent; // id posiljaoca
+     // id posiljaoca
     this.message.reservation = resId; // id rezervacije
     this.message.payload = null;
 

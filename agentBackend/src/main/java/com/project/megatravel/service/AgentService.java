@@ -126,7 +126,7 @@ public class AgentService {
 	}
 	
 	public Agent agentByMail(String mail) {
-		return agentWsClient.getAgent(mail).getAgent();
+		return agentWsClient.getAgent(properties.getProperty("username", "")).getAgent();
 	}
 	
 

@@ -1,4 +1,4 @@
 export class Slike {
-    value: string;
+    value: string | ArrayBuffer;
     putanja: string;
 }
