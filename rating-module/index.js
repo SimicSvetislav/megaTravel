@@ -193,6 +193,46 @@ exports.getRatingsByObject = function getRatingsByObject(req, res) {
   
 }
 
+exports.getRatingsByObjectApproved = function getRatingsByObjectApproved(req, res) {
+	
+	res.set('Access-Control-Allow-Origin', "*");
+	res.set('Access-Control-Allow-Methods', 'GET');
+  
+	// Plus konvertuje string u broj
+	let object = +req.query.object;
+	
+	if (!object) {
+		object = req.body.object;
+		if (!object) {
+			res.status(400).send('Object must be specified in request body or as query parameter!')
+			return;
+		}
+	}
+
+	client.connect(err => {
+		
+		if (err) {
+			//client.close()
+			res.status(500).send(err)
+		}			
+		const collection = client.db(dbName).collection(colName)
+
+		collection.find({object: object, approved: true}, { projection: { _id: 0 } }).toArray(function(err, result) {
+			
+			//client.close()
+			
+			if (err) throw err
+			
+			result = result.filter(res => res.comment.trim()!=="");
+
+			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result))
+		})
+		
+	})
+  
+}
+
 exports.getRatingsByUser = function getRatingsByUser(req, res) {
 	
 	res.set('Access-Control-Allow-Origin', "*");
@@ -280,6 +320,8 @@ exports.getRatingsApproved = function getRatingsApproved(req, res) {
 			
 			if (err) throw err
 
+			result = result.filter(res => res.comment.trim()!=="");
+
 			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
 			res.status(200).send(JSON.stringify(result))
 		})
@@ -307,9 +349,11 @@ exports.getRatingsNotApproved = function getRatingsNotApproved(req, res) {
 			//client.close()
 			
 			if (err) throw err
+			
+			result = result.filter(res => res.comment.trim()!=="");
 
 			//res.status(200).send('Fetched ratings\nLength: ' + result.length + '\n' + JSON.stringify(result))
-			res.status(200).send(JSON.stringify(result))
+			res.status(200).send(JSON.stringify(result)) 
 		})
 		
 	})

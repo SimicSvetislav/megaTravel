@@ -1,3 +1,4 @@
+import { Rating } from './../rating';
 import { AgentService } from './../services/users/agent.service';
 import { CloudService } from './../services/cloud/cloud.service';
 import { TokenStorageService } from './../services/auth/token-storage.service';
@@ -31,6 +32,7 @@ export class PreviewObjectComponent implements OnInit {
   finalAddress: string = "";
   address: string = "";
   extras: DodatnaUsluga[] = [];
+  comments: Rating[] = [];
 
   constructor(private router: Router, private agService: AgentService,
     private route: ActivatedRoute, private extrasService: ExtrasService,
@@ -50,12 +52,17 @@ export class PreviewObjectComponent implements OnInit {
       this.objekat = data;
       this.extras = data.dodatnaUsluga;
 
+      this.address = this.objekat.lokacija.naziv;
+      this.finalAddress = "https://maps.google.com/maps?q="+this.address+"&t=&z=13&ie=UTF8&iwloc=&output=embed";
+      
+      /*
       this.agService.getOneByObject(this.objectId).subscribe( data => {
-        this.address = data.adresa + ', ' + this.objekat.lokacija.naziv;
+        //this.address = data.adresa + ', ' + this.objekat.lokacija.naziv;
+        this.address = this.objekat.lokacija.naziv;
         this.finalAddress = "https://maps.google.com/maps?q="+this.address+"&t=&z=13&ie=UTF8&iwloc=&output=embed";
       }, (error: Response) => {
 
-      })
+      })*/
 
       this.podrazumevaniCenovnik = this.objekat.podrazumevaniCenovnik;
       
@@ -68,6 +75,12 @@ export class PreviewObjectComponent implements OnInit {
 
     this.cloudSe.averageObject(this.objectId).subscribe(data => {
       this.objRating = data;
+    })
+
+    this.cloudSe.getRatingsByObjectApproved(this.objectId).subscribe(data => {
+      this.comments = data;
+    }, (e: Response) => {
+      console.log(e);
     })
 
 

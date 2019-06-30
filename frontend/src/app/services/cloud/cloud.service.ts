@@ -8,6 +8,11 @@ import { Rating } from 'src/app/rating';
   providedIn: 'root'
 })
 export class CloudService {
+  getRatingsByObjectApproved(objectId: any): Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Content-type', 'application/json');
+    return this.http.get(CLOUD_API + 'getRatingsByObjectApproved?object=' + objectId, {headers});
+  }
 
   constructor(private http: HttpClient) { }
 
