@@ -7,13 +7,18 @@ import org.springframework.stereotype.Service;
 
 import com.project.megatravel.exceptions.ValueConflictException;
 import com.project.megatravel.model.accomodation.KategorijaSm;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.repository.CategoriesRepository;
+import com.project.megatravel.repository.SoRepository;
 
 @Service
 public class CategoriesService {
 
 	@Autowired
 	private CategoriesRepository repo;
+	
+	@Autowired
+	private SoRepository soRepo;
 	
 	public List<KategorijaSm> getAll() {
 		
@@ -45,9 +50,40 @@ public class CategoriesService {
 		return cat;
 		
 	}
+	
+	public KategorijaSm update(KategorijaSm cat) throws ValueConflictException {
 
-	public KategorijaSm removeById(Long id) {
+		List<KategorijaSm> all = (List<KategorijaSm>) repo.getAll();
+		
+		List<SmestajniObjekat> allSo = (List<SmestajniObjekat>) soRepo.getAll();
+		
+		Long catId = cat.getId();
+		
+		if (allSo.stream().anyMatch(so -> so.getKategorijaSm().getId()==catId)) {
+			throw new ValueConflictException();
+		}
+		
+		for (KategorijaSm c : all) {
+			if (c.getZvezdice()==cat.getZvezdice() && c.getId()!=cat.getId()) {
+				throw new ValueConflictException();
+			}
+		}
+		
+		cat = repo.save(cat);
+		
+		return cat;
+		
+	}
 
+	public KategorijaSm removeById(Long id) throws ValueConflictException {
+
+		List<SmestajniObjekat> allSo = (List<SmestajniObjekat>) soRepo.getAll();
+		
+		if (allSo.stream().anyMatch(so -> so.getKategorijaSm().getId()==id)) {
+			throw new ValueConflictException();
+		}
+		
+		
 		KategorijaSm cat = repo.deleteById(id);
 		
 		return cat;

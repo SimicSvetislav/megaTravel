@@ -38,10 +38,11 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     serviceUrl:
+      # MENJAJ SAMO OVO
       # Docker
-      # defaultZone: http://host.docker.internal:8761/eureka/
+      defaultZone: http://host.docker.internal:8761/eureka/
       # Normal
-      defaultZone: http://localhost:8761/eureka/
+      # defaultZone: http://localhost:8761/eureka/
   instance: 
     # Docker
     # hostname: host.docker.internal

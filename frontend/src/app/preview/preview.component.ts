@@ -15,7 +15,7 @@ import { EventBrokerService } from '../services/event-broker/event-broker.servic
 import { Router } from '@angular/router';
 import { ObjectService } from '../services/object/object.service';
 //import { lookup } from 'dns';
-import { NgbModal, NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbDate, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { TokenStorageService } from '../services/auth/token-storage.service';
 import { SearchService } from '../services/search/search.service';
 import { asElementData } from '@angular/core/src/view';
@@ -35,6 +35,7 @@ export class PreviewComponent implements OnInit {
   fromDate: NgbDate;
   toDate: NgbDate;
   hoveredDate: NgbDate;
+  today: NgbDate;
   prosli: SearchObject = new SearchObject();
   pr: SearchObject = new SearchObject();
   objects: SmestajniObjekat[] = [];
@@ -63,7 +64,9 @@ export class PreviewComponent implements OnInit {
     private modalService: NgbModal, private toastr: ToastrService,
     private typesService: TypesService, private categoriesService: CategoriesService,
     private datePipe: DatePipe, private resService: ReservationService,
-    private userService: UserService) { }
+    private userService: UserService, private calendar: NgbCalendar) { 
+      this.today = calendar.getToday();
+    }
   ngOnInit() {
 
     this.userId = +this.token.getUser();
@@ -72,7 +75,7 @@ export class PreviewComponent implements OnInit {
 
     if (this.userId) {
       this.userService.getLogged(this.userId).subscribe( data => {
-
+        this.user = data;
       }, error => {
         console.log(error)
       })
@@ -87,17 +90,17 @@ export class PreviewComponent implements OnInit {
       }, error => console.log(error));
     }
 
-    /*  this.extrasService.getAll().subscribe(data => {
+    this.extrasService.getAll().subscribe(data => {
         this.extras = data;
-      });*/
+      });
 
-    /*  this.typesService.getAll().subscribe(data => {
+    this.typesService.getAll().subscribe(data => {
         this.types = data;
-      });*/
+      });
 
-    /*  this.categoriesService.getAll().subscribe(data => {
+    this.categoriesService.getAll().subscribe(data => {
         this.categories = data;
-      });*/
+      });
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -187,9 +190,11 @@ export class PreviewComponent implements OnInit {
 
   search() {
 
-    /*if (!this.pr.lokacija) {
-      this.toastr.warning("Please enter location");
-      return;
+    if (!this.pr.udaljenost) {
+      if (!this.pr.lokacija) {
+        this.toastr.warning("Please enter location");
+        return;
+      }
     }
 
     if (!this.pr.brojOsoba) {
@@ -207,20 +212,30 @@ export class PreviewComponent implements OnInit {
       return;
     }
 
-    if (this.pr.udaljenost !== undefined) {
+    if (this.fromDate.before(this.today)) {
+      this.toastr.error("Can't search dates in past");
+      return;
+    }
+
+    if (this.toDate < this.fromDate) {
+      this.toastr.error("Check in date can't be after check out date");
+      return;
+    }
+
+    if (this.pr.udaljenost) {
       if (this.pr.udaljenost <= 0) { 
         this.toastr.warning("Distance must be whole number");
       }
     }
 
-    if (this.pr.besplatnoOktazivanje === true) {
+    if (this.pr.besplatnoOtkazivanje === true) {
       if (this.pr.otkazivanjePre !== undefined) {
         if (!Number.isInteger(this.pr.otkazivanjePre) || this.pr.otkazivanjePre <= 0) {
           this.toastr.warning("Number of days for cancellation must be whole positive number");
           return;
         }
       }
-    }*/
+    }
 
     this.pr.dolazak = new Date(this.fromDate.year, this.fromDate.month - 1, this.fromDate.day);
     this.pr.odlazak = new Date(this.toDate.year, this.toDate.month - 1, this.toDate.day);
@@ -308,7 +323,7 @@ export class PreviewComponent implements OnInit {
     this.rezervacija.datumPocetka = dolazak;
     this.rezervacija.datumZavrsetka = odlazak;
     this.rezervacija.cenaSmestaja = cena;
-    this.rezervacija.stanje = "AKTIVNA";
+    this.rezervacija.stanje = "REZERVISANO";
 
     this.pom = this.token.getUser();
 

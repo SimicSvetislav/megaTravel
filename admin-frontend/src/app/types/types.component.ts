@@ -43,9 +43,19 @@ export class TypesComponent implements OnInit {
       this.refresh()
       console.log("Updated " + data.id);
       this.toastr.success('Type updated');
-    }, error =>  { 
-      console.log(error);
-      this.toastr.error('Update failed');
+    }, (error: Response) => {
+      switch(error.status) {
+        case 409:
+          this.toastr.warning("Type can't be updated");
+          break;
+        case 500:
+            this.toastr.error("Server error");
+            break;
+        default:
+          this.toastr.error("Unknown error occured");
+          break;
+      }
+      console.log(error)
     });
   }
 
@@ -54,7 +64,20 @@ export class TypesComponent implements OnInit {
       this.refresh()
       console.log("Deleted " + data.id);
       this.toastr.success('Type deleted');
-    }, error => console.log(error));
+    }, (error: Response) => {
+      switch(error.status) {
+        case 409:
+          this.toastr.warning("Type can't be deleted");
+          break;
+        case 500:
+            this.toastr.error("Server error");
+            break;
+        default:
+          this.toastr.error("Unknown error occured");
+          break;
+      }
+      console.log(error)
+    });
   }
 
   refresh() {

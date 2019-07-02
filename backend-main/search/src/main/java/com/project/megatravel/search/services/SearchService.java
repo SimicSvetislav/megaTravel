@@ -46,7 +46,8 @@ public class SearchService {
 	@Autowired
 	private RestTemplate rest;
 	
-	private static final String GRADE = "http://localhost:8010/rating-module/us-central1/averageGrade?room=";
+	//private static final String GRADE = "http://localhost:8010/rating-module/us-central1/averageGrade?room=";
+	private static final String GRADE = "http://host.docker.internal:8010/rating-module/us-central1/averageGrade?room=";
 	
 	public List<SmestajniObjekat> searchObject(PretragaObjekat po) {
 		
@@ -83,14 +84,14 @@ public class SearchService {
 		// Kategorija smestaja, nula nekategorisan
 		if (po.getKategorijaSmestaja()!=null) {
 			// Filtriranje po kategoriji
-			list = list.stream().filter(sj -> mapa.get(sj.getSObjekat()).getZvezdice()==po.getKategorijaSmestaja()).collect(Collectors.toList());
+			list = list.stream().filter(sj -> mapa.get(sj.getSObjekat()).getKategorijaSm().getZvezdice()==po.getKategorijaSmestaja()).collect(Collectors.toList());
 		}
 		
 		// Besplatno otkazivanje
 		if (po.isBesplatnoOtkazivanje()!=null && po.isBesplatnoOtkazivanje()) {
 			list = list.stream().filter(sj -> sj.getOtkazivanje().isDozvoljeno()).collect(Collectors.toList());
 			if (po.getOtkazivanjePre()!=null && po.getOtkazivanjePre()>0) {
-				list = list.stream().filter(sj -> sj.getOtkazivanje().getBrojDana() >= po.getOtkazivanjePre()).collect(Collectors.toList());
+				list = list.stream().filter(sj -> sj.getOtkazivanje().getBrojDana() <= po.getOtkazivanjePre()).collect(Collectors.toList());
 			}
 		}
 		
@@ -128,8 +129,11 @@ public class SearchService {
 				System.out.println("PO: " + po.getDolazak() + "    " + po.getOdlazak());
 				System.out.println("R: " + r.getDatumZavrsetka() + "    " + r.getDatumPocetka());
 				if (po.getDolazak().before(r.getDatumZavrsetka()) && r.getDatumPocetka().before(po.getOdlazak())) {
-					toRemove.add(s);
-					break;
+					if (!r.getStanje().equals("OTKAZANO")) {
+						toRemove.add(s);
+						break;
+					}
+					
 				}
 			}
 		}

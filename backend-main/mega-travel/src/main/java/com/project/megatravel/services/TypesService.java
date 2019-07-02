@@ -5,7 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.megatravel.exceptions.ValueConflictException;
+import com.project.megatravel.model.accomodation.KategorijaSm;
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.accomodation.TipSmestaja;
+import com.project.megatravel.repository.SoRepository;
 import com.project.megatravel.repository.TypesRepository;
 
 @Service
@@ -13,6 +17,9 @@ public class TypesService {
 
 	@Autowired
 	private TypesRepository repo;
+	
+	@Autowired
+	private SoRepository soRepo;
 	
 	public List<TipSmestaja> getAll() {
 		
@@ -36,8 +43,30 @@ public class TypesService {
 		return du;
 		
 	}
+	
+	public TipSmestaja update(TipSmestaja tip) throws ValueConflictException {
 
-	public TipSmestaja removeById(Long id) {
+		List<SmestajniObjekat> allSo = (List<SmestajniObjekat>) soRepo.getAll();
+		
+		Long id = tip.getId();
+		
+		if (allSo.stream().anyMatch(so -> so.getTipSmestaja().getId()==id)) {
+			throw new ValueConflictException();
+		}
+		
+		tip = repo.save(tip);
+		
+		return tip;
+		
+	}
+
+	public TipSmestaja removeById(Long id) throws ValueConflictException {
+		
+		List<SmestajniObjekat> allSo = (List<SmestajniObjekat>) soRepo.getAll();
+
+		if (allSo.stream().anyMatch(so -> so.getTipSmestaja().getId()==id)) {
+			throw new ValueConflictException();
+		}
 
 		TipSmestaja du = repo.deleteById(id);
 		

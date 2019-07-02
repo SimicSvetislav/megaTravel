@@ -17,6 +17,7 @@ export class ExtrasComponent implements OnInit {
 
   extras: Extra[] = new Array<Extra>();
   newExtra: Extra = new Extra();
+  check: number;
 
   ngOnInit() {
 
@@ -59,9 +60,17 @@ export class ExtrasComponent implements OnInit {
 
   delete(id: number) {
     this.service.delete(id).subscribe(data => {
-      this.refresh()
-      console.log("Deleted " + data.id);
-      this.toastr.success('Extra deleted');
+      this.check = this.extras.length;
+      this.service.getAll().subscribe(data => {
+        this.extras = data;
+        if (this.check===this.extras.length) {
+          this.toastr.warning("Extra can't be deleted");
+        } else {
+          this.toastr.success("Extra deleted");
+          console.log("Deleted " + data.id);
+        }
+      }, error => console.log(error));
+      
     }, error => console.log(error));
   }
 
@@ -88,8 +97,8 @@ export class ExtrasComponent implements OnInit {
       this.toastr.success('Extra added');
       this.refresh();
       this.newExtra = new Extra();
-    }, error => console.log(error));
-
+    }, (error: Response) => {
+      console.log(error)});
   }
 
 }

@@ -55,9 +55,10 @@ export class ViewObjectComponent implements OnInit {
   averageGradeObj() {
     this.activeTab = 'average';
     // this.objekat.id = 13;
-    this.ratingService.averageGradeObject(1).subscribe(data => {
+    //this.ratingService.averageGradeObject(1).subscribe(data => {
+      this.ratingService.averageGradeObject(this.objekat.id).subscribe(data => {
       this.averageMark = data;
-    });
+    }); 
   }
 
 }

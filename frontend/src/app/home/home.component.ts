@@ -56,6 +56,11 @@ export class HomeComponent implements OnInit {
       return;
     }
 
+    if (this.po.dolazak < new Date()) {
+      this.toastr.error("Can't search dates in past");
+      return;
+    }
+
     if (this.po.odlazak < this.po.dolazak) {
       this.toastr.error("Check in date can't be after check out date");
       return;

@@ -100,7 +100,7 @@ export class NewObjectBasicInfoComponent implements OnInit {
 
     const lokacija: Lokacija = new Lokacija() ;
     lokacija.naziv = this.adresa;
-    if (this.duzinaStepeni && this.sirinaStepeni && this.duzinaOrijentacija && this.sirinaOrijentacija) {
+    if (this.duzinaStepeni && this.sirinaStepeni) {
       const sirina: Koordinate = new Koordinate();
       sirina.stepeni = +this.sirinaStepeni;
       sirina.strana  = this.sirinaOrijentacija;

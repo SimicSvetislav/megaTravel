@@ -50,10 +50,18 @@ export class CategoriesComponent implements OnInit {
       this.refresh()
       console.log("Updated " + data.id);
       this.toastr.success('Category updated');
-    }, error =>  { 
-      console.log(error);
-      this.toastr.error('Update failed');
+    }, (error: Response) => {
+      switch(error.status) {
+        case 409:
+          this.toastr.warning("Category can't be updated");
+          break;
+        default:
+          this.toastr.error("Unknown error occured");
+          break;
+      }
+      console.log(error)
     });
+
   }
 
   delete(id: number) {
@@ -61,7 +69,20 @@ export class CategoriesComponent implements OnInit {
       this.refresh()
       console.log("Deleted " + data.id);
       this.toastr.success('Category deleted');
-    }, error => console.log(error));
+    }, (error: Response) => { 
+      
+      switch(error.status) {
+        case 409:
+          this.toastr.warning("Category can't be deleted");
+          break;
+        default:
+          this.toastr.error("Unknown error occured");
+          break;
+      }
+      
+      console.log(error)
+    });
+
   }
 
   refresh() {
@@ -86,7 +107,19 @@ export class CategoriesComponent implements OnInit {
       this.toastr.success('Category added');
       this.refresh();
       this.newCat = new CategorySm();
-    }, error => console.log(error));
+    }, (error: Response) => { 
+      
+      switch(error.status) {
+        case 409:
+          this.toastr.warning("Category already exists");
+          break;
+        default:
+          this.toastr.error("Unknown error occured");
+          break;
+      }
+      
+      console.log(error)
+    });
 
   }
 

@@ -1,5 +1,6 @@
 package com.project.megatravel.users.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.passay.CharacterData;
@@ -12,8 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.users.repository.AgentRepository;
+import com.project.megatravel.users.repository.SoRepository;
 import com.project.megatravel.users.request.LoginForm;
 
 @Service
@@ -22,6 +25,9 @@ public class AgentsService {
 
 	@Autowired
 	private AgentRepository repo;
+	
+	@Autowired
+	private SoRepository soRepo;
 	
 	@Autowired
     private AuthenticationManager authenticationManager;
@@ -50,6 +56,12 @@ public class AgentsService {
 	}
 
 	public Agent deleteById(Long id) {
+		
+		Collection<SmestajniObjekat> all = soRepo.getAll();
+		
+		if (all.stream().anyMatch(so -> so.getAgent().equals(id))) {
+			return null;
+		}
 		
 		Agent a = repo.deleteById(id);
 		

@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 import com.project.megatravel.model.dto.ReservationDTO;
 import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Agent;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
-import com.project.megatravel.reservations.services.EmailService;
 import com.project.megatravel.reservations.services.ReservationService;
 
 @RestController
@@ -31,22 +29,18 @@ public class ReservationsController {
 	@Autowired
 	private ReservationService service;
 	
-	@Autowired
-	private EmailService emailSender;
-	
-	@Autowired
-	private RestTemplate rest;
-	
-	private final String RBM = "http://localhost:8020/";
+	//private final String RBM = "http://localhost:8020/";
 	
 	@RequestMapping(method = RequestMethod.POST, path="/")
 	public ResponseEntity<RezervacijaKorisnika> makeReservation(@RequestBody RezervacijaKorisnika rezervacija) {
 		System.out.println("Rezervisao ????");
 		
 		rezervacija.setDatumRezervacije(new Date());
-		//rezervacija.sets
+		rezervacija.setStanje("REZERVISANO");
 		
 		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
+		
+		service.sendEmail(rez);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
 	}
@@ -56,9 +50,9 @@ public class ReservationsController {
 		
 		RezervacijaKorisnika rez = service.makeReservation(rezervacija);
 		
-		String uri = RBM + "makeRes/" + more;
+		//String uri = RBM + "makeRes/" + more;
 		
-		String res = rest.postForObject(uri, rezervacija, String.class);
+		//String res = rest.postForObject(uri, rezervacija, String.class);
 		
 		return new ResponseEntity<RezervacijaKorisnika>(rez, HttpStatus.OK);
 	}

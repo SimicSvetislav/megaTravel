@@ -69,8 +69,8 @@
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <input class="form-control" type="checkbox" name="cb" id="cb"
-                                        [checked]="pr.besplatnoOktazivanje"
-                                        (change)="pr.besplatnoOktazivanje = !pr.besplatnoOktazivanje">
+                                        [checked]="pr.besplatnoOtkazivanje"
+                                        (change)="pr.besplatnoOtkazivanje = !pr.besplatnoOtkazivanje">
                                 </div>
                             </div>
 
@@ -122,7 +122,7 @@
                                                 *ngIf="o.jedinica.balkon">Balkon<i class="fas fa-check"></i></div>
                                         </h4>
                                         <span>Ocena: <span style="color:gold"><i class="fas fa-star"></i></span><span
-                                                class="ml-1">{{o.ocena}}</span></span>
+                                                class="ml-1">{{o.ocena | number : '1.0-2'}}</span></span>
                                         <p class="card-text"></p>
                                         <h4 class="card-title">{{o.cena}} € </h4>
                                         <p>{{o.cena}} €</p>

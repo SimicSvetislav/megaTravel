@@ -22,7 +22,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
   constructor(private service: UsersService, private toastr: ToastrService,
               private tokenService: TokenStorageService, private router: Router) { }
 
-  users: any;
+  users: [];
+  check: number;
 
   ngOnInit() {
 
@@ -77,9 +78,15 @@ export class UsersComponent implements OnInit, AfterViewInit {
   delete(id: number) {
     this.service.remove(id).subscribe(user => {
       console.log('Deleted ' + user.id)
-      this.toastr.success('User deleted')
+      this.toastr.success('Operation executed')
+      this.check = this.users.length
       this.service.getAll().subscribe(data => {
         this.users = data;
+        if (this.check===this.users.length) {
+          this.toastr.warning("User can't be deleted");
+        } else {
+          this.toastr.success("User deleted");
+        }
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

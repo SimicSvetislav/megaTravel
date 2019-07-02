@@ -24,7 +24,6 @@ import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.ibm.icu.util.Calendar;
@@ -56,6 +55,9 @@ public class ReservationService {
 	
 	@Autowired
 	private KorisnikRepository userRepo;
+	
+	@Autowired
+	private EmailService emailSender;
 	
 	// Fabrika za kreiranje transformera formata
 	private TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -96,8 +98,10 @@ public class ReservationService {
 		List<RezervacijaKorisnika> rk = (List<RezervacijaKorisnika>)repo.getAll();
 		
 		for (RezervacijaKorisnika rezervacijaKorisnika : rk) {
-			if(rezervacijaKorisnika.getKorisnik().equals(id)) {
-				pom.add(rezervacijaKorisnika);
+			if (rezervacijaKorisnika.getKorisnik()!=null) {
+				if(rezervacijaKorisnika.getKorisnik().equals(id)) {
+					pom.add(rezervacijaKorisnika);
+				}
 			}
 		}
 		
@@ -384,6 +388,24 @@ public class ReservationService {
 		}
 		
 		return false;
+	}
+	
+	public void sendEmail(RezervacijaKorisnika rez) {
+		
+		InputStream inputStream = generateHTMLForMail(rez.getId());
+		
+		KrajnjiKorisnik kk = userRepo.getOneById(rez.getKorisnik());
+		
+		emailSender.sendMessageWithAttachmentFromInputStream(kk.getEmail(), "Reservation confirmation", 
+				"You have successfully made reservation!\n\nSincerely,\nMegatravel team", 
+				inputStream);
+		
+		try {
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	

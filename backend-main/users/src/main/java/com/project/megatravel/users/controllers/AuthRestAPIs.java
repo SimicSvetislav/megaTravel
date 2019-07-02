@@ -179,6 +179,8 @@ public class AuthRestAPIs {
     		
     		
     		lokacija.setKoordinate(polozaj);
+    		
+    		kk.setLokacija(lokacija);
 
     		//dalje ne znam kako to sacuvati al ovo je valjda to
     		

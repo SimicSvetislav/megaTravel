@@ -191,7 +191,13 @@ public class AdminController {
 		
 		String url = MAIN_MS + "extras/" + id;
 		
-		restClient.delete(url);
+		try {
+			restClient.delete(url);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		DodatnaUsluga du = new DodatnaUsluga();
 		du.setId(id);
@@ -205,7 +211,15 @@ public class AdminController {
 		
 		String url = MAIN_MS + "extras";
 		
-		ResponseEntity<DodatnaUsluga> response = restClient.postForEntity(url, extra, DodatnaUsluga.class);
+		ResponseEntity<DodatnaUsluga> response = null;
+		
+		try {
+			response = restClient.postForEntity(url, extra, DodatnaUsluga.class);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		return response;
 	}
@@ -216,7 +230,13 @@ public class AdminController {
 		
 		String url = MAIN_MS + "extras";
 		
-		restClient.put(url, extra);
+		try {
+			restClient.put(url, extra);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		DodatnaUsluga du = new DodatnaUsluga();
 		du.setId(extra.getId());
@@ -246,7 +266,13 @@ public class AdminController {
 		
 		String url = MAIN_MS + "types/" + id;
 		
-		restClient.delete(url);
+		try {
+			restClient.delete(url);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		TipSmestaja tip = new TipSmestaja();
 		tip.setId(id);
@@ -260,7 +286,15 @@ public class AdminController {
 		
 		String url = MAIN_MS + "types";
 		
-		ResponseEntity<TipSmestaja> response = restClient.postForEntity(url, type, TipSmestaja.class);
+		ResponseEntity<TipSmestaja> response = null;
+		
+		try {
+			response = restClient.postForEntity(url, type, TipSmestaja.class);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		return response;
 	}
@@ -270,8 +304,14 @@ public class AdminController {
 	public ResponseEntity<TipSmestaja> updateType(@RequestBody TipSmestaja type) {
 		
 		String url = MAIN_MS + "types";
-		
-		restClient.put(url, type);
+				
+		try {
+			restClient.put(url, type);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		TipSmestaja t = new TipSmestaja();
 		t.setId(type.getId());
@@ -300,8 +340,14 @@ public class AdminController {
 	public ResponseEntity<KategorijaSm> deleteCategory(@PathVariable("id") Long id) {
 		
 		String url = MAIN_MS + "cat/" + id;
-		
-		restClient.delete(url);
+
+		try {
+			restClient.delete(url);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		KategorijaSm cat = new KategorijaSm();
 		cat.setId(id);
@@ -311,11 +357,19 @@ public class AdminController {
 	
 	@RequestMapping(method = RequestMethod.POST, path="/cat", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<TipSmestaja> addCategory(@RequestBody KategorijaSm cat) {
+	public ResponseEntity<KategorijaSm> addCategory(@RequestBody KategorijaSm cat) {
 		
 		String url = MAIN_MS + "cat";
 		
-		ResponseEntity<TipSmestaja> response = restClient.postForEntity(url, cat, TipSmestaja.class);
+		ResponseEntity<KategorijaSm> response = null;
+		
+		try {
+			response = restClient.postForEntity(url, cat, KategorijaSm.class);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		return response;
 	}
@@ -326,7 +380,13 @@ public class AdminController {
 		
 		String url = MAIN_MS + "cat";
 		
-		restClient.put(url, cat);
+		try {
+			restClient.put(url, cat);
+		} catch (HttpClientErrorException e) {
+			if (e.getRawStatusCode() == 409) {
+				return new ResponseEntity<>(HttpStatus.CONFLICT);
+			}
+		}
 		
 		KategorijaSm c = new KategorijaSm();
 		c.setId(cat.getId());

@@ -32,11 +32,15 @@ public class CategoriesController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path="/cat/{id}")
-	public ResponseEntity<String> deleteCategory(@PathVariable("id") Long id) {
+	public ResponseEntity<KategorijaSm> deleteCategory(@PathVariable("id") Long id) {
 		
-		service.removeById(id);
+		try {
+			service.removeById(id);
+		} catch (ValueConflictException e) {
+			return new ResponseEntity<KategorijaSm>(HttpStatus.CONFLICT);
+		}
 		
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<KategorijaSm>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path="/cat", produces = "application/json")
@@ -58,7 +62,7 @@ public class CategoriesController {
 	public ResponseEntity<KategorijaSm> updateCategory(@RequestBody KategorijaSm c) {
 		
 		try {
-			service.save(c);
+			service.update(c);
 		} catch (ValueConflictException e) {
 			return new ResponseEntity<KategorijaSm>(HttpStatus.CONFLICT);
 		}

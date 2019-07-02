@@ -1,15 +1,19 @@
 package com.project.megatravel.users.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import com.project.megatravel.model.accomodation.SmestajniObjekat;
+import com.project.megatravel.model.reservations.RezervacijaKorisnika;
 import com.project.megatravel.model.users.Administrator;
 import com.project.megatravel.model.users.KrajnjiKorisnik;
 import com.project.megatravel.users.repository.AdminRepository;
 import com.project.megatravel.users.repository.KorisnikRepository;
+import com.project.megatravel.users.repository.RezervacijeRepository;
 
 @Service
 @CrossOrigin
@@ -20,6 +24,9 @@ public class UsersService {
 	
 	@Autowired
 	private AdminRepository adminRepo;
+	
+	@Autowired
+	private RezervacijeRepository rRepo;
 	
 	public KrajnjiKorisnik getById(Long id) {
 		
@@ -47,6 +54,12 @@ public class UsersService {
 	}
 	
 	public KrajnjiKorisnik remove(Long id) {
+		
+		Collection<RezervacijaKorisnika> all = rRepo.getAll();
+		
+		if (all.stream().anyMatch(rez -> rez.getKorisnik()!=null && rez.getKorisnik().equals(id))) {
+			return null;
+		}
 		
 		KrajnjiKorisnik kk = repo.deleteById(id);
 		

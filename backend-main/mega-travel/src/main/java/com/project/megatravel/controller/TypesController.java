@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.megatravel.exceptions.ValueConflictException;
+import com.project.megatravel.model.accomodation.KategorijaSm;
 import com.project.megatravel.model.accomodation.TipSmestaja;
 import com.project.megatravel.services.TypesService;
 
@@ -31,11 +33,15 @@ public class TypesController {
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path="/types/{id}")
-	public ResponseEntity<String> deleteAgent(@PathVariable("id") Long id) {
+	public ResponseEntity<TipSmestaja> deleteAgent(@PathVariable("id") Long id) {
 		
-		service.removeById(id);
+		try {
+			service.removeById(id);
+		} catch (ValueConflictException e) {
+			return new ResponseEntity<TipSmestaja>(HttpStatus.CONFLICT);
+		}
 		
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<TipSmestaja>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path="/types", produces = "application/json")
@@ -51,7 +57,11 @@ public class TypesController {
 	@ResponseBody
 	public ResponseEntity<TipSmestaja> updateExtra(@RequestBody TipSmestaja t) {
 		
-		service.save(t);
+		try {
+			service.update(t);
+		} catch (ValueConflictException e) {
+			return new ResponseEntity<TipSmestaja>(HttpStatus.CONFLICT);
+		}
 		
 		return new ResponseEntity<TipSmestaja>(HttpStatus.OK);
 	}

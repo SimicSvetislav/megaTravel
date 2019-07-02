@@ -12,7 +12,8 @@ import { TokenStorageService } from '../services/auth/token-storage.service';
 })
 export class AgentsComponent implements OnInit {
 
-  agents: any;
+  agents: [];
+  check: number;
 
   constructor(private tokenService: TokenStorageService, 
               private agentService: AgentsService, private router: Router, 
@@ -37,7 +38,8 @@ export class AgentsComponent implements OnInit {
 
   delete(id: number) {
     this.agentService.remove(id).subscribe(data => {
-      this.toastr.success("Agent deleted");
+      this.toastr.success("Operation executed");
+      this.check = this.agents.length
       this.refresh();
     }, error => console.log(error));
   }
@@ -45,6 +47,11 @@ export class AgentsComponent implements OnInit {
   refresh() {
     this.agentService.getAgents().subscribe(data => {
       this.agents = data;
+      if (this.check===this.agents.length) {
+        this.toastr.warning("Agent can't be deleted");
+      } else {
+        this.toastr.success("Agent deleted");
+      }
     }, error => console.log(error));
   }
 

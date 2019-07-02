@@ -201,4 +201,7 @@ $RECYCLE.BIN/
 # Server baze podataka
 /TomEE
 
+# Frontend copy for additional instances of agent application
+/agentFrontend_2
+
 # End of https://www.gitignore.io/api/java,linux,maven,angular,windows,eclipse,java-web,code-java,visualstudiocode
